@@ -6,13 +6,14 @@
 #    By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/26 17:19:58 by jusaint-          #+#    #+#              #
-#    Updated: 2022/06/14 14:03:32 by jusaint-         ###   ########.fr        #
+#    Updated: 2022/06/14 15:27:18 by jusaint-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME				=	containers
 
 CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98
+
 DEBUGFLAGS			=	-g3
 
 CXX				=	c++
@@ -20,18 +21,23 @@ CXX				=	c++
 RM				=	rm -rf
 
 SRCS				=	test_iterator.cpp
+
 SRCS_DIR			=	_test
 
 INC				=	-I inc/iterator -I inc/type_traits -I inc/utility
 
 OBJS				=	$(SRCS:.cpp=.o)
+
 OBJS_DIR			= 	.obj
 
 DEPS				=	$(SRCS:.cpp=.d)
+
 DEPS_DIR			=	.dep
 
 vpath %.cpp 			$(SRCS_DIR)
+
 vpath %.o			$(OBJS_DIR)
+
 vpath %.d			$(DEPS_DIR)
 
 all:				$(NAME)
