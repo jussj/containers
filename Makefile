@@ -6,51 +6,67 @@
 #    By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/26 17:19:58 by jusaint-          #+#    #+#              #
-#    Updated: 2022/06/13 18:50:04 by jusaint-         ###   ########.fr        #
+#    Updated: 2022/06/14 14:03:32 by jusaint-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME				=	containers
 
-CPP_FLAGS			=	-Wall -Wextra -Werror -std=c++98
+CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98
+DEBUGFLAGS			=	-g3
 
-DEBUG_FLAGS			=	-g3
+CXX				=	c++
 
-DEPS_FLAGS			=	-MMD -MP -include $(DEPS)
+RM				=	rm -rf
 
-CC					=	c++
+SRCS				=	test_iterator.cpp
+SRCS_DIR			=	_test
 
-RM					=	rm -f
+INC				=	-I inc/iterator -I inc/type_traits -I inc/utility
 
-SRCS				=	_test/test_iterator.cpp
+OBJS				=	$(SRCS:.cpp=.o)
+OBJS_DIR			= 	.obj
 
-OBJS				=	$(addprefix $(OBJS_DIR),$(SRCS:.cpp=.o))
+DEPS				=	$(SRCS:.cpp=.d)
+DEPS_DIR			=	.dep
 
-OBJS_DIR			= 	.obj/
-
-DEPS				=	$(addprefix $(DEPS_DIR),$(SRCS:.cpp=.d))
-
-DEPS_DIR			=	.dep/
+vpath %.cpp 			$(SRCS_DIR)
+vpath %.o			$(OBJS_DIR)
+vpath %.d			$(DEPS_DIR)
 
 all:				$(NAME)
 
-$(NAME):			$(OBJS)
-					$(CC) $(CPP_FLAGS) $^ -o $(NAME)
+$(NAME):			$(DEPS) $(OBJS)
+	$(CXX) $(CXXFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(NAME)
 
-$(OBJS_DIR)/%.o:	%.cpp
-					mkdir -p $(OBJS_DIR) $(DEPS_DIR)
-					$(CC) $(CPP_FLAGS) $(DEPS_FLAGS) -c $< -o $@
+%.d:				%.cpp
+	$(CXX) $(INC) -MM $< -MF $(DEPS_DIR)/$@ 
+
+-include $(addprefix $(DEPS_DIR)/, $(DEPS))
+
+%.o:				%.cpp
+	$(CXX) $(INC) $(CXXFLAGS) -c $< -o $(OBJS_DIR)/$@
+
+$(DEPS):			| $(DEPS_DIR)
+
+$(DEPS_DIR):
+	mkdir -p $(DEPS_DIR)
+
+$(OBJS):			| $(OBJS_DIR)
+
+$(OBJS_DIR):
+	mkdir -p $(OBJS_DIR)
 
 clean:		
-					$(RM) $(OBJS_DIR) $(DEPS_DIR)
+	$(RM) $(OBJS_DIR) $(DEPS_DIR)
 
-fclean: 			clean
-					$(RM) $(NAME)
+fclean:				clean
+	$(RM) $(NAME)
 
-re:					fclean all
+re:				fclean all
 
 dl:			
-					curl -O "https://projects.intra.42.fr/uploads/document/document/8394/main.cpp"
-					curl -O "https://cdn.intra.42.fr/pdf/pdf/47623/en.subject.pdf"
+	curl -O "https://projects.intra.42.fr/uploads/document/document/8394/main.cpp"
+	curl -O "https://cdn.intra.42.fr/pdf/pdf/47623/en.subject.pdf"
 
-.PHONY:				all clean fclean re
+.PHONY:				all clean fclean re dl
