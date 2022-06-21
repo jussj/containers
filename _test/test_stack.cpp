@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 10:33:14 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/20 18:22:25 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/21 14:51:21 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,53 @@
 
 #define NAMESPACE std
 
-void	printStack(NAMESPACE::stack<int>)
+template<class T, class Cont>
+void	printNumbers(NAMESPACE::stack<T, Cont<T> > stack) {
+
+	T	t;
+
+	if (stack.empty())
+		return ;
+
+	t = stack.top();
+	stack.pop();
+	printStack(stack);
+	std::cout << t << " ";
+	stack.push(t);
+}
+
+template<class T, class Cont>
+void	printStack(NAMESPACE::stack<T, Cont<T> > stack) {
+	std::cout << "[ ";
+	printNumbers(stack);
+	std::cout << " ]" << std::endl;
+}
 
 int 	main() {
 		// CTOR IS WORKING ON ANY UNDERLYING CONTAINER WITH ANY CONTAINER IN INPUT
 	{	// BUILDING STACKS AND SIZE
-		std::stack<int> 			myvector (3,100);          
-		std::stack<int> 			first;				
-		std::stack<int,std::vector<int> >	second;
-		std::stack<int,std::vector<int> > 	third (myvector);
+		// TEST COPY CTOR AND COPY
+		NAMESPACE::stack<int, std::vector<int> >	a;          
+		NAMESPACE::stack<int, std::vector<int> >	b;
+		NAMESPACE::stack<int, std::vector<int> > 	c;
+		NAMESPACE::stack<int> 				d;	// UNDERLYING CONTAINER IS DEQUE
+		
+	
+		b.push(7);
+		b.push(-65);
+		b.push(34);
 
-		std::cout << "size of first: " << first.size() << '\n';
-		std::cout << "size of second: " << second.size() << '\n';
-		std::cout << "size of third: " << third.size() << '\n';
+		std::cout << "size of stack A: " << a.size() << std::endl;
+		if (a.empty())
+			std::cout << "stack A is empty (and empty function seems to work...)" << std::endl;
+		std::cout << "size of stack B: " << b.size() << std::endl;
+		printStack(b);
+		std::cout << "size of stack C: " << c.size() << std::endl;
+		std::cout << "size of stack D: " << d.size() << std::endl;
 	}
 	{	// STACK TOP, EMPTY, PUSH
 		// EMPTY STACK, HUGE STACK
-		std::stack<int> mystack;
+		NAMESPACE::stack<int> mystack;
 		int sum (0);
 
 		for (int i=1;i<=10;i++) 

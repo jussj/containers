@@ -6,7 +6,7 @@
 #    By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/26 17:19:58 by jusaint-          #+#    #+#              #
-#    Updated: 2022/06/14 15:27:18 by jusaint-         ###   ########.fr        #
+#    Updated: 2022/06/21 14:22:05 by jusaint-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CXX				=	c++
 
 RM				=	rm -rf
 
-SRCS				=	test_iterator.cpp
+SRCS				=	test_stack.cpp \
 
 SRCS_DIR			=	_test
 
