@@ -6,35 +6,39 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 10:33:14 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/21 14:51:21 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/23 17:17:10 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>       // std::cout
 #include <stack>          // std::stack
 #include <vector>         // std::vector
+# include <stdexcept>
+#include "../inc/stack.hpp"
 
-#define NAMESPACE std
+#define NAMESPACE ft 
 
 template<class T, class Cont>
-void	printNumbers(NAMESPACE::stack<T, Cont<T> > stack) {
+//void	printNumbers(NAMESPACE::stack<T, Cont<T> > s) {
+void	printNumbers(NAMESPACE::stack<T> s) {
 
 	T	t;
 
-	if (stack.empty())
+	if (s.empty())
 		return ;
 
-	t = stack.top();
-	stack.pop();
-	printStack(stack);
+	t = s.top();
+	s.pop();
+	printNumbers(s);
 	std::cout << t << " ";
-	stack.push(t);
+	s.push(t);
 }
 
 template<class T, class Cont>
-void	printStack(NAMESPACE::stack<T, Cont<T> > stack) {
+//void	printStack(NAMESPACE::stack<T, Cont<T> > s) {
+void	printStack(NAMESPACE::stack<T> s) {
 	std::cout << "[ ";
-	printNumbers(stack);
+	printNumbers(s);
 	std::cout << " ]" << std::endl;
 }
 
@@ -56,7 +60,7 @@ int 	main() {
 		if (a.empty())
 			std::cout << "stack A is empty (and empty function seems to work...)" << std::endl;
 		std::cout << "size of stack B: " << b.size() << std::endl;
-		printStack(b);
+	//	printStack<std::stack<int, std::vector<int> > (b);
 		std::cout << "size of stack C: " << c.size() << std::endl;
 		std::cout << "size of stack D: " << d.size() << std::endl;
 	}

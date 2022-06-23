@@ -6,28 +6,43 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 09:41:46 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/20 18:44:50 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/23 18:58:59 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STACK_HPP
 # define STACK_HPP
 
+# include <stdexcept>
 # include <vector>
-# define NAMESPACE std
+# define VEC_NAMESPACE std
 
 namespace ft {
 
-	template <class T, class Container = NAMESPACE::vector<T> >
-	class Stack {
+	template <class T, class Container = VEC_NAMESPACE::vector<T> >
+	class stack {
 
 		public:
 
-		// CONSTRUCTOR
-			Stack();								//empty stack
-			explicit Stack (const container_type & cont = container_type());	//stack init with copied cont elements
-			~Stack();
+		// MEMBER TYPES
+			typedef Container				container_type;		//container_type >> vector by default
+			//typedef T 					value_type;
+			typedef typename Container::value_type 		value_type;
+			typedef typename Container::size_type		size_type;		// size _t is default
+			typedef typename Container::const_reference	const_reference;
+			typedef typename Container::reference		reference;
 
+		// CTOR DTOR CPY
+		// cpy and dtor?? YES
+		// overload for assign elements from one cont to another
+			stack() {								//constructors: empty stack
+				c();
+			}
+			explicit stack (const container_type & cont = container_type()) {	//stack init with copied cont elements	
+				c(cont);
+			}
+			~stack();								//destructor
+		
 		// MEMBER FUNCTIONS
 			bool 			empty() const {
 				if (c.size() == 0)
@@ -48,7 +63,7 @@ namespace ft {
 				return (c.back());
 			}
 			void			push(const value_type & val) {
-				c.push_back(value_type);
+				c.push_back(val);
 			}
 			void			pop() {
 				if (this->empty()) 
@@ -57,23 +72,37 @@ namespace ft {
 			}
 
 		// EXCEPTIONS
-			class EmptyStack : public std::exception() {
+			class EmptyStack : public std::exception {
 				public:
-					virtual const char * what() const throw() 
+					virtual const char * what() const throw() { 
 						return "stack is empty";
+					}
 			};
-
-		// MEMBER TYPES
-			typedef Container				container_type;		//container_type >> vector by default
-			//typedef T 					value_type;
-			typedef typename Container::value_type 		value_type;
-			typedef typename Container::size_type		size_type;		// size _t is default
-			typedef typename Container::const_reference	const_reference;
-			typedef typename Container::reference		reference
 
 		protected:
 			Container		c;
-
 	};
+
+	template <class T, class Cont>
+	bool operator==(const stack<T, Cont>& x, const stack<T, Cont>& y) {
+		return x == y;	
+	}
+	template <class T, class Cont>
+	tool operator!=(const stack<T, Cont>& x, const stack<T, Cont>& y) {
+		return x != y;	
+	}
+	template <class T, class Cont>
+	bool operator> (const stack<T, Cont>& x, const stack<T, Cont>& y) {
+		return x > y;	
+	}
+	template <class T, class Cont>
+	bool operator>=(const stack<T, Cont>& x, const stack<T, Cont>& y) {
+		return x >= y;	
+	}
+	template <class T, class Cont>
+	bool operator<=(const stack<T, Cont>& x, const stack<T, Cont>& y) {
+		return x <= y;	
+	}
+}
 
 #endif
