@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 09:41:46 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/23 18:58:59 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/24 13:08:13 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,12 @@ namespace ft {
 			typedef typename Container::const_reference	const_reference;
 			typedef typename Container::reference		reference;
 
-		// CTOR DTOR CPY
-		// cpy and dtor?? YES
+		// cpy and dtor??
 		// overload for assign elements from one cont to another
-			stack() {								//constructors: empty stack
-				c();
-			}
+		// CTOR
 			explicit stack (const container_type & cont = container_type()) {	//stack init with copied cont elements	
-				c(cont);
+				c = cont;
 			}
-			~stack();								//destructor
 		
 		// MEMBER FUNCTIONS
 			bool 			empty() const {
@@ -88,7 +84,7 @@ namespace ft {
 		return x == y;	
 	}
 	template <class T, class Cont>
-	tool operator!=(const stack<T, Cont>& x, const stack<T, Cont>& y) {
+	bool operator!=(const stack<T, Cont>& x, const stack<T, Cont>& y) {
 		return x != y;	
 	}
 	template <class T, class Cont>

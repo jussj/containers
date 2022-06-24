@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 10:33:14 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/23 17:17:10 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/24 14:48:15 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,58 +18,72 @@
 
 #define NAMESPACE ft 
 
-template<class T, class Cont>
-//void	printNumbers(NAMESPACE::stack<T, Cont<T> > s) {
-void	printNumbers(NAMESPACE::stack<T> s) {
-
-	T	t;
-
-	if (s.empty())
-		return ;
-
-	t = s.top();
-	s.pop();
-	printNumbers(s);
-	std::cout << t << " ";
-	s.push(t);
-}
-
-template<class T, class Cont>
-//void	printStack(NAMESPACE::stack<T, Cont<T> > s) {
-void	printStack(NAMESPACE::stack<T> s) {
+template<class T>
+void	printStack(NAMESPACE::stack<T> & s) {
 	std::cout << "[ ";
-	printNumbers(s);
-	std::cout << " ]" << std::endl;
+	//printElements(s);
+	while (!s.empty()) {
+		std::cout << s.top() << " ";
+		s.pop();
+	}
+	std::cout << "]" << std::endl;
 }
 
 int 	main() {
 		// CTOR IS WORKING ON ANY UNDERLYING CONTAINER WITH ANY CONTAINER IN INPUT
 	{	// BUILDING STACKS AND SIZE
 		// TEST COPY CTOR AND COPY
-		NAMESPACE::stack<int, std::vector<int> >	a;          
-		NAMESPACE::stack<int, std::vector<int> >	b;
-		NAMESPACE::stack<int, std::vector<int> > 	c;
-		NAMESPACE::stack<int> 				d;	// UNDERLYING CONTAINER IS DEQUE
+		NAMESPACE::stack<int, std::deque<int> >			a;          
+		NAMESPACE::stack<int, std::vector<int> >		b;
+		NAMESPACE::stack<std::string> 				d;	// UNDERLYING CONTAINER IS DEQUE IN STD
 		
 	
+		std::cout << "pushing three elements to stack B..." << std::endl;
+		
 		b.push(7);
 		b.push(-65);
 		b.push(34);
 
+		std::cout << "copy ctor stack c(b)..." << std::endl;
+		
+		NAMESPACE::stack<int, std::vector<int> > 	c(b);
+
+		std::cout << "pushing three elements to stack D..." << std::endl;
+
+		d.push("WORDS");
+		d.push("SIX");
+		d.push("CONTAINS");
+		d.push("STACK");
+		d.push("MY");
+		d.push("LOOK");
+
+		std::cout << "copy ctor stack e(d)..." << std::endl;
+		
+		NAMESPACE::stack<std::string>	e(d);
+		
 		std::cout << "size of stack A: " << a.size() << std::endl;
 		if (a.empty())
-			std::cout << "stack A is empty (and empty function seems to work...)" << std::endl;
+			std::cout << ">> stack A is empty" << std::endl;
+		
 		std::cout << "size of stack B: " << b.size() << std::endl;
-	//	printStack<std::stack<int, std::vector<int> > (b);
+		if (!b.empty())
+			std::cout << ">> stack B is NOT empty" << std::endl;
+		printStack(b);
 		std::cout << "size of stack C: " << c.size() << std::endl;
 		std::cout << "size of stack D: " << d.size() << std::endl;
+		std::cout << "top of stack D is \"" << d.top() << "\"" << std::endl;
+		printStack(d);
+
+		//std::cout << "popping three elements out of stack E..." << std::endl;
+		std::cout << "size of stack E: " << d.size() << std::endl;
+		printStack(d);
 	}
 	{	// STACK TOP, EMPTY, PUSH
 		// EMPTY STACK, HUGE STACK
 		NAMESPACE::stack<int> mystack;
 		int sum (0);
 
-		for (int i=1;i<=10;i++) 
+		for (int i=1;i<=100;i++) 
 			mystack.push(i);
 
 		while (!mystack.empty()) {
@@ -77,7 +91,7 @@ int 	main() {
 		   mystack.pop();
 		}
 
-		std::cout << "total: " << sum << '\n';	
+		std::cout << "total sum of elements: " << sum << '\n';	
 	}
   return 0;
 }
