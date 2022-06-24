@@ -6,22 +6,23 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 10:33:14 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/24 14:48:15 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/24 16:22:59 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>       // std::cout
 #include <stack>          // std::stack
 #include <vector>         // std::vector
-# include <stdexcept>
+#include <stdexcept>
 #include "../inc/stack.hpp"
 
-#define NAMESPACE ft 
+#ifndef NAMESPACE
+# define NAMESPACE ft
+#endif
 
 template<class T>
 void	printStack(NAMESPACE::stack<T> & s) {
 	std::cout << "[ ";
-	//printElements(s);
 	while (!s.empty()) {
 		std::cout << s.top() << " ";
 		s.pop();
@@ -37,7 +38,6 @@ int 	main() {
 		NAMESPACE::stack<int, std::vector<int> >		b;
 		NAMESPACE::stack<std::string> 				d;	// UNDERLYING CONTAINER IS DEQUE IN STD
 		
-	
 		std::cout << "pushing three elements to stack B..." << std::endl;
 		
 		b.push(7);
@@ -74,9 +74,12 @@ int 	main() {
 		std::cout << "top of stack D is \"" << d.top() << "\"" << std::endl;
 		printStack(d);
 
-		//std::cout << "popping three elements out of stack E..." << std::endl;
-		std::cout << "size of stack E: " << d.size() << std::endl;
-		printStack(d);
+		std::cout << "popping three elements out of stack E..." << std::endl;
+		e.pop();
+		e.pop();
+		e.pop();
+		std::cout << "size of stack E: " << e.size() << std::endl;
+		printStack(e);
 	}
 	{	// STACK TOP, EMPTY, PUSH
 		// EMPTY STACK, HUGE STACK
