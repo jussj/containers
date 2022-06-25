@@ -6,7 +6,7 @@
 #    By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/26 17:19:58 by jusaint-          #+#    #+#              #
-#    Updated: 2022/06/21 14:22:05 by jusaint-         ###   ########.fr        #
+#    Updated: 2022/06/25 16:40:09 by jusaint-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,10 @@ CXX				=	c++
 
 RM				=	rm -rf
 
-SRCS				=	test_stack.cpp \
+SRCS				=	test_vector.cpp	\
 
-SRCS_DIR			=	_test
+SRCS_DIR			=	test		\
+					src		\
 
 INC				=	-I inc/iterator -I inc/type_traits -I inc/utility
 
