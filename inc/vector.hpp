@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/26 14:29:30 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/26 16:04:08 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <cstddef>		// ptrdiff_t
 # include <memory>		// allocator
+# include <stdexcept>
 
 namespace ft {
 	template <class T, class Alloc = std::allocator<T> >
@@ -60,9 +61,9 @@ namespace ft {
 			
 			~vector() {
 				for (size_type s = 0; s < this->size(); s++) {
-					_alloc.destroy(_begin + s);
+					this->_alloc.destroy(this->_begin + s);
 				}
-				_alloc.deallocate(_begin, this->size());
+				this->_alloc.deallocate(this->_begin, this->size());
 			}
 			
 			template <class InputIterator>
@@ -73,6 +74,7 @@ namespace ft {
 			vector<T,Alloc>&	operator=(const vector<T,Alloc>& x);
 
 		// ITERATORS
+
 			iterator		begin();
 			const_iterator 		begin() const;
 			iterator 		end();
@@ -83,26 +85,44 @@ namespace ft {
 			const_reverse_iterator	rend() const;
 
 		// CAPACITY
-			size_type		size() const {
+
+			size_type	size() const {
 				return _end - _begin;
 			}
-			size_type		max_size() const {
+			size_type	max_size() const {
 				return _alloc.max_size();
 			}
-			void 			resize(size_type sz, T c = T());
-			size_type 		capacity() const {
+			void 		resize(size_type sz, T c = T());
+
+			size_type 	capacity() const {
 				return _capacity - _end;
 			}
-			bool 			empty() const {
+			bool 		empty() const {
 				if (size())
 					return false;
 				return true;
 			}
-			void 			reserve(size_type n) {
-				
+			void 		reserve(size_type n) {
+				if (n > max_size())
+					throw std::length_error("vector::reserve");
+				else if (n > capacity()) {
+					pointer tmp	= this->_alloc.allocate(n);
+					
+					for (size_type s = 0; s < this->size(); s++)
+						this->_alloc.construct(tmp + s, *(this->_begin + s));
+					
+					for (size_type s = 0; s < this->size(); s++) {
+						this->_alloc.destroy(this->_begin + s);
+					}
+					this->_alloc.deallocate(this->_begin, this->size());
+					this->_begin	= tmp;
+					this->_end	= this->_begin + this->size();
+					this->_capacity = this->_begin + n;
+				}
 			}
 		
 		// ACCESS
+
 			reference 		operator[](size_type n) {
 				return *(_begin + n);
 			}

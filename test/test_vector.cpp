@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/26 14:18:11 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/26 15:57:05 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,31 @@ int 	main() {
 	if (!c.empty())
 		std::cout << "C is NOT empty" << std::endl;
 
-	std::cout	<< "printing C..." << std::endl;
+	std::cout << "a.reserve(max_size + 1)..." << std::endl;
+	try {
+		a.reserve(a.max_size()+1);
+	}
+	catch (std::length_error& le) {
+		std::cerr << "error thrown: " << le.what() << std::endl;
+	}
+	
+	std::cout 	<< "a.reserve(7)..." << std::endl;
+	a.reserve(7);
+	std::cout	<< "size of A is " << a.size()
+			<< ", actual capacity is " << a.capacity()
+			<< std::endl;
 
+	std::cout << "printing C..." << std::endl;
 	for (size_t s = 0; s < c.size(); s++) {
 		std::cout << c[s] << " ";
 	}
-	std::cout	<< std::endl;
+	std::cout << std::endl;
+
+	std::cout 	<< "c.reserve(9)..." << std::endl;
+	c.reserve(9);
+	std::cout	<< "size of C is " << c.size()
+			<< ", actual capacity is " << c.capacity()
+			<< std::endl;
 
 	std::cout	<< "C front is " << c.front()
 			<< ", back is " << c.back() << std::endl;
