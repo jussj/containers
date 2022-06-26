@@ -6,7 +6,7 @@
 #    By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/26 17:19:58 by jusaint-          #+#    #+#              #
-#    Updated: 2022/06/25 16:40:09 by jusaint-         ###   ########.fr        #
+#    Updated: 2022/06/26 13:04:39 by jusaint-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ vpath %.d			$(DEPS_DIR)
 all:				$(NAME)
 
 $(NAME):			$(DEPS) $(OBJS)
-	$(CXX) $(CXXFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(NAME)
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(NAME)
 
 %.d:				%.cpp
 	$(CXX) $(INC) -MM $< -MF $(DEPS_DIR)/$@ 
@@ -52,7 +52,7 @@ $(NAME):			$(DEPS) $(OBJS)
 -include $(addprefix $(DEPS_DIR)/, $(DEPS))
 
 %.o:				%.cpp
-	$(CXX) $(INC) $(CXXFLAGS) -c $< -o $(OBJS_DIR)/$@
+	$(CXX) $(INC) $(CXXFLAGS) $(DEBUGFLAGS) -c $< -o $(OBJS_DIR)/$@
 
 $(DEPS):			| $(DEPS_DIR)
 

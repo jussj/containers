@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/25 17:38:24 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/26 14:29:30 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,16 @@
 # define VECTOR_HPP
 
 # include <cstddef>		// ptrdiff_t
-# include <memory>
+# include <memory>		// allocator
 
 namespace ft {
 	template <class T, class Alloc = std::allocator<T> >
 	class vector {
 		public:
-		
 		// TYPES
 			// iterator and const iterator are pointers
 			typedef	T*				iterator;
 			typedef	const T*			const_iterator;
-			
-			// right types?	
 			typedef	size_t				size_type;
 			typedef	ptrdiff_t			difference_type;
 
@@ -45,10 +42,9 @@ namespace ft {
 			explicit vector(const Alloc& Allocator = Alloc())
 				: _alloc(Allocator), _begin(NULL), _end(NULL), _capacity(NULL) {}
 
-			explicit vector(size_type n, const T& value = T(), 
+			explicit vector(size_type n, const T& value = T(),
 					const Alloc& Allocator = Alloc()) 
 				: _alloc(Allocator) {
-				
 				this->_begin 	= this->_alloc.allocate(n + 1);
 				pointer p 	= this->_begin;
 				
@@ -62,7 +58,12 @@ namespace ft {
 			vector(InputIterator first, InputIterator last, const Alloc& = Alloc());
 			vector(const vector<T,Alloc>& x);
 			
-			~vector();
+			~vector() {
+				for (size_type s = 0; s < this->size(); s++) {
+					_alloc.destroy(_begin + s);
+				}
+				_alloc.deallocate(_begin, this->size());
+			}
 			
 			template <class InputIterator>
 			void 			assign(InputIterator first, InputIterator last);
@@ -82,22 +83,49 @@ namespace ft {
 			const_reverse_iterator	rend() const;
 
 		// CAPACITY
-			size_type		size() const;		//_begin - _end
-			size_type		max_size() const;
+			size_type		size() const {
+				return _end - _begin;
+			}
+			size_type		max_size() const {
+				return _alloc.max_size();
+			}
 			void 			resize(size_type sz, T c = T());
-			size_type 		capacity() const;	//_capacity - _end
-			bool 			empty() const;
-			void 			reserve(size_type n);
+			size_type 		capacity() const {
+				return _capacity - _end;
+			}
+			bool 			empty() const {
+				if (size())
+					return false;
+				return true;
+			}
+			void 			reserve(size_type n) {
+				
+			}
 		
 		// ACCESS
-			reference 		operator[](size_type n);
-			const_reference 	operator[](size_type n) const;
+			reference 		operator[](size_type n) {
+				return *(_begin + n);
+			}
+			const_reference 	operator[](size_type n) const {
+				// implicit cast?
+				return *(_begin + n);
+			}
 			const_reference 	at(size_type n) const;
 			reference 		at(size_type n);
-			reference 		front();
-			const_reference 	front() const;
-			reference 		back();
-			const_reference 	back() const;
+			reference 		front() {
+				return *(_begin);
+			}
+			const_reference 	front() const {
+				// implicit cast?
+				return *(_begin);
+			}
+			reference 		back() {
+				return *(_end - 1);
+			}
+			const_reference 	back() const {
+				// implicit cast?
+				return *(_end);
+			}
 		
 		// MODIFIERS
 			void 		push_back(const T& x);
@@ -110,12 +138,13 @@ namespace ft {
 			iterator 	erase(iterator first, iterator last);
 			void 		swap(vector<T,Alloc>&);
 			void 		clear();
-
+		
 		private:
 			allocator_type		_alloc;
 			pointer			_begin;
 			pointer			_end;
 			pointer			_capacity;
+		
 	};
 
 	template <class T, class Alloc>
@@ -136,6 +165,6 @@ namespace ft {
 //void swap(vector<T,Alloc>& x, vector<T,Alloc>& y);
 }
 
-# include "vector.tpp"
+//# include "vector.tpp"
 
 #endif
