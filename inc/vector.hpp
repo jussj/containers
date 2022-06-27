@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/26 16:04:08 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/27 12:00:15 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ namespace ft {
 			typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		// CTOR/CPY/DTOR
+
 			explicit vector(const Alloc& Allocator = Alloc())
 				: _alloc(Allocator), _begin(NULL), _end(NULL), _capacity(NULL) {}
 
@@ -106,17 +107,16 @@ namespace ft {
 				if (n > max_size())
 					throw std::length_error("vector::reserve");
 				else if (n > capacity()) {
-					pointer tmp	= this->_alloc.allocate(n);
+					pointer tmp		= this->_alloc.allocate(n + 1);
+					size_type array_size	= this->size();
 					
 					for (size_type s = 0; s < this->size(); s++)
 						this->_alloc.construct(tmp + s, *(this->_begin + s));
-					
-					for (size_type s = 0; s < this->size(); s++) {
+					for (size_type s = 0; s < this->size(); s++)
 						this->_alloc.destroy(this->_begin + s);
-					}
 					this->_alloc.deallocate(this->_begin, this->size());
 					this->_begin	= tmp;
-					this->_end	= this->_begin + this->size();
+					this->_end	= this->_begin + array_size;
 					this->_capacity = this->_begin + n;
 				}
 			}
@@ -127,29 +127,36 @@ namespace ft {
 				return *(_begin + n);
 			}
 			const_reference 	operator[](size_type n) const {
-				// implicit cast?
 				return *(_begin + n);
 			}
 			const_reference 	at(size_type n) const;
 			reference 		at(size_type n);
+			
 			reference 		front() {
 				return *(_begin);
 			}
 			const_reference 	front() const {
-				// implicit cast?
 				return *(_begin);
 			}
 			reference 		back() {
 				return *(_end - 1);
 			}
 			const_reference 	back() const {
-				// implicit cast?
-				return *(_end);
+				return *(_end - 1);
 			}
 		
 		// MODIFIERS
-			void 		push_back(const T& x);
-			void 		pop_back();
+
+			void 		push_back(const T& x) {
+				this->reserve(1);
+				this->_end++;
+				this->_alloc.construct(this->_end, x);
+			}
+			void 		pop_back() {
+				this->_alloc.destroy(this->_end);
+				this->_end--;
+			}
+			
 			iterator 	insert(iterator position, const T& x);
 			void 		insert(iterator position, size_type n, const T& x);
 			template <class InputIterator>
@@ -160,10 +167,15 @@ namespace ft {
 			void 		clear();
 		
 		private:
+
+		// ATTRIBUTES
+
 			allocator_type		_alloc;
 			pointer			_begin;
 			pointer			_end;
 			pointer			_capacity;
+
+		// UTILS
 		
 	};
 
