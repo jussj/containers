@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/27 12:00:15 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/27 14:00:36 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ namespace ft {
 	template <class T, class Alloc = std::allocator<T> >
 	class vector {
 		public:
+
 		// TYPES
 			// iterator and const iterator are pointers
 			typedef	T*				iterator;
@@ -96,7 +97,7 @@ namespace ft {
 			void 		resize(size_type sz, T c = T());
 
 			size_type 	capacity() const {
-				return _capacity - _end;
+				return _capacity - _begin;
 			}
 			bool 		empty() const {
 				if (size())
@@ -123,34 +124,41 @@ namespace ft {
 		
 		// ACCESS
 
-			reference 		operator[](size_type n) {
-				return *(_begin + n);
+			reference 	operator[](size_type n) {
+				return *(this->_begin + n);
 			}
-			const_reference 	operator[](size_type n) const {
-				return *(_begin + n);
+			const_reference operator[](size_type n) const {
+				return *(this->_begin + n);
 			}
-			const_reference 	at(size_type n) const;
-			reference 		at(size_type n);
-			
-			reference 		front() {
-				return *(_begin);
+			const_reference at(size_type n) const {
+				if (n >= this->size())
+					throw std::out_of_range("vector::at");
+				return *(this->_begin + n);
 			}
-			const_reference 	front() const {
-				return *(_begin);
+			reference 	at(size_type n) {
+				if (n >= this->size())
+					throw std::out_of_range("vector::at");
+				return *(this->_begin + n);
 			}
-			reference 		back() {
-				return *(_end - 1);
+			reference 	front() {
+				return *(this->_begin);
 			}
-			const_reference 	back() const {
-				return *(_end - 1);
+			const_reference front() const {
+				return *(this->_begin);
+			}
+			reference 	back() {
+				return *(this->_end - 1);
+			}
+			const_reference back() const {
+				return *(this->_end - 1);
 			}
 		
 		// MODIFIERS
 
 			void 		push_back(const T& x) {
 				this->reserve(1);
-				this->_end++;
-				this->_alloc.construct(this->_end, x);
+				this->_end += 1;
+				this->_alloc.construct(this->_end - 1, x);
 			}
 			void 		pop_back() {
 				this->_alloc.destroy(this->_end);
@@ -165,7 +173,7 @@ namespace ft {
 			iterator 	erase(iterator first, iterator last);
 			void 		swap(vector<T,Alloc>&);
 			void 		clear();
-		
+
 		private:
 
 		// ATTRIBUTES

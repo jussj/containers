@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/27 12:01:31 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/27 13:57:18 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 #include "../inc/vector.hpp"
 
 int 	main() {
-	NAMESPACE::vector<int>		a;		// empty vector
-//	NAMESPACE::vector<int>		b(100, 5);	// 100 ints with value 5
+	NAMESPACE::vector<int>		a;
+//	NAMESPACE::vector<int>		b(100, 5);	// enable_if and 
+							// is_integral, 
+							// will use range ctor
 	NAMESPACE::vector<std::string>	c(4, "he");
 
 	std::cout	<< "size of A is " << a.size()
@@ -49,8 +51,10 @@ int 	main() {
 			<< ", actual capacity is " << a.capacity()
 			<< std::endl;
 
-	std::cout	<< "a.push_back(42)..." << std::endl;
+	std::cout	<< "a.push_back() * 3..." << std::endl;
 	a.push_back(42);
+	a.push_back(789);
+	a.push_back(321321);
 	std::cout	<< "size of A is " << a.size()
 			<< ", actual capacity is " << a.capacity() << std::endl
 			<< "A front is " << a.front()

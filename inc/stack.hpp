@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 09:41:46 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/24 17:51:04 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/27 13:32:38 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ namespace ft {
 		public:
 
 		// MEMBER TYPES
+
 			typedef Container				container_type;
 			//typedef T 					value_type;
 			typedef typename Container::value_type 		value_type;
@@ -35,10 +36,12 @@ namespace ft {
 		// cpy and dtor??
 		// overload for assign elements from one cont to another
 		// CTOR
-			explicit stack (const container_type & cont = container_type())		// stack init with copy of
+
+			explicit stack (const container_type& cont = container_type())		// stack init with copy of
 				: c(cont) {}							// cont elements or nothing
 		
 		// MEMBER FUNCTIONS
+
 			bool 			empty() const {
 				if (c.size() == 0)
 					return true;
@@ -57,7 +60,7 @@ namespace ft {
 					throw EmptyStack();
 				return c.back();
 			}
-			void			push(const value_type & val) {
+			void			push(const value_type& val) {
 				c.push_back(val);
 			}
 			void			pop() {
@@ -67,9 +70,11 @@ namespace ft {
 			}
 
 		// EXCEPTIONS
+
+			//class EmptyStackException : public std::exception {
 			class EmptyStack : public std::exception {
 				public:
-					virtual const char * what() const throw() { 
+					virtual const char* what() const throw() { 
 						return "stack is empty";
 					}
 			};
