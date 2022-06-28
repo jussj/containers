@@ -2,6 +2,7 @@ size of A is 0, actual capacity is 0, max_size is 2305843009213693951
 size of C is 4, actual capacity is 0, max_size is 288230376151711743
 A is empty
 C is NOT empty
+a.reserve(0)...
 a.reserve(max_size + 1)...
 a.reserve(7)...
 size of A is 0, actual capacity is 7
@@ -25,3 +26,16 @@ size of C is 4, actual capacity is 9
 C front is he, back is ha
 printing C...
 he he he ha 
+c.resize(3)..
+size of C is 3, actual capacity is 9
+C front is he, back is he
+printing C...
+he he he 
+c.resize(6, ha)..
+size of C is 6, actual capacity is 9
+C front is he, back is ha
+printing C...
+he he he ha ha ha 
+c.resize(12)..
+size of C is 12, actual capacity is 12
+C front is he, back is 

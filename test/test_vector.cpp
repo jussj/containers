@@ -6,17 +6,21 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/27 13:57:18 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/28 11:10:26 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE ft
+# define NAMESPACE std
 #endif
 
 #include <vector>
 #include <iostream>
 #include "../inc/vector.hpp"
+
+//void	print_state();
+//void	print_vector();
+//void	test_vector();	ft must be a template
 
 int 	main() {
 	NAMESPACE::vector<int>		a;
@@ -37,6 +41,9 @@ int 	main() {
 	if (!c.empty())
 		std::cout << "C is NOT empty" << std::endl;
 
+	std::cout 	<< "a.reserve(0)..." << std::endl;
+	a.reserve(0);
+	
 	std::cout << "a.reserve(max_size + 1)..." << std::endl;
 	try {
 		a.reserve(a.max_size()+1);
@@ -101,11 +108,65 @@ int 	main() {
 			<< "C front is " << c.front()
 			<< ", back is " << c.back() << std::endl;
 
-	std::cout << "printing C..." << std::endl;
+	std::cout 	<< "printing C..." << std::endl;
 	for (size_t s = 0; s < c.size(); s++) {
 		std::cout << c[s] << " ";
 	}
-	std::cout << std::endl;
+	std::cout 	<< std::endl;
 
+	// TEST at()
+	
+	std::cout 	<< "c.resize(3).." << std::endl;
+	c.resize(3);
+	std::cout	<< "size of C is " << c.size()
+			<< ", actual capacity is " << c.capacity() << std::endl
+			<< "C front is " << c.front()
+			<< ", back is " << c.back() << std::endl;
+
+	std::cout 	<< "printing C..." << std::endl;
+	for (size_t s = 0; s < c.size(); s++) {
+		std::cout << c[s] << " ";
+	}
+	std::cout 	<< std::endl;
+
+	std::cout	<< "accessing element thru at()..." << std::endl;
+
+	std::cout	<< "in range: element at(0) is "
+			<< c.at(0) << std::endl;
+	std::cout	<< "past size(): element at(3) is ";
+	try {
+	std::cout	<< c.at(3) << std::endl;
+	}
+	catch (std::exception& e) {
+		std::cerr << "error thrown: " << e.what() << std::endl;
+	}
+	std::cout	<< "past capacity(): element at(12) is ";
+	try {
+	std::cout	<< c.at(12) << std::endl;
+	}
+	catch (std::exception& e) {
+		std::cerr << "error thrown: " << e.what() << std::endl;
+	}
+
+	std::cout 	<< "c.resize(6, ha).." << std::endl;
+	c.resize(6, "ha");
+	std::cout	<< "size of C is " << c.size()
+			<< ", actual capacity is " << c.capacity() << std::endl
+			<< "C front is " << c.front()
+			<< ", back is " << c.back() << std::endl;
+
+	std::cout 	<< "printing C..." << std::endl;
+	for (size_t s = 0; s < c.size(); s++) {
+		std::cout << c[s] << " ";
+	}
+	std::cout 	<< std::endl;
+
+	std::cout 	<< "c.resize(12) with NULL value..." << std::endl;
+	c.resize(12);
+	std::cout	<< "size of C is " << c.size()
+			<< ", actual capacity is " << c.capacity() << std::endl
+			<< "C front is " << c.front()
+			<< ", back is " << c.back() << std::endl;
+	
 	return 0;
 }

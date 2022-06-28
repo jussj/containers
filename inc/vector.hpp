@@ -6,16 +6,18 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/27 14:00:36 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/28 12:30:30 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
+//# define __N (msgid) (msgid)	// msg identifier keyword for at() exception
+
 # include <cstddef>		// ptrdiff_t
 # include <memory>		// allocator
-# include <stdexcept>
+# include <stdexcept>		// exceptions
 
 namespace ft {
 	template <class T, class Alloc = std::allocator<T> >
@@ -94,7 +96,24 @@ namespace ft {
 			size_type	max_size() const {
 				return _alloc.max_size();
 			}
-			void 		resize(size_type sz, T c = T());
+			void 		resize(size_type n, T value = T()) {
+				if (n > this->size()) {
+					if (n > this->capacity())
+						reserve(n);
+					for (size_type s = this->size(); s < n; s++)
+						this->_alloc.construct(_begin + s, value);	
+					this->_end	= this->_begin + n;
+					if (n > this->capacity())
+						this->_capacity = this->_end;
+				}
+				else if (n < this->size()) {
+					for (size_type s = n; s < this->size(); s++) {
+						_alloc.destroy(this->_begin + s);
+					}
+					this->_end = this->_begin + n;
+				}
+
+			}
 
 			size_type 	capacity() const {
 				return _capacity - _begin;
@@ -130,12 +149,13 @@ namespace ft {
 			const_reference operator[](size_type n) const {
 				return *(this->_begin + n);
 			}
-			const_reference at(size_type n) const {
-				if (n >= this->size())
-					throw std::out_of_range("vector::at");
-				return *(this->_begin + n);
+			const_reference at(size_type n) {
+				//if (n >= this->size())
+					//throw this->OutOfRangeException(1, 2);
+				_M_range_check(n);
+				return *(this)[n];
 			}
-			reference 	at(size_type n) {
+			reference 	at(size_type n) const {
 				if (n >= this->size())
 					throw std::out_of_range("vector::at");
 				return *(this->_begin + n);
@@ -161,7 +181,8 @@ namespace ft {
 				this->_alloc.construct(this->_end - 1, x);
 			}
 			void 		pop_back() {
-				this->_alloc.destroy(this->_end);
+				this->_alloc.destroy(this->_end - 1);
+				//this->_alloc.deallocate(this->_end, 1);
 				this->_end--;
 			}
 			
@@ -174,8 +195,6 @@ namespace ft {
 			void 		swap(vector<T,Alloc>&);
 			void 		clear();
 
-		private:
-
 		// ATTRIBUTES
 
 			allocator_type		_alloc;
@@ -184,6 +203,21 @@ namespace ft {
 			pointer			_capacity;
 
 		// UTILS
+
+			_M_range_check(size_type n) {
+				std::string	fmt_msg[4];
+				fmt_msg = {	"vector::_M_range_check: __n (which is ",
+						n,
+						") >= this->size() (which is ",
+						this->size()	};
+
+				if (n >= this->size())
+					throw std::out_of_range(fmt_msg);
+						//"vector::_M_range_check: __n (which is "
+						//+ n + ") >= this->size() (which is "
+						//+ this->size()
+					//);
+			}
 		
 	};
 
@@ -207,4 +241,4 @@ namespace ft {
 
 //# include "vector.tpp"
 
-#endif
+#endif	/* VECTOR_HPP */
