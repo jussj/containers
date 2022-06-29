@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/29 12:13:59 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/29 19:58:34 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ namespace ft {
 						reserve(n);
 					for (size_type s = this->size(); s < n; s++)
 						this->_alloc.construct(_begin + s, value);	
-					this->_end	= this->_begin + n;
+					this->_end = this->_begin + n;
 					if (n > this->capacity())
 						this->_capacity = this->_end;
 				}

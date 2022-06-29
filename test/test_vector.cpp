@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/29 11:46:43 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/29 19:58:21 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,20 @@ int 	main() {
 	}
 	std::cout 	<< std::endl;
 
-	// TEST at()
-	
+	std::cout 	<< "c.resize(10, hi).." << std::endl;
+	c.resize(10, "hi");
+	std::cout	<< "size of C is " << c.size()
+			<< ", actual capacity is " << c.capacity() << std::endl
+			<< "C front is " << c.front()
+			<< ", back is " << c.back() << std::endl;
+
+	std::cout 	<< "printing C..." << std::endl;
+	for (size_t s = 0; s < c.size(); s++) {
+		std::cout << c[s] << " ";
+	}
+	std::cout 	<< std::endl;
+
+
 	std::cout 	<< "c.resize(3).." << std::endl;
 	c.resize(3);
 	std::cout	<< "size of C is " << c.size()
