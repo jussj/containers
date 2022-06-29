@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/29 11:37:42 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/29 12:13:59 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,7 @@ namespace ft {
 				return *(this->_begin + n);
 			}
 			reference 	at(size_type n) const {
-				if (n >= this->size())
-					throw std::out_of_range("vector::at");
+				_range_check(n);
 				return *(this->_begin + n);
 			}
 			reference 	front() {
