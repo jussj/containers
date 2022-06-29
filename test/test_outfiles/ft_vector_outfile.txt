@@ -1,5 +1,5 @@
-size of A is 0, actual capacity is 0, max_size is 2305843009213693951
-size of C is 4, actual capacity is 0, max_size is 288230376151711743
+size of A is 0, actual capacity is 0, max_size is 4611686018427387903
+size of C is 4, actual capacity is 0, max_size is 576460752303423487
 A is empty
 C is NOT empty
 a.reserve(0)...
@@ -31,11 +31,6 @@ size of C is 3, actual capacity is 9
 C front is he, back is he
 printing C...
 he he he 
-c.resize(6, ha)..
-size of C is 6, actual capacity is 9
-C front is he, back is ha
-printing C...
-he he he ha ha ha 
-c.resize(12)..
-size of C is 12, actual capacity is 12
-C front is he, back is 
+accessing element thru at()...
+in range: element at(0) is he
+past size(): element at(3) is ha

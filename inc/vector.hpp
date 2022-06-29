@@ -6,18 +6,17 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/28 12:30:30 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/29 11:37:42 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-//# define __N (msgid) (msgid)	// msg identifier keyword for at() exception
-
 # include <cstddef>		// ptrdiff_t
 # include <memory>		// allocator
 # include <stdexcept>		// exceptions
+# include <sstream>
 
 namespace ft {
 	template <class T, class Alloc = std::allocator<T> >
@@ -150,10 +149,8 @@ namespace ft {
 				return *(this->_begin + n);
 			}
 			const_reference at(size_type n) {
-				//if (n >= this->size())
-					//throw this->OutOfRangeException(1, 2);
-				_M_range_check(n);
-				return *(this)[n];
+				_range_check(n);
+				return *(this->_begin + n);
 			}
 			reference 	at(size_type n) const {
 				if (n >= this->size())
@@ -204,19 +201,25 @@ namespace ft {
 
 		// UTILS
 
-			_M_range_check(size_type n) {
-				std::string	fmt_msg[4];
-				fmt_msg = {	"vector::_M_range_check: __n (which is ",
-						n,
-						") >= this->size() (which is ",
-						this->size()	};
+			// put that ft in another utils header
+			std::string	long_to_str(size_t n) {
+				std::stringstream	stream;
 
+				stream << n;
+				std::string 		str = stream.str();
+				return str;
+			}
+			
+			void		_range_check(size_type n) {
+				std::string	fmt;
+				fmt = "vector::_M_range_check: __n (which is ";
+
+				fmt.append(long_to_str(n));
+				fmt.append(") >= this->size() (which is ");
+				fmt.append(long_to_str(this->size()));
+				fmt.append(")");
 				if (n >= this->size())
-					throw std::out_of_range(fmt_msg);
-						//"vector::_M_range_check: __n (which is "
-						//+ n + ") >= this->size() (which is "
-						//+ this->size()
-					//);
+					throw std::out_of_range(fmt);
 			}
 		
 	};

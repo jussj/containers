@@ -6,12 +6,12 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/28 11:10:26 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/29 11:46:43 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE std
+# define NAMESPACE ft
 #endif
 
 #include <vector>
@@ -135,7 +135,9 @@ int 	main() {
 			<< c.at(0) << std::endl;
 	std::cout	<< "past size(): element at(3) is ";
 	try {
-	std::cout	<< c.at(3) << std::endl;
+		std::cout	<< c.at(3) << std::endl;
+		//that element exists???? taking off throwing exception
+		//no segv
 	}
 	catch (std::exception& e) {
 		std::cerr << "error thrown: " << e.what() << std::endl;
