@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/29 19:58:34 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/30 11:49:02 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,8 @@ namespace ft {
 			iterator 	erase(iterator first, iterator last);
 			void 		swap(vector<T,Alloc>&);
 			void 		clear();
+
+		private:
 
 		// ATTRIBUTES
 

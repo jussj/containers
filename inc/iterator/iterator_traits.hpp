@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 13:42:00 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/14 15:57:48 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/30 11:36:13 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@
 
 namespace ft {
 
-	struct output_iterator_tag {};
-	struct input_iterator_tag {};
-	struct forward_iterator_tag : public input_iterator_tag {};
-	struct bidirectional_iterator_tag : public forward_iterator_tag {};
-	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
+	// inherite from std tags for greater portability? does it work with every algo???
+	struct output_iterator_tag 	{};
+	struct input_iterator_tag 	{};
+	struct forward_iterator_tag 		: public input_iterator_tag 		{};
+	struct bidirectional_iterator_tag 	: public forward_iterator_tag 		{};
+	struct random_access_iterator_tag 	: public bidirectional_iterator_tag 	{};
 
 	template<class Iter>
 	class iterator_traits {

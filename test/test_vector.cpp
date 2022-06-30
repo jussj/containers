@@ -6,21 +6,18 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/29 19:58:21 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/30 16:45:12 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE ft
+# define NAMESPACE std
 #endif
 
 #include <vector>
 #include <iostream>
 #include "../inc/vector.hpp"
-
-//void	print_state();
-//void	print_vector();
-//void	test_vector();	ft must be a template
+#include "Test.hpp"
 
 int 	main() {
 	NAMESPACE::vector<int>		a;
@@ -28,18 +25,18 @@ int 	main() {
 							// is_integral, 
 							// will use range ctor
 	NAMESPACE::vector<std::string>	c(4, "he");
+	NAMESPACE::vector<IncrediblyComplex<int> >	d(5);
 
-	std::cout	<< "size of A is " << a.size()
-			<< ", actual capacity is " << a.capacity()
-			<< ", max_size is " << a.max_size() << std::endl
-			<< "size of C is " << c.size()
-			<< ", actual capacity is " << a.capacity()
-			<< ", max_size is " << c.max_size() << std::endl;
+	print_info(a, "A");
+	print_info(c, "C");
+//	print_info(d, "D");
 
 	if (a.empty())
 		std::cout << "A is empty" << std::endl;
 	if (!c.empty())
 		std::cout << "C is NOT empty" << std::endl;
+	if (!d.empty())
+		std::cout << "D is NOT empty" << std::endl;
 
 	std::cout 	<< "a.reserve(0)..." << std::endl;
 	a.reserve(0);
@@ -67,79 +64,43 @@ int 	main() {
 			<< "A front is " << a.front()
 			<< ", back is " << a.back() << std::endl;
 
-	std::cout << "printing C..." << std::endl;
-	for (size_t s = 0; s < c.size(); s++) {
-		std::cout << c[s] << " ";
-	}
-	std::cout << std::endl;
-	
+	print_vector(c, "C");
+
 	std::cout 	<< "c.reserve(4)..." << std::endl;
 	c.reserve(4);
-	std::cout	<< "size of C is " << c.size()
-			<< ", actual capacity is " << c.capacity()
-			<< std::endl;
+
+	print_info(c, "C");
 
 	std::cout 	<< "c.reserve(9)..." << std::endl;
 	c.reserve(9);
-	std::cout	<< "size of C is " << c.size()
-			<< ", actual capacity is " << c.capacity()
-			<< std::endl;
-
-	std::cout	<< "C front is " << c.front()
-			<< ", back is " << c.back() << std::endl;
+	
+	print_info(c, "C");
 
 	std::cout	<< "c.pop_back()..." << std::endl;
 	c.pop_back();
-	std::cout	<< "size of C is " << c.size()
-			<< ", actual capacity is " << c.capacity() << std::endl
-			<< "C front is " << c.front()
-			<< ", back is " << c.back() << std::endl;
-
-	std::cout << "printing C..." << std::endl;
-	for (size_t s = 0; s < c.size(); s++) {
-		std::cout << c[s] << " ";
-	}
+	
+	print_info(c, "C");
+	print_vector(c, "C");
 	
 	std::cout << std::endl;
 	std::cout	<< "c.push_back(ha)..." << std::endl;
 	c.push_back("ha");
-	std::cout	<< "size of C is " << c.size()
-			<< ", actual capacity is " << c.capacity() << std::endl
-			<< "C front is " << c.front()
-			<< ", back is " << c.back() << std::endl;
-
-	std::cout 	<< "printing C..." << std::endl;
-	for (size_t s = 0; s < c.size(); s++) {
-		std::cout << c[s] << " ";
-	}
-	std::cout 	<< std::endl;
+	
+	print_info(c, "C");
+	print_vector(c, "C");
 
 	std::cout 	<< "c.resize(10, hi).." << std::endl;
 	c.resize(10, "hi");
-	std::cout	<< "size of C is " << c.size()
-			<< ", actual capacity is " << c.capacity() << std::endl
-			<< "C front is " << c.front()
-			<< ", back is " << c.back() << std::endl;
-
-	std::cout 	<< "printing C..." << std::endl;
-	for (size_t s = 0; s < c.size(); s++) {
-		std::cout << c[s] << " ";
-	}
-	std::cout 	<< std::endl;
+	
+	print_info(c, "C");
+	print_vector(c, "C");
 
 
 	std::cout 	<< "c.resize(3).." << std::endl;
 	c.resize(3);
-	std::cout	<< "size of C is " << c.size()
-			<< ", actual capacity is " << c.capacity() << std::endl
-			<< "C front is " << c.front()
-			<< ", back is " << c.back() << std::endl;
-
-	std::cout 	<< "printing C..." << std::endl;
-	for (size_t s = 0; s < c.size(); s++) {
-		std::cout << c[s] << " ";
-	}
-	std::cout 	<< std::endl;
+	
+	print_info(c, "C");
+	print_vector(c, "C");
 
 	std::cout	<< "accessing element thru at()..." << std::endl;
 
@@ -148,8 +109,6 @@ int 	main() {
 	std::cout	<< "past size(): element at(3) is ";
 	try {
 		std::cout	<< c.at(3) << std::endl;
-		//that element exists???? taking off throwing exception
-		//no segv
 	}
 	catch (std::exception& e) {
 		std::cerr << "error thrown: " << e.what() << std::endl;
@@ -164,23 +123,14 @@ int 	main() {
 
 	std::cout 	<< "c.resize(6, ha).." << std::endl;
 	c.resize(6, "ha");
-	std::cout	<< "size of C is " << c.size()
-			<< ", actual capacity is " << c.capacity() << std::endl
-			<< "C front is " << c.front()
-			<< ", back is " << c.back() << std::endl;
 
-	std::cout 	<< "printing C..." << std::endl;
-	for (size_t s = 0; s < c.size(); s++) {
-		std::cout << c[s] << " ";
-	}
-	std::cout 	<< std::endl;
+	print_info(c, "C");	
+	print_vector(c, "C");
 
 	std::cout 	<< "c.resize(12) with NULL value..." << std::endl;
 	c.resize(12);
-	std::cout	<< "size of C is " << c.size()
-			<< ", actual capacity is " << c.capacity() << std::endl
-			<< "C front is " << c.front()
-			<< ", back is " << c.back() << std::endl;
+
+	print_info(c, "C");	
 	
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 09:41:46 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/27 13:32:38 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/06/30 13:22:55 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include <stdexcept>
 # include <vector>
-# define VEC_NAMESPACE std
+# define VEC_NS std
 
 namespace ft {
 
-	template <class T, class Container = VEC_NAMESPACE::vector<T> >
+	template <class T, class Container = VEC_NS::vector<T> >
 	class stack {
 
 		public:
