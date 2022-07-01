@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/01 13:16:00 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/01 17:08:28 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 namespace ft {
 
 	template<class T, class Iterator, class Container>
-	class vectorIterator {
+	class VectorIterator {
 	
 		public:
 			
@@ -37,28 +37,59 @@ namespace ft {
 
 		// CTOR, CPY, DTOR
 
-			vectorIterator() : _ptr(NULL) {}
-			~vectorIterator() {}
+			VectorIterator() : _ptr(NULL) {}
+			~VectorIterator() {}
 
 		// OPERATORS
 		
 			// COMPARAISON
-			bool	operator==(const vectorIterator& src) {
+			bool	operator==(const VectorIterator& src) {
 				return _ptr == src._ptr;
 			}
-			bool	operator!=(const vectorIterator& src) {
+			bool	operator!=(const VectorIterator& src) {
 				return _ptr != src._ptr;
 			}
-			bool	operator<(const vectorIterator& src) {
+			bool	operator<(const VectorIterator& src) {
 				return _ptr < src._ptr;
 			}
-			bool	operator>(const vectorIterator& src) {
+			bool	operator>(const VectorIterator& src) {
 				return _ptr > src._ptr;
 			}
+			bool	operator>=(const VectorIterator& src) {
+				return _ptr >= src._ptr;
+			}
+			bool	operator<=(const VectorIterator& src) {
+				return _ptr <= src._ptr;
+			}
+			
+			// ARITHMETIC
 
+			// PREFIX/POSTFIX INCREMENT/DECREMENT
+			VectorIterator&	operator++(void) {
+				_ptr++;
+				return *this;
+			}
+			VectorIterator&	operator--(void){
+				_ptr--;
+				return *this;
+			}
+			VectorIterator	operator++(int) {
+				VectorIterator	tmp = *this;
+				
+				++_ptr;
+				return tmp;
+			}
+			VectorIterator	operator--(int) {
+				VectorIterator	tmp = *this;
+
+				--_ptr;
+				return tmp;
+			}
+		
 		private:
 
 			pointer		_ptr;
+		
 	};
 
 }
