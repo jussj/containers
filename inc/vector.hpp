@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/30 11:49:02 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/01 09:30:52 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include <cstddef>		// ptrdiff_t
 # include <memory>		// allocator
 # include <stdexcept>		// exceptions
-# include <sstream>
+# include <sstream>		// stream
+# include "vector_iterator.hpp"
 
 namespace ft {
 	template <class T, class Alloc = std::allocator<T> >
