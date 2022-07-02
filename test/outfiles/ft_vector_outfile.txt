@@ -1,0 +1,114 @@
+
+// VECTOR A INFO
+   size:       0
+   capacity:   0
+   max_size:   2305843009213693951
+
+
+// VECTOR C INFO
+   size:       4
+   capacity:   4
+   max_size:   288230376151711743
+   front/back: [ he ... he ]
+
+A is empty
+C is NOT empty
+D is NOT empty
+a.reserve(0)...
+a.reserve(max_size + 1)...
+a.reserve(7)...
+size of A is 0, actual capacity is 7
+a.push_back() * 3...
+size of A is 3, actual capacity is 7
+A front is 42, back is 321321
+
+// VECTOR C
+   [ he he he he ]
+
+c.reserve(4)...
+
+// VECTOR C INFO
+   size:       4
+   capacity:   4
+   max_size:   288230376151711743
+   front/back: [ he ... he ]
+
+c.reserve(9)...
+
+// VECTOR C INFO
+   size:       4
+   capacity:   9
+   max_size:   288230376151711743
+   front/back: [ he ... he ]
+
+c.pop_back()...
+
+// VECTOR C INFO
+   size:       3
+   capacity:   9
+   max_size:   288230376151711743
+   front/back: [ he ... he ]
+
+
+// VECTOR C
+   [ he he he ]
+
+
+c.push_back(ha)...
+
+// VECTOR C INFO
+   size:       4
+   capacity:   9
+   max_size:   288230376151711743
+   front/back: [ he ... ha ]
+
+
+// VECTOR C
+   [ he he he ha ]
+
+c.resize(10, hi)..
+
+// VECTOR C INFO
+   size:       10
+   capacity:   10
+   max_size:   288230376151711743
+   front/back: [ he ... hi ]
+
+
+// VECTOR C
+   [ he he he ha hi hi hi hi hi hi ]
+
+c.resize(3)..
+
+// VECTOR C INFO
+   size:       3
+   capacity:   10
+   max_size:   288230376151711743
+   front/back: [ he ... he ]
+
+
+// VECTOR C
+   [ he he he ]
+
+accessing element thru at()...
+in range: element at(0) is he
+past size(): element at(3) is past capacity(): element at(12) is c.resize(6, ha)..
+
+// VECTOR C INFO
+   size:       6
+   capacity:   10
+   max_size:   288230376151711743
+   front/back: [ he ... ha ]
+
+
+// VECTOR C
+   [ he he he ha ha ha ]
+
+c.resize(12) with NULL value...
+
+// VECTOR C INFO
+   size:       12
+   capacity:   12
+   max_size:   288230376151711743
+   front/back: [ he ...  ]
+

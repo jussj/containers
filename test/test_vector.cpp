@@ -6,17 +6,17 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/30 16:45:12 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:33:27 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE std
+# define NAMESPACE ft
 #endif
 
 #include <vector>
-#include <iostream>
 #include "../inc/vector.hpp"
+#include <iostream>
 #include "Test.hpp"
 
 int 	main() {
@@ -27,9 +27,9 @@ int 	main() {
 	NAMESPACE::vector<std::string>	c(4, "he");
 	NAMESPACE::vector<IncrediblyComplex<int> >	d(5);
 
-	print_info(a, "A");
+	print_info<NAMESPACE::vector<int> >(a, "A");
 	print_info(c, "C");
-//	print_info(d, "D");
+	//print_info(d, "D");
 
 	if (a.empty())
 		std::cout << "A is empty" << std::endl;
@@ -130,7 +130,13 @@ int 	main() {
 	std::cout 	<< "c.resize(12) with NULL value..." << std::endl;
 	c.resize(12);
 
-	print_info(c, "C");	
+	print_info(c, "C");
+
+
+	std::cout 	<< "iterators... " << std::endl 
+			<< "c.begin is " << c.begin() 
+			<< " and c.end is " << c.end() << std::endl;
+
 	
 	return 0;
 }

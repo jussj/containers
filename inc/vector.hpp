@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/01 09:30:52 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/02 19:13:46 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,20 @@ namespace ft {
 				this->_capacity = this->_end;
 			}
 
+			// need enable_if and is_integral
 			template <class InputIterator>
 			vector(InputIterator first, InputIterator last, const Alloc& = Alloc());
-			vector(const vector<T,Alloc>& x);
+			
+			vector(const vector<T,Alloc>& src) {
+				// if is same?
+				this->_begin	= this->_alloc.allocate(src.capacity());
+				pointer p	= this->_begin;
+				for (size_type s = 0; s < src.size(); s++) {
+					this->_alloc.construct(p++, src._begin + s);	
+				}
+				this->_end	= this->_begin + size();
+				this->capacity	= this->_begin + capacity();
+			}
 			
 			~vector() {
 				for (size_type s = 0; s < this->size(); s++) {
@@ -72,21 +83,53 @@ namespace ft {
 			
 			template <class InputIterator>
 			void 			assign(InputIterator first, InputIterator last);
-			void			assign(size_type n, const T& u);
-			allocator_type		get_Alloc() const;
+			void			assign(size_type n, const value_type& value) {
+				for (size_type s = 0; s < this->size(); s++) {
+					this->_alloc.destroy(this->_begin + s);
+				}
+				this->_alloc.deallocate(this->_begin, this->size());
+
+				this->_begin 	= this->_alloc.allocate(n + 1);
+				pointer p 	= this->_begin;
+				
+				for (size_type s = 0; s < n; s++)
+					this->_alloc.construct(p++, value);	
+				this->_end	= this->_begin + n;
+				this->_capacity = this->_end;
+			}
+			allocator_type		get_allocator() const {
+				return _alloc;
+			}
 			
 			vector<T,Alloc>&	operator=(const vector<T,Alloc>& x);
 
 		// ITERATORS
 
-			iterator		begin();
-			const_iterator 		begin() const;
-			iterator 		end();
-			const_iterator		end() const;
-			reverse_iterator 	rbegin();
-			const_reverse_iterator	rbegin() const;
-			reverse_iterator 	rend();
-			const_reverse_iterator	rend() const;
+			// add &?? // "shall not be derefenreced if empty array???
+			iterator		begin() {
+				return iterator(&front());
+			}
+			const_iterator 		begin() const {
+				return const_iterator(&front());
+			}
+			iterator 		end() {
+				return iterator(&back() + 1);
+			}
+			const_iterator		end() const {
+				return const_iterator(&back() + 1);
+			}
+			reverse_iterator 	rbegin() {
+				return reverse_iterator(&front());
+			}
+			const_reverse_iterator	rbegin() const {
+				return const_reverse_iterator(&front());
+			}
+			reverse_iterator 	rend() {
+				return reverse_iterator(&back());
+			}
+			const_reverse_iterator	rend() const {
+				return const_iterator(&back());
+			}
 
 		// CAPACITY
 
@@ -186,7 +229,9 @@ namespace ft {
 			iterator 	insert(iterator position, const T& x);
 			void 		insert(iterator position, size_type n, const T& x);
 			template <class InputIterator>
-			void 		insert(iterator position, InputIterator first, InputIterator last);
+			void 		insert(		iterator position, 
+							InputIterator first, 
+							InputIterator last	);
 			iterator 	erase(iterator position);
 			iterator 	erase(iterator first, iterator last);
 			void 		swap(vector<T,Alloc>&);
@@ -203,7 +248,7 @@ namespace ft {
 
 		// UTILS
 
-			// put that ft in another utils header
+			// put that function in another utils header
 			std::string	long_to_str(size_t n) {
 				std::stringstream	stream;
 
@@ -227,17 +272,29 @@ namespace ft {
 	};
 
 	template <class T, class Alloc>
-	bool operator==(const vector<T,Alloc>& x, const vector<T,Alloc>& y);
+	bool operator==(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
+		return x == y;
+	}
 	template <class T, class Alloc>
-	bool operator< (const vector<T,Alloc>& x, const vector<T,Alloc>& y);
+	bool operator< (const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
+		return x < y;
+	}
 	template <class T, class Alloc>
-	bool operator!=(const vector<T,Alloc>& x, const vector<T,Alloc>& y);
+	bool operator!=(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
+		return x != y;
+	}
 	template <class T, class Alloc>
-	bool operator> (const vector<T,Alloc>& x, const vector<T,Alloc>& y);
+	bool operator> (const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
+		return x > y;
+	}
 	template <class T, class Alloc>
-	bool operator>=(const vector<T,Alloc>& x, const vector<T,Alloc>& y);
+	bool operator>=(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
+		return x >= y;
+	}
 	template <class T, class Alloc>
-	bool operator<=(const vector<T,Alloc>& x, const vector<T,Alloc>& y);
+	bool operator<=(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
+		return x <= y;
+	}
 
 // specialized algorithms??? need to implement THAT?
 //template <class T, class Alloc>

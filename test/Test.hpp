@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:01:37 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/30 16:46:59 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/02 18:11:56 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,38 @@ class	IncrediblyComplex {
 	private:
 		int	nb;
 		T	*ptr;
+
+// overload << for accessing values
 };
 
 // TESTING UTILS
 
 template<class Vec>
-void	print_info(Vec v, std::string name) {
+void	print_info(const Vec& v, std::string name) {
 	std::cout	<< std::endl
 			<< "// VECTOR " << name << " INFO" << std::endl
 			<< "   size:       " << v.size() << std::endl
 			<< "   capacity:   " << v.capacity() << std::endl
-			<< "   max_size:   " << v.max_size() << std::endl
-		//	<< "   front/back: [ " << v.front() << " ... " << v.back() << " ]" 
-			<< std::endl;
+			<< "   max_size:   " << v.max_size() << std::endl;
+			if (!v.empty()) {
+				std::cout	<< "   front/back: [ " << v.front()
+						<< " ... " << v.back() << " ]" << std::endl;
+			}
+	std::cout	<< std::endl;
 }
 
 template<class Vec>
-void	print_vector(Vec v, std::string name) {
+void	print_vector(const Vec& v, std::string name) {
 	std::cout	<< std::endl
-			<< "// VECTOR " << name << std::endl;
+			<< "// VECTOR " << name << " ARRAY" << std::endl;
 	std::cout << "   [ ";
 	for (size_t s = 0; s < v.size(); s++) {
 		std::cout << v[s] << " ";
 	}
 	std::cout << "]" << std::endl << std::endl;
 }
+
+// how to randomize values for each type??
 
 template<class T, class Vec>
 void	test_vector(Vec v, std::string name, T value) {
