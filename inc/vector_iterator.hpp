@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/01 17:08:28 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/04 15:07:54 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 namespace ft {
 
-	template<class T, class Iterator, class Container>
+	template<class T>
 	class VectorIterator {
 	
 		public:

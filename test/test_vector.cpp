@@ -6,12 +6,13 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/02 18:33:27 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:24:57 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
 # define NAMESPACE ft
+
 #endif
 
 #include <vector>
@@ -59,12 +60,12 @@ int 	main() {
 	a.push_back(42);
 	a.push_back(789);
 	a.push_back(321321);
-	std::cout	<< "size of A is " << a.size()
-			<< ", actual capacity is " << a.capacity() << std::endl
-			<< "A front is " << a.front()
-			<< ", back is " << a.back() << std::endl;
 
-	print_vector(c, "C");
+	print_vector(a, "A");
+
+	//d.push_back(1);
+	d.pop_back();
+	//print_vector(d, "D");
 
 	std::cout 	<< "c.reserve(4)..." << std::endl;
 	c.reserve(4);
@@ -132,11 +133,35 @@ int 	main() {
 
 	print_info(c, "C");
 
+	std::cout	<< "c.assign(6, hi)..." << std::endl;
 
-	std::cout 	<< "iterators... " << std::endl 
-			<< "c.begin is " << c.begin() 
-			<< " and c.end is " << c.end() << std::endl;
+	c.assign(6, "hi");
+	print_info(c, "C");
+	print_vector(c, "C");
 
-	
+	std::cout	<< "c.assign(9, ha)..." << std::endl;
+
+	c.assign(9, "ha");
+	print_info(c, "C");
+	print_vector(c, "C");
+
+	std::cout	<< "c.assign(0, he)..." << std::endl;
+
+	c.assign(0, "he");
+	print_info(c, "C");
+	print_vector(c, "C");
+
+	std::cout	<< "c.assign(13, ho)..." << std::endl;
+
+	c.assign(13, "ho");
+	print_info(c, "C");
+	print_vector(c, "C");
+//	std::cout 	<< "iterators... " << std::endl 
+//			<< "c.begin is " << c.begin() 
+//			<< " and c.end is " << c.end() << std::endl;
+
+	test_capacity(c, "C");
+	test_capacity(d, "D");
+
 	return 0;
 }

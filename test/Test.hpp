@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:01:37 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/02 18:11:56 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:24:52 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,25 @@
 template<class T>
 class	IncrediblyComplex {
 	public:
-		IncrediblyComplex() : nb(42), ptr(new T) {}
-		IncrediblyComplex(int n, T type) : nb(n), ptr(new T) {
-			*ptr = type;
+		IncrediblyComplex() : _nb(42), _ptr(new T) {}
+		IncrediblyComplex(int n, T type) : _nb(n), _ptr(new T) {
+			*_ptr = type;
 		}
 		IncrediblyComplex(IncrediblyComplex const &src)
-			: nb(src.nb), ptr(new T) {
-			*ptr 	= *src.ptr;
+			: _nb(src._nb), _ptr(new T) {
+			*_ptr 	= *src._ptr;
 		}
 		~IncrediblyComplex() {
-			delete ptr;
+			delete _ptr;
 		}
 	private:
-		int	nb;
-		T	*ptr;
+		int	_nb;
+		T	*_ptr;
 
-// overload << for accessing values
+	std::ostream &	operator<<(std::ostream & o) {
+		o << "(" << this->_nb << "; " << this->_ptr << ")"; 
+		return	o;
+	}
 };
 
 // TESTING UTILS
@@ -63,8 +66,8 @@ void	print_vector(const Vec& v, std::string name) {
 
 // how to randomize values for each type??
 
-template<class T, class Vec>
-void	test_vector(Vec v, std::string name, T value) {
+template<class Vec>
+void	test_capacity(Vec& v, std::string name) {
 	std::cout 	<< "// VECTOR " << name << std::endl;	
 	std::cout 	<< "   >> IS EMPTY" 	<< std::endl;
 	if (v.empty())
@@ -91,35 +94,59 @@ void	test_vector(Vec v, std::string name, T value) {
 			<< "   >> POP_BACK()"		<< std::endl;
 	for (size_t s = 0; s < v.size(); s++)
 		v.pop_back();
-	std::cout	<< "      reached size"		<< std::endl;
-	for (size_t s = 0; s < v.capacity(); s++)
-		v.pop_back();
-	std::cout	<< "      reached capacity"	<< std::endl;
-	v.pop_back();
+	//std::cout	<< "      reached size"		<< std::endl;
+	//for (size_t s = 0; s < v.capacity(); s++)
+		//v.pop_back();
+	//std::cout	<< "      reached capacity"	<< std::endl;
+	//v.pop_back();
 
-	print_vector(v);
+	//print_vector(v);
 
-	std::cout	<< std::endl
-			<< "   >> PUSH_BACK(VALUE)"	<< std::endl;
-	for (size_t s = 0; s < 10; s++)	
-		v.push_back(value);
+	//std::cout	<< std::endl
+			//<< "   >> PUSH_BACK(VALUE)"	<< std::endl;
+	//for (size_t s = 0; s < 10; s++)	
+		//v.push_back(value);
 	
-	print_vector(v);
+	//print_vector(v);
 
-	std::cout	<< std::endl
-			<< "   >> AT()"			<< std::endl
-			<< "      in range " 
-			<< "...at(0): " << v.at(0) << " ...at(size-1): " << v.at(v.size() - 1)
-			<< "      out of range ...at(size): ";
-			try {
-				std::cout << at(v.size());
-			}
-			catch (std::exception& e) {
-				std::cerr << "      ERROR THROWN: " << e.what() << std::endl;
-			}
+	//std::cout	<< std::endl
+			//<< "   >> AT()"			<< std::endl
+			//<< "      in range " 
+			//<< "...at(0): " << v.at(0) << " ...at(size-1): " << v.at(v.size() - 1)
+			//<< "      out of range ...at(size): ";
+			//try {
+				//std::cout << at(v.size());
+			//}
+			//catch (std::exception& e) {
+				//std::cerr << "      ERROR THROWN: " << e.what() << std::endl;
+			//}
 	
 	std::cout	<< std::endl
 			<< "   >> RESIZE()"	<< std::endl;
+
+	v.resize(0);
+	try {
+		v.resize(v.max_size() + 1);
+	}
+	catch (std::length_error& le) {
+		std::cerr << "      ERROR THROWN: " << le.what() << std::endl;
+	}
+	v.resize(10);
+	v.resize(v.size() + 10);
+	v.resize(v.capacity() * 2);
+	v.resize(v.size() / 2);
+	
+	//std::cout	<< std::endl
+			//<< "   >> ASSIGN(N, VALUE)"	<< std::endl;
+
+	//v.assign(v.size());
+	//v.assign(v.size() * 2);
+	//v.assign(v.capacity() * 4);
+	//v.assign(v.capacity() * 2);
+	//v.assign(v.size() / 2);
+	//v.assign(0);
+	
+	std::cout 	<< std::endl;
 }
 
 

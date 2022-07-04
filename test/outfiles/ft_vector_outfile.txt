@@ -22,7 +22,7 @@ a.push_back() * 3...
 size of A is 3, actual capacity is 7
 A front is 42, back is 321321
 
-// VECTOR C
+// VECTOR C ARRAY
    [ he he he he ]
 
 c.reserve(4)...
@@ -50,7 +50,7 @@ c.pop_back()...
    front/back: [ he ... he ]
 
 
-// VECTOR C
+// VECTOR C ARRAY
    [ he he he ]
 
 
@@ -63,7 +63,7 @@ c.push_back(ha)...
    front/back: [ he ... ha ]
 
 
-// VECTOR C
+// VECTOR C ARRAY
    [ he he he ha ]
 
 c.resize(10, hi)..
@@ -75,7 +75,7 @@ c.resize(10, hi)..
    front/back: [ he ... hi ]
 
 
-// VECTOR C
+// VECTOR C ARRAY
    [ he he he ha hi hi hi hi hi hi ]
 
 c.resize(3)..
@@ -87,7 +87,7 @@ c.resize(3)..
    front/back: [ he ... he ]
 
 
-// VECTOR C
+// VECTOR C ARRAY
    [ he he he ]
 
 accessing element thru at()...
@@ -101,7 +101,7 @@ past size(): element at(3) is past capacity(): element at(12) is c.resize(6, ha)
    front/back: [ he ... ha ]
 
 
-// VECTOR C
+// VECTOR C ARRAY
    [ he he he ha ha ha ]
 
 c.resize(12) with NULL value...
@@ -111,4 +111,51 @@ c.resize(12) with NULL value...
    capacity:   12
    max_size:   288230376151711743
    front/back: [ he ...  ]
+
+c.assign(6, hi)...
+
+// VECTOR C INFO
+   size:       6
+   capacity:   12
+   max_size:   288230376151711743
+   front/back: [ hi ... hi ]
+
+
+// VECTOR C ARRAY
+   [ hi hi hi hi hi hi ]
+
+c.assign(9, ha)...
+
+// VECTOR C INFO
+   size:       9
+   capacity:   12
+   max_size:   288230376151711743
+   front/back: [ ha ... ha ]
+
+
+// VECTOR C ARRAY
+   [ ha ha ha ha ha ha ha ha ha ]
+
+c.assign(0, he)...
+
+// VECTOR C INFO
+   size:       0
+   capacity:   12
+   max_size:   288230376151711743
+
+
+// VECTOR C ARRAY
+   [ ]
+
+c.assign(13, ho)...
+
+// VECTOR C INFO
+   size:       13
+   capacity:   13
+   max_size:   288230376151711743
+   front/back: [ ho ... ho ]
+
+
+// VECTOR C ARRAY
+   [ ho ho ho ho ho ho ho ho ho ho ho ho ho ]
 
