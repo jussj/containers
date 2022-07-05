@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_iterator.hpp                                :+:      :+:    :+:   */
+/*   VectorIterator.hpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/04 15:07:54 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/05 18:57:27 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ namespace ft {
 		// CTOR, CPY, DTOR
 
 			VectorIterator() : _ptr(NULL) {}
+			//VectorIterator(Iterator& it) : _ptr(it) {}
+			VectorIterator(T* it) : _ptr(it) {}
 			~VectorIterator() {}
 
 		// OPERATORS
@@ -94,4 +96,4 @@ namespace ft {
 
 }
 
-#endif 	/* VECTOR_ITERATOR_HPP */
+#endif 	/* VECTORITERATOR_HPP */

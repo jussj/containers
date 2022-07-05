@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.hpp                                         :+:      :+:    :+:   */
+/*   Vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/04 16:39:50 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/05 18:56:31 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <memory>		// allocator
 # include <stdexcept>		// exceptions
 # include <sstream>		// stream
-# include "vector_iterator.hpp"
+# include "VectorIterator.hpp"
 
 namespace ft {
 	template <class T, class Alloc = std::allocator<T> >
@@ -26,17 +26,17 @@ namespace ft {
 
 		// TYPES
 			// iterator and const iterator are pointers
-			typedef	VectorIterator<T>		iterator;
-			typedef	const VectorIterator<T>		const_iterator;
-			typedef	size_t				size_type;
-			typedef	ptrdiff_t			difference_type;
+			typedef	VectorIterator<T>			iterator;
+			typedef	const VectorIterator<T>			const_iterator;
+			typedef	size_t					size_type;
+			typedef	ptrdiff_t				difference_type;
 
-			typedef	T				value_type;
-			typedef Alloc				allocator_type;
-			typedef typename Alloc::reference	reference;
-			typedef typename Alloc::const_reference	const_reference;
-			typedef typename Alloc::pointer		pointer;
-			typedef typename Alloc::const_pointer	const_pointer;
+			typedef	T					value_type;
+			typedef Alloc					allocator_type;
+			typedef typename Alloc::reference		reference;
+			typedef typename Alloc::const_reference		const_reference;
+			typedef typename Alloc::pointer			pointer;
+			typedef typename Alloc::const_pointer		const_pointer;
 			
 			// using std reverse_iterator
 			typedef std::reverse_iterator<iterator>		reverse_iterator;
@@ -60,7 +60,7 @@ namespace ft {
 			}
 
 			// need enable_if and is_integral
-			template <class InputIterator>
+			template<class InputIterator>
 			vector(InputIterator first, InputIterator last, const Alloc& = Alloc());
 			
 			vector(const vector<T,Alloc>& src) {
