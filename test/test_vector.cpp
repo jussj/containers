@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/04 17:24:57 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/05 17:15:26 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int 	main() {
 
 	print_info<NAMESPACE::vector<int> >(a, "A");
 	print_info(c, "C");
-	//print_info(d, "D");
+	print_info(d, "D");
 
 	if (a.empty())
 		std::cout << "A is empty" << std::endl;
@@ -65,7 +65,7 @@ int 	main() {
 
 	//d.push_back(1);
 	d.pop_back();
-	//print_vector(d, "D");
+	print_vector(d, "D");
 
 	std::cout 	<< "c.reserve(4)..." << std::endl;
 	c.reserve(4);
@@ -156,10 +156,14 @@ int 	main() {
 	c.assign(13, "ho");
 	print_info(c, "C");
 	print_vector(c, "C");
-//	std::cout 	<< "iterators... " << std::endl 
-//			<< "c.begin is " << c.begin() 
-//			<< " and c.end is " << c.end() << std::endl;
 
+	NAMESPACE::vector<std::string>::iterator vbegin	= c.begin();
+//	NAMESPACE::vector<std::string>::iterator vend	= c.end();
+	std::cout 	<< "iterators... " << std::endl 
+			<< "c.begin is " << *vbegin
+			<< " and c.end is "/* << *vend*/ << std::endl;
+
+	test_capacity(a, "A");
 	test_capacity(c, "C");
 	test_capacity(d, "D");
 

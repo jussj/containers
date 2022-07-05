@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   Test.hpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:01:37 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/04 17:24:52 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/05 16:54:28 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TEST_HPP
 # define TEST_HPP
+
+// COMPLEX OBJ
 
 template<class T>
 class	IncrediblyComplex {
@@ -27,16 +29,22 @@ class	IncrediblyComplex {
 		~IncrediblyComplex() {
 			delete _ptr;
 		}
+		int	getNb() const {
+			return _nb;
+		}
+		T	getPtr() const {
+			return *_ptr;
+		}
 	private:
 		int	_nb;
 		T	*_ptr;
-
-	std::ostream &	operator<<(std::ostream & o) {
-		o << "(" << this->_nb << "; " << this->_ptr << ")"; 
-		return	o;
-	}
 };
 
+template<class T>
+std::ostream &    operator<<(std::ostream & o, const IncrediblyComplex<T> &obj) {
+    o << "(" << obj.getNb() << "; " << obj.getPtr() << ")"; 
+    return    o;
+}
 // TESTING UTILS
 
 template<class Vec>
@@ -63,6 +71,7 @@ void	print_vector(const Vec& v, std::string name) {
 	}
 	std::cout << "]" << std::endl << std::endl;
 }
+
 
 // how to randomize values for each type??
 
