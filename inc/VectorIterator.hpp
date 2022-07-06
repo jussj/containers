@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/05 18:57:27 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/06 12:11:01 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define VECTOR_ITERATOR_HPP
 
 # include <cstddef>		// ptrdiff_t
-# include <memory>
+# include <memory>		// allocator
 # include "iterator/iterator_traits.hpp"
 # include <iterator>
 
-# define TAG_NS	std
+# define TAG_NS	ft
 
 namespace ft {
 
@@ -43,24 +43,32 @@ namespace ft {
 			~VectorIterator() {}
 
 		// OPERATORS
-		
+	
+			//reference	operator*() {
+			//	return *(this->_ptr);
+			//}
+			
+			reference	operator*() const {
+				return *(this->_ptr);
+			}
+
 			// COMPARAISON
-			bool	operator==(const VectorIterator& src) {
+			bool	operator==(const VectorIterator& src) const {
 				return _ptr == src._ptr;
 			}
-			bool	operator!=(const VectorIterator& src) {
+			bool	operator!=(const VectorIterator& src) const {
 				return _ptr != src._ptr;
 			}
-			bool	operator<(const VectorIterator& src) {
+			bool	operator<(const VectorIterator& src) const {
 				return _ptr < src._ptr;
 			}
-			bool	operator>(const VectorIterator& src) {
+			bool	operator>(const VectorIterator& src) const {
 				return _ptr > src._ptr;
 			}
-			bool	operator>=(const VectorIterator& src) {
+			bool	operator>=(const VectorIterator& src) const {
 				return _ptr >= src._ptr;
 			}
-			bool	operator<=(const VectorIterator& src) {
+			bool	operator<=(const VectorIterator& src) const {
 				return _ptr <= src._ptr;
 			}
 			
@@ -71,7 +79,7 @@ namespace ft {
 				_ptr++;
 				return *this;
 			}
-			VectorIterator&	operator--(void){
+			VectorIterator&	operator--(void) {
 				_ptr--;
 				return *this;
 			}

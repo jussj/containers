@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/05 18:41:06 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/06 11:55:45 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,15 +157,24 @@ int 	main() {
 	print_info(c, "C");
 	print_vector(c, "C");
 
-	NAMESPACE::vector<std::string>::iterator vbegin	= c.begin();
-//	NAMESPACE::vector<std::string>::iterator vend	= c.end();
+	NAMESPACE::vector<std::string>::const_iterator vbegin	= c.begin();
+	NAMESPACE::vector<std::string>::const_iterator vend	= c.end();
 	std::cout 	<< "iterators... " << std::endl 
-			<< "c.begin is " << *vbegin
-			<< " and c.end is "/* << *vend*/ << std::endl;
+			<< "c.begin is " << *vbegin << std::endl;
+	//std::cout << "c.end is " << *vend << std::endl; // will segf
+
+	std::cout 	<< "iterating through vector... " << std::endl 
+			<< "[ ";
+	for (	NAMESPACE::vector<std::string>::const_iterator it = vbegin;
+		it != vend;
+		it++		) {
+		std::cout << *it << " "; 
+	}
+	std::cout	<< "]" << std::endl << std::endl;
 
 	test_capacity(a, "A");
 	test_capacity(c, "C");
 	test_capacity(d, "D");
-
+	
 	return 0;
 }

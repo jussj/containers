@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/05 18:56:31 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/06 12:11:35 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,27 +104,28 @@ namespace ft {
 
 			iterator		begin() {
 				return iterator(&front());
+				//return iterator(front());
 			}
 			const_iterator 		begin() const {
-				return const_iterator(&front());
+				return const_iterator(front());
 			}
 			iterator 		end() {
-				return iterator(&back() + 1);
+				return iterator(back() + 1);
 			}
 			const_iterator		end() const {
-				return const_iterator(&back() + 1);
+				return const_iterator(back() + 1);
 			}
 			reverse_iterator 	rbegin() {
-				return reverse_iterator(&front());
+				return reverse_iterator(front());
 			}
 			const_reverse_iterator	rbegin() const {
-				return const_reverse_iterator(&front());
+				return const_reverse_iterator(front());
 			}
 			reverse_iterator 	rend() {
-				return reverse_iterator(&back());
+				return reverse_iterator(back());
 			}
 			const_reverse_iterator	rend() const {
-				return const_iterator(&back());
+				return const_iterator(back());
 			}
 
 		// CAPACITY
