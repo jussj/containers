@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/06 12:11:01 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/06 19:30:11 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,29 @@ namespace ft {
 
 			VectorIterator() : _ptr(NULL) {}
 			//VectorIterator(Iterator& it) : _ptr(it) {}
-			VectorIterator(T* it) : _ptr(it) {}
+			
+			VectorIterator(pointer it) : _ptr(it) {}
+			
+			template<class I>
+			VectorIterator(VectorIterator<I> it) : _ptr(it.current()) {}
 			~VectorIterator() {}
 
+		// ACCESS
+		
+			pointer		current() {
+				return this->_ptr;
+			}
+
 		// OPERATORS
-	
-			//reference	operator*() {
-			//	return *(this->_ptr);
-			//}
+
+			// FORWARD
+			pointer		operator+(difference_type n) const {
+				return current() + n;
+			}
+			
+			pointer		operator-(difference_type n) const {
+				return current() - n;
+			}
 			
 			reference	operator*() const {
 				return *(this->_ptr);
@@ -73,8 +88,11 @@ namespace ft {
 			}
 			
 			// ARITHMETIC
+			
+			//VectorIterator operator+() {}
 
 			// PREFIX/POSTFIX INCREMENT/DECREMENT
+
 			VectorIterator&	operator++(void) {
 				_ptr++;
 				return *this;

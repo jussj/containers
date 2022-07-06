@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/06 12:11:35 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/06 19:13:51 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ namespace ft {
 		// TYPES
 			// iterator and const iterator are pointers
 			typedef	VectorIterator<T>			iterator;
-			typedef	const VectorIterator<T>			const_iterator;
+			typedef	VectorIterator<const T>			const_iterator;
 			typedef	size_t					size_type;
 			typedef	ptrdiff_t				difference_type;
 
@@ -51,7 +51,7 @@ namespace ft {
 					const Alloc& Allocator = Alloc()) 
 				: _alloc(Allocator) {
 				this->_begin 	= this->_alloc.allocate(n + 1);
-				pointer p 	= this->_begin;
+				pointer p 	    = this->_begin;
 				
 				for (size_type s = 0; s < n; s++)
 					this->_alloc.construct(p++, value);	
@@ -66,7 +66,7 @@ namespace ft {
 			vector(const vector<T,Alloc>& src) {
 				// if is same?
 				this->_begin	= this->_alloc.allocate(src.capacity());
-				pointer p	= this->_begin;
+				pointer p	    = this->_begin;
 				for (size_type s = 0; s < src.size(); s++) {
 					this->_alloc.construct(p++, src._begin + s);	
 				}
@@ -103,23 +103,22 @@ namespace ft {
 		// ITERATORS
 
 			iterator		begin() {
-				return iterator(&front());
-				//return iterator(front());
+				return iterator(this->_begin);
 			}
 			const_iterator 		begin() const {
-				return const_iterator(front());
+				return const_iterator(this->_begin);
 			}
 			iterator 		end() {
-				return iterator(back() + 1);
+				return iterator(this->_end);
 			}
 			const_iterator		end() const {
-				return const_iterator(back() + 1);
+				return const_iterator(this->_end);
 			}
 			reverse_iterator 	rbegin() {
-				return reverse_iterator(front());
+				return reverse_iterator(this->_begin);
 			}
 			const_reverse_iterator	rbegin() const {
-				return const_reverse_iterator(front());
+				return const_reverse_iterator(this->_begin);
 			}
 			reverse_iterator 	rend() {
 				return reverse_iterator(back());
