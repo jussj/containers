@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/06 19:30:11 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/06 19:49:12 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,34 +37,67 @@ namespace ft {
 
 		// CTOR, CPY, DTOR
 
-			VectorIterator() : _ptr(NULL) {}
-			//VectorIterator(Iterator& it) : _ptr(it) {}
-			
-			VectorIterator(pointer it) : _ptr(it) {}
-			
+			VectorIterator() 			: _ptr(NULL) 	{}
+			VectorIterator(pointer it) 		: _ptr(it) 	{}
 			template<class I>
-			VectorIterator(VectorIterator<I> it) : _ptr(it.current()) {}
+			VectorIterator(VectorIterator<I> it) 	: _ptr(it.current()) {}
 			~VectorIterator() {}
 
 		// ACCESS
 		
-			pointer		current() {
+			pointer		current() const {
 				return this->_ptr;
 			}
 
 		// OPERATORS
 
 			// FORWARD
+			reference	operator*() const {
+				return *(current());
+			}
+			VectorIterator&	operator++() {
+				++_ptr;
+				return *this;
+			}
+			VectorIterator	operator++(int) {
+				VectorIterator	tmp = *this;
+				
+				++_ptr;
+				return tmp;
+			}
+			pointer		operator->() const {
+				return current();
+			}
+
+			// BIDIRECTIONAL
+			VectorIterator&	operator--(void) {
+				--_ptr;
+				return *this;
+			}
+			VectorIterator	operator--(int) {
+				VectorIterator	tmp = *this;
+
+				--_ptr;
+				return tmp;
+			}
+
+			// RANDOM ACCESS
 			pointer		operator+(difference_type n) const {
 				return current() + n;
 			}
-			
 			pointer		operator-(difference_type n) const {
 				return current() - n;
 			}
-			
-			reference	operator*() const {
-				return *(this->_ptr);
+			VectorIterator&	operator+=(difference_type n) {
+				this->ptr += n;
+				return *this;
+			}
+			VectorIterator&	operator-=(difference_type n) {
+				this->ptr -= n;
+				return *this;
+			}
+			reference	operator[](difference_type n) {
+				return this->_ptr[n];
 			}
 
 			// COMPARAISON
@@ -85,33 +118,6 @@ namespace ft {
 			}
 			bool	operator<=(const VectorIterator& src) const {
 				return _ptr <= src._ptr;
-			}
-			
-			// ARITHMETIC
-			
-			//VectorIterator operator+() {}
-
-			// PREFIX/POSTFIX INCREMENT/DECREMENT
-
-			VectorIterator&	operator++(void) {
-				_ptr++;
-				return *this;
-			}
-			VectorIterator&	operator--(void) {
-				_ptr--;
-				return *this;
-			}
-			VectorIterator	operator++(int) {
-				VectorIterator	tmp = *this;
-				
-				++_ptr;
-				return tmp;
-			}
-			VectorIterator	operator--(int) {
-				VectorIterator	tmp = *this;
-
-				--_ptr;
-				return tmp;
 			}
 		
 		private:
