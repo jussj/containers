@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_vector.cpp                                    :+:      :+:    :+:   */
+/*   main_vector.cpp                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/06 19:07:16 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/07 19:22:59 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE ft
+# define NAMESPACE std
 
 #endif
 
 #include <vector>
 #include "../inc/vector.hpp"
 #include <iostream>
-#include "Test.hpp"
+#include "TestUtils.hpp"
+//#include "TestVecIterators.hpp"
 #include <cstddef>		// ptrdiff_t
+#include <typeinfo>
 
 int 	main() {
 	NAMESPACE::vector<int>		a;
@@ -64,7 +66,13 @@ int 	main() {
 
 	print_vector(a, "A");
 
-	//d.push_back(1);
+
+	//NAMESPACE::vector<IncrediblyComplex<int> >	e(9);
+
+//	std::cout	<< "d.push_back(9)..." << std::endl;
+//	d.push_back(d(9));
+	std::cout	<< "d.pop_back()..." << std::endl;
+	
 	d.pop_back();
 	print_vector(d, "D");
 
@@ -96,7 +104,6 @@ int 	main() {
 	
 	print_info(c, "C");
 	print_vector(c, "C");
-
 
 	std::cout 	<< "c.resize(3).." << std::endl;
 	c.resize(3);
@@ -158,6 +165,11 @@ int 	main() {
 	print_info(c, "C");
 	print_vector(c, "C");
 
+	//typedef std::iterator_traits<int*> traits;
+  	
+	//if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
+    	//	std::cout << "int* is a random-access iterator";
+
 	NAMESPACE::vector<std::string>::iterator vbegin	= c.begin();
 	NAMESPACE::vector<std::string>::iterator vend	= c.end();
 	std::cout 	<< "iterators... " << std::endl 
@@ -187,6 +199,12 @@ int 	main() {
 		std::cout << *it << " "; 
 	}
 	std::cout	<< "]" << std::endl << std::endl;
+	
+	std::cout	<< "clearing a..." << std::endl;
+
+	//print_info(a, "A");
+	//a.clear();
+	//print_info(a, "A");
 
 	test_capacity(a, "A");
 	test_capacity(c, "C");

@@ -2,14 +2,21 @@
 // VECTOR A INFO
    size:       0
    capacity:   0
-   max_size:   2305843009213693951
+   max_size:   4611686018427387903
 
 
 // VECTOR C INFO
    size:       4
    capacity:   4
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ he ... he ]
+
+
+// VECTOR D INFO
+   size:       5
+   capacity:   5
+   max_size:   1152921504606846975
+   front/back: [ (42; 0) ... (42; 0) ]
 
 A is empty
 C is NOT empty
@@ -23,12 +30,17 @@ a.push_back() * 3...
 // VECTOR A ARRAY
    [ 42 789 321321 ]
 
+d.pop_back()...
+
+// VECTOR D ARRAY
+   [ (42; 0) (42; 0) (42; 0) (42; 0) ]
+
 c.reserve(4)...
 
 // VECTOR C INFO
    size:       4
    capacity:   4
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ he ... he ]
 
 c.reserve(9)...
@@ -36,7 +48,7 @@ c.reserve(9)...
 // VECTOR C INFO
    size:       4
    capacity:   9
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ he ... he ]
 
 c.pop_back()...
@@ -44,7 +56,7 @@ c.pop_back()...
 // VECTOR C INFO
    size:       3
    capacity:   9
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ he ... he ]
 
 
@@ -57,7 +69,7 @@ c.push_back(ha)...
 // VECTOR C INFO
    size:       4
    capacity:   9
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ he ... ha ]
 
 
@@ -69,7 +81,7 @@ c.resize(10, hi)..
 // VECTOR C INFO
    size:       10
    capacity:   10
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ he ... hi ]
 
 
@@ -81,7 +93,7 @@ c.resize(3)..
 // VECTOR C INFO
    size:       3
    capacity:   10
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ he ... he ]
 
 
@@ -95,7 +107,7 @@ past size(): element at(3) is past capacity(): element at(12) is c.resize(6, ha)
 // VECTOR C INFO
    size:       6
    capacity:   10
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ he ... ha ]
 
 
@@ -107,7 +119,7 @@ c.resize(12) with NULL value...
 // VECTOR C INFO
    size:       12
    capacity:   12
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ he ...  ]
 
 c.assign(6, hi)...
@@ -115,7 +127,7 @@ c.assign(6, hi)...
 // VECTOR C INFO
    size:       6
    capacity:   12
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ hi ... hi ]
 
 
@@ -127,7 +139,7 @@ c.assign(9, ha)...
 // VECTOR C INFO
    size:       9
    capacity:   12
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ ha ... ha ]
 
 
@@ -139,7 +151,7 @@ c.assign(0, he)...
 // VECTOR C INFO
    size:       0
    capacity:   12
-   max_size:   288230376151711743
+   max_size:   576460752303423487
 
 
 // VECTOR C ARRAY
@@ -150,12 +162,25 @@ c.assign(13, ho)...
 // VECTOR C INFO
    size:       13
    capacity:   13
-   max_size:   288230376151711743
+   max_size:   576460752303423487
    front/back: [ ho ... ho ]
 
 
 // VECTOR C ARRAY
    [ ho ho ho ho ho ho ho ho ho ho ho ho ho ]
+
+// VECTOR A
+   >> IS EMPTY
+     no
+
+   >> RESERVE
+	  reserve(0)
+      reserve(max_size+1)
+	  reserve(size+10)
+
+   >> POP_BACK()
+
+   >> RESIZE()
 
 // VECTOR C
    >> IS EMPTY
@@ -182,4 +207,14 @@ c.assign(13, ho)...
    >> POP_BACK()
 
    >> RESIZE()
+
+iterators... 
+c.begin is 
+iterating through vector... 
+[                        ]
+
+const iterators... 
+c.begin is 
+iterating through vector... 
+[                        ]
 

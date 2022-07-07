@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/06 19:13:51 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/07 19:53:46 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ namespace ft {
 			vector(const vector<T,Alloc>& src) {
 				// if is same?
 				this->_begin	= this->_alloc.allocate(src.capacity());
-				pointer p	    = this->_begin;
+				pointer p	= this->_begin;
 				for (size_type s = 0; s < src.size(); s++) {
 					this->_alloc.construct(p++, src._begin + s);	
 				}
@@ -75,14 +75,20 @@ namespace ft {
 			}
 			
 			~vector() {
-				for (size_type s = 0; s < this->size(); s++) {
+				for (size_type s = 0; s < this->size(); s++)
 					this->_alloc.destroy(this->_begin + s);
-				}
 				this->_alloc.deallocate(this->_begin, this->size());
 			}
 			
 			template <class InputIterator>
-			void 			assign(InputIterator first, InputIterator last);
+			void 			assign(InputIterator first, InputIterator last) {
+				size_type dis	= this->_distance(first, last);
+				this->reserve(dis);
+				for (iterator it = first; first != last; it++) 
+					this->pop_back(*it);
+				for (iterator it = first; first != last; it++) 
+					this->push_back(*it);	
+			}
 
 			void			assign(size_type n, const value_type& value) {
 				if (n > this->capacity())
@@ -98,7 +104,12 @@ namespace ft {
 				return this->_alloc;
 			}
 			
-			vector<T,Alloc>&	operator=(const vector<T,Alloc>& x);
+			//vector&		operator=(const vector& src) {
+			vector<T,Alloc>&	operator=(const vector<T,Alloc>& src) {
+				if (&src = this)
+					return *this;
+				//use assign with the iterators!!
+			}
 
 		// ITERATORS
 
@@ -146,9 +157,8 @@ namespace ft {
 						this->_capacity = this->_end;
 				}
 				else if (n < this->size()) {
-					for (size_type s = n; s < this->size(); s++) {
+					for (size_type s = n; s < this->size(); s++)
 						_alloc.destroy(this->_begin + s);
-					}
 					this->_end = this->_begin + n;
 				}
 
@@ -218,7 +228,6 @@ namespace ft {
 			}
 			void 		pop_back() {
 				this->_alloc.destroy(this->_end - 1);
-				//this->_alloc.deallocate(this->_end, 1);
 				this->_end--;
 			}
 			
@@ -230,8 +239,26 @@ namespace ft {
 							InputIterator last	);
 			iterator 	erase(iterator position);
 			iterator 	erase(iterator first, iterator last);
-			void 		swap(vector<T,Alloc>&);
-			void 		clear();
+			void 		swap(vector<T,Alloc>& src) {
+				pointer	tmp_begin 	= this->_begin;
+				pointer	tmp_end 	= this->_end;
+				pointer	tmp_capacity 	= this->_capacity;
+
+				
+				this->_begin	= src.begin();
+				this->_end 	= src.begin() + src.size();
+				this->_capacity	= src.begin() + src.capacity();
+				src._begin	= tmp_begin;
+				src._end	= tmp_end;
+				src._alloc	= tmp_alloc;
+
+			}
+			
+			void 		clear() {
+				for (size_type s = 0; s < this->size(); s++)
+					this->_alloc.destroy(this->_begin + s);
+				this->_end = this->_begin;
+			}
 
 		private:
 
@@ -244,13 +271,18 @@ namespace ft {
 
 		// UTILS
 
-			// put that function in another utils header
+			// put these functions in another utils header
 			std::string	long_to_str(size_t n) {
 				std::stringstream	stream;
 
 				stream << n;
 				std::string 		str = stream.str();
 				return str;
+			}
+
+			// should have a const safe passage!! template?
+			difference_type	_distance(iterator first, iterator last) {
+				return last - first;
 			}
 			
 			void		_range_check(size_type n) {
@@ -293,7 +325,9 @@ namespace ft {
 	}
 
 	template <class T, class Alloc>
-	void swap(vector<T,Alloc>& x, vector<T,Alloc>& y);
+	void swap(vector<T,Alloc>& x, vector<T,Alloc>& y) {
+		//x.swap(y);
+	}
 }
 
 #endif	/* VECTOR_HPP */

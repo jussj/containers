@@ -6,7 +6,7 @@
 #    By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/26 17:19:58 by jusaint-          #+#    #+#              #
-#    Updated: 2022/06/26 13:04:39 by jusaint-         ###   ########.fr        #
+#    Updated: 2022/07/07 16:26:04 by jusaint-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CXX				=	c++
 
 RM				=	rm -rf
 
-SRCS				=	test_vector.cpp	\
+SRCS				=	main_vector.cpp	\
 
 SRCS_DIR			=	test		\
 					src		\

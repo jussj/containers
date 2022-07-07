@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Test.hpp                                           :+:      :+:    :+:   */
+/*   TestUtils.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:01:37 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/05 16:54:28 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:44:09 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TEST_HPP
-# define TEST_HPP
+#ifndef TESTUTILS_HPP
+# define TESTUTILS_HPP
 
 // COMPLEX OBJ
 
@@ -45,7 +45,8 @@ std::ostream &    operator<<(std::ostream & o, const IncrediblyComplex<T> &obj) 
     o << "(" << obj.getNb() << "; " << obj.getPtr() << ")"; 
     return    o;
 }
-// TESTING UTILS
+
+// PRINTING VECTOR
 
 template<class Vec>
 void	print_info(const Vec& v, std::string name) {
@@ -74,6 +75,8 @@ void	print_vector(const Vec& v, std::string name) {
 
 
 // how to randomize values for each type??
+
+// TESTING VECTOR FEATURES
 
 template<class Vec>
 void	test_capacity(Vec& v, std::string name) {
@@ -159,4 +162,4 @@ void	test_capacity(Vec& v, std::string name) {
 }
 
 
-#endif 	/* TEST_HPP */
+#endif 	/* TESTUTILS_HPP */
