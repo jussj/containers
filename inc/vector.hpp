@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/08 19:33:26 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/08 21:29:41 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,9 @@ namespace ft {
 				
 				if (dis > this->capacity())
 					this->reserve(dis);	
-				for (size_type s = 0; s < 2; s++) 
-					this->pop_back();
-				//for (iterator it = first; it != last; it++) 
-					//this->push_back(*it);	
+				this->clear();
+				for (iterator it = first; it != last; it++) 
+					this->push_back(*it);	
 			}
 
 			void			assign(size_type n, const value_type& value) {
@@ -112,7 +111,7 @@ namespace ft {
 			vector<T,Alloc>&	operator=(const vector<T,Alloc>& src) {
 				if (&src == this)
 					return *this;
-				//use assign with the iterators!!
+				this->assign(src.begin(), src.end());
 			}
 
 		// ITERATORS
@@ -245,15 +244,14 @@ namespace ft {
 							InputIterator last	);
 			iterator 	erase(iterator position);
 			iterator 	erase(iterator first, iterator last);
+			
 			void 		swap(vector<T,Alloc>& src) {
 				pointer	tmp_begin 	= this->_begin;
 				pointer	tmp_end 	= this->_end;
-				pointer	tmp_capacity 	= this->_capacity;
-
 				
-				this->_begin	= src.begin();
-				this->_end 	= src.begin() + src.size();
-				this->_capacity	= src.begin() + src.capacity();
+				this->_begin	= src._begin;
+				this->_end 	= src._begin + src.size();
+				this->_capacity	= src._begin + src.capacity();
 				src._begin	= tmp_begin;
 				src._end	= tmp_end;
 
@@ -285,7 +283,6 @@ namespace ft {
 				return str;
 			}
 
-			// should have a const safe passage!! template?
 			template<class It>
 			difference_type	distance(It first, It last) {
 				return last - first;

@@ -6,12 +6,12 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/08 19:53:51 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/08 21:31:13 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE std
+# define NAMESPACE ft
 
 #endif
 
@@ -21,7 +21,7 @@
 #include "TestUtils.hpp"
 //#include "TestVecIterators.hpp"
 #include <cstddef>		// ptrdiff_t
-#include <typeinfo>
+#include <typeinfo>		// typei
 
 int 	main() {
 	NAMESPACE::vector<int>		a;
@@ -223,14 +223,48 @@ int 	main() {
 	print_vector(e, "E");
 	print_info(e, "E");
 	
-	std::cout	<< "assign to c.end() =" << *(c.end()) << std::endl;
-	e.assign(c.begin() + 10, c.end());	//if end, = end - 1
+	//std::cout	<< "assign to c.end() =" << *(c.end()) << std::endl;
+	//e.assign(c.begin() + 10, c.end());
+	//print_vector(e, "E");
+	//print_info(e, "E");
+
+	//std::cout	<< "assign to c.end() + 1 =" << *(c.end() + 1) << std::endl;
+	//e.assign(c.begin(), c.end() + 1);
+	//print_vector(e, "E");
+	//print_info(e, "E");
+	
+	std::cout	<< "assign from c.begin() - 1 =" << *(c.begin() - 1) << std::endl;
+	e.assign(c.begin() - 1, c.end() - 10);
 	print_vector(e, "E");
 	print_info(e, "E");
 
-	//std::cout	<< "swap!" << std::endl;
-	//std::cout	<< "swap overload!" << std::endl;
+	c.resize(25, "hi");
+	print_vector(c, "C");
+	print_info(c, "C");
+	print_vector(e, "E");
+	print_info(e, "E");
+	
+	std::cout	<< "swap!" << std::endl;
 
+	e.swap(c);
+	print_vector(c, "C");
+	print_info(c, "C");
+	
+	std::cout	<< "deleting src..." << std::endl;
+	c.clear();	
+	
+	print_vector(e, "E");
+	print_info(e, "E");
+
+	std::cout	<< "swap overload!" << std::endl;
+
+	swap(c, e);
+
+	print_vector(c, "C");
+	print_info(c, "C");
+	print_vector(e, "E");
+	print_info(e, "E");
+	
 	//std::cout	<< "clearing a..." << std::endl;
 
 	//print_info(a, "A");
