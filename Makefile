@@ -6,7 +6,7 @@
 #    By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/26 17:19:58 by jusaint-          #+#    #+#              #
-#    Updated: 2022/07/07 16:26:04 by jusaint-         ###   ########.fr        #
+#    Updated: 2022/07/08 18:03:19 by jusaint-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ CXX				=	c++
 
 RM				=	rm -rf
 
-SRCS				=	main_vector.cpp	\
+SRCS				=	main_vector.cpp
 
 SRCS_DIR			=	test		\
 					src		\
@@ -43,8 +43,19 @@ vpath %.d			$(DEPS_DIR)
 
 all:				$(NAME)
 
+diff:				std_vec ft_vec
+	./std_vec > "test/outfiles/std_vector_outfile.txt" &
+	./ft_vec > "test/outfiles/std_vector_outfile.txt" &
+	diff test/outfiles/std_vector_outfile.txt test/outfiles/std_vector_outfile.txt
+
 $(NAME):			$(DEPS) $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(NAME)
+
+std:				$(DEPS) $(OBJS)
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -DNAMESPACE=std $(addprefix $(OBJS_DIR)/,$(OBJS)) -o "std_vec"
+
+ft:			$(DEPS) $(OBJS)
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -DNAMESPACE=ft $(addprefix $(OBJS_DIR)/,$(OBJS)) -o "ft_vec"
 
 %.d:				%.cpp
 	$(CXX) $(INC) -MM $< -MF $(DEPS_DIR)/$@ 
@@ -68,7 +79,7 @@ clean:
 	$(RM) $(OBJS_DIR) $(DEPS_DIR)
 
 fclean:				clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) ft_vec std_vec
 
 re:				fclean all
 
