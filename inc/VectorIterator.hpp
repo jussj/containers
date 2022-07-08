@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/06 19:49:12 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/08 11:13:42 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ namespace ft {
 				return *this;
 			}
 			VectorIterator	operator++(int) {
-				VectorIterator	tmp = *this;
+				VectorIterator tmp = *this;
 				
 				++_ptr;
 				return tmp;

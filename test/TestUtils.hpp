@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:01:37 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/07 15:44:09 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/08 14:57:12 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,12 @@
 template<class T>
 class	IncrediblyComplex {
 	public:
-		IncrediblyComplex() : _nb(42), _ptr(new T) {}
-		IncrediblyComplex(int n, T type) : _nb(n), _ptr(new T) {
+		IncrediblyComplex<T>() : _nb(42), _ptr(new T) {}
+		
+		IncrediblyComplex<T>(int n, T type) : _nb(n), _ptr(new T) {
 			*_ptr = type;
 		}
-		IncrediblyComplex(IncrediblyComplex const &src)
+		IncrediblyComplex<T>(IncrediblyComplex const &src)
 			: _nb(src._nb), _ptr(new T) {
 			*_ptr 	= *src._ptr;
 		}

@@ -6,12 +6,12 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/07 19:22:59 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/08 15:06:08 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE std
+# define NAMESPACE ft
 
 #endif
 
@@ -29,12 +29,17 @@ int 	main() {
 							// is_integral, 
 							// will use range ctor
 	NAMESPACE::vector<std::string>	c(4, "he");
-	NAMESPACE::vector<IncrediblyComplex<int> >	d(5);
+	//NAMESPACE::vector<IncrediblyComplex<int> >	d(5);
+	NAMESPACE::vector<IncrediblyComplex<char> >	d {
+		IncrediblyComplex(1, 'a'),
+		IncrediblyComplex(1, 'a'),
+		IncrediblyComplex(1, 'a')
+	};
 
 	print_info<NAMESPACE::vector<int> >(a, "A");
 	print_info(c, "C");
 	print_info(d, "D");
-
+/*
 	if (a.empty())
 		std::cout << "A is empty" << std::endl;
 	if (!c.empty())
@@ -191,7 +196,7 @@ int 	main() {
 			<< "c.begin is " << *cvbegin << std::endl;
 	//std::cout << "c.end is " << *vend << std::endl; // will segf
 
-	std::cout 	<< "iterating through vector... " << std::endl 
+	std::cout 	<< "iterating through vector..." << std::endl 
 			<< "[ ";
 	for (	NAMESPACE::vector<std::string>::const_iterator it = cvbegin;
 		it != cvend;
@@ -199,16 +204,41 @@ int 	main() {
 		std::cout << *it << " "; 
 	}
 	std::cout	<< "]" << std::endl << std::endl;
+
+	std::cout	<< "assign with iterators..." << std::endl;
 	
-	std::cout	<< "clearing a..." << std::endl;
+	NAMESPACE::vector<std::string>						e(20, "HE");
+//	NAMESPACE::vector<IncrediblyComplex<IncrediblyComplex<float> > >	f(42);
+//	NAMESPACE::vector<IncrediblyComplex<std::string> >			g(6);
+
+	c.push_back("he");
+	c.push_back("ha");
+	
+	print_vector(e, "E");
+	print_info(e, "E");
+	print_vector(c, "C");
+	print_info(c, "C");
+
+	NAMESPACE::vector<std::string>::iterator				ite;
+	NAMESPACE::vector<IncrediblyComplex<std::string> >::iterator		itg;
+
+	e.assign(c.begin() + 1, c.end() - 1);
+
+	print_vector(e, "E");
+	print_info(e, "E");
+
+	//std::cout	<< "swap!" << std::endl;
+	//std::cout	<< "swap overload!" << std::endl;
+
+	//std::cout	<< "clearing a..." << std::endl;
 
 	//print_info(a, "A");
 	//a.clear();
 	//print_info(a, "A");
 
-	test_capacity(a, "A");
-	test_capacity(c, "C");
-	test_capacity(d, "D");
+	//test_capacity(a, "A");
+	//test_capacity(c, "C");
+	//test_capacity(d, "D");
 	
-	return 0;
+	return 0;*/
 }

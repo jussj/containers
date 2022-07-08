@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Vector.hpp                                         :+:      :+:    :+:   */
+/*   vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/07 19:53:46 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/08 14:43:50 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <memory>		// allocator
 # include <stdexcept>		// exceptions
 # include <sstream>		// stream
+# include <iostream>
 # include "VectorIterator.hpp"
 
 namespace ft {
@@ -51,7 +52,7 @@ namespace ft {
 					const Alloc& Allocator = Alloc()) 
 				: _alloc(Allocator) {
 				this->_begin 	= this->_alloc.allocate(n + 1);
-				pointer p 	    = this->_begin;
+				pointer p 	= this->_begin;
 				
 				for (size_type s = 0; s < n; s++)
 					this->_alloc.construct(p++, value);	
@@ -82,17 +83,21 @@ namespace ft {
 			
 			template <class InputIterator>
 			void 			assign(InputIterator first, InputIterator last) {
-				size_type dis	= this->_distance(first, last);
-				this->reserve(dis);
-				for (iterator it = first; first != last; it++) 
-					this->pop_back(*it);
-				for (iterator it = first; first != last; it++) 
-					this->push_back(*it);	
+				size_type dis	= this->distance(first, last);
+				iterator it	= first;
+				
+				if (dis > this->capacity())
+					this->reserve(dis);
+				//for (size_type s = 0; s < this->size(); s++) 
+				 //	this->pop_back();
+				//for (iterator it = first; it != last; it++) 
+					//this->push_back(*it);	
 			}
 
 			void			assign(size_type n, const value_type& value) {
 				if (n > this->capacity())
 					reserve(n);
+				// not destroying elements???
 				for (size_type s = 0; s < n; s++)
 					this->_alloc.construct(this->_begin + s, value);	
 				this->_end	= this->_begin + n;
@@ -106,7 +111,7 @@ namespace ft {
 			
 			//vector&		operator=(const vector& src) {
 			vector<T,Alloc>&	operator=(const vector<T,Alloc>& src) {
-				if (&src = this)
+				if (&src == this)
 					return *this;
 				//use assign with the iterators!!
 			}
@@ -250,7 +255,6 @@ namespace ft {
 				this->_capacity	= src.begin() + src.capacity();
 				src._begin	= tmp_begin;
 				src._end	= tmp_end;
-				src._alloc	= tmp_alloc;
 
 			}
 			
@@ -281,7 +285,8 @@ namespace ft {
 			}
 
 			// should have a const safe passage!! template?
-			difference_type	_distance(iterator first, iterator last) {
+			template<class It>
+			difference_type	distance(It first, It last) {
 				return last - first;
 			}
 			
@@ -326,7 +331,7 @@ namespace ft {
 
 	template <class T, class Alloc>
 	void swap(vector<T,Alloc>& x, vector<T,Alloc>& y) {
-		//x.swap(y);
+		x.swap(y);
 	}
 }
 
