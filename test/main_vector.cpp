@@ -6,12 +6,12 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/08 19:34:22 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:53:51 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE ft
+# define NAMESPACE std
 
 #endif
 
@@ -218,8 +218,13 @@ int 	main() {
 	NAMESPACE::vector<std::string>::iterator				ite;
 	NAMESPACE::vector<IncrediblyComplex<std::string> >::iterator		itg;
 
-//	e.assign(c.begin() + 10, c.end());
-
+	std::cout	<< "assign to c.end() - 1 =" << *(c.end() - 1) << std::endl;
+	e.assign(c.begin() + 10, c.end() - 1);
+	print_vector(e, "E");
+	print_info(e, "E");
+	
+	std::cout	<< "assign to c.end() =" << *(c.end()) << std::endl;
+	e.assign(c.begin() + 10, c.end());	//if end, = end - 1
 	print_vector(e, "E");
 	print_info(e, "E");
 
