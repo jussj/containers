@@ -6,7 +6,7 @@
 #    By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/26 17:19:58 by jusaint-          #+#    #+#              #
-#    Updated: 2022/07/08 18:03:19 by jusaint-         ###   ########.fr        #
+#    Updated: 2022/07/08 18:06:26 by jusaint-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,10 +51,10 @@ diff:				std_vec ft_vec
 $(NAME):			$(DEPS) $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(NAME)
 
-std:				$(DEPS) $(OBJS)
+std_vec:			$(DEPS) $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -DNAMESPACE=std $(addprefix $(OBJS_DIR)/,$(OBJS)) -o "std_vec"
 
-ft:			$(DEPS) $(OBJS)
+ft_vec:				$(DEPS) $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -DNAMESPACE=ft $(addprefix $(OBJS_DIR)/,$(OBJS)) -o "ft_vec"
 
 %.d:				%.cpp
