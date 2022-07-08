@@ -6,7 +6,7 @@
 #    By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/26 17:19:58 by jusaint-          #+#    #+#              #
-#    Updated: 2022/07/08 18:06:26 by jusaint-         ###   ########.fr        #
+#    Updated: 2022/07/08 18:15:39 by jusaint-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,7 @@ RM				=	rm -rf
 
 SRCS				=	main_vector.cpp
 
-SRCS_DIR			=	test		\
-					src		\
+SRCS_DIR			=	test
 
 INC				=	-I inc/iterator -I inc/type_traits -I inc/utility
 
@@ -46,7 +45,7 @@ all:				$(NAME)
 diff:				std_vec ft_vec
 	./std_vec > "test/outfiles/std_vector_outfile.txt" &
 	./ft_vec > "test/outfiles/std_vector_outfile.txt" &
-	diff test/outfiles/std_vector_outfile.txt test/outfiles/std_vector_outfile.txt
+	diff "test/outfiles/std_vector_outfile.txt" "test/outfiles/std_vector_outfile.txt" > "diff.txt"
 
 $(NAME):			$(DEPS) $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(NAME)

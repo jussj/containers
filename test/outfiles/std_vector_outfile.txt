@@ -11,13 +11,6 @@
    max_size:   576460752303423487
    front/back: [ he ... he ]
 
-
-// VECTOR D INFO
-   size:       5
-   capacity:   5
-   max_size:   1152921504606846975
-   front/back: [ (42; 0) ... (42; 0) ]
-
 A is empty
 C is NOT empty
 D is NOT empty
@@ -31,10 +24,6 @@ a.push_back() * 3...
    [ 42 789 321321 ]
 
 d.pop_back()...
-
-// VECTOR D ARRAY
-   [ (42; 0) (42; 0) (42; 0) (42; 0) ]
-
 c.reserve(4)...
 
 // VECTOR C INFO
@@ -169,52 +158,16 @@ c.assign(13, ho)...
 // VECTOR C ARRAY
    [ ho ho ho ho ho ho ho ho ho ho ho ho ho ]
 
-// VECTOR A
-   >> IS EMPTY
-     no
-
-   >> RESERVE
-	  reserve(0)
-      reserve(max_size+1)
-	  reserve(size+10)
-
-   >> POP_BACK()
-
-   >> RESIZE()
-
-// VECTOR C
-   >> IS EMPTY
-     no
-
-   >> RESERVE
-	  reserve(0)
-      reserve(max_size+1)
-	  reserve(size+10)
-
-   >> POP_BACK()
-
-   >> RESIZE()
-
-// VECTOR D
-   >> IS EMPTY
-     no
-
-   >> RESERVE
-	  reserve(0)
-      reserve(max_size+1)
-	  reserve(size+10)
-
-   >> POP_BACK()
-
-   >> RESIZE()
-
 iterators... 
-c.begin is 
+c.begin is ho
 iterating through vector... 
-[                        ]
+[ ho ho ho ho ho ho ho ho ho ho ho ho ho ]
 
 const iterators... 
-c.begin is 
-iterating through vector... 
-[                        ]
+c.begin is ho
+iterating through vector...
+[ ho ho ho ho ho ho ho ho ho ho ho ho ho ]
 
+assign with iterators...
+
+// VECTOR E ARRAY

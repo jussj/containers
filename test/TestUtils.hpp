@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:01:37 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/08 14:57:12 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/08 18:59:31 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@
 template<class T>
 class	IncrediblyComplex {
 	public:
-		IncrediblyComplex<T>() : _nb(42), _ptr(new T) {}
+		IncrediblyComplex() : _nb(42), _ptr(new T) {}
+		//IncrediblyComplex() : _nb(42), _ptr(new char) {}
 		
-		IncrediblyComplex<T>(int n, T type) : _nb(n), _ptr(new T) {
+		IncrediblyComplex(int n, T type) : _nb(n), _ptr(new T) {
+		//IncrediblyComplex(int n, char type) : _nb(n), _ptr(new char) {
 			*_ptr = type;
 		}
-		IncrediblyComplex<T>(IncrediblyComplex const &src)
+		IncrediblyComplex(IncrediblyComplex const &src)
 			: _nb(src._nb), _ptr(new T) {
+			//: _nb(src._nb), _ptr(new char) {
 			*_ptr 	= *src._ptr;
 		}
 		~IncrediblyComplex() {
@@ -38,6 +41,7 @@ class	IncrediblyComplex {
 		}
 	private:
 		int	_nb;
+		//char	*_ptr;
 		T	*_ptr;
 };
 
@@ -56,10 +60,10 @@ void	print_info(const Vec& v, std::string name) {
 			<< "   size:       " << v.size() << std::endl
 			<< "   capacity:   " << v.capacity() << std::endl
 			<< "   max_size:   " << v.max_size() << std::endl;
-			if (!v.empty()) {
-				std::cout	<< "   front/back: [ " << v.front()
-						<< " ... " << v.back() << " ]" << std::endl;
-			}
+			//if (!v.empty()) {
+				//std::cout	<< "   front/back: [ " << v.front()
+						//<< " ... " << v.back() << " ]" << std::endl;
+			//}
 	std::cout	<< std::endl;
 }
 

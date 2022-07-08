@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/08 15:06:08 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:34:22 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,13 @@ int 	main() {
 							// is_integral, 
 							// will use range ctor
 	NAMESPACE::vector<std::string>	c(4, "he");
-	//NAMESPACE::vector<IncrediblyComplex<int> >	d(5);
-	NAMESPACE::vector<IncrediblyComplex<char> >	d {
-		IncrediblyComplex(1, 'a'),
-		IncrediblyComplex(1, 'a'),
-		IncrediblyComplex(1, 'a')
-	};
+	NAMESPACE::vector<IncrediblyComplex<int> >	d(5);
+	//NAMESPACE::vector<IncrediblyComplex>	d(5);
 
 	print_info<NAMESPACE::vector<int> >(a, "A");
 	print_info(c, "C");
-	print_info(d, "D");
-/*
+	//print_info(d, "D");
+
 	if (a.empty())
 		std::cout << "A is empty" << std::endl;
 	if (!c.empty())
@@ -79,7 +75,7 @@ int 	main() {
 	std::cout	<< "d.pop_back()..." << std::endl;
 	
 	d.pop_back();
-	print_vector(d, "D");
+//	print_vector(d, "D");
 
 	std::cout 	<< "c.reserve(4)..." << std::endl;
 	c.reserve(4);
@@ -170,10 +166,10 @@ int 	main() {
 	print_info(c, "C");
 	print_vector(c, "C");
 
-	//typedef std::iterator_traits<int*> traits;
+//	typedef std::iterator_traits<int*> traits;
   	
-	//if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
-    	//	std::cout << "int* is a random-access iterator";
+//	if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
+//		    std::cout << "int* is a random-access iterator";
 
 	NAMESPACE::vector<std::string>::iterator vbegin	= c.begin();
 	NAMESPACE::vector<std::string>::iterator vend	= c.end();
@@ -222,7 +218,7 @@ int 	main() {
 	NAMESPACE::vector<std::string>::iterator				ite;
 	NAMESPACE::vector<IncrediblyComplex<std::string> >::iterator		itg;
 
-	e.assign(c.begin() + 1, c.end() - 1);
+//	e.assign(c.begin() + 10, c.end());
 
 	print_vector(e, "E");
 	print_info(e, "E");
@@ -240,5 +236,5 @@ int 	main() {
 	//test_capacity(c, "C");
 	//test_capacity(d, "D");
 	
-	return 0;*/
+	return 0;
 }

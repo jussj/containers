@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/08 14:43:50 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:33:26 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ namespace ft {
 		public:
 
 		// TYPES
-			// iterator and const iterator are pointers
 			typedef	VectorIterator<T>			iterator;
 			typedef	VectorIterator<const T>			const_iterator;
 			typedef	size_t					size_type;
@@ -87,9 +86,9 @@ namespace ft {
 				iterator it	= first;
 				
 				if (dis > this->capacity())
-					this->reserve(dis);
-				//for (size_type s = 0; s < this->size(); s++) 
-				 //	this->pop_back();
+					this->reserve(dis);	
+				for (size_type s = 0; s < 2; s++) 
+					this->pop_back();
 				//for (iterator it = first; it != last; it++) 
 					//this->push_back(*it);	
 			}
@@ -180,7 +179,8 @@ namespace ft {
 			void 		reserve(size_type n) {
 				if (n > max_size())
 					throw std::length_error("vector::reserve");
-				else if (n > capacity()) {
+
+				else if (n > this->capacity()) {
 					pointer tmp		= this->_alloc.allocate(n + 1);
 					size_type array_size	= this->size();
 					
@@ -227,7 +227,8 @@ namespace ft {
 		// MODIFIERS
 
 			void 		push_back(const T& x) {
-				this->reserve(1);
+				if (this->size() + 1 > this->capacity())
+					this->reserve(this->capacity() + 1);
 				this->_end += 1;
 				this->_alloc.construct(this->_end - 1, x);
 			}
