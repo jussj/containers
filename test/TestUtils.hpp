@@ -6,7 +6,7 @@
 /*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 10:01:37 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/08 18:59:31 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:54:26 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ void	print_info(const Vec& v, std::string name) {
 			<< "   size:       " << v.size() << std::endl
 			<< "   capacity:   " << v.capacity() << std::endl
 			<< "   max_size:   " << v.max_size() << std::endl;
-			//if (!v.empty()) {
-				//std::cout	<< "   front/back: [ " << v.front()
-						//<< " ... " << v.back() << " ]" << std::endl;
-			//}
+			if (!v.empty()) {
+				std::cout	<< "   front/back: [ " << v.front()
+						<< " ... " << v.back() << " ]" << std::endl;
+			}
 	std::cout	<< std::endl;
 }
 

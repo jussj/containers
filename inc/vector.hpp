@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/08 21:29:41 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/09 18:33:37 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ namespace ft {
 			explicit vector(size_type n, const T& value = T(),
 					const Alloc& Allocator = Alloc()) 
 				: _alloc(Allocator) {
+				//why not using reserve
 				this->_begin 	= this->_alloc.allocate(n + 1);
 				pointer p 	= this->_begin;
 				
@@ -61,10 +62,11 @@ namespace ft {
 
 			// need enable_if and is_integral
 			template<class InputIterator>
-			vector(InputIterator first, InputIterator last, const Alloc& = Alloc());
+			vector(InputIterator first, InputIterator last, const Alloc& = Alloc()) {
+				this->assign(first, last);
+			}
 			
 			vector(const vector<T,Alloc>& src) {
-				// if is same?
 				this->_begin	= this->_alloc.allocate(src.capacity());
 				pointer p	= this->_begin;
 				for (size_type s = 0; s < src.size(); s++) {
@@ -72,6 +74,7 @@ namespace ft {
 				}
 				this->_end	= this->_begin + size();
 				this->_capacity	= this->_begin + capacity();
+				//use operator=?
 			}
 			
 			~vector() {
@@ -85,6 +88,7 @@ namespace ft {
 				size_type dis	= this->distance(first, last);
 				iterator it	= first;
 				
+				// assign on empty vec??
 				if (dis > this->capacity())
 					this->reserve(dis);	
 				this->clear();
@@ -96,6 +100,7 @@ namespace ft {
 				if (n > this->capacity())
 					reserve(n);
 				// not destroying elements???
+				// assign on empty vec??
 				for (size_type s = 0; s < n; s++)
 					this->_alloc.construct(this->_begin + s, value);	
 				this->_end	= this->_begin + n;
@@ -236,7 +241,36 @@ namespace ft {
 				this->_end--;
 			}
 			
-			iterator 	insert(iterator position, const T& x);
+			iterator 	insert(iterator position, const T& x) {
+				pointer		new_array;
+				size_type	new_capacity;
+				size_type	new_size 	= this->size() + 1;
+				size_type	distance_new 	= distance(this->begin(), position);
+				std::cout<<"DIS "<<distance_new<<std::endl;
+
+				if (this->size() + 1 > this->capacity())
+					new_capacity = this->capacity() + 1;
+				else 
+					new_capacity = this->capacity();
+				new_array = this->_alloc.allocate(this->capacity());
+				for (iterator it = this->begin(); it != this->end(); it++) {
+					if (it == position) {
+						this->_alloc.construct(new_array, x);
+					}
+					else
+						this->_alloc.construct(new_array, *it);
+					std::cout<< "ARR " << *new_array << std::endl;
+					new_array++;
+				}
+				//this->clear();
+				//this->_alloc.deallocate(this->_begin, this->size());
+				this->_begin 	= new_array;
+				this->_end 	= this->_begin + new_size;
+				this->_capacity	= this->_begin + new_capacity;
+
+				return this->_begin + distance_new;
+			}
+			
 			void 		insert(iterator position, size_type n, const T& x);
 			template <class InputIterator>
 			void 		insert(		iterator position, 

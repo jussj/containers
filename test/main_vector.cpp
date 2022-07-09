@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/08 21:31:13 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/09 17:50:56 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,18 @@ int 	main() {
 	}
 	
 	std::cout 	<< "a.reserve(7)..." << std::endl;
-	a.reserve(7);
+	a.reserve(5);
 	std::cout	<< "size of A is " << a.size()
 			<< ", actual capacity is " << a.capacity()
 			<< std::endl;
 
-	std::cout	<< "a.push_back() * 3..." << std::endl;
+	std::cout	<< "a.push_back() * 6 (past capacity)..." << std::endl;
 	a.push_back(42);
 	a.push_back(789);
 	a.push_back(321321);
+	a.push_back(12);
+	a.push_back(-89);
+	a.push_back(021321);
 
 	print_vector(a, "A");
 
@@ -76,6 +79,7 @@ int 	main() {
 	
 	d.pop_back();
 //	print_vector(d, "D");
+	std::cout	<< "//// RESERVE ////" << std::endl;
 
 	std::cout 	<< "c.reserve(4)..." << std::endl;
 	c.reserve(4);
@@ -87,6 +91,8 @@ int 	main() {
 	
 	print_info(c, "C");
 
+	std::cout	<< "//// PUSH & POP ////" << std::endl;
+	
 	std::cout	<< "c.pop_back()..." << std::endl;
 	c.pop_back();
 	
@@ -100,6 +106,8 @@ int 	main() {
 	print_info(c, "C");
 	print_vector(c, "C");
 
+	std::cout	<< "//// RESIZE ////" << std::endl;
+	
 	std::cout 	<< "c.resize(10, hi).." << std::endl;
 	c.resize(10, "hi");
 	
@@ -112,7 +120,18 @@ int 	main() {
 	print_info(c, "C");
 	print_vector(c, "C");
 
-	std::cout	<< "accessing element thru at()..." << std::endl;
+	std::cout 	<< "c.resize(6, ha).." << std::endl;
+	c.resize(6, "ha");
+
+	print_info(c, "C");	
+	print_vector(c, "C");
+
+	std::cout 	<< "c.resize(12) with NULL value..." << std::endl;
+	c.resize(12);
+
+	print_info(c, "C");
+
+	std::cout	<< "//// AT ////" << std::endl;
 
 	std::cout	<< "in range: element at(0) is "
 			<< c.at(0) << std::endl;
@@ -131,17 +150,8 @@ int 	main() {
 		std::cerr << "error thrown: " << e.what() << std::endl;
 	}
 
-	std::cout 	<< "c.resize(6, ha).." << std::endl;
-	c.resize(6, "ha");
-
-	print_info(c, "C");	
-	print_vector(c, "C");
-
-	std::cout 	<< "c.resize(12) with NULL value..." << std::endl;
-	c.resize(12);
-
-	print_info(c, "C");
-
+	std::cout	<< "//// ASSIGN(NB, T) ////" << std::endl;
+	
 	std::cout	<< "c.assign(6, hi)..." << std::endl;
 
 	c.assign(6, "hi");
@@ -166,14 +176,15 @@ int 	main() {
 	print_info(c, "C");
 	print_vector(c, "C");
 
-//	typedef std::iterator_traits<int*> traits;
-  	
-//	if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
-//		    std::cout << "int* is a random-access iterator";
+	//std::cout 	<< "//// ITERATOR TRAITS //// " << std::endl 
+	//typedef std::iterator_traits<int*> traits;
+	  
+	//if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
+		    //std::cout << "int* is a random-access iterator";
 
 	NAMESPACE::vector<std::string>::iterator vbegin	= c.begin();
 	NAMESPACE::vector<std::string>::iterator vend	= c.end();
-	std::cout 	<< "iterators... " << std::endl 
+	std::cout 	<< "//// ITERATORS //// " << std::endl 
 			<< "c.begin is " << *vbegin << std::endl;
 	//std::cout << "c.end is " << *vend << std::endl; // will segf
 
@@ -201,9 +212,9 @@ int 	main() {
 	}
 	std::cout	<< "]" << std::endl << std::endl;
 
-	std::cout	<< "assign with iterators..." << std::endl;
+	std::cout	<< "//// ASSIGN(IT, IT) ////" << std::endl;
 	
-	NAMESPACE::vector<std::string>						e(20, "HE");
+	NAMESPACE::vector<std::string>		e(20, "HE");
 //	NAMESPACE::vector<IncrediblyComplex<IncrediblyComplex<float> > >	f(42);
 //	NAMESPACE::vector<IncrediblyComplex<std::string> >			g(6);
 
@@ -244,13 +255,13 @@ int 	main() {
 	print_vector(e, "E");
 	print_info(e, "E");
 	
-	std::cout	<< "swap!" << std::endl;
+	std::cout	<< "//// SWAP ////" << std::endl;
 
 	e.swap(c);
 	print_vector(c, "C");
 	print_info(c, "C");
 	
-	std::cout	<< "deleting src..." << std::endl;
+	std::cout	<< "clearing src..." << std::endl;
 	c.clear();	
 	
 	print_vector(e, "E");
@@ -265,7 +276,7 @@ int 	main() {
 	print_vector(e, "E");
 	print_info(e, "E");
 	
-	//std::cout	<< "clearing a..." << std::endl;
+	//std::cout	<< "//// CLEAR ////" << std::endl;
 
 	//print_info(a, "A");
 	//a.clear();
@@ -274,6 +285,22 @@ int 	main() {
 	//test_capacity(a, "A");
 	//test_capacity(c, "C");
 	//test_capacity(d, "D");
+	
+	std::cout	<< "//// INSERT ////" << std::endl << std::endl;
+
+	NAMESPACE::vector<std::string>::iterator				pos;
+	//pos = e.insert(e.begin(), "he");	// empty array, segf
+						// it on wrong vector
+	//c.reserve(30);
+	//pos = c.insert(e.end(), "HE");	// past size, segf
+	//pos = c.insert(e.capacity() + 1, "HE"); 
+						// past cap, compile not
+	pos = c.insert(c.begin() + 6, "HO");
+
+	std::cout	<< "new element is " << *pos << std::endl;
+
+	print_vector(c, "C");
+	print_info(c, "C");
 	
 	return 0;
 }
