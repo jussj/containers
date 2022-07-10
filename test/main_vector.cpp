@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/10 18:00:25 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/10 21:16:12 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,6 +298,15 @@ int 	main() {
 	//pos = c.insert(e.capacity() + 1, "HE"); 
 						// past cap, compile not
 	pos = c.insert(c.begin() + 6, "HO");
+
+	std::cout	<< "new element is " << *pos << std::endl;
+
+	print_vector(c, "C");
+	print_info(c, "C");
+	
+	std::cout	<< "//// ERASE ////" << std::endl << std::endl;
+	
+	pos = c.erase(c.begin() + 6);
 
 	std::cout	<< "new element is " << *pos << std::endl;
 

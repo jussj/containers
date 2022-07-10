@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/10 19:13:05 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/10 21:21:01 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ namespace ft {
 					reserve(n);
 				// not destroying elements???
 				// assign on empty vec??
+				// FUNC construct param size + value + new end
 				for (size_type s = 0; s < n; s++)
 					this->_alloc.construct(this->_begin + s, value);	
 				this->_end	= this->_begin + n;
@@ -158,6 +159,7 @@ namespace ft {
 				if (n > this->size()) {
 					if (n > this->capacity())
 						reserve(n);
+					// FUNC construct param size + value + new end
 					for (size_type s = this->size(); s < n; s++)
 						this->_alloc.construct(_begin + s, value);	
 					this->_end = this->_begin + n;
@@ -277,8 +279,28 @@ namespace ft {
 			void 		insert(		iterator position, 
 							InputIterator first, 
 							InputIterator last	);
-			iterator 	erase(iterator position);
 			iterator 	erase(iterator first, iterator last);
+			iterator 	erase(const_iterator position);
+			iterator 	erase(iterator position) {
+				// check pos? must be valid and dereferenceable (not end())
+				size_type	new_size 	= this->size() - 1;
+				iterator	it		= this->begin();
+				size_type	new_position	= distance(this->begin(), position);
+				
+				for (size_type s = 0; s < this->size(); s++) {
+					if (it == position) {
+						this->_alloc.destroy(this->_begin + s);
+						it++;
+						this->_alloc.construct(this->_begin + s, *it);
+					}
+					else if (it > position)
+						this->_alloc.construct(this->_begin + s, *it);
+					it++;
+				}
+				this->_end 	= this->_begin + new_size;
+
+				return this->begin() + new_position;
+			}
 			
 			void 		swap(vector<T,Alloc>& src) {
 				pointer	tmp_begin 	= this->_begin;
@@ -289,7 +311,6 @@ namespace ft {
 				this->_capacity	= src._begin + src.capacity();
 				src._begin	= tmp_begin;
 				src._end	= tmp_end;
-
 			}
 			
 			void 		clear() {
