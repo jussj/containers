@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/09 17:50:56 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/10 18:00:25 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,16 +235,18 @@ int 	main() {
 	print_info(e, "E");
 	
 	//std::cout	<< "assign to c.end() =" << *(c.end()) << std::endl;
-	//e.assign(c.begin() + 10, c.end());
-	//print_vector(e, "E");
-	//print_info(e, "E");
+	// is undefined? protect against segf?
+	std::cout	<< "assign to c.end()" << std::endl;
+	e.assign(c.begin() + 10, c.end());
+	print_vector(e, "E");
+	print_info(e, "E");
 
-	//std::cout	<< "assign to c.end() + 1 =" << *(c.end() + 1) << std::endl;
-	//e.assign(c.begin(), c.end() + 1);
-	//print_vector(e, "E");
-	//print_info(e, "E");
+	std::cout	<< "assign to c.end() + 1" << std::endl;
+	e.assign(c.begin() + 10, c.end() + 1);
+	print_vector(e, "E");
+	print_info(e, "E");
 	
-	std::cout	<< "assign from c.begin() - 1 =" << *(c.begin() - 1) << std::endl;
+	std::cout	<< "assign from c.begin() - 1" << std::endl;
 	e.assign(c.begin() - 1, c.end() - 10);
 	print_vector(e, "E");
 	print_info(e, "E");

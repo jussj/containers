@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/09 18:33:37 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/10 19:13:05 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,30 +245,31 @@ namespace ft {
 				pointer		new_array;
 				size_type	new_capacity;
 				size_type	new_size 	= this->size() + 1;
-				size_type	distance_new 	= distance(this->begin(), position);
-				std::cout<<"DIS "<<distance_new<<std::endl;
-
+				size_type	new_position	= distance(this->begin(), position);
+				
 				if (this->size() + 1 > this->capacity())
 					new_capacity = this->capacity() + 1;
 				else 
 					new_capacity = this->capacity();
-				new_array = this->_alloc.allocate(this->capacity());
-				for (iterator it = this->begin(); it != this->end(); it++) {
+				new_array 	= this->_alloc.allocate(new_capacity);
+				iterator it	= this->begin();
+				for (size_type s = 0; s < new_size; s++) {
 					if (it == position) {
-						this->_alloc.construct(new_array, x);
+						this->_alloc.construct(new_array + s, x);
+						s += 1;
+						this->_alloc.construct(new_array + s, *it);
 					}
 					else
-						this->_alloc.construct(new_array, *it);
-					std::cout<< "ARR " << *new_array << std::endl;
-					new_array++;
+						this->_alloc.construct(new_array + s, *it);
+					it++;
 				}
-				//this->clear();
-				//this->_alloc.deallocate(this->_begin, this->size());
+				this->clear();
+				this->_alloc.deallocate(this->_begin, this->size());
 				this->_begin 	= new_array;
 				this->_end 	= this->_begin + new_size;
 				this->_capacity	= this->_begin + new_capacity;
 
-				return this->_begin + distance_new;
+				return this->begin() + new_position;
 			}
 			
 			void 		insert(iterator position, size_type n, const T& x);
@@ -317,9 +318,18 @@ namespace ft {
 				return str;
 			}
 
+			// protect against not random access it?
 			template<class It>
-			difference_type	distance(It first, It last) {
-				return last - first;
+			//typename std::iterator_traits<It>::difference_type
+			difference_type
+			distance(It first, It last) {
+				difference_type dis	= 0;
+				while (first != last) {
+					++first;
+					++dis;
+				}
+				return dis;
+				//return last - first;
 			}
 			
 			void		_range_check(size_type n) {

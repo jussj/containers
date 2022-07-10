@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/09 17:54:13 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/10 10:17:40 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,21 @@ namespace ft {
 			}
 
 			// RANDOM ACCESS
-			//value_type		operator+(difference_type n) const {
-			pointer		operator+(difference_type n) const {
+			VectorIterator	operator+(difference_type n) const {
+			//pointer		operator+(difference_type n) const {
 				return current() + n;
 			}
-			pointer		operator-(difference_type n) const {
+			VectorIterator	operator-(difference_type n) const {
+			//pointer		operator-(difference_type n) const {
 				return current() - n;
 			}
-			VectorIterator&	operator+=(difference_type n) {
+			VectorIterator&	operator+=(int n) {
+			//VectorIterator&	operator+=(difference_type n) {
 				this->ptr += n;
 				return *this;
 			}
-			VectorIterator&	operator-=(difference_type n) {
+			VectorIterator&	operator-=(int n) {
+			//VectorIterator&	operator-=(difference_type n) {
 				this->ptr -= n;
 				return *this;
 			}
