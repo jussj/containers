@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/10 21:16:12 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:26:03 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,6 +312,27 @@ int 	main() {
 
 	print_vector(c, "C");
 	print_info(c, "C");
+	
+	pos = c.erase(c.begin());
+
+	std::cout	<< "new element is " << *pos << std::endl;
+
+	print_vector(c, "C");
+	print_info(c, "C");
+
+	pos = c.erase(c.end());
+
+	std::cout	<< "new element is " << *pos << std::endl;
+
+	print_vector(c, "C");
+	print_info(c, "C");
+	
+	std::cout	<< "clearing c" << std::endl;
+	c.clear();
+
+	pos = c.erase(c.begin());
+
+	std::cout	<< "new element is " << *pos << std::endl;
 	
 	return 0;
 }
