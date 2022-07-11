@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/10 21:21:01 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/11 12:02:19 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,13 +281,14 @@ namespace ft {
 							InputIterator last	);
 			iterator 	erase(iterator first, iterator last);
 			iterator 	erase(const_iterator position);
+
 			iterator 	erase(iterator position) {
 				// check pos? must be valid and dereferenceable (not end())
 				size_type	new_size 	= this->size() - 1;
-				iterator	it		= this->begin();
 				size_type	new_position	= distance(this->begin(), position);
-				
-				for (size_type s = 0; s < this->size(); s++) {
+				size_type 	s 		= 0;
+
+				for (iterator it = this->begin(); it != this->end(); it++) {
 					if (it == position) {
 						this->_alloc.destroy(this->_begin + s);
 						it++;
@@ -295,7 +296,7 @@ namespace ft {
 					}
 					else if (it > position)
 						this->_alloc.construct(this->_begin + s, *it);
-					it++;
+					s++;
 				}
 				this->_end 	= this->_begin + new_size;
 
@@ -355,7 +356,8 @@ namespace ft {
 			
 			void		_range_check(size_type n) {
 				std::string	fmt;
-				fmt = "vector::_M_range_check: __n (which is ";
+				//fmt = "vector::_M_range_check: __n (which is ";
+				fmt = "vector::_range_check: n (which is ";
 
 				fmt.append(long_to_str(n));
 				fmt.append(") >= this->size() (which is ");
