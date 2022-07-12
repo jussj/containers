@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/12 16:31:40 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/12 18:53:49 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,6 +340,23 @@ int 	main() {
 	//pos = c.erase(c.begin());	// will segf
 
 	//std::cout	<< "new element is " << *pos << std::endl;
+
+	std::cout	<< "//// INSERT MULTIPLE VALUES ////" << std::endl;
+
+	c.insert(c.begin() + 4, 6, "HO");
+
+	print_vector(c, "C"); // diff capacity
+	print_info(c, "C");
+	
+	c.insert(c.begin() + 4, 6, "HA");
+
+	print_vector(c, "C"); // diff capacity
+	print_info(c, "C");
+	
+	c.insert(c.begin() + 4, 20, "HA");
+
+	print_vector(c, "C"); // diff capacity
+	print_info(c, "C");
 	
 	return 0;
 }

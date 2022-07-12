@@ -386,3 +386,37 @@ new element is hi
    max_size:   576460752303423487
    front/back: [ ho ... hi ]
 
+//// INSERT MULTIPLE VALUES ////
+
+// VECTOR C ARRAY
+   [ ho ho ho ho HO HO HO HO HO HO ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi ]
+
+
+// VECTOR C INFO
+   size:       29
+   capacity:   46
+   max_size:   576460752303423487
+   front/back: [ ho ... hi ]
+
+
+// VECTOR C ARRAY
+   [ ho ho ho ho HA HA HA HA HA HA HO HO HO HO HO HO ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi ]
+
+
+// VECTOR C INFO
+   size:       35
+   capacity:   46
+   max_size:   576460752303423487
+   front/back: [ ho ... hi ]
+
+
+// VECTOR C ARRAY
+   [ ho ho ho ho HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HO HO HO HO HO HO ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi ]
+
+
+// VECTOR C INFO
+   size:       55
+   capacity:   70
+   max_size:   576460752303423487
+   front/back: [ ho ... hi ]
+

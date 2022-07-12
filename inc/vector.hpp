@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/12 16:35:29 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/12 18:53:15 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,21 +244,28 @@ namespace ft {
 			}
 			
 			iterator 	insert(iterator position, const T& x) {
+				size_type new_position = distance(this->begin(), position);
+			
+				insert(position, 1, x);
+				return this->begin() + new_position;
+			}
+
+			void 		insert(iterator position, size_type n, const T& x) {
 				pointer		new_array;
 				size_type	new_capacity;
-				size_type	new_size 	= this->size() + 1;
-				size_type	new_position	= distance(this->begin(), position);
+				size_type	new_size 	= this->size() + n;
 				
-				if (this->size() + 1 > this->capacity())
-					new_capacity = this->capacity() + 1;
+				// check whether capacity calculation is ok or not ok
+				if (this->size() + n > this->capacity())
+					new_capacity = this->capacity() + (n * 2);
 				else 
 					new_capacity = this->capacity();
 				new_array 	= this->_alloc.allocate(new_capacity);
 				iterator it	= this->begin();
 				for (size_type s = 0; s < new_size; s++) {
 					if (it == position) {
-						this->_alloc.construct(new_array + s, x);
-						s += 1;
+						this->_fill(new_array + s, n, x);
+						s += n;
 						this->_alloc.construct(new_array + s, *it);
 					}
 					else
@@ -270,17 +277,17 @@ namespace ft {
 				this->_begin 	= new_array;
 				this->_end 	= this->_begin + new_size;
 				this->_capacity	= this->_begin + new_capacity;
-
-				return this->begin() + new_position;
 			}
-			
-			void 		insert(iterator position, size_type n, const T& x);
+
 			template <class InputIterator>
 			void 		insert(		iterator position, 
 							InputIterator first, 
 							InputIterator last	);
-			iterator 	erase(iterator first, iterator last);
-			iterator 	erase(const_iterator position);
+			
+			iterator 	erase(iterator first, iterator last) {
+				for (iterator it = first; first != last; it++)
+					erase(it);
+			}
 
 			iterator 	erase(iterator position) {
 				// check pos? must be valid and dereferenceable (not end())
@@ -355,6 +362,11 @@ namespace ft {
 				}
 				return dis;
 				//return last - first;
+			}
+			
+			void		_fill(pointer start, size_type size, const T& value) {
+				for (size_type s = 0; s < size; s++)
+					this->_alloc.construct(start + s, value);
 			}
 			
 			void		_range_check(size_type n) {
