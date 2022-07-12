@@ -175,6 +175,28 @@ iterating through vector...
 
 //// ASSIGN(IT, IT) ////
 
+// VECTOR C ARRAY
+   [ ho ho ho ho ho ho ho ho ho ho ho ho ho ]
+
+
+// VECTOR C INFO
+   size:       13
+   capacity:   13
+   max_size:   576460752303423487
+   front/back: [ ho ... ho ]
+
+
+// VECTOR C ARRAY
+   [ ho ho ho ho ho ho ho ho ho ho ho ho ho he ]
+
+
+// VECTOR C INFO
+   size:       14
+   capacity:   26
+   max_size:   576460752303423487
+   front/back: [ ho ... he ]
+
+
 // VECTOR E ARRAY
    [ HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE ]
 
@@ -192,7 +214,7 @@ iterating through vector...
 
 // VECTOR C INFO
    size:       15
-   capacity:   15
+   capacity:   26
    max_size:   576460752303423487
    front/back: [ ho ... ha ]
 
@@ -251,7 +273,7 @@ assign from c.begin() - 1
 
 // VECTOR C INFO
    size:       25
-   capacity:   25
+   capacity:   26
    max_size:   576460752303423487
    front/back: [ ho ... hi ]
 
@@ -274,7 +296,7 @@ assign from c.begin() - 1
 
 // VECTOR C INFO
    size:       6
-   capacity:   78
+   capacity:   20
    max_size:   576460752303423487
    front/back: [  ... ho ]
 
@@ -286,7 +308,7 @@ clearing src...
 
 // VECTOR E INFO
    size:       25
-   capacity:   25
+   capacity:   26
    max_size:   576460752303423487
    front/back: [ ho ... hi ]
 
@@ -298,7 +320,7 @@ swap overload!
 
 // VECTOR C INFO
    size:       25
-   capacity:   25
+   capacity:   26
    max_size:   576460752303423487
    front/back: [ ho ... hi ]
 
@@ -309,7 +331,7 @@ swap overload!
 
 // VECTOR E INFO
    size:       0
-   capacity:   78
+   capacity:   20
    max_size:   576460752303423487
 
 //// INSERT ////
@@ -364,5 +386,3 @@ new element is hi
    max_size:   576460752303423487
    front/back: [ ho ... hi ]
 
-clearing c
-new element is ho

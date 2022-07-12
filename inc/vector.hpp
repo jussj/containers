@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/11 12:02:19 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:35:29 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ namespace ft {
 
 			void 		push_back(const T& x) {
 				if (this->size() + 1 > this->capacity())
-					this->reserve(this->capacity() + 1);
+					this->reserve(this->size() * 2);
 				this->_end += 1;
 				this->_alloc.construct(this->_end - 1, x);
 			}
@@ -306,12 +306,15 @@ namespace ft {
 			void 		swap(vector<T,Alloc>& src) {
 				pointer	tmp_begin 	= this->_begin;
 				pointer	tmp_end 	= this->_end;
+				pointer	tmp_capacity 	= this->_capacity;
 				
 				this->_begin	= src._begin;
 				this->_end 	= src._begin + src.size();
 				this->_capacity	= src._begin + src.capacity();
 				src._begin	= tmp_begin;
 				src._end	= tmp_end;
+				src._capacity	= tmp_capacity;
+
 			}
 			
 			void 		clear() {

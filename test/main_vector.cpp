@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/11 15:26:03 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:31:40 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,14 @@ int 	main() {
 //	NAMESPACE::vector<IncrediblyComplex<IncrediblyComplex<float> > >	f(42);
 //	NAMESPACE::vector<IncrediblyComplex<std::string> >			g(6);
 
+	print_vector(c, "C");
+	print_info(c, "C");
+	
 	c.push_back("he");
+	
+	print_vector(c, "C");
+	print_info(c, "C");
+
 	c.push_back("ha");
 	
 	print_vector(e, "E");
@@ -260,7 +267,7 @@ int 	main() {
 	std::cout	<< "//// SWAP ////" << std::endl;
 
 	e.swap(c);
-	print_vector(c, "C");
+	print_vector(c, "C"); // capacity differs 
 	print_info(c, "C");
 	
 	std::cout	<< "clearing src..." << std::endl;
@@ -275,7 +282,7 @@ int 	main() {
 
 	print_vector(c, "C");
 	print_info(c, "C");
-	print_vector(e, "E");
+	print_vector(e, "E"); // capacity differs
 	print_info(e, "E");
 	
 	//std::cout	<< "//// CLEAR ////" << std::endl;
@@ -327,12 +334,12 @@ int 	main() {
 	print_vector(c, "C");
 	print_info(c, "C");
 	
-	std::cout	<< "clearing c" << std::endl;
-	c.clear();
+	//std::cout	<< "clearing c" << std::endl;
+	//c.clear();
 
-	pos = c.erase(c.begin());
+	//pos = c.erase(c.begin());	// will segf
 
-	std::cout	<< "new element is " << *pos << std::endl;
+	//std::cout	<< "new element is " << *pos << std::endl;
 	
 	return 0;
 }

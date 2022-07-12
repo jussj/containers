@@ -175,6 +175,28 @@ iterating through vector...
 
 //// ASSIGN(IT, IT) ////
 
+// VECTOR C ARRAY
+   [ ho ho ho ho ho ho ho ho ho ho ho ho ho ]
+
+
+// VECTOR C INFO
+   size:       13
+   capacity:   13
+   max_size:   576460752303423487
+   front/back: [ ho ... ho ]
+
+
+// VECTOR C ARRAY
+   [ ho ho ho ho ho ho ho ho ho ho ho ho ho he ]
+
+
+// VECTOR C INFO
+   size:       14
+   capacity:   26
+   max_size:   576460752303423487
+   front/back: [ ho ... he ]
+
+
 // VECTOR E ARRAY
    [ HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE ]
 
@@ -364,4 +386,3 @@ new element is hi
    max_size:   576460752303423487
    front/back: [ ho ... hi ]
 
-clearing c
