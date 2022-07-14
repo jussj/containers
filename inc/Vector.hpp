@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.hpp                                         :+:      :+:    :+:   */
+/*   Vector.hpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/12 18:53:15 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/14 17:37:17 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <sstream>		// stream
 # include <iostream>
 # include "VectorIterator.hpp"
+# include "Utils.hpp"
 
 namespace ft {
 	template <class T, class Alloc = std::allocator<T> >
@@ -85,7 +86,7 @@ namespace ft {
 			
 			template <class InputIterator>
 			void 			assign(InputIterator first, InputIterator last) {
-				size_type dis	= this->distance(first, last);
+				size_type dis	= ft::distance(first, last);
 				iterator it	= first;
 				
 				// assign on empty vec??
@@ -244,10 +245,10 @@ namespace ft {
 			}
 			
 			iterator 	insert(iterator position, const T& x) {
-				size_type new_position = distance(this->begin(), position);
+				size_type offset = ft::distance(this->begin(), position);
 			
 				insert(position, 1, x);
-				return this->begin() + new_position;
+				return this->begin() + offset;
 			}
 
 			void 		insert(iterator position, size_type n, const T& x) {
@@ -257,7 +258,8 @@ namespace ft {
 				
 				// check whether capacity calculation is ok or not ok
 				if (this->size() + n > this->capacity())
-					new_capacity = this->capacity() + (n * 2);
+					new_capacity = this->capacity() + n;
+					//new_capacity = this->capacity() + (n * 2);
 				else 
 					new_capacity = this->capacity();
 				new_array 	= this->_alloc.allocate(new_capacity);
@@ -280,9 +282,37 @@ namespace ft {
 			}
 
 			template <class InputIterator>
-			void 		insert(		iterator position, 
-							InputIterator first, 
-							InputIterator last	);
+			void 	insert(		iterator position, 
+						InputIterator first, 
+						InputIterator last	) {
+				pointer		new_array;
+				size_type	new_capacity;
+				size_type 	length		= ft::distance(first, last);
+				size_type	new_size	= this->size() + length;
+				
+				if (this->size() + length > this->capacity())
+					new_capacity = new_size;
+				else
+					new_capacity = this->capacity();
+				new_array 	= this->_alloc.allocate(new_capacity);
+				iterator it	= this->begin();
+				for (size_type s = 0; s < new_size; s++) {
+					if (it == position) {
+						this->_fill(new_array + s, first, last);
+						s += length;
+						this->_alloc.construct(new_array + s, *it);
+					}
+					else
+						this->_alloc.construct(new_array + s, *it);
+					it++;
+				}
+				this->clear();
+				this->_alloc.deallocate(this->_begin, this->size());
+				this->_begin 	= new_array;
+				this->_end 	= this->_begin + new_size;
+				this->_capacity	= this->_begin + new_capacity;
+
+			}
 			
 			iterator 	erase(iterator first, iterator last) {
 				for (iterator it = first; first != last; it++)
@@ -292,7 +322,7 @@ namespace ft {
 			iterator 	erase(iterator position) {
 				// check pos? must be valid and dereferenceable (not end())
 				size_type	new_size 	= this->size() - 1;
-				size_type	new_position	= distance(this->begin(), position);
+				size_type	new_position	= ft::distance(this->begin(), position);
 				size_type 	s 		= 0;
 
 				for (iterator it = this->begin(); it != this->end(); it++) {
@@ -341,32 +371,15 @@ namespace ft {
 
 		// UTILS
 
-			// put these functions in another utils header
-			std::string	long_to_str(size_t n) {
-				std::stringstream	stream;
-
-				stream << n;
-				std::string 		str = stream.str();
-				return str;
-			}
-
-			// protect against not random access it?
-			template<class It>
-			//typename std::iterator_traits<It>::difference_type
-			difference_type
-			distance(It first, It last) {
-				difference_type dis	= 0;
-				while (first != last) {
-					++first;
-					++dis;
-				}
-				return dis;
-				//return last - first;
-			}
-			
 			void		_fill(pointer start, size_type size, const T& value) {
 				for (size_type s = 0; s < size; s++)
 					this->_alloc.construct(start + s, value);
+			}
+
+			void		_fill(pointer start, iterator first, iterator last) {
+				for (iterator it = first; it != last; it++) {
+					this->_alloc.construct(start++, *it);
+				}
 			}
 			
 			void		_range_check(size_type n) {
@@ -374,9 +387,9 @@ namespace ft {
 				//fmt = "vector::_M_range_check: __n (which is ";
 				fmt = "vector::_range_check: n (which is ";
 
-				fmt.append(long_to_str(n));
+				fmt.append(ft::long_to_str(n));
 				fmt.append(") >= this->size() (which is ");
-				fmt.append(long_to_str(this->size()));
+				fmt.append(ft::long_to_str(this->size()));
 				fmt.append(")");
 				if (n >= this->size())
 					throw std::out_of_range(fmt);

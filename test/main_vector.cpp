@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/12 18:53:49 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/14 17:26:19 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #endif
 
 #include <vector>
-#include "../inc/vector.hpp"
+#include "../inc/Vector.hpp"
 #include <iostream>
 #include "TestUtils.hpp"
 //#include "TestVecIterators.hpp"
@@ -353,10 +353,23 @@ int 	main() {
 	print_vector(c, "C"); // diff capacity
 	print_info(c, "C");
 	
-	c.insert(c.begin() + 4, 20, "HA");
+	c.insert(c.begin() + 4, 10, "HA");
 
 	print_vector(c, "C"); // diff capacity
 	print_info(c, "C");
 	
+	e.assign(20, "HE");
+	
+	print_vector(e, "E");
+	print_info(e, "E");
+
+	e.insert(e.begin() + 5, c.end() - 10, c.end() - 5);
+
+	print_vector(e, "E");
+	print_info(e, "E");
+
+	// test with int enable if 
+	// test with non broken complex classes
+
 	return 0;
 }
