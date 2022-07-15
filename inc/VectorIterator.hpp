@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/10 10:17:40 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:07:20 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ namespace ft {
 		// TYPES
 			
 			typedef T						value_type;
-			typedef ptrdiff_t					difference_type;
+			typedef ptrdiff_t				difference_type;
 			typedef T*						pointer;
 			typedef T&						reference;
 			typedef typename TAG_NS::random_access_iterator_tag	iterator_category;
@@ -38,7 +38,7 @@ namespace ft {
 		// CTOR, CPY, DTOR
 
 			VectorIterator() 			: _ptr(NULL) 	{}
-			VectorIterator(pointer it) 		: _ptr(it) 	{}
+			VectorIterator(pointer it) 	: _ptr(it) 		{}
 			template<class I>
 			VectorIterator(VectorIterator<I> it) 	: _ptr(it.current()) {}
 			~VectorIterator() {}

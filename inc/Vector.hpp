@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/14 17:37:17 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/15 15:05:55 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,20 @@ namespace ft {
 		public:
 
 		// TYPES
-			typedef	VectorIterator<T>			iterator;
+			typedef	VectorIterator<T>				iterator;
 			typedef	VectorIterator<const T>			const_iterator;
-			typedef	size_t					size_type;
-			typedef	ptrdiff_t				difference_type;
+			typedef	size_t							size_type;
+			typedef	ptrdiff_t						difference_type;
 
-			typedef	T					value_type;
-			typedef Alloc					allocator_type;
+			typedef	T								value_type;
+			typedef Alloc							allocator_type;
 			typedef typename Alloc::reference		reference;
-			typedef typename Alloc::const_reference		const_reference;
+			typedef typename Alloc::const_reference	const_reference;
 			typedef typename Alloc::pointer			pointer;
-			typedef typename Alloc::const_pointer		const_pointer;
+			typedef typename Alloc::const_pointer	const_pointer;
 			
 			// using std reverse_iterator
-			typedef std::reverse_iterator<iterator>		reverse_iterator;
+			typedef std::reverse_iterator<iterator>			reverse_iterator;
 			typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		// CTOR/CPY/DTOR
@@ -53,11 +53,11 @@ namespace ft {
 				: _alloc(Allocator) {
 				//why not using reserve
 				this->_begin 	= this->_alloc.allocate(n + 1);
-				pointer p 	= this->_begin;
+				pointer p 		= this->_begin;
 				
 				for (size_type s = 0; s < n; s++)
 					this->_alloc.construct(p++, value);	
-				this->_end	= this->_begin + n;
+				this->_end		= this->_begin + n;
 				this->_capacity = this->_end;
 			}
 
@@ -69,11 +69,11 @@ namespace ft {
 			
 			vector(const vector<T,Alloc>& src) {
 				this->_begin	= this->_alloc.allocate(src.capacity());
-				pointer p	= this->_begin;
+				pointer p		= this->_begin;
 				for (size_type s = 0; s < src.size(); s++) {
 					this->_alloc.construct(p++, src._begin + s);	
 				}
-				this->_end	= this->_begin + size();
+				this->_end		= this->_begin + size();
 				this->_capacity	= this->_begin + capacity();
 				//use operator=?
 			}
@@ -87,7 +87,7 @@ namespace ft {
 			template <class InputIterator>
 			void 			assign(InputIterator first, InputIterator last) {
 				size_type dis	= ft::distance(first, last);
-				iterator it	= first;
+				iterator it		= first;
 				
 				// assign on empty vec??
 				if (dis > this->capacity())
@@ -123,13 +123,13 @@ namespace ft {
 
 		// ITERATORS
 
-			iterator		begin() {
+			iterator			begin() {
 				return iterator(this->_begin);
 			}
 			const_iterator 		begin() const {
 				return const_iterator(this->_begin);
 			}
-			iterator 		end() {
+			iterator 			end() {
 				return iterator(this->_end);
 			}
 			const_iterator		end() const {
@@ -188,7 +188,7 @@ namespace ft {
 					throw std::length_error("vector::reserve");
 
 				else if (n > this->capacity()) {
-					pointer tmp		= this->_alloc.allocate(n + 1);
+					pointer tmp				= this->_alloc.allocate(n + 1);
 					size_type array_size	= this->size();
 					
 					for (size_type s = 0; s < this->size(); s++)
@@ -197,7 +197,7 @@ namespace ft {
 						this->_alloc.destroy(this->_begin + s);
 					this->_alloc.deallocate(this->_begin, this->size());
 					this->_begin	= tmp;
-					this->_end	= this->_begin + array_size;
+					this->_end		= this->_begin + array_size;
 					this->_capacity = this->_begin + n;
 				}
 			}
@@ -254,7 +254,7 @@ namespace ft {
 			void 		insert(iterator position, size_type n, const T& x) {
 				pointer		new_array;
 				size_type	new_capacity;
-				size_type	new_size 	= this->size() + n;
+				size_type	new_size 		= this->size() + n;
 				
 				// check whether capacity calculation is ok or not ok
 				if (this->size() + n > this->capacity())
@@ -277,7 +277,7 @@ namespace ft {
 				this->clear();
 				this->_alloc.deallocate(this->_begin, this->size());
 				this->_begin 	= new_array;
-				this->_end 	= this->_begin + new_size;
+				this->_end 		= this->_begin + new_size;
 				this->_capacity	= this->_begin + new_capacity;
 			}
 
@@ -309,7 +309,7 @@ namespace ft {
 				this->clear();
 				this->_alloc.deallocate(this->_begin, this->size());
 				this->_begin 	= new_array;
-				this->_end 	= this->_begin + new_size;
+				this->_end 		= this->_begin + new_size;
 				this->_capacity	= this->_begin + new_capacity;
 
 			}
@@ -321,9 +321,9 @@ namespace ft {
 
 			iterator 	erase(iterator position) {
 				// check pos? must be valid and dereferenceable (not end())
-				size_type	new_size 	= this->size() - 1;
+				size_type	new_size 		= this->size() - 1;
 				size_type	new_position	= ft::distance(this->begin(), position);
-				size_type 	s 		= 0;
+				size_type 	s 				= 0;
 
 				for (iterator it = this->begin(); it != this->end(); it++) {
 					if (it == position) {
@@ -341,15 +341,15 @@ namespace ft {
 			}
 			
 			void 		swap(vector<T,Alloc>& src) {
-				pointer	tmp_begin 	= this->_begin;
-				pointer	tmp_end 	= this->_end;
+				pointer	tmp_begin 		= this->_begin;
+				pointer	tmp_end 		= this->_end;
 				pointer	tmp_capacity 	= this->_capacity;
 				
 				this->_begin	= src._begin;
-				this->_end 	= src._begin + src.size();
+				this->_end 		= src._begin + src.size();
 				this->_capacity	= src._begin + src.capacity();
-				src._begin	= tmp_begin;
-				src._end	= tmp_end;
+				src._begin		= tmp_begin;
+				src._end		= tmp_end;
 				src._capacity	= tmp_capacity;
 
 			}
@@ -364,7 +364,7 @@ namespace ft {
 
 		// ATTRIBUTES
 
-			allocator_type		_alloc;
+			allocator_type	_alloc;
 			pointer			_begin;
 			pointer			_end;
 			pointer			_capacity;
