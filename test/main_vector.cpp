@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/14 17:26:19 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:33:37 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,22 @@
 #include "TestUtils.hpp"
 //#include "TestVecIterators.hpp"
 #include <cstddef>		// ptrdiff_t
-#include <typeinfo>		// typei
+#include <typeinfo>		// typeid
 
 int 	main() {
-	NAMESPACE::vector<int>		a;
-//	NAMESPACE::vector<int>		b(100, 5);	// enable_if and 
-							// is_integral, 
-							// will use range ctor
-	NAMESPACE::vector<std::string>	c(4, "he");
+	NAMESPACE::vector<int>						a;
+	NAMESPACE::vector<int>						b(50, 5);	
+	NAMESPACE::vector<std::string>				c(4, "he");
 	NAMESPACE::vector<IncrediblyComplex<int> >	d(5);
 	//NAMESPACE::vector<IncrediblyComplex>	d(5);
 
-	print_info<NAMESPACE::vector<int> >(a, "A");
+	print_info(a, "A");
 	print_info(c, "C");
 	//print_info(d, "D");
 
+	print_info(b, "B");
+	print_vector(b, "B");
+	
 	if (a.empty())
 		std::cout << "A is empty" << std::endl;
 	if (!c.empty())

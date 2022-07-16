@@ -6,12 +6,12 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/15 15:07:20 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/16 14:51:37 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTOR_ITERATOR_HPP
-# define VECTOR_ITERATOR_HPP
+#ifndef VECTORITERATOR_HPP
+# define VECTORITERATOR_HPP
 
 # include <cstddef>		// ptrdiff_t
 # include <memory>		// allocator

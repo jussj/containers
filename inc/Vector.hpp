@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/15 15:05:55 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/07/16 17:35:51 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 
 # include <cstddef>		// ptrdiff_t
 # include <memory>		// allocator
-# include <stdexcept>		// exceptions
+# include <stdexcept>	// exceptions
 # include <sstream>		// stream
 # include <iostream>
 # include "VectorIterator.hpp"
 # include "Utils.hpp"
+# include "type_traits/enable_if.hpp"
+# include "type_traits/is_integral.hpp"
 
 namespace ft {
+	
 	template <class T, class Alloc = std::allocator<T> >
 	class vector {
 		public:
@@ -62,8 +65,11 @@ namespace ft {
 			}
 
 			// need enable_if and is_integral
-			template<class InputIterator>
-			vector(InputIterator first, InputIterator last, const Alloc& = Alloc()) {
+			template<class InputIt>
+			vector(	typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first,
+			//vector(	InputIt first,
+					InputIt last, 
+					const Alloc& = Alloc()) {
 				this->assign(first, last);
 			}
 			
@@ -84,6 +90,7 @@ namespace ft {
 				this->_alloc.deallocate(this->_begin, this->size());
 			}
 			
+			// emable_if?
 			template <class InputIterator>
 			void 			assign(InputIterator first, InputIterator last) {
 				size_type dis	= ft::distance(first, last);
@@ -281,6 +288,7 @@ namespace ft {
 				this->_capacity	= this->_begin + new_capacity;
 			}
 
+			// enable_if?
 			template <class InputIterator>
 			void 	insert(		iterator position, 
 						InputIterator first, 
@@ -395,7 +403,7 @@ namespace ft {
 					throw std::out_of_range(fmt);
 			}
 		
-	};
+	};	/* class vector */
 
 	template <class T, class Alloc>
 	bool operator==(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
@@ -426,6 +434,6 @@ namespace ft {
 	void swap(vector<T,Alloc>& x, vector<T,Alloc>& y) {
 		x.swap(y);
 	}
-}
+} 	/* namespace ft */
 
 #endif	/* VECTOR_HPP */
