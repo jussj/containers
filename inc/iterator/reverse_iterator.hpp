@@ -12,34 +12,46 @@ namespace ft {
 					typename iterator_traits<Iterator>::pointer,
 					typename iterator_traits<Iterator>::reference	> {
 				
-				protected:
-
-					Iterator current;
-				
 				public:
+
+				// TYPES
 
 					typedef Iterator											iterator_type;
 					typedef typename iterator_traits<Iterator>::difference_type	difference_type;
 					typedef typename iterator_traits<Iterator>::reference		reference;
 					typedef typename iterator_traits<Iterator>::pointer			pointer;
 				
+				// CTOR/DTOR
+
 					reverse_iterator();
-						explicit reverse_iterator(Iterator x);
-						template <class U> reverse_iterator(const reverse_iterator<U>& u);
+					explicit reverse_iterator(Iterator it) : _base(it), current(it) {}
+					template <class It>
+					reverse_iterator(const reverse_iterator<It>& u);
 				
-						Iterator 	base() const; // explicit
-						
-						reference 			operator*() const;
-						pointer 			operator->() const;
-						reverse_iterator& 	operator++();
-						reverse_iterator 	operator++(int);
-						reverse_iterator& 	operator--();
-						reverse_iterator 	operator--(int);
-						reverse_iterator 	operator+ (difference_type n) const;
-						reverse_iterator& 	operator+=(difference_type n);
-						reverse_iterator 	operator- (difference_type n) const;
-						reverse_iterator& 	operator-=(difference_type n);
-						reference 			operator[](difference_type n) const;
+					Iterator 	base() const {	// explicit
+						return this->_base;
+					}
+					
+					reference 			operator*() const;
+					pointer 			operator->() const;
+					reverse_iterator& 	operator++();
+					reverse_iterator 	operator++(int);
+					reverse_iterator& 	operator--();
+					reverse_iterator 	operator--(int);
+					reverse_iterator 	operator+ (difference_type n) const;
+					reverse_iterator& 	operator+=(difference_type n);
+					reverse_iterator 	operator- (difference_type n) const;
+					reverse_iterator& 	operator-=(difference_type n);
+					reference 			operator[](difference_type n) const;
+				
+				protected:
+
+					Iterator 	current;
+
+				private:
+
+					Iterator	_base;
+				
 		};
 		
 		template <class Iterator>
