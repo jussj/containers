@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/08/05 17:54:43 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/08/05 18:20:04 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,7 @@ namespace ft {
 		// MODIFIERS
 
 			void 		push_back(const T& x) {
-				if (this->size() == 0)
+				if (this->empty())
 					this->reserve(1);
 				else if (this->size() + 1 > this->capacity())
 					this->reserve(this->size() * 2);
@@ -337,8 +337,11 @@ namespace ft {
 			}
 			
 			iterator 	erase(iterator first, iterator last) {
+				iterator	ret;
+					
 				for (iterator it = first; first != last; it++)
-					erase(it);
+					ret = erase(it);
+				return ret; // ???? 
 			}
 
 			iterator 	erase(iterator position) {
@@ -358,7 +361,7 @@ namespace ft {
 					s++;
 				}
 				this->_end 	= this->_begin + new_size;
-
+				
 				return this->begin() + new_position;
 			}
 			
