@@ -1,6 +1,8 @@
 #ifndef UTILS_HPP
 # define UTILS_HPP
 
+# include "type_traits/enable_if.hpp"
+# include "type_traits/is_integral.hpp"
 # include "VectorIterator.hpp"
 # include "Vector.hpp"
 
@@ -15,10 +17,13 @@ namespace ft {
 
 	// protect against not random access it?
 	template<class It>
-	//typename std::iterator_traits<It>::difference_type
-	typename It::difference_type
-	distance(It first, It last) {
-		typename It::difference_type dis = 0;
+	//typename It::difference_type
+	size_t	distance(It first, It last) {
+				//typename ft::enable_if<!ft::is_integral<It>::value >::type* = NULL
+				//) {
+		size_t	dis = 0;
+		//typename It::difference_type dis = 0;
+
 		while (first != last) {
 			++first;
 			++dis;

@@ -1,55 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   TestUtils.hpp                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: anonymous <anonymous@student.42.fr>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/28 10:01:37 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/09 17:54:26 by jusaint-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#ifndef TESTUTILS_HPP
-# define TESTUTILS_HPP
-
-// COMPLEX OBJ
-
-template<class T>
-class	IncrediblyComplex {
-	public:
-		IncrediblyComplex() : _nb(42), _ptr(new T) {}
-		//IncrediblyComplex() : _nb(42), _ptr(new char) {}
-		
-		IncrediblyComplex(int n, T type) : _nb(n), _ptr(new T) {
-		//IncrediblyComplex(int n, char type) : _nb(n), _ptr(new char) {
-			*_ptr = type;
-		}
-		IncrediblyComplex(IncrediblyComplex const &src)
-			: _nb(src._nb), _ptr(new T) {
-			//: _nb(src._nb), _ptr(new char) {
-			*_ptr 	= *src._ptr;
-		}
-		~IncrediblyComplex() {
-			delete _ptr;
-		}
-		int	getNb() const {
-			return _nb;
-		}
-		T	getPtr() const {
-			return *_ptr;
-		}
-	private:
-		int	_nb;
-		//char	*_ptr;
-		T	*_ptr;
-};
-
-template<class T>
-std::ostream &    operator<<(std::ostream & o, const IncrediblyComplex<T> &obj) {
-    o << "(" << obj.getNb() << "; " << obj.getPtr() << ")"; 
-    return    o;
-}
+#ifndef TESTVECTOR_HPP
+# define TESTVECTOR_HPP
 
 // PRINTING VECTOR
 
@@ -68,9 +18,13 @@ void	print_info(const Vec& v, std::string name) {
 }
 
 template<class Vec>
-void	print_vector(const Vec& v, std::string name) {
+void	print_content(const Vec& v, std::string name) {
 	std::cout	<< std::endl
 			<< "// VECTOR " << name << " ARRAY" << std::endl;
+	if (v.empty()) {
+		std::cout << "   [ IS EMPTY ]" << std::endl;
+		return ;
+	}
 	std::cout << "   [ ";
 	for (size_t s = 0; s < v.size(); s++) {
 		std::cout << v[s] << " ";
@@ -86,25 +40,25 @@ void	print_vector(const Vec& v, std::string name) {
 template<class Vec>
 void	test_capacity(Vec& v, std::string name) {
 	std::cout 	<< "// VECTOR " << name << std::endl;	
-	std::cout 	<< "   >> IS EMPTY" 	<< std::endl;
+	std::cout 	<< "   >> EMPTY()" 	<< std::endl;
 	if (v.empty())
-		std::cout << "     yes" << std::endl;
+		std::cout << "\tyes" << std::endl;
 	else
-		std::cout << "     no" << std::endl;
+		std::cout << "\tno" << std::endl;
 	
 	std::cout	<< std::endl
-			<< "   >> RESERVE"			<< std::endl;
+			<< "   >> RESERVE()"			<< std::endl;
 
-	std::cout 	<< "	  reserve(0)" 			<< std::endl;
+	std::cout 	<< "\treserve(0)" 			<< std::endl;
 	v.reserve(0);
-	std::cout 	<< "      reserve(max_size+1)" 		<< std::endl;
+	std::cout 	<< "\treserve(max_size+1)" 		<< std::endl;
 	try {
 		v.reserve(v.max_size() + 1);
 	}
 	catch (std::length_error& le) {
-		std::cerr << "      ERROR THROWN: " << le.what() << std::endl;
+		std::cerr << "\t\tERROR THROWN: " << le.what() << std::endl;
 	}
-	std::cout 	<< "	  reserve(size+10)" 		 << std::endl;
+	std::cout 	<< "\treserve(size+10)" 		 << std::endl;
 	v.reserve(v.size() + 10);
 	
 	std::cout	<< std::endl
@@ -146,7 +100,7 @@ void	test_capacity(Vec& v, std::string name) {
 		v.resize(v.max_size() + 1);
 	}
 	catch (std::length_error& le) {
-		std::cerr << "      ERROR THROWN: " << le.what() << std::endl;
+		std::cerr << "\t\tERROR THROWN: " << le.what() << std::endl;
 	}
 	v.resize(10);
 	v.resize(v.size() + 10);
@@ -166,5 +120,13 @@ void	test_capacity(Vec& v, std::string name) {
 	std::cout 	<< std::endl;
 }
 
+//template<class Vec, class T>
+//void	test_manipulate(Vec& v, std::string name) {
+	//std::cout 	<< "// VECTOR " << name << std::endl;	
+	//std::cout 	<< "   >> ASSIGN(NB, T)" 	<< std::endl;
+	//std::cout 	<< "   >> ASSIGN(IT, IT)" 	<< std::endl;
+	//std::cout 	<< "   >> PUSH()" 	<< std::endl;
+	//std::cout 	<< "   >> POP()" 	<< std::endl;
 
-#endif 	/* TESTUTILS_HPP */
+
+#endif 	/* TESTVECTOR_HPP */

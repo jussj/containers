@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main_vector.cpp                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 15:35:48 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/16 17:33:37 by jusaint-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef NAMESPACE
 # define NAMESPACE ft
 
@@ -18,7 +6,8 @@
 #include <vector>
 #include "../inc/Vector.hpp"
 #include <iostream>
-#include "TestUtils.hpp"
+#include "../test/vector/TestVector.hpp"
+#include "../test/vector/ComplexClass.hpp"
 //#include "TestVecIterators.hpp"
 #include <cstddef>		// ptrdiff_t
 #include <typeinfo>		// typeid
@@ -35,7 +24,7 @@ int 	main() {
 	//print_info(d, "D");
 
 	print_info(b, "B");
-	print_vector(b, "B");
+	print_content(b, "B");
 	
 	if (a.empty())
 		std::cout << "A is empty" << std::endl;
@@ -69,7 +58,7 @@ int 	main() {
 	a.push_back(-89);
 	a.push_back(021321);
 
-	print_vector(a, "A");
+	print_content(a, "A");
 
 
 	//NAMESPACE::vector<IncrediblyComplex<int> >	e(9);
@@ -79,7 +68,7 @@ int 	main() {
 	std::cout	<< "d.pop_back()..." << std::endl;
 	
 	d.pop_back();
-//	print_vector(d, "D");
+//	print_content(d, "D");
 	std::cout	<< "//// RESERVE ////" << std::endl;
 
 	std::cout 	<< "c.reserve(4)..." << std::endl;
@@ -98,14 +87,14 @@ int 	main() {
 	c.pop_back();
 	
 	print_info(c, "C");
-	print_vector(c, "C");
+	print_content(c, "C");
 	
 	std::cout << std::endl;
 	std::cout	<< "c.push_back(ha)..." << std::endl;
 	c.push_back("ha");
 	
 	print_info(c, "C");
-	print_vector(c, "C");
+	print_content(c, "C");
 
 	std::cout	<< "//// RESIZE ////" << std::endl;
 	
@@ -113,19 +102,19 @@ int 	main() {
 	c.resize(10, "hi");
 	
 	print_info(c, "C");
-	print_vector(c, "C");
+	print_content(c, "C");
 
 	std::cout 	<< "c.resize(3).." << std::endl;
 	c.resize(3);
 	
 	print_info(c, "C");
-	print_vector(c, "C");
+	print_content(c, "C");
 
 	std::cout 	<< "c.resize(6, ha).." << std::endl;
 	c.resize(6, "ha");
 
 	print_info(c, "C");	
-	print_vector(c, "C");
+	print_content(c, "C");
 
 	std::cout 	<< "c.resize(12) with NULL value..." << std::endl;
 	c.resize(12);
@@ -157,25 +146,25 @@ int 	main() {
 
 	c.assign(6, "hi");
 	print_info(c, "C");
-	print_vector(c, "C");
+	print_content(c, "C");
 
 	std::cout	<< "c.assign(9, ha)..." << std::endl;
 
 	c.assign(9, "ha");
 	print_info(c, "C");
-	print_vector(c, "C");
+	print_content(c, "C");
 
 	std::cout	<< "c.assign(0, he)..." << std::endl;
 
 	c.assign(0, "he");
 	print_info(c, "C");
-	print_vector(c, "C");
+	print_content(c, "C");
 
 	std::cout	<< "c.assign(13, ho)..." << std::endl;
 
 	c.assign(13, "ho");
 	print_info(c, "C");
-	print_vector(c, "C");
+	print_content(c, "C");
 
 	//std::cout 	<< "//// ITERATOR TRAITS //// " << std::endl 
 	//typedef std::iterator_traits<int*> traits;
@@ -219,19 +208,19 @@ int 	main() {
 //	NAMESPACE::vector<IncrediblyComplex<IncrediblyComplex<float> > >	f(42);
 //	NAMESPACE::vector<IncrediblyComplex<std::string> >			g(6);
 
-	print_vector(c, "C");
+	print_content(c, "C");
 	print_info(c, "C");
 	
 	c.push_back("he");
 	
-	print_vector(c, "C");
+	print_content(c, "C");
 	print_info(c, "C");
 
 	c.push_back("ha");
 	
-	print_vector(e, "E");
+	print_content(e, "E");
 	print_info(e, "E");
-	print_vector(c, "C");
+	print_content(c, "C");
 	print_info(c, "C");
 
 	NAMESPACE::vector<std::string>::iterator				ite;
@@ -239,51 +228,51 @@ int 	main() {
 
 	std::cout	<< "assign to c.end() - 1 =" << *(c.end() - 1) << std::endl;
 	e.assign(c.begin() + 10, c.end() - 1);
-	print_vector(e, "E");
+	print_content(e, "E");
 	print_info(e, "E");
 	
 	//std::cout	<< "assign to c.end() =" << *(c.end()) << std::endl;
 	// is undefined? protect against segf?
 	std::cout	<< "assign to c.end()" << std::endl;
 	e.assign(c.begin() + 10, c.end());
-	print_vector(e, "E");
+	print_content(e, "E");
 	print_info(e, "E");
 
 	std::cout	<< "assign to c.end() + 1" << std::endl;
 	e.assign(c.begin() + 10, c.end() + 1);
-	print_vector(e, "E");
+	print_content(e, "E");
 	print_info(e, "E");
 	
 	std::cout	<< "assign from c.begin() - 1" << std::endl;
 	e.assign(c.begin() - 1, c.end() - 10);
-	print_vector(e, "E");
+	print_content(e, "E");
 	print_info(e, "E");
 
 	c.resize(25, "hi");
-	print_vector(c, "C");
+	print_content(c, "C");
 	print_info(c, "C");
-	print_vector(e, "E");
+	print_content(e, "E");
 	print_info(e, "E");
 	
 	std::cout	<< "//// SWAP ////" << std::endl;
 
 	e.swap(c);
-	print_vector(c, "C"); // capacity differs 
+	print_content(c, "C"); // capacity differs 
 	print_info(c, "C");
 	
 	std::cout	<< "clearing src..." << std::endl;
 	c.clear();	
 	
-	print_vector(e, "E");
+	print_content(e, "E");
 	print_info(e, "E");
 
 	std::cout	<< "swap overload!" << std::endl;
 
 	swap(c, e);
 
-	print_vector(c, "C");
+	print_content(c, "C");
 	print_info(c, "C");
-	print_vector(e, "E"); // capacity differs
+	print_content(e, "E"); // capacity differs
 	print_info(e, "E");
 	
 	//std::cout	<< "//// CLEAR ////" << std::endl;
@@ -292,10 +281,6 @@ int 	main() {
 	//a.clear();
 	//print_info(a, "A");
 
-	//test_capacity(a, "A");
-	//test_capacity(c, "C");
-	//test_capacity(d, "D");
-	
 	std::cout	<< "//// INSERT ////" << std::endl << std::endl;
 
 	NAMESPACE::vector<std::string>::iterator				pos;
@@ -309,7 +294,7 @@ int 	main() {
 
 	std::cout	<< "new element is " << *pos << std::endl;
 
-	print_vector(c, "C");
+	print_content(c, "C");
 	print_info(c, "C");
 	
 	std::cout	<< "//// ERASE ////" << std::endl << std::endl;
@@ -318,21 +303,21 @@ int 	main() {
 
 	std::cout	<< "new element is " << *pos << std::endl;
 
-	print_vector(c, "C");
+	print_content(c, "C");
 	print_info(c, "C");
 	
 	pos = c.erase(c.begin());
 
 	std::cout	<< "new element is " << *pos << std::endl;
 
-	print_vector(c, "C");
+	print_content(c, "C");
 	print_info(c, "C");
 
 	pos = c.erase(c.end());
 
 	std::cout	<< "new element is " << *pos << std::endl;
 
-	print_vector(c, "C");
+	print_content(c, "C");
 	print_info(c, "C");
 	
 	//std::cout	<< "clearing c" << std::endl;
@@ -346,31 +331,52 @@ int 	main() {
 
 	c.insert(c.begin() + 4, 6, "HO");
 
-	print_vector(c, "C"); // diff capacity
+	print_content(c, "C"); // diff capacity
 	print_info(c, "C");
 	
 	c.insert(c.begin() + 4, 6, "HA");
 
-	print_vector(c, "C"); // diff capacity
+	print_content(c, "C"); // diff capacity
 	print_info(c, "C");
 	
 	c.insert(c.begin() + 4, 10, "HA");
 
-	print_vector(c, "C"); // diff capacity
+	print_content(c, "C"); // diff capacity
 	print_info(c, "C");
 	
 	e.assign(20, "HE");
 	
-	print_vector(e, "E");
+	print_content(e, "E");
 	print_info(e, "E");
 
 	e.insert(e.begin() + 5, c.end() - 10, c.end() - 5);
 
-	print_vector(e, "E");
+	print_content(e, "E");
 	print_info(e, "E");
 
 	// test with int enable if 
 	// test with non broken complex classes
 
+	//std::cout	<< "//// CAPACITY ////" << std::endl;
+	
+	//test_capacity(a, "A");
+	//test_capacity(c, "C");
+	//test_capacity(d, "D");
+	
+	std::cout	<< "//// ACCESS ////" << std::endl;
+  
+	NAMESPACE::vector<int> myvector;
+
+	myvector.push_back(10);
+
+	while (myvector.back() != 0) {
+		myvector.push_back(myvector.back() - 1);
+	}
+
+	std::cout << "myvector contains:";
+	for (unsigned i=0; i<myvector.size() ; i++)
+		std::cout << ' ' << myvector[i];
+	std::cout << '\n';
+	
 	return 0;
 }

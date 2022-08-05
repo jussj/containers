@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/04/26 17:19:58 by jusaint-          #+#    #+#              #
-#    Updated: 2022/07/08 18:15:39 by jusaint-         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME				=	containers
 
 CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98
@@ -42,10 +30,15 @@ vpath %.d			$(DEPS_DIR)
 
 all:				$(NAME)
 
-diff:				std_vec ft_vec
-	./std_vec > "test/outfiles/std_vector_outfile.txt" &
-	./ft_vec > "test/outfiles/std_vector_outfile.txt" &
-	diff "test/outfiles/std_vector_outfile.txt" "test/outfiles/std_vector_outfile.txt" > "diff.txt"
+vector:	 			test/main_vector.cpp
+	${CXX} ${CXXFLAGS} -I inc -DNAMESPACE=ft \
+	test/main_vector.cpp -o ft_vector -D${ARG}
+	./ft_vector > outs/ft_vector.txt
+	${CXX} ${CXXFLAGS} -I inc -DNAMESPACE=std \
+	test/main_vector.cpp -o std_vector -D${ARG}
+	./std_vector > outs/std_vector.txt
+	cat -n test/outfiles/ft_vector.txt
+	diff test/outfiles/std_vector.txt test/outfiles/ft_vector.txt
 
 $(NAME):			$(DEPS) $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(NAME)

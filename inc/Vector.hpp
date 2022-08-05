@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/16 17:35:51 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/08/05 17:54:43 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,11 @@ namespace ft {
 		// CTOR/CPY/DTOR
 
 			explicit vector(const Alloc& Allocator = Alloc())
-				: _alloc(Allocator), _begin(NULL), _end(NULL), _capacity(NULL) {}
+				: _alloc(Allocator), _begin(NULL), _end(NULL), _capacity(NULL) {
+					this->_begin	= this->_alloc.allocate(0);
+					this->_end		= this->_begin;
+					this->_capacity = this->_begin;	
+				}
 
 			explicit vector(size_type n, const T& value = T(),
 					const Alloc& Allocator = Alloc()) 
@@ -64,12 +68,14 @@ namespace ft {
 				this->_capacity = this->_end;
 			}
 
-			// need enable_if and is_integral
+			// put it first in overloads?
 			template<class InputIt>
-			vector(	typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first,
-			//vector(	InputIt first,
-					InputIt last, 
-					const Alloc& = Alloc()) {
+			vector(	//typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first,
+					InputIt first,
+					InputIt last,
+					const Alloc& = Alloc(),
+					typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
+					) {
 				this->assign(first, last);
 			}
 			
@@ -90,9 +96,11 @@ namespace ft {
 				this->_alloc.deallocate(this->_begin, this->size());
 			}
 			
-			// emable_if?
-			template <class InputIterator>
-			void 			assign(InputIterator first, InputIterator last) {
+			template <class InputIt>
+			void 	assign(	InputIt first,
+							InputIt last,
+							typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
+							) {
 				size_type dis	= ft::distance(first, last);
 				iterator it		= first;
 				
@@ -104,7 +112,7 @@ namespace ft {
 					this->push_back(*it);	
 			}
 
-			void			assign(size_type n, const value_type& value) {
+			void	assign(size_type n, const value_type& value) {
 				if (n > this->capacity())
 					reserve(n);
 				// not destroying elements???
@@ -202,6 +210,7 @@ namespace ft {
 						this->_alloc.construct(tmp + s, *(this->_begin + s));
 					for (size_type s = 0; s < this->size(); s++)
 						this->_alloc.destroy(this->_begin + s);
+
 					this->_alloc.deallocate(this->_begin, this->size());
 					this->_begin	= tmp;
 					this->_end		= this->_begin + array_size;
@@ -217,11 +226,11 @@ namespace ft {
 			const_reference operator[](size_type n) const {
 				return *(this->_begin + n);
 			}
-			const_reference at(size_type n) {
+			const_reference at(size_type n) const {
 				_range_check(n);
 				return *(this->_begin + n);
 			}
-			reference 	at(size_type n) const {
+			reference 	at(size_type n) {
 				_range_check(n);
 				return *(this->_begin + n);
 			}
@@ -241,14 +250,17 @@ namespace ft {
 		// MODIFIERS
 
 			void 		push_back(const T& x) {
-				if (this->size() + 1 > this->capacity())
+				if (this->size() == 0)
+					this->reserve(1);
+				else if (this->size() + 1 > this->capacity())
 					this->reserve(this->size() * 2);
 				this->_end += 1;
 				this->_alloc.construct(this->_end - 1, x);
 			}
+
 			void 		pop_back() {
 				this->_alloc.destroy(this->_end - 1);
-				this->_end--;
+				this->_end -= 1;
 			}
 			
 			iterator 	insert(iterator position, const T& x) {
@@ -289,10 +301,12 @@ namespace ft {
 			}
 
 			// enable_if?
-			template <class InputIterator>
-			void 	insert(		iterator position, 
-						InputIterator first, 
-						InputIterator last	) {
+			template <class InputIt>
+			void 	insert(	iterator position, 
+							InputIt first, 
+							InputIt last,	
+							typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
+							) {
 				pointer		new_array;
 				size_type	new_capacity;
 				size_type 	length		= ft::distance(first, last);
@@ -390,7 +404,7 @@ namespace ft {
 				}
 			}
 			
-			void		_range_check(size_type n) {
+			void		_range_check(size_type n) const {
 				std::string	fmt;
 				//fmt = "vector::_M_range_check: __n (which is ";
 				fmt = "vector::_range_check: n (which is ";
@@ -434,6 +448,7 @@ namespace ft {
 	void swap(vector<T,Alloc>& x, vector<T,Alloc>& y) {
 		x.swap(y);
 	}
+
 } 	/* namespace ft */
 
 #endif	/* VECTOR_HPP */
