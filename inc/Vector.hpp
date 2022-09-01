@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/08/05 18:20:04 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/01 17:06:40 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include "Utils.hpp"
 # include "type_traits/enable_if.hpp"
 # include "type_traits/is_integral.hpp"
+# include "iterator/reverse_iterator.hpp"
 
 namespace ft {
 	
@@ -42,9 +43,8 @@ namespace ft {
 			typedef typename Alloc::pointer			pointer;
 			typedef typename Alloc::const_pointer	const_pointer;
 			
-			// using std reverse_iterator
-			typedef std::reverse_iterator<iterator>			reverse_iterator;
-			typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef ft::reverse_iterator<iterator>			reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		// CTOR/CPY/DTOR
 
@@ -151,16 +151,16 @@ namespace ft {
 				return const_iterator(this->_end);
 			}
 			reverse_iterator 	rbegin() {
-				return reverse_iterator(this->_begin);
+				return reverse_iterator(this->_end - 1);
 			}
 			const_reverse_iterator	rbegin() const {
-				return const_reverse_iterator(this->_begin);
+				return const_reverse_iterator(this->_end - 1);
 			}
 			reverse_iterator 	rend() {
-				return reverse_iterator(back());
+				return reverse_iterator(this->_begin - 1);
 			}
 			const_reverse_iterator	rend() const {
-				return const_iterator(back());
+				return const_iterator(this->_begin - 1);
 			}
 
 		// CAPACITY

@@ -373,18 +373,21 @@ int 	main() {
 		while (myvector.back() != 0)
 			myvector.push_back(myvector.back() - 1);
 
-		std::cout << "myvector contains:";
-		for (unsigned i=0; i<myvector.size() ; i++)
+		std::cout	<< std::endl
+					<< "myvector contains:";
+		for (unsigned i = 0; i < myvector.size() ; i++)
 			std::cout << ' ' << myvector[i];
-		std::cout << '\n';
-	}
+		
+		std::cout	<< std::endl << std::endl;;
+	}/*
 	{
 		std::cout	<< "//// ERASE ////" << std::endl;
 		
 		NAMESPACE::vector<int> myvector;
-
+		
 		// set some values (from 1 to 10)
-		for (int i=1; i<=10; i++) myvector.push_back(i);
+		for (int i = 1; i <= 10; i++)
+			myvector.push_back(i);		// invalid read
 
 		// erase the 6th element
 		myvector.erase (myvector.begin()+5);
@@ -396,6 +399,6 @@ int 	main() {
 		for (unsigned i=0; i<myvector.size(); ++i)
 			std::cout << ' ' << myvector[i];
 		std::cout << '\n';
-	}
+	}*/
 	return 0;
 }
