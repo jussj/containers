@@ -201,6 +201,22 @@ int 	main() {
 		std::cout << *it << " "; 
 	}
 	std::cout	<< "]" << std::endl << std::endl;
+	
+	{
+		//std::cout	<< "//// ACCESS ////" << std::endl;
+		 
+		NAMESPACE::vector<int> f;
+
+		f.push_back(10);
+
+		while (f.back() != 0)
+			f.push_back(f.back() - 1);
+		std::cout	<< std::endl
+					<< "access to f:";
+		for (unsigned i = 0; i < f.size() ; i++)
+			std::cout << ' ' << f[i];
+		print_info(f, "F");
+	}
 
 	std::cout	<< "//// ASSIGN(IT, IT) ////" << std::endl;
 	
@@ -327,6 +343,30 @@ int 	main() {
 
 	//std::cout	<< "new element is " << *pos << std::endl;
 
+	{
+		NAMESPACE::vector<int>::iterator	ret;	
+		NAMESPACE::vector<int>				f;
+		
+		// set some values (from 1 to 10)
+		for (int i = 1; i <= 10; i++)
+			f.push_back(i);		// invalid read
+
+		print_info(f, "F");
+		print_content(f, "F");
+		
+		// erase the 6th element
+		ret = f.erase(f.begin() + 5);
+		std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
+		print_info(f, "F");
+		print_content(f, "F");
+
+		// erase the first 3 elements:
+		f.erase (f.begin(),f.begin()+3);
+		std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
+		print_info(f, "F");
+		print_content(f, "F");
+	}
+
 	std::cout	<< "//// INSERT MULTIPLE VALUES ////" << std::endl;
 
 	c.insert(c.begin() + 4, 6, "HO");
@@ -363,43 +403,32 @@ int 	main() {
 	//test_capacity(c, "C");
 	//test_capacity(d, "D");
 	
-	{
-		std::cout	<< "//// ACCESS ////" << std::endl;
-		 
-		NAMESPACE::vector<int> f;
-
-		f.push_back(10);
-
-		while (f.back() != 0)
-			f.push_back(f.back() - 1);
-
-		print_info(f, "F");
-		print_content(f, "F");
-	}
-	{
-		std::cout	<< "//// ERASE ////" << std::endl;
+	std::cout	<< "//// REVERSE_ITERATOR FUNCTIONS ////" << std::endl;
 	
-		NAMESPACE::vector<int>::iterator	ret;	
-		NAMESPACE::vector<int>				f;
-		
-		// set some values (from 1 to 10)
-		for (int i = 1; i <= 10; i++)
-			f.push_back(i);		// invalid read
+	NAMESPACE::vector<int> g (5);  // 5 default-constructed ints
 
-		print_info(f, "F");
-		print_content(f, "F");
-		
-		// erase the 6th element
-		ret = f.erase(f.begin() + 5);
-		std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
-		print_info(f, "F");
-		print_content(f, "F");
+	std::cout	<< std::endl
+				<< "TESTING REND" << std::endl;	
 
-		// erase the first 3 elements:
-		f.erase (f.begin(),f.begin()+3);
-		std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
-		print_info(f, "F");
-		print_content(f, "F");
+	NAMESPACE::vector<int>::reverse_iterator	rit = g.rbegin();
+
+
+	std::cout << *rit << std::endl;
+	int i = 0;
+	for (rit = g.rbegin(); rit != g.rend(); ++rit) {
+		*rit = ++i;
 	}
+
+	print_content(g, "G");
+	print_info(g, "G");
+	
+	std::cout	<< "TESTING RBEGIN" << std::endl;	
+	
+	NAMESPACE::vector<int>::reverse_iterator	ritt = g.rbegin();
+	
+	i = 0;
+	for (; ritt != g.rend(); ++ritt)
+		*ritt = ++i;
+	
 	return 0;
 }
