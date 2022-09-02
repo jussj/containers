@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/07/16 14:51:37 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/02 10:32:46 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ namespace ft {
 				return this->_ptr[n];
 			}
 
-			// COMPARAISON
+			// COMPARISON
 			bool	operator==(const VectorIterator& src) const {
 				return _ptr == src._ptr;
 			}
@@ -129,7 +129,6 @@ namespace ft {
 			pointer		_ptr;
 		
 	};
-
 }
 
 #endif 	/* VECTORITERATOR_HPP */

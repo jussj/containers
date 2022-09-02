@@ -366,39 +366,40 @@ int 	main() {
 	{
 		std::cout	<< "//// ACCESS ////" << std::endl;
 		 
-		NAMESPACE::vector<int> myvector;
+		NAMESPACE::vector<int> f;
 
-		myvector.push_back(10);
+		f.push_back(10);
 
-		while (myvector.back() != 0)
-			myvector.push_back(myvector.back() - 1);
+		while (f.back() != 0)
+			f.push_back(f.back() - 1);
 
-		std::cout	<< std::endl
-					<< "myvector contains:";
-		for (unsigned i = 0; i < myvector.size() ; i++)
-			std::cout << ' ' << myvector[i];
-		
-		std::cout	<< std::endl << std::endl;;
-	}/*
+		print_info(f, "F");
+		print_content(f, "F");
+	}
 	{
 		std::cout	<< "//// ERASE ////" << std::endl;
-		
-		NAMESPACE::vector<int> myvector;
+	
+		NAMESPACE::vector<int>::iterator	ret;	
+		NAMESPACE::vector<int>				f;
 		
 		// set some values (from 1 to 10)
 		for (int i = 1; i <= 10; i++)
-			myvector.push_back(i);		// invalid read
+			f.push_back(i);		// invalid read
 
+		print_info(f, "F");
+		print_content(f, "F");
+		
 		// erase the 6th element
-		myvector.erase (myvector.begin()+5);
+		ret = f.erase(f.begin() + 5);
+		std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
+		print_info(f, "F");
+		print_content(f, "F");
 
 		// erase the first 3 elements:
-		myvector.erase (myvector.begin(),myvector.begin()+3);
-
-		std::cout << "myvector contains:";
-		for (unsigned i=0; i<myvector.size(); ++i)
-			std::cout << ' ' << myvector[i];
-		std::cout << '\n';
-	}*/
+		f.erase (f.begin(),f.begin()+3);
+		std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
+		print_info(f, "F");
+		print_content(f, "F");
+	}
 	return 0;
 }

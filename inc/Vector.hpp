@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/01 17:06:40 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/02 15:42:45 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,6 +316,7 @@ namespace ft {
 					new_capacity = new_size;
 				else
 					new_capacity = this->capacity();
+
 				new_array 	= this->_alloc.allocate(new_capacity);
 				iterator it	= this->begin();
 				for (size_type s = 0; s < new_size; s++) {
@@ -333,15 +334,19 @@ namespace ft {
 				this->_begin 	= new_array;
 				this->_end 		= this->_begin + new_size;
 				this->_capacity	= this->_begin + new_capacity;
-
 			}
 			
 			iterator 	erase(iterator first, iterator last) {
-				iterator	ret;
+				//iterator	ret;
+				size_t		dis		= distance(first, last);
+				iterator	it		= first;
 					
-				for (iterator it = first; first != last; it++)
-					ret = erase(it);
-				return ret; // ???? 
+				for (size_t i = 0; i < dis; ++i) {
+					erase(first);
+					//ret = erase(it);
+				}
+				//return ret; // ???? 
+				return it; // ???? 
 			}
 
 			iterator 	erase(iterator position) {
@@ -446,12 +451,10 @@ namespace ft {
 	bool operator<=(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
 		return x <= y;
 	}
-
 	template <class T, class Alloc>
 	void swap(vector<T,Alloc>& x, vector<T,Alloc>& y) {
 		x.swap(y);
 	}
-
 } 	/* namespace ft */
 
 #endif	/* VECTOR_HPP */
