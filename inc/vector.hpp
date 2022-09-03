@@ -18,8 +18,8 @@
 # include <stdexcept>	// exceptions
 # include <sstream>		// stream
 # include <iostream>
-# include "VectorIterator.hpp"
-# include "Utils.hpp"
+# include "vectorIterator.hpp"
+# include "utils.hpp"
 # include "type_traits/enable_if.hpp"
 # include "type_traits/is_integral.hpp"
 # include "iterator/reverse_iterator.hpp"

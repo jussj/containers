@@ -4,7 +4,7 @@
 #endif
 
 #include <vector>
-#include "../inc/Vector.hpp"
+#include "../inc/vector.hpp"
 #include <iostream>
 #include "../test/vector/TestVector.hpp"
 #include "../test/vector/ComplexClass.hpp"

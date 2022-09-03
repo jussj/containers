@@ -3,8 +3,8 @@
 
 # include "type_traits/enable_if.hpp"
 # include "type_traits/is_integral.hpp"
-# include "VectorIterator.hpp"
-# include "Vector.hpp"
+# include "vectorIterator.hpp"
+# include "vector.hpp"
 
 namespace ft {
 	std::string	long_to_str(size_t n) {
