@@ -402,38 +402,39 @@ int 	main() {
 	//test_capacity(a, "A");
 	//test_capacity(c, "C");
 	//test_capacity(d, "D");
-	
-	std::cout	<< "//// REVERSE_ITERATOR FUNCTIONS ////" << std::endl;
-	
-	NAMESPACE::vector<int> g;  // 5 default-constructed ints
+	{	
+		std::cout	<< "//// REVERSE_ITERATOR FUNCTIONS ////" << std::endl;
+		
+		NAMESPACE::vector<int> g;  // 5 default-constructed ints
 
-	std::cout	<< std::endl
-				<< "TESTING REND & RBEGIN" << std::endl;	
+		std::cout	<< std::endl
+					<< "TESTING REND & RBEGIN" << std::endl;	
 
-	for (int i = 5; i <= 10; i++)
-		g.push_back(i);
-	
-	NAMESPACE::vector<int>::reverse_iterator	rit = g.rbegin();
-	NAMESPACE::vector<int>::reverse_iterator	rit_end = g.rend() - 1;
+		for (int i = 5; i <= 10; i++)
+			g.push_back(i);
+		
+		NAMESPACE::vector<int>::reverse_iterator	rit = g.rbegin();
+		NAMESPACE::vector<int>::reverse_iterator	rit_end = g.rend() - 1;
 
-	std::cout << *rit << std::endl;
-	std::cout << *rit_end << std::endl;
+		std::cout << *rit << std::endl;
+		std::cout << *rit_end << std::endl;
 
-	int i = 0;
-	std::cout << "NEW VALUES WOW: ";
-	for (rit = g.rbegin(); rit != g.rend(); ++rit) {
-		*rit = ++i;
+		//int i = 0;
+		std::cout << "NEW VALUES WOW: " << std::endl;
+		for (rit = g.rbegin(); rit != g.rend(); ++rit) {
+			std::cout << *rit << std::endl;
+			//*rit = ++i;
+		}
+		//std::cout << std::endl;
 	}
-	std::cout << std::endl;
-
-	print_content(g, "G");
-	print_info(g, "G");
+	//print_content(g, "G");
+	//print_info(g, "G");
 	
-	NAMESPACE::vector<int>::reverse_iterator	ritt = g.rbegin();
+	//NAMESPACE::vector<int>::reverse_iterator	ritt = g.rbegin();
 	
-	i = 0;
-	for (; ritt != g.rend(); ++ritt)
-		*ritt = ++i;
+	//i = 0;
+	//for (; ritt != g.rend(); ++ritt)
+		//*ritt = ++i;
 
 	return 0;
 }

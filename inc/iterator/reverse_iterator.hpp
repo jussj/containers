@@ -77,8 +77,9 @@ namespace ft {
 						this->_current += n;
 						return *this;
 					}
-					reference 			operator[](difference_type n) const;
-					// same than ptr???
+					reference 			operator[](difference_type n) const {
+						return *(this->_current - n - 1);
+					}
 				
 				private:
 
