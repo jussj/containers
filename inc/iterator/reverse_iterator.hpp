@@ -35,6 +35,7 @@ namespace ft {
 
 					reference 			operator*() const {
 						It	tmp = this->_current;
+						--tmp;
 
 						return *tmp;
 					}
@@ -66,14 +67,14 @@ namespace ft {
 						return reverse_iterator(base() + n);
 					}
 					reverse_iterator& 	operator+=(difference_type n) {
-						this->_current += n;
+						this->_current -= n;
 						return *this;
 					}
 					reverse_iterator 	operator-(difference_type n) const {
-						return reverse_iterator(base() - n);
+						return reverse_iterator(base() + n);
 					}
 					reverse_iterator& 	operator-=(difference_type n) {
-						this->_current -= n;
+						this->_current += n;
 						return *this;
 					}
 					reference 			operator[](difference_type n) const;
