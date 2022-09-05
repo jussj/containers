@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reverse_iterator.hpp                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/05 14:40:45 by jusaint-          #+#    #+#             */
+/*   Updated: 2022/09/05 14:45:59 by jusaint-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef REVERSE_ITERATOR_HPP
 # define REVERSE_ITERATOR_HPP
 
@@ -98,7 +110,7 @@ namespace ft {
 		}
 		template <class It>
 		bool 	operator!=(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
-			return x != y;
+			return !(x == y);
 		}
 		template <class It>
 		bool 	operator>(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
