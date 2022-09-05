@@ -419,22 +419,68 @@ int 	main() {
 		std::cout << *rit << std::endl;
 		std::cout << *rit_end << std::endl;
 
-		//int i = 0;
+		int i = 0;
 		std::cout << "NEW VALUES WOW: " << std::endl;
 		for (rit = g.rbegin(); rit != g.rend(); ++rit) {
-			std::cout << *rit << std::endl;
-			//*rit = ++i;
+			std::cout << *rit << ' ';
+			*rit = ++i;
 		}
-		//std::cout << std::endl;
+		std::cout << std::endl;
+		print_content(g, "G");
+		print_info(g, "G");
+		
+		NAMESPACE::vector<int>::reverse_iterator	ritt = g.rbegin();
+		
+		std::cout << "NEW VALUES AGAIN: " << std::endl;
+		for (; ritt != g.rend(); ++ritt) {
+			*ritt = ++i;
+			std::cout << *ritt << ' ';
+		}
+		std::cout << std::endl;
+		print_info(g, "G");
 	}
-	//print_content(g, "G");
-	//print_info(g, "G");
-	
-	//NAMESPACE::vector<int>::reverse_iterator	ritt = g.rbegin();
-	
-	//i = 0;
-	//for (; ritt != g.rend(); ++ritt)
-		//*ritt = ++i;
+	{
+		std::cout	<< "//// COPY CTOR ////" << std::endl;
+			
+		NAMESPACE::vector<std::string> marc(5, "bjr");
+		NAMESPACE::vector<std::string> jean(marc);
 
+		print_content(jean, "JEAN");
+		print_info(jean, "JEAN");
+		print_content(marc, "MARC");
+		print_info(marc, "MARC");
+		
+		NAMESPACE::vector<int> john;
+		NAMESPACE::vector<int> bob(5, 8);
+		std::cout << "BOB(5, 8): ";
+		
+		for (size_t i = 0; i < bob.size(); i++)
+			std::cout << bob[i] << ' ';
+		
+		std::cout << std::endl;
+		
+		NAMESPACE::vector<int> mike(bob);
+		
+		print_content(john, "JOHN");
+		print_content(mike, "MIKE");
+		print_content(bob, "BOB");
+
+		std::cout	<< "//// RELATIONAL OPERATORS ////" << std::endl << std::endl;
+		
+		NAMESPACE::vector<int> mike_2(mike);
+		std::cout << "mike and bob are equal ? " << (mike == bob) << '\n';
+		std::cout << "mike and mike_2 are equal ? " << (mike == mike_2) << '\n';
+
+		std::cout << "\nb real\n";
+		NAMESPACE::vector<int> real;
+		real.assign(5, 7);
+		for (NAMESPACE::vector<int>::iterator it = real.begin(); it != real.end(); it++)
+			std::cout << *it << " ";
+		std::cout << '\n';
+
+		std::cout << std::endl;
+
+	}
+	
 	return 0;
 }

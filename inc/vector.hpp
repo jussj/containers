@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/05 14:51:20 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/05 17:15:45 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdexcept>	// exceptions
 # include <sstream>		// stream
 # include <iostream>
+# include <algorithm>	// equal
 # include "vectorIterator.hpp"
 # include "utils.hpp"
 # include "type_traits/enable_if.hpp"
@@ -83,10 +84,10 @@ namespace ft {
 				this->_begin	= this->_alloc.allocate(src.capacity());
 				pointer p		= this->_begin;
 				for (size_type s = 0; s < src.size(); s++) {
-					this->_alloc.construct(p++, src._begin + s);	
+					this->_alloc.construct(p++, *(src._begin + s));	
 				}
-				this->_end		= this->_begin + size();
-				this->_capacity	= this->_begin + capacity();
+				this->_end		= this->_begin + src.size();
+				this->_capacity	= this->_begin + src.capacity();
 				//use operator=?
 			}
 			
@@ -429,7 +430,8 @@ namespace ft {
 
 	template <class T, class Alloc>
 	bool operator==(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
-		return x == y;
+		return (x.size() == y.size()
+	      && std::equal(x.begin(), x.end(), y.begin()));
 	}
 	template <class T, class Alloc>
 	bool operator< (const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
