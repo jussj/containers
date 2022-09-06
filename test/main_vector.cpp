@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/06 13:12:53 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/06 15:52:25 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -528,7 +528,30 @@ int 	main() {
 		
 		std::cout << "size of bjr: " << int(bjr.size()) << '\n';
 		std::cout << "size of orvoir: " << int(orvoir.size()) << '\n';
-	}
 
+		std::cout << std::endl;
+	}
+	{
+		std::cout	<< "//// MER ERASING ////" << std::endl << std::endl;
+		
+		NAMESPACE::vector<NAMESPACE::vector<int> >	erase_in_me;
+		
+		for (int i = 0; i < 15; i++) {
+			NAMESPACE::vector<int>	j(1, i);
+			erase_in_me.push_back(j);
+		}
+		for (size_t i = 0; i < erase_in_me.size(); i++)
+			std::cout << erase_in_me.at(i).front() << ' ';
+		std::cout << '\n';
+
+		erase_in_me.erase(erase_in_me.begin() + 7);								// LEAK
+		for (size_t i = 0; i < erase_in_me.size(); i++)
+			std::cout << erase_in_me.at(i).front() << ' ';
+		std::cout << '\n';
+		erase_in_me.erase(erase_in_me.begin() + 2, erase_in_me.begin() + 6);	// LEAK
+		for (size_t i = 0; i < erase_in_me.size(); i++)
+			std::cout << erase_in_me.at(i).front() << ' ';
+		std::cout << '\n';
+	}
 	return 0;
 }

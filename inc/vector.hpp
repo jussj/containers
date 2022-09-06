@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/06 13:11:34 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/06 15:50:32 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,8 @@ namespace ft {
 			~vector() {
 				for (size_type s = 0; s < this->size(); s++)
 					this->_alloc.destroy(this->_begin + s);
-				this->_alloc.deallocate(this->_begin, this->size());
+				//this->_alloc.deallocate(this->_begin, this->size());
+				this->_alloc.deallocate(this->_begin, this->capacity());
 			}
 			
 			template <class InputIt>
@@ -206,7 +207,8 @@ namespace ft {
 					throw std::length_error("vector::reserve");
 
 				else if (n > this->capacity()) {
-					pointer tmp				= this->_alloc.allocate(n + 1);
+					//pointer tmp				= this->_alloc.allocate(n + 1);
+					pointer tmp				= this->_alloc.allocate(n);
 					size_type array_size	= this->size();
 					
 					for (size_type s = 0; s < this->size(); s++)
@@ -341,7 +343,7 @@ namespace ft {
 			
 			iterator 	erase(iterator first, iterator last) {
 				//iterator	ret;
-				size_t		dis		= distance(first, last);
+				size_t		dis		= ft::distance(first, last);
 				iterator	it		= first;
 					
 				for (size_t i = 0; i < dis; ++i) {
@@ -356,18 +358,21 @@ namespace ft {
 				// check pos? must be valid and dereferenceable (not end())
 				size_type	new_size 		= this->size() - 1;
 				size_type	new_position	= ft::distance(this->begin(), position);
-				size_type 	s 				= 0;
+				size_type 	s 				= new_position;
 
-				for (iterator it = this->begin(); it != this->end(); it++) {
+				for (iterator it = position; it < this->end(); it++) {
 					if (it == position) {
 						this->_alloc.destroy(this->_begin + s);
 						it++;
 						this->_alloc.construct(this->_begin + s, *it);
 					}
-					else if (it > position)
+					else if (it > position) {
+						this->_alloc.destroy(this->_begin + s);
 						this->_alloc.construct(this->_begin + s, *it);
+					}
 					s++;
 				}
+				this->_alloc.destroy(this->_begin + s);
 				this->_end 	= this->_begin + new_size;
 				
 				return this->begin() + new_position;

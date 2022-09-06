@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/06 13:11:21 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/06 13:33:24 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,12 @@ namespace ft {
 			}
 			VectorIterator&	operator+=(int n) {
 			//VectorIterator&	operator+=(difference_type n) {
-				this->ptr += n;
+				this->_ptr += n;
 				return *this;
 			}
 			VectorIterator&	operator-=(int n) {
 			//VectorIterator&	operator-=(difference_type n) {
-				this->ptr -= n;
+				this->_ptr -= n;
 				return *this;
 			}
 			reference	operator[](difference_type n) {
