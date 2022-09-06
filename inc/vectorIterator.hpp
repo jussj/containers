@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/06 13:33:24 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/06 17:08:28 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ namespace ft {
 			VectorIterator	operator-(difference_type n) const {
 			//pointer		operator-(difference_type n) const {
 				return current() - n;
+			}
+			difference_type operator-(const VectorIterator<T>& x) {
+				return this->current() - x.current();
 			}
 			VectorIterator&	operator+=(int n) {
 			//VectorIterator&	operator+=(difference_type n) {

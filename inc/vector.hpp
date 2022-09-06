@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/06 15:50:32 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/06 17:26:47 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,12 @@ namespace ft {
 			void 		resize(size_type n, T value = T()) {
 				if (n > this->size()) {
 					if (n > this->capacity())
-						reserve(n);
+					{
+						if (size() * 2 >= n)				// !!!
+								reserve(size() * 2);		// !!!
+						else								// !!!
+							reserve(n);
+					}
 					// FUNC construct param size + value + new end
 					for (size_type s = this->size(); s < n; s++)
 						this->_alloc.construct(_begin + s, value);	
