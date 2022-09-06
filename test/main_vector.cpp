@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_vector.cpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
+/*   Updated: 2022/09/06 11:49:50 by jusaint-         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef NAMESPACE
 # define NAMESPACE ft
 
@@ -476,11 +488,47 @@ int 	main() {
 		real.assign(5, 7);
 		for (NAMESPACE::vector<int>::iterator it = real.begin(); it != real.end(); it++)
 			std::cout << *it << " ";
-		std::cout << '\n';
+		std::cout << std::endl << std::endl;
+		
+		NAMESPACE::vector<int> foo (3,100);   // three ints with a value of 100
+		NAMESPACE::vector<int> bar (2,200);   // two ints with a value of 200
+
+		if (foo == bar) 
+			std::cout << "foo and bar are equal\n";
+		if (foo != bar)
+			std::cout << "foo and bar are not equal\n";
+		if (foo < bar)
+			std::cout << "foo is less than bar\n";
+		if (foo > bar)
+			std::cout << "foo is greater than bar\n";
+		if (foo <= bar)
+			std::cout << "foo is less than or equal to bar\n";
+		if (foo >= bar)
+			std::cout << "foo is greater than or equal to bar\n";
 
 		std::cout << std::endl;
-
 	}
-	
+	{
+		std::cout	<< "//// OPERATOR= ASSIGNATION YE ////" << std::endl << std::endl;
+		
+		NAMESPACE::vector<int> foo (3,0);
+		NAMESPACE::vector<int> bar (5,0);
+
+		NAMESPACE::vector<std::string> bjr (3,"bjr");
+		NAMESPACE::vector<std::string> orvoir (5, "orvoir");
+		
+		bar = foo;
+		foo = NAMESPACE::vector<int>();
+
+		bjr = orvoir;
+		orvoir = NAMESPACE::vector<std::string>();
+		
+		std::cout << "size of foo: " << int(foo.size()) << '\n';
+		std::cout << "size of bar: " << int(bar.size()) << '\n';
+		
+		std::cout << "size of bjr: " << int(bjr.size()) << '\n';
+		std::cout << "size of orvoir: " << int(orvoir.size()) << '\n';
+	}
+
 	return 0;
 }

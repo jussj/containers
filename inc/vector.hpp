@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/05 17:15:45 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/06 11:22:33 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include "type_traits/enable_if.hpp"
 # include "type_traits/is_integral.hpp"
 # include "iterator/reverse_iterator.hpp"
+# include "algorithm/equal.hpp"
 
 namespace ft {
 	
@@ -431,27 +432,31 @@ namespace ft {
 	template <class T, class Alloc>
 	bool operator==(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
 		return (x.size() == y.size()
-	      && std::equal(x.begin(), x.end(), y.begin()));
+	      && !(ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end())));
+		  //&& std::equal(x.begin(), x.end(), y.begin()));
+		  //careful, using std::equal!!!!
 	}
 	template <class T, class Alloc>
-	bool operator< (const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
-		return x < y;
+	bool operator<(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
+		//return x < y;
+		return ft::lexicographical_compare(	x.begin(), x.end(),
+											y.begin(), y.end() );	
 	}
 	template <class T, class Alloc>
 	bool operator!=(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
-		return x != y;
+		return !(x == y);
 	}
 	template <class T, class Alloc>
-	bool operator> (const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
-		return x > y;
+	bool operator>(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
+		return y < x;
 	}
 	template <class T, class Alloc>
 	bool operator>=(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
-		return x >= y;
+		return !(x < y);
 	}
 	template <class T, class Alloc>
 	bool operator<=(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
-		return x <= y;
+		return !(y < x);
 	}
 	template <class T, class Alloc>
 	void swap(vector<T,Alloc>& x, vector<T,Alloc>& y) {
