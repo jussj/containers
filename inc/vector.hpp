@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/06 11:22:33 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/06 13:11:34 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,14 @@ namespace ft {
 							typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
 							) {
 				size_type dis	= ft::distance(first, last);
-				iterator it		= first;
+				//iterator it		= first;
 				
 				// assign on empty vec??
 				if (dis > this->capacity())
 					this->reserve(dis);	
 				this->clear();
-				for (iterator it = first; it != last; it++) 
-					this->push_back(*it);	
+				for (; first != last; first++) 
+					this->push_back(*first);	
 			}
 
 			void	assign(size_type n, const value_type& value) {
@@ -136,6 +136,7 @@ namespace ft {
 				if (&src == this)
 					return *this;
 				this->assign(src.begin(), src.end());
+				return *this;
 			}
 
 		// ITERATORS

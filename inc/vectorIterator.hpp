@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/05 14:51:08 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/06 13:11:21 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ namespace ft {
 			VectorIterator() 			: _ptr(NULL) 	{}
 			VectorIterator(pointer it) 	: _ptr(it) 		{}
 			template<class I>
-			VectorIterator(VectorIterator<I> it) 	: _ptr(it.current()) {}
+			VectorIterator(VectorIterator<I> it)		: _ptr(it.current()) {}
+			//VectorIterator(const VectorIterator<I> it) 	: _ptr(it.current()) {}
 			~VectorIterator() {}
 
 		// ACCESS
