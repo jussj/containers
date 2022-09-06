@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_stack.cpp                                     :+:      :+:    :+:   */
+/*   main_stack.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 10:33:14 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/06/24 16:22:59 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/06 18:19:01 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void	printStack(NAMESPACE::stack<T> & s) {
 
 int 	main() {
 		// CTOR IS WORKING ON ANY UNDERLYING CONTAINER WITH ANY CONTAINER IN INPUT
-	{	// BUILDING STACKS AND SIZE
+		// BUILDING STACKS AND SIZE
 		// TEST COPY CTOR AND COPY
+	{
 		NAMESPACE::stack<int, std::deque<int> >			a;          
 		NAMESPACE::stack<int, std::vector<int> >		b;
 		NAMESPACE::stack<std::string> 				d;	// UNDERLYING CONTAINER IS DEQUE IN STD
@@ -94,7 +95,103 @@ int 	main() {
 		   mystack.pop();
 		}
 
-		std::cout << "total sum of elements: " << sum << '\n';	
+		std::cout << "total sum of elements: " << sum << std::endl << std::endl;	
+	}
+	{
+		std::cout << "//// RELATIONAL OPERATORS ////" << std::endl << std::endl;
+		
+		NAMESPACE::stack<int> a, b, c;
+		
+		a.push(10);
+		a.push(20);
+		a.push(30);
+
+		b.push(10);
+		b.push(20);
+		b.push(30);
+
+		c.push(30);
+		c.push(20);
+		c.push(10);
+
+		if (a==b)
+			std::cout << "a and b are equal\n";
+		if (b!=c) 
+			std::cout << "b and c are not equal\n";
+		if (b<c)
+			std::cout << "b is less than c\n";
+		if (c>b)
+			std::cout << "c is greater than b\n";
+		if (a<=b)
+			std::cout << "a is less than or equal to b\n";
+		if (a>=b)
+			std::cout << "a is greater than or equal to b\n";
+	}
+	{
+		NAMESPACE::stack<int> mystack;
+
+		std::cout << "stack<" << "int" << "> mystack" << std::endl;
+		std::cout << std::endl;
+
+
+		std::cout << "# empty" << std::endl;
+		std::cout << "mystack.empty(): " <<  mystack.empty() << std::endl;
+		std::cout << "mystack.size(): " << mystack.size() << std::endl;
+		std::cout << "# one element" << std::endl;
+		mystack.push(42);
+		std::cout << "mystack.push(42)" << std::endl;
+		std::cout << "mystack.empty(): " <<  mystack.empty() << std::endl;
+		std::cout << "mystack.size(): " << mystack.size() << std::endl;
+		std::cout << "mystack.top(): " << mystack.top() << std::endl;
+		std::cout << "# two element" << std::endl;
+		mystack.push(2);
+		std::cout << "mystack.push(2)" << std::endl;
+		std::cout << "mystack.size(): " << mystack.size() << std::endl;
+		std::cout << "mystack.top(): " << mystack.top() << std::endl;
+		std::cout << "# pop element" << std::endl;
+		mystack.pop();
+		std::cout << "mystack.pop()" << std::endl;
+		std::cout << "mystack.size(): " << mystack.size() << std::endl;
+		std::cout << "mystack.top(): " << mystack.top() << std::endl;
+		std::cout << std::endl;
+
+		stack<int, ft::vector<int> > mystack2;
+
+		std::cout << "stack<" << "int" << ", " << "ft::vector" << "> mystack2" << std::endl;
+		std::cout << std::endl;
+
+
+		std::cout << "# empty" << std::endl;
+		std::cout << "mystack2.empty(): " <<  mystack2.empty() << std::endl;
+		std::cout << "mystack2.size(): " << mystack2.size() << std::endl;
+		std::cout << "# one element" << std::endl;
+		mystack2.push(42);
+		std::cout << "mystack2.push(42)" << std::endl;
+		std::cout << "mystack2.empty(): " <<  mystack2.empty() << std::endl;
+		std::cout << "mystack2.size(): " << mystack2.size() << std::endl;
+		std::cout << "mystack2.top(): " << mystack2.top() << std::endl;
+		std::cout << "# two element" << std::endl;
+		mystack2.push(2);
+		std::cout << "mystack2.push(2)" << std::endl;
+		std::cout << "mystack2.size(): " << mystack2.size() << std::endl;
+		std::cout << "mystack2.top(): " << mystack2.top() << std::endl;
+		std::cout << "# pop element" << std::endl;
+		mystack2.pop();
+		std::cout << "mystack2.pop()" << std::endl;
+		std::cout << "mystack2.size(): " << mystack2.size() << std::endl;
+		std::cout << "mystack2.top(): " << mystack2.top() << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "# test cpy and equality" << std::endl;
+		stack<int>	cpystack = mystack;
+		std::cout << "stack<" << "int" << "> cpystack = mystack" << std::endl;
+		std::cout << std::endl;
+
+		std::cout << "cpystack == mystack:" << (cpystack == mystack) << std::endl;
+		cpystack.push(7);
+		std::cout << "cpystack.push(7)" << std::endl;
+		std::cout << "cpystack == mystack:" << (cpystack == mystack) << std::endl;
+
 	}
   return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/06 17:26:47 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/06 18:20:23 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,9 +177,8 @@ namespace ft {
 			}
 			void 		resize(size_type n, T value = T()) {
 				if (n > this->size()) {
-					if (n > this->capacity())
-					{
-						if (size() * 2 >= n)				// !!!
+					if (n > this->capacity()) {
+						if (size() * 2 > n)					// !!!
 								reserve(size() * 2);		// !!!
 						else								// !!!
 							reserve(n);
@@ -284,7 +283,8 @@ namespace ft {
 				pointer		new_array;
 				size_type	new_capacity;
 				size_type	new_size 		= this->size() + n;
-				
+			
+				// new vector each time insert is called??	
 				// check whether capacity calculation is ok or not ok
 				if (this->size() + n > this->capacity())
 					new_capacity = this->capacity() + n;

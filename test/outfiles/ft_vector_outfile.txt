@@ -11,6 +11,17 @@
    max_size:   288230376151711743
    front/back: [ he ... he ]
 
+
+// VECTOR B INFO
+   size:       50
+   capacity:   50
+   max_size:   2305843009213693951
+   front/back: [ 5 ... 5 ]
+
+
+// VECTOR B ARRAY
+   [ 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 ]
+
 A is empty
 C is NOT empty
 D is NOT empty
@@ -149,8 +160,7 @@ c.assign(0, he)...
 
 
 // VECTOR C ARRAY
-   [ ]
-
+   [ IS EMPTY ]
 c.assign(13, ho)...
 
 // VECTOR C INFO
@@ -172,6 +182,14 @@ const iterators...
 c.begin is ho
 iterating through vector...
 [ ho ho ho ho ho ho ho ho ho ho ho ho ho ]
+
+
+access to f: 10 9 8 7 6 5 4 3 2 1 0
+// VECTOR F INFO
+   size:       11
+   capacity:   16
+   max_size:   2305843009213693951
+   front/back: [ 10 ... 0 ]
 
 //// ASSIGN(IT, IT) ////
 
@@ -326,8 +344,7 @@ swap overload!
 
 
 // VECTOR E ARRAY
-   [ ]
-
+   [ IS EMPTY ]
 
 // VECTOR E INFO
    size:       0
@@ -386,6 +403,41 @@ new element is hi
    max_size:   288230376151711743
    front/back: [ ho ... hi ]
 
+
+// VECTOR F INFO
+   size:       10
+   capacity:   16
+   max_size:   2305843009213693951
+   front/back: [ 1 ... 10 ]
+
+
+// VECTOR F ARRAY
+   [ 1 2 3 4 5 6 7 8 9 10 ]
+
+   ERASE RETURNS 7
+
+// VECTOR F INFO
+   size:       9
+   capacity:   16
+   max_size:   2305843009213693951
+   front/back: [ 1 ... 10 ]
+
+
+// VECTOR F ARRAY
+   [ 1 2 3 4 5 7 8 9 10 ]
+
+   ERASE RETURNS 10
+
+// VECTOR F INFO
+   size:       6
+   capacity:   16
+   max_size:   2305843009213693951
+   front/back: [ 4 ... 10 ]
+
+
+// VECTOR F ARRAY
+   [ 4 5 7 8 9 10 ]
+
 //// INSERT MULTIPLE VALUES ////
 
 // VECTOR C ARRAY
@@ -442,3 +494,98 @@ new element is hi
    max_size:   288230376151711743
    front/back: [ HE ... HE ]
 
+//// REVERSE_ITERATOR FUNCTIONS ////
+
+TESTING REND & RBEGIN
+10
+5
+NEW VALUES WOW: 
+10 9 8 7 6 5 
+
+// VECTOR G ARRAY
+   [ 6 5 4 3 2 1 ]
+
+
+// VECTOR G INFO
+   size:       6
+   capacity:   8
+   max_size:   2305843009213693951
+   front/back: [ 6 ... 1 ]
+
+NEW VALUES AGAIN: 
+7 8 9 10 11 12 
+
+// VECTOR G INFO
+   size:       6
+   capacity:   8
+   max_size:   2305843009213693951
+   front/back: [ 12 ... 7 ]
+
+//// COPY CTOR ////
+
+// VECTOR JEAN ARRAY
+   [ bjr bjr bjr bjr bjr ]
+
+
+// VECTOR JEAN INFO
+   size:       5
+   capacity:   5
+   max_size:   288230376151711743
+   front/back: [ bjr ... bjr ]
+
+
+// VECTOR MARC ARRAY
+   [ bjr bjr bjr bjr bjr ]
+
+
+// VECTOR MARC INFO
+   size:       5
+   capacity:   5
+   max_size:   288230376151711743
+   front/back: [ bjr ... bjr ]
+
+BOB(5, 8): 8 8 8 8 8 
+
+// VECTOR JOHN ARRAY
+   [ IS EMPTY ]
+
+// VECTOR MIKE ARRAY
+   [ 8 8 8 8 8 ]
+
+
+// VECTOR BOB ARRAY
+   [ 8 8 8 8 8 ]
+
+//// RELATIONAL OPERATORS ////
+
+mike and bob are equal ? 1
+mike and mike_2 are equal ? 1
+
+b real
+7 7 7 7 7 
+
+foo and bar are not equal
+foo is less than bar
+foo is less than or equal to bar
+
+//// OPERATOR= ASSIGNATION YE ////
+
+size of foo: 0
+size of bar: 3
+size of bjr: 5
+size of orvoir: 0
+
+//// MER ERASING ////
+
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 
+0 1 2 3 4 5 6 8 9 10 11 12 13 14 
+0 1 6 8 9 10 11 12 13 14 
+//// MER MER ////
+
+
+RESIZE TESTS
+s: 72, c: 72
+s: 100, c: 144
+s: 4170, c: 4170
+s: 171, c: 4170
+s: 62, c: 4170

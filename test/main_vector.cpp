@@ -6,12 +6,12 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/06 15:52:25 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/06 18:27:40 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE ft
+# define NAMESPACE std
 
 #endif
 
@@ -553,5 +553,24 @@ int 	main() {
 			std::cout << erase_in_me.at(i).front() << ' ';
 		std::cout << '\n';
 	}
+	
+	std::cout	<< "//// MER MER ////" << std::endl << std::endl;
+	{
+		
+		std::cout << std::endl << "RESIZE TESTS" << std::endl;
+		NAMESPACE::vector<int> test(12, 12);
+		//vector<T> test();		// nasty axel test with empty vec
+
+		test.resize(72);
+		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+		test.resize(100);
+		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+		test.resize(4170);
+		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+		test.resize(171, 12);
+		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+		test.resize(62);
+		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+	}	
 	return 0;
 }
