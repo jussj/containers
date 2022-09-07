@@ -6,7 +6,7 @@
 /*   By: mchardin <mchardin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 13:07:06 by hbaudet           #+#    #+#             */
-/*   Updated: 2022/09/06 18:29:36 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:13:04 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,18 +283,18 @@ int main_test_mazoise()
 	push_pop_back_tests<int>();
 	resize_tests<int>();
 	insert_tests<int>();
-	//reserve_tests<int>();
-	//copy_swap_tests<int>();
-	//reverse_it_tests<int>();
-	//erase_clear_tests<int>();
-	//max_size_tests();
-	//awesome_tests();
-	//push_pop_back_tests<Awesome>();
-	//resize_tests<Awesome>();
-	//insert_tests<Awesome>();
-	//reserve_tests<Awesome>();
-	//copy_swap_tests<Awesome>();
-	//reverse_it_tests<Awesome>();
-	//erase_clear_tests<Awesome>();
+	reserve_tests<int>();
+	copy_swap_tests<int>(); // invalid read
+	reverse_it_tests<int>(); // segf
+	erase_clear_tests<int>();
+	max_size_tests();
+	awesome_tests();
+	push_pop_back_tests<Awesome>();
+	resize_tests<Awesome>();
+	insert_tests<Awesome>();
+	reserve_tests<Awesome>();
+	copy_swap_tests<Awesome>(); // invalid read
+	reverse_it_tests<Awesome>(); // segf
+	erase_clear_tests<Awesome>();
 	return 0;
 }

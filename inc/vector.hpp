@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/06 18:20:23 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:20:02 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,10 +178,10 @@ namespace ft {
 			void 		resize(size_type n, T value = T()) {
 				if (n > this->size()) {
 					if (n > this->capacity()) {
-						if (size() * 2 > n)					// !!!
-								reserve(size() * 2);		// !!!
-						else								// !!!
-							reserve(n);
+						if (this->size() * 2 > n)						// !!!
+							this->reserve(this->size() * 2);			// !!!
+						else											// !!!
+							this->reserve(n);
 					}
 					// FUNC construct param size + value + new end
 					for (size_type s = this->size(); s < n; s++)
@@ -195,7 +195,6 @@ namespace ft {
 						_alloc.destroy(this->_begin + s);
 					this->_end = this->_begin + n;
 				}
-
 			}
 
 			size_type 	capacity() const {
@@ -212,8 +211,8 @@ namespace ft {
 
 				else if (n > this->capacity()) {
 					//pointer tmp				= this->_alloc.allocate(n + 1);
-					pointer tmp				= this->_alloc.allocate(n);
-					size_type array_size	= this->size();
+					pointer		tmp			= this->_alloc.allocate(n);
+					size_type	array_size	= this->size();
 					
 					for (size_type s = 0; s < this->size(); s++)
 						this->_alloc.construct(tmp + s, *(this->_begin + s));
@@ -283,15 +282,39 @@ namespace ft {
 				pointer		new_array;
 				size_type	new_capacity;
 				size_type	new_size 		= this->size() + n;
-			
+				//iterator	rbegin_insert	= position + n - 1;
+				//iterator	rlast_insert	= position;
+				//size_type	copy_to			= new_size - 1;
+				//size_type	copy_from		= this->size() - 1;
+
 				// new vector each time insert is called??	
 				// check whether capacity calculation is ok or not ok
-				if (this->size() + n > this->capacity())
-					new_capacity = this->capacity() + n;
-					//new_capacity = this->capacity() + (n * 2);
+				if (n < 1)
+					return ;
+				//if position is last() you know what to do
+				if (new_size > this->capacity()) {
+					if (new_size > this->size() * 2)
+						//this->reserve(new_size);
+						new_capacity = new_size;
+					else
+						//this->reserve(this->size() * 2);
+						new_capacity = this->size() * 2;
+				}
 				else 
 					new_capacity = this->capacity();
-				new_array 	= this->_alloc.allocate(new_capacity);
+				// NEW INSERT: COPY/CONSTRUCT FROM THE END
+				//for (iterator it = rbegin_insert; it != rlast_insert; ++it) {
+					//std::cout<<"RBEGIN "<<*it<<" RLAST "<<*rlast_insert<<" CPY TO "<<copy_to<<" CPY FROM "<<copy_from<<std::endl;
+					//this->_alloc.construct(this->_begin + copy_to, *(this->begin() + copy_from));
+					//this->_alloc.destroy(this->_begin + copy_from);
+					//--copy_to;
+					//--copy_from;
+					//this->_alloc.construct(this->_begin + copy_from, x);
+				//}
+
+				// OLD INSERT: FULL REALLOCATION
+				// add capacity + 1 IS IT BAD ???? :((((((
+				new_array 	= this->_alloc.allocate(new_capacity + 1);
 				iterator it	= this->begin();
 				for (size_type s = 0; s < new_size; s++) {
 					if (it == position) {
@@ -306,6 +329,7 @@ namespace ft {
 				this->clear();
 				this->_alloc.deallocate(this->_begin, this->size());
 				this->_begin 	= new_array;
+
 				this->_end 		= this->_begin + new_size;
 				this->_capacity	= this->_begin + new_capacity;
 			}
@@ -322,8 +346,13 @@ namespace ft {
 				size_type 	length		= ft::distance(first, last);
 				size_type	new_size	= this->size() + length;
 				
-				if (this->size() + length > this->capacity())
-					new_capacity = new_size;
+				if (this->size() + length > this->capacity()) {
+					//new_capacity = new_size;
+					if (new_size > this->size() * 2)
+						new_capacity = new_size;
+					else
+						new_capacity = this->size() * 2;
+				}
 				else
 					new_capacity = this->capacity();
 
@@ -394,7 +423,6 @@ namespace ft {
 				src._begin		= tmp_begin;
 				src._end		= tmp_end;
 				src._capacity	= tmp_capacity;
-
 			}
 			
 			void 		clear() {

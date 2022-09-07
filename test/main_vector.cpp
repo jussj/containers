@@ -6,12 +6,12 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/06 18:27:40 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/07 19:20:26 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE std
+# define NAMESPACE ft
 
 #endif
 
@@ -25,6 +25,8 @@
 #include <typeinfo>		// typeid
 
 int 	main() {
+	std::cout	<< "//// CONSTRUCTOR ////" << std::endl;
+	
 	NAMESPACE::vector<int>						a;
 	NAMESPACE::vector<int>						b(50, 5);	
 	NAMESPACE::vector<std::string>				c(4, "he");
@@ -45,6 +47,88 @@ int 	main() {
 	if (!d.empty())
 		std::cout << "D is NOT empty" << std::endl;
 
+	{
+		std::cout	<< "//// COPY CTOR ////" << std::endl;
+			
+		NAMESPACE::vector<std::string> marc(5, "bjr");
+		NAMESPACE::vector<std::string> jean(marc);
+
+		print_content(jean, "JEAN");
+		print_info(jean, "JEAN");
+		print_content(marc, "MARC");
+		print_info(marc, "MARC");
+		
+		NAMESPACE::vector<int> john;
+		NAMESPACE::vector<int> bob(5, 8);
+		std::cout << "BOB(5, 8): ";
+		
+		for (size_t i = 0; i < bob.size(); i++)
+			std::cout << bob[i] << ' ';
+		
+		std::cout << std::endl;
+		
+		NAMESPACE::vector<int> mike(bob);
+		
+		print_content(john, "JOHN");
+		print_content(mike, "MIKE");
+		print_content(bob, "BOB");
+
+		std::cout	<< "//// RELATIONAL OPERATORS ////" << std::endl << std::endl;
+		
+		NAMESPACE::vector<int> mike_2(mike);
+		std::cout << "mike and bob are equal ? " << (mike == bob) << '\n';
+		std::cout << "mike and mike_2 are equal ? " << (mike == mike_2) << '\n';
+
+		std::cout << "\nb real\n";
+		NAMESPACE::vector<int> real;
+		real.assign(5, 7);
+		for (NAMESPACE::vector<int>::iterator it = real.begin(); it != real.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl << std::endl;
+		
+		NAMESPACE::vector<int> foo (3,100);   // three ints with a value of 100
+		NAMESPACE::vector<int> bar (2,200);   // two ints with a value of 200
+
+		if (foo == bar) 
+			std::cout << "foo and bar are equal\n";
+		if (foo != bar)
+			std::cout << "foo and bar are not equal\n";
+		if (foo < bar)
+			std::cout << "foo is less than bar\n";
+		if (foo > bar)
+			std::cout << "foo is greater than bar\n";
+		if (foo <= bar)
+			std::cout << "foo is less than or equal to bar\n";
+		if (foo >= bar)
+			std::cout << "foo is greater than or equal to bar\n";
+
+		std::cout << std::endl;
+	}
+	{
+		std::cout	<< "//// OPERATOR= ASSIGNATION YE ////" << std::endl << std::endl;
+		
+		NAMESPACE::vector<int> foo (3,0);
+		NAMESPACE::vector<int> bar (5,0);
+
+		NAMESPACE::vector<std::string> bjr (3,"bjr");
+		NAMESPACE::vector<std::string> orvoir (5, "orvoir");
+		
+		bar = foo;
+		foo = NAMESPACE::vector<int>();
+
+		bjr = orvoir;
+		orvoir = NAMESPACE::vector<std::string>();
+		
+		std::cout << "size of foo: " << int(foo.size()) << '\n';
+		std::cout << "size of bar: " << int(bar.size()) << '\n';
+		
+		std::cout << "size of bjr: " << int(bjr.size()) << '\n';
+		std::cout << "size of orvoir: " << int(orvoir.size()) << '\n';
+
+		std::cout << std::endl;
+	}
+	std::cout	<< "//// RESERVE W PUSH & POP ////" << std::endl << std::endl;
+	
 	std::cout 	<< "a.reserve(0)..." << std::endl;
 	a.reserve(0);
 	
@@ -132,7 +216,21 @@ int 	main() {
 	c.resize(12);
 
 	print_info(c, "C");
+	{
+		NAMESPACE::vector<int> test(12, 12);
+		//vector<T> test();		// nasty axel test with empty vec
 
+		test.resize(72);
+		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+		test.resize(100);
+		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+		test.resize(4170);
+		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+		test.resize(171, 12);
+		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+		test.resize(62);
+		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+	}
 	std::cout	<< "//// AT ////" << std::endl;
 
 	std::cout	<< "in range: element at(0) is "
@@ -356,6 +454,26 @@ int 	main() {
 	//std::cout	<< "new element is " << *pos << std::endl;
 
 	{
+		NAMESPACE::vector<NAMESPACE::vector<int> >	erase_in_me;
+		
+		for (int i = 0; i < 15; i++) {
+			NAMESPACE::vector<int>	j(1, i);
+			erase_in_me.push_back(j);
+		}
+		for (size_t i = 0; i < erase_in_me.size(); i++)
+			std::cout << erase_in_me.at(i).front() << ' ';
+		std::cout << '\n';
+
+		erase_in_me.erase(erase_in_me.begin() + 7);
+		for (size_t i = 0; i < erase_in_me.size(); i++)
+			std::cout << erase_in_me.at(i).front() << ' ';
+		std::cout << '\n';
+		erase_in_me.erase(erase_in_me.begin() + 2, erase_in_me.begin() + 6);
+		for (size_t i = 0; i < erase_in_me.size(); i++)
+			std::cout << erase_in_me.at(i).front() << ' ';
+		std::cout << '\n';
+	}
+	{
 		NAMESPACE::vector<int>::iterator	ret;	
 		NAMESPACE::vector<int>				f;
 		
@@ -401,12 +519,12 @@ int 	main() {
 	print_content(e, "E");
 	print_info(e, "E");
 
+	// capacity differs, should be 40
 	e.insert(e.begin() + 5, c.end() - 10, c.end() - 5);
 
 	print_content(e, "E");
 	print_info(e, "E");
 
-	// test with int enable if 
 	// test with non broken complex classes
 
 	//std::cout	<< "//// CAPACITY ////" << std::endl;
@@ -451,126 +569,101 @@ int 	main() {
 		std::cout << std::endl;
 		print_info(g, "G");
 	}
+	std::cout	<< "//// MER TESTS ////" << std::endl << std::endl;
 	{
-		std::cout	<< "//// COPY CTOR ////" << std::endl;
-			
-		NAMESPACE::vector<std::string> marc(5, "bjr");
-		NAMESPACE::vector<std::string> jean(marc);
+		{
+			std::cout << std::endl << "RESIZE TESTS" << std::endl;
+			//vector<T> test();		// nasty axel test with empty vec
+			//test.resize(72);
+			std::cout << std::endl << "INSERT TESTS" << std::endl;
+			//redo insert to optimize when all tests are good
+			NAMESPACE::vector<int> test(1, 1);
+			NAMESPACE::vector<int> test2(5, 5);
 
-		print_content(jean, "JEAN");
-		print_info(jean, "JEAN");
-		print_content(marc, "MARC");
-		print_info(marc, "MARC");
-		
-		NAMESPACE::vector<int> john;
-		NAMESPACE::vector<int> bob(5, 8);
-		std::cout << "BOB(5, 8): ";
-		
-		for (size_t i = 0; i < bob.size(); i++)
-			std::cout << bob[i] << ' ';
-		
-		std::cout << std::endl;
-		
-		NAMESPACE::vector<int> mike(bob);
-		
-		print_content(john, "JOHN");
-		print_content(mike, "MIKE");
-		print_content(bob, "BOB");
-
-		std::cout	<< "//// RELATIONAL OPERATORS ////" << std::endl << std::endl;
-		
-		NAMESPACE::vector<int> mike_2(mike);
-		std::cout << "mike and bob are equal ? " << (mike == bob) << '\n';
-		std::cout << "mike and mike_2 are equal ? " << (mike == mike_2) << '\n';
-
-		std::cout << "\nb real\n";
-		NAMESPACE::vector<int> real;
-		real.assign(5, 7);
-		for (NAMESPACE::vector<int>::iterator it = real.begin(); it != real.end(); it++)
-			std::cout << *it << " ";
-		std::cout << std::endl << std::endl;
-		
-		NAMESPACE::vector<int> foo (3,100);   // three ints with a value of 100
-		NAMESPACE::vector<int> bar (2,200);   // two ints with a value of 200
-
-		if (foo == bar) 
-			std::cout << "foo and bar are equal\n";
-		if (foo != bar)
-			std::cout << "foo and bar are not equal\n";
-		if (foo < bar)
-			std::cout << "foo is less than bar\n";
-		if (foo > bar)
-			std::cout << "foo is greater than bar\n";
-		if (foo <= bar)
-			std::cout << "foo is less than or equal to bar\n";
-		if (foo >= bar)
-			std::cout << "foo is greater than or equal to bar\n";
-
-		std::cout << std::endl;
-	}
-	{
-		std::cout	<< "//// OPERATOR= ASSIGNATION YE ////" << std::endl << std::endl;
-		
-		NAMESPACE::vector<int> foo (3,0);
-		NAMESPACE::vector<int> bar (5,0);
-
-		NAMESPACE::vector<std::string> bjr (3,"bjr");
-		NAMESPACE::vector<std::string> orvoir (5, "orvoir");
-		
-		bar = foo;
-		foo = NAMESPACE::vector<int>();
-
-		bjr = orvoir;
-		orvoir = NAMESPACE::vector<std::string>();
-		
-		std::cout << "size of foo: " << int(foo.size()) << '\n';
-		std::cout << "size of bar: " << int(bar.size()) << '\n';
-		
-		std::cout << "size of bjr: " << int(bjr.size()) << '\n';
-		std::cout << "size of orvoir: " << int(orvoir.size()) << '\n';
-
-		std::cout << std::endl;
-	}
-	{
-		std::cout	<< "//// MER ERASING ////" << std::endl << std::endl;
-		
-		NAMESPACE::vector<NAMESPACE::vector<int> >	erase_in_me;
-		
-		for (int i = 0; i < 15; i++) {
-			NAMESPACE::vector<int>	j(1, i);
-			erase_in_me.push_back(j);
+			test.insert(test.begin(), 200, 12);
+			print_info(test, "TEST");
+			test.insert(test.begin() + 12, 200, 30);
+			print_info(test, "TEST");
+			test.insert(test.end(), 12, 50);
+			print_info(test, "TEST");
+			test.insert(test.end() - 1, 0, 60);
+			print_info(test, "TEST");
+			test.insert(test.end() - 1, 1, 70);
+			print_info(test, "TEST");
+			test.insert(test.begin() + 412, test2.begin(), test2.end());
+			print_info(test, "TEST");
+			test.insert(test.begin() + 6, test2.begin(), test2.end());
+			print_info(test, "TEST");
+			test.insert(test.end(), test2.begin(), test2.end());
+			print_info(test, "TEST");
 		}
-		for (size_t i = 0; i < erase_in_me.size(); i++)
-			std::cout << erase_in_me.at(i).front() << ' ';
-		std::cout << '\n';
+		{
+			std::cout << std::endl << "SIZE TESTS" << std::endl;
+			NAMESPACE::vector<int> myints;
+			std::cout << "0. size: " << myints.size() << '\n';
 
-		erase_in_me.erase(erase_in_me.begin() + 7);								// LEAK
-		for (size_t i = 0; i < erase_in_me.size(); i++)
-			std::cout << erase_in_me.at(i).front() << ' ';
-		std::cout << '\n';
-		erase_in_me.erase(erase_in_me.begin() + 2, erase_in_me.begin() + 6);	// LEAK
-		for (size_t i = 0; i < erase_in_me.size(); i++)
-			std::cout << erase_in_me.at(i).front() << ' ';
-		std::cout << '\n';
+			for (int i=0; i<10; i++)
+				myints.push_back(i);
+			std::cout << "1. size: " << myints.size() << '\n';
+
+			myints.insert (myints.end(),10,100); // invalid read 4
+			std::cout << "2. size: " << myints.size() << '\n';
+
+			myints.pop_back();
+			std::cout << "3. size: " << myints.size() << '\n';
+		}
+		{
+			std::cout << std::endl << "COPY && SWAP TESTS" << std::endl;
+			NAMESPACE::vector<int> test;
+			NAMESPACE::vector<int>::const_iterator cit;
+			for (size_t i = 0; i < 50; i++)
+				test.push_back(i);
+			
+			NAMESPACE::vector<int> test_copy(test);
+			for (size_t i = 0; i < test_copy.size(); i++)
+				test_copy[i] += 100;
+			print_info(test_copy, "TEST_COPY");
+
+			NAMESPACE::vector<int> test_range(test.begin() + 20, test.begin() + 30);
+			//print_info(test_range, "TEST_RANGE");
+			
+			//test_copy.swap(test);
+			//print_info(test, "TEST");
+			//print_info(test_copy, "TEST_COPY");
+			//print_info(test_range, "TEST_RANGE");
+			//print_info(test_range, "TEST_RANGE");
+			//print_info(test_copy, "TEST_COPY");
+			
+			//test.swap(test_copy);
+			//print_info(test, "TEST");
+			//print_info(test_copy, "TEST_COPY");
+					
+		}
+		{
+	/*		std::cout << std::endl << "REVERSE IT TESTS" << std::endl;
+			NAMESPACE::vector<T> test;
+			
+			for (size_t i = 0; i < 12; i++) 
+				test.push_back(i);
+			typename vector<T>::reverse_iterator		revbeg = test.rbegin();
+			for (typename vector<T>::reverse_iterator it = revbeg; it != test.rend(); it++) {
+				std::cout << *it << " ";
+				if (!((revbeg - it) % 10) && it != revbeg)
+					std::cout << std::endl;
+			}
+			std::cout << *(test.rbegin() + 2) << std::endl;
+			std::cout << *(test.rend() - 8) << std::endl;
+			std::cout << (test.rbegin() == revbeg) << std::endl;
+			revbeg++;
+			std::cout << *revbeg << std::endl;
+			std::cout << (test.rbegin() == test.rend()) << std::endl;
+			std::cout << (test.rbegin() <= test.rbegin()) << std::endl;
+			std::cout << (test.rbegin() < test.rend()) << std::endl;
+			std::cout << (test.rbegin() >= test.rend()) << std::endl;
+			revbeg += 3;
+			std::cout << *revbeg << std::endl;
+			std::cout << std::endl;
+	*/	}	
 	}
-	
-	std::cout	<< "//// MER MER ////" << std::endl << std::endl;
-	{
-		
-		std::cout << std::endl << "RESIZE TESTS" << std::endl;
-		NAMESPACE::vector<int> test(12, 12);
-		//vector<T> test();		// nasty axel test with empty vec
-
-		test.resize(72);
-		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
-		test.resize(100);
-		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
-		test.resize(4170);
-		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
-		test.resize(171, 12);
-		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
-		test.resize(62);
-		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
-	}	
 	return 0;
 }

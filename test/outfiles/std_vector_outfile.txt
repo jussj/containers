@@ -1,3 +1,4 @@
+//// CONSTRUCTOR ////
 
 // VECTOR A INFO
    size:       0
@@ -25,6 +26,62 @@
 A is empty
 C is NOT empty
 D is NOT empty
+//// COPY CTOR ////
+
+// VECTOR JEAN ARRAY
+   [ bjr bjr bjr bjr bjr ]
+
+
+// VECTOR JEAN INFO
+   size:       5
+   capacity:   5
+   max_size:   288230376151711743
+   front/back: [ bjr ... bjr ]
+
+
+// VECTOR MARC ARRAY
+   [ bjr bjr bjr bjr bjr ]
+
+
+// VECTOR MARC INFO
+   size:       5
+   capacity:   5
+   max_size:   288230376151711743
+   front/back: [ bjr ... bjr ]
+
+BOB(5, 8): 8 8 8 8 8 
+
+// VECTOR JOHN ARRAY
+   [ IS EMPTY ]
+
+// VECTOR MIKE ARRAY
+   [ 8 8 8 8 8 ]
+
+
+// VECTOR BOB ARRAY
+   [ 8 8 8 8 8 ]
+
+//// RELATIONAL OPERATORS ////
+
+mike and bob are equal ? 1
+mike and mike_2 are equal ? 1
+
+b real
+7 7 7 7 7 
+
+foo and bar are not equal
+foo is less than bar
+foo is less than or equal to bar
+
+//// OPERATOR= ASSIGNATION YE ////
+
+size of foo: 0
+size of bar: 3
+size of bjr: 5
+size of orvoir: 0
+
+//// RESERVE W PUSH & POP ////
+
 a.reserve(0)...
 a.reserve(max_size + 1)...
 a.reserve(7)...
@@ -123,6 +180,11 @@ c.resize(12) with NULL value...
    max_size:   288230376151711743
    front/back: [ he ...  ]
 
+s: 72, c: 72
+s: 100, c: 144
+s: 4170, c: 4170
+s: 171, c: 4170
+s: 62, c: 4170
 //// AT ////
 in range: element at(0) is he
 past size(): element at(3) is ha
@@ -403,6 +465,9 @@ new element is hi
    max_size:   288230376151711743
    front/back: [ ho ... hi ]
 
+0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 
+0 1 2 3 4 5 6 8 9 10 11 12 13 14 
+0 1 6 8 9 10 11 12 13 14 
 
 // VECTOR F INFO
    size:       10
@@ -521,71 +586,81 @@ NEW VALUES AGAIN:
    max_size:   2305843009213693951
    front/back: [ 12 ... 7 ]
 
-//// COPY CTOR ////
-
-// VECTOR JEAN ARRAY
-   [ bjr bjr bjr bjr bjr ]
-
-
-// VECTOR JEAN INFO
-   size:       5
-   capacity:   5
-   max_size:   288230376151711743
-   front/back: [ bjr ... bjr ]
-
-
-// VECTOR MARC ARRAY
-   [ bjr bjr bjr bjr bjr ]
-
-
-// VECTOR MARC INFO
-   size:       5
-   capacity:   5
-   max_size:   288230376151711743
-   front/back: [ bjr ... bjr ]
-
-BOB(5, 8): 8 8 8 8 8 
-
-// VECTOR JOHN ARRAY
-   [ IS EMPTY ]
-
-// VECTOR MIKE ARRAY
-   [ 8 8 8 8 8 ]
-
-
-// VECTOR BOB ARRAY
-   [ 8 8 8 8 8 ]
-
-//// RELATIONAL OPERATORS ////
-
-mike and bob are equal ? 1
-mike and mike_2 are equal ? 1
-
-b real
-7 7 7 7 7 
-
-foo and bar are not equal
-foo is less than bar
-foo is less than or equal to bar
-
-//// OPERATOR= ASSIGNATION YE ////
-
-size of foo: 0
-size of bar: 3
-size of bjr: 5
-size of orvoir: 0
-
-//// MER ERASING ////
-
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 
-0 1 2 3 4 5 6 8 9 10 11 12 13 14 
-0 1 6 8 9 10 11 12 13 14 
-//// MER MER ////
+//// MER TESTS ////
 
 
 RESIZE TESTS
-s: 72, c: 72
-s: 100, c: 144
-s: 4170, c: 4170
-s: 171, c: 4170
-s: 62, c: 4170
+
+INSERT TESTS
+
+// VECTOR TEST INFO
+   size:       201
+   capacity:   201
+   max_size:   2305843009213693951
+   front/back: [ 12 ... 1 ]
+
+
+// VECTOR TEST INFO
+   size:       401
+   capacity:   402
+   max_size:   2305843009213693951
+   front/back: [ 12 ... 1 ]
+
+
+// VECTOR TEST INFO
+   size:       413
+   capacity:   802
+   max_size:   2305843009213693951
+   front/back: [ 12 ... 50 ]
+
+
+// VECTOR TEST INFO
+   size:       413
+   capacity:   802
+   max_size:   2305843009213693951
+   front/back: [ 12 ... 50 ]
+
+
+// VECTOR TEST INFO
+   size:       414
+   capacity:   802
+   max_size:   2305843009213693951
+   front/back: [ 12 ... 50 ]
+
+
+// VECTOR TEST INFO
+   size:       419
+   capacity:   802
+   max_size:   2305843009213693951
+   front/back: [ 12 ... 50 ]
+
+
+// VECTOR TEST INFO
+   size:       424
+   capacity:   802
+   max_size:   2305843009213693951
+   front/back: [ 12 ... 50 ]
+
+
+// VECTOR TEST INFO
+   size:       429
+   capacity:   802
+   max_size:   2305843009213693951
+   front/back: [ 12 ... 5 ]
+
+
+RESERVE TESTS
+s: 65, c: 65
+s: 65, c: 65
+s: 65, c: 66
+s: 65, c: 128
+s: 65, c: 1023
+s: 65, c: 10252
+length error
+
+// VECTOR TEST INFO
+   size:       65
+   capacity:   10252
+   max_size:   2305843009213693951
+   front/back: [ 7 ... 7 ]
+

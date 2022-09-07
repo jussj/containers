@@ -5,7 +5,8 @@
 
 template<class Vec>
 void	print_info(const Vec& v, std::string name) {
-	std::cout	<< std::endl
+	//std::cout	<< std::endl
+	std::cout
 			<< "// VECTOR " << name << " INFO" << std::endl
 			<< "   size:       " << v.size() << std::endl
 			<< "   capacity:   " << v.capacity() << std::endl

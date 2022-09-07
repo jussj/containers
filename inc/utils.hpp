@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 14:51:31 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/05 14:51:33 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/07 15:00:16 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,14 @@ namespace ft {
 
 	// protect against not random access it?
 	template<class It>
-	//typename It::difference_type
 	size_t	distance(It first, It last) {
-				//typename ft::enable_if<!ft::is_integral<It>::value >::type* = NULL
-				//) {
 		size_t	dis = 0;
-		//typename It::difference_type dis = 0;
 
 		while (first != last) {
 			++first;
 			++dis;
 		}
 		return dis;
-		//return last - first;
 	}
 }
 
