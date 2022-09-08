@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/08 16:21:45 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/08 16:36:56 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,18 @@ namespace ft {
 				this->_end		= this->_begin;
 				this->_capacity = this->_begin;
 				this->_alloc	= Alloc();
-					
+				
 				this->assign(first, last);
 			}
 			
 			vector(const vector<T,Alloc>& src) {
-				this->_begin	= this->_alloc.allocate(src.capacity());
+				this->_begin	= this->_alloc.allocate(src.size());
 				pointer p		= this->_begin;
 				for (size_type s = 0; s < src.size(); s++) {
 					this->_alloc.construct(p++, *(src._begin + s));	
 				}
 				this->_end		= this->_begin + src.size();
-				this->_capacity	= this->_begin + src.capacity();
+				this->_capacity	= this->_begin + src.size();
 				//use operator=?
 			}
 			

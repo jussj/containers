@@ -602,48 +602,6 @@ SIZE TESTS
 3. size: 19
 
 COPY && SWAP TESTS
-// VECTOR TEST_COPY INFO
-   size:       50
-   capacity:   64
-   max_size:   2305843009213693951
-   front/back: [ 100 ... 149 ]
-
-// VECTOR TEST_RANGE INFO
-   size:       10
-   capacity:   10
-   max_size:   2305843009213693951
-   front/back: [ 20 ... 29 ]
-
-// VECTOR TEST INFO
-   size:       50
-   capacity:   64
-   max_size:   2305843009213693951
-   front/back: [ 100 ... 149 ]
-
-// VECTOR TEST_COPY INFO
-   size:       50
-   capacity:   64
-   max_size:   2305843009213693951
-   front/back: [ 0 ... 49 ]
-
-// VECTOR TEST_RANGE INFO
-   size:       10
-   capacity:   10
-   max_size:   2305843009213693951
-   front/back: [ 20 ... 29 ]
-
-// VECTOR TEST_RANGE INFO
-   size:       10
-   capacity:   10
-   max_size:   2305843009213693951
-   front/back: [ 20 ... 29 ]
-
-// VECTOR TEST_COPY INFO
-   size:       50
-   capacity:   64
-   max_size:   2305843009213693951
-   front/back: [ 0 ... 49 ]
-
 // VECTOR TEST INFO
    size:       50
    capacity:   64

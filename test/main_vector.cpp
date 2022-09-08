@@ -6,12 +6,12 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/08 15:57:06 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/08 16:45:37 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE std
+# define NAMESPACE ft
 
 #endif
 
@@ -618,7 +618,8 @@ int 	main() {
 			NAMESPACE::vector<int>::const_iterator cit;
 			for (size_t i = 0; i < 50; i++)
 				test.push_back(i);
-			
+
+			print_info(test, "TEST");	
 			NAMESPACE::vector<int> test_copy(test);
 			for (size_t i = 0; i < test_copy.size(); i++)
 				test_copy[i] += 100;
@@ -640,13 +641,14 @@ int 	main() {
 					
 		}
 		{
-	/*		std::cout << std::endl << "REVERSE IT TESTS" << std::endl;
-			NAMESPACE::vector<T> test;
+			std::cout << std::endl << "REVERSE IT TESTS" << std::endl;
+			NAMESPACE::vector<int> test;
 			
 			for (size_t i = 0; i < 12; i++) 
 				test.push_back(i);
-			typename vector<T>::reverse_iterator		revbeg = test.rbegin();
-			for (typename vector<T>::reverse_iterator it = revbeg; it != test.rend(); it++) {
+			NAMESPACE::vector<int>::reverse_iterator		revbeg = test.rbegin();
+			for (	NAMESPACE::vector<int>::reverse_iterator it = revbeg;
+					it != test.rend(); it++	) {
 				std::cout << *it << " ";
 				if (!((revbeg - it) % 10) && it != revbeg)
 					std::cout << std::endl;
@@ -663,7 +665,7 @@ int 	main() {
 			revbeg += 3;
 			std::cout << *revbeg << std::endl;
 			std::cout << std::endl;
-	*/	}	
+		}	
 	}
 	return 0;
 }
