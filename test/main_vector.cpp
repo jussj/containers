@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/07 19:20:26 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/08 11:14:40 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -625,18 +625,18 @@ int 	main() {
 			print_info(test_copy, "TEST_COPY");
 
 			NAMESPACE::vector<int> test_range(test.begin() + 20, test.begin() + 30);
-			//print_info(test_range, "TEST_RANGE");
+			print_info(test_range, "TEST_RANGE");
 			
-			//test_copy.swap(test);
-			//print_info(test, "TEST");
-			//print_info(test_copy, "TEST_COPY");
-			//print_info(test_range, "TEST_RANGE");
-			//print_info(test_range, "TEST_RANGE");
-			//print_info(test_copy, "TEST_COPY");
+			test_copy.swap(test);
+			print_info(test, "TEST");
+			print_info(test_copy, "TEST_COPY");
+			print_info(test_range, "TEST_RANGE");
+			print_info(test_range, "TEST_RANGE");
+			print_info(test_copy, "TEST_COPY");
 			
-			//test.swap(test_copy);
-			//print_info(test, "TEST");
-			//print_info(test_copy, "TEST_COPY");
+			test.swap(test_copy);
+			print_info(test, "TEST");
+			print_info(test_copy, "TEST_COPY");
 					
 		}
 		{

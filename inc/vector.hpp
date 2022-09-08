@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/07 19:20:02 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/08 11:32:17 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,14 @@ namespace ft {
 			vector(	//typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first,
 					InputIt first,
 					InputIt last,
-					const Alloc& = Alloc(),
+					const Alloc& Allocator = Alloc(),
 					typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
-					) {
+					) : _alloc(Allocator) {
+				this->_begin	= this->_alloc.allocate(0);
+				this->_end		= this->_begin;
+				this->_capacity = this->_begin;
+				this->_alloc	= Alloc();
+					
 				this->assign(first, last);
 			}
 			
