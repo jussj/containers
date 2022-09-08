@@ -1,17 +1,14 @@
 //// CONSTRUCTOR ////
-
 // VECTOR A INFO
    size:       0
    capacity:   0
    max_size:   2305843009213693951
-
 
 // VECTOR C INFO
    size:       4
    capacity:   4
    max_size:   288230376151711743
    front/back: [ he ... he ]
-
 
 // VECTOR B INFO
    size:       50
@@ -31,7 +28,6 @@ D is NOT empty
 // VECTOR JEAN ARRAY
    [ bjr bjr bjr bjr bjr ]
 
-
 // VECTOR JEAN INFO
    size:       5
    capacity:   5
@@ -41,7 +37,6 @@ D is NOT empty
 
 // VECTOR MARC ARRAY
    [ bjr bjr bjr bjr bjr ]
-
 
 // VECTOR MARC INFO
    size:       5
@@ -94,7 +89,6 @@ a.push_back() * 6 (past capacity)...
 d.pop_back()...
 //// RESERVE ////
 c.reserve(4)...
-
 // VECTOR C INFO
    size:       4
    capacity:   4
@@ -102,7 +96,6 @@ c.reserve(4)...
    front/back: [ he ... he ]
 
 c.reserve(9)...
-
 // VECTOR C INFO
    size:       4
    capacity:   9
@@ -111,7 +104,6 @@ c.reserve(9)...
 
 //// PUSH & POP ////
 c.pop_back()...
-
 // VECTOR C INFO
    size:       3
    capacity:   9
@@ -124,7 +116,6 @@ c.pop_back()...
 
 
 c.push_back(ha)...
-
 // VECTOR C INFO
    size:       4
    capacity:   9
@@ -137,7 +128,6 @@ c.push_back(ha)...
 
 //// RESIZE ////
 c.resize(10, hi)..
-
 // VECTOR C INFO
    size:       10
    capacity:   10
@@ -149,7 +139,6 @@ c.resize(10, hi)..
    [ he he he ha hi hi hi hi hi hi ]
 
 c.resize(3)..
-
 // VECTOR C INFO
    size:       3
    capacity:   10
@@ -161,7 +150,6 @@ c.resize(3)..
    [ he he he ]
 
 c.resize(6, ha)..
-
 // VECTOR C INFO
    size:       6
    capacity:   10
@@ -173,7 +161,6 @@ c.resize(6, ha)..
    [ he he he ha ha ha ]
 
 c.resize(12) with NULL value...
-
 // VECTOR C INFO
    size:       12
    capacity:   12
@@ -190,7 +177,6 @@ in range: element at(0) is he
 past size(): element at(3) is ha
 past capacity(): element at(12) is //// ASSIGN(NB, T) ////
 c.assign(6, hi)...
-
 // VECTOR C INFO
    size:       6
    capacity:   12
@@ -202,7 +188,6 @@ c.assign(6, hi)...
    [ hi hi hi hi hi hi ]
 
 c.assign(9, ha)...
-
 // VECTOR C INFO
    size:       9
    capacity:   12
@@ -214,7 +199,6 @@ c.assign(9, ha)...
    [ ha ha ha ha ha ha ha ha ha ]
 
 c.assign(0, he)...
-
 // VECTOR C INFO
    size:       0
    capacity:   12
@@ -224,7 +208,6 @@ c.assign(0, he)...
 // VECTOR C ARRAY
    [ IS EMPTY ]
 c.assign(13, ho)...
-
 // VECTOR C INFO
    size:       13
    capacity:   13
@@ -246,8 +229,7 @@ iterating through vector...
 [ ho ho ho ho ho ho ho ho ho ho ho ho ho ]
 
 
-access to f: 10 9 8 7 6 5 4 3 2 1 0
-// VECTOR F INFO
+access to f: 10 9 8 7 6 5 4 3 2 1 0// VECTOR F INFO
    size:       11
    capacity:   16
    max_size:   2305843009213693951
@@ -257,7 +239,6 @@ access to f: 10 9 8 7 6 5 4 3 2 1 0
 
 // VECTOR C ARRAY
    [ ho ho ho ho ho ho ho ho ho ho ho ho ho ]
-
 
 // VECTOR C INFO
    size:       13
@@ -269,7 +250,6 @@ access to f: 10 9 8 7 6 5 4 3 2 1 0
 // VECTOR C ARRAY
    [ ho ho ho ho ho ho ho ho ho ho ho ho ho he ]
 
-
 // VECTOR C INFO
    size:       14
    capacity:   26
@@ -280,7 +260,6 @@ access to f: 10 9 8 7 6 5 4 3 2 1 0
 // VECTOR E ARRAY
    [ HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE ]
 
-
 // VECTOR E INFO
    size:       20
    capacity:   20
@@ -290,7 +269,6 @@ access to f: 10 9 8 7 6 5 4 3 2 1 0
 
 // VECTOR C ARRAY
    [ ho ho ho ho ho ho ho ho ho ho ho ho ho he ha ]
-
 
 // VECTOR C INFO
    size:       15
@@ -303,7 +281,6 @@ assign to c.end() - 1 =ha
 // VECTOR E ARRAY
    [ ho ho ho he ]
 
-
 // VECTOR E INFO
    size:       4
    capacity:   20
@@ -314,7 +291,6 @@ assign to c.end()
 
 // VECTOR E ARRAY
    [ ho ho ho he ha ]
-
 
 // VECTOR E INFO
    size:       5
@@ -327,7 +303,6 @@ assign to c.end() + 1
 // VECTOR E ARRAY
    [ ho ho ho he ha  ]
 
-
 // VECTOR E INFO
    size:       6
    capacity:   20
@@ -339,7 +314,6 @@ assign from c.begin() - 1
 // VECTOR E ARRAY
    [  ho ho ho ho ho ]
 
-
 // VECTOR E INFO
    size:       6
    capacity:   20
@@ -350,7 +324,6 @@ assign from c.begin() - 1
 // VECTOR C ARRAY
    [ ho ho ho ho ho ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi hi ]
 
-
 // VECTOR C INFO
    size:       25
    capacity:   26
@@ -360,7 +333,6 @@ assign from c.begin() - 1
 
 // VECTOR E ARRAY
    [  ho ho ho ho ho ]
-
 
 // VECTOR E INFO
    size:       6
@@ -373,7 +345,6 @@ assign from c.begin() - 1
 // VECTOR C ARRAY
    [  ho ho ho ho ho ]
 
-
 // VECTOR C INFO
    size:       6
    capacity:   20
@@ -384,7 +355,6 @@ clearing src...
 
 // VECTOR E ARRAY
    [ ho ho ho ho ho ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi hi ]
-
 
 // VECTOR E INFO
    size:       25
@@ -397,7 +367,6 @@ swap overload!
 // VECTOR C ARRAY
    [ ho ho ho ho ho ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi hi ]
 
-
 // VECTOR C INFO
    size:       25
    capacity:   26
@@ -407,7 +376,6 @@ swap overload!
 
 // VECTOR E ARRAY
    [ IS EMPTY ]
-
 // VECTOR E INFO
    size:       0
    capacity:   20
@@ -419,7 +387,6 @@ new element is HO
 
 // VECTOR C ARRAY
    [ ho ho ho ho ho ho HO ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi hi ]
-
 
 // VECTOR C INFO
    size:       26
@@ -434,7 +401,6 @@ new element is ho
 // VECTOR C ARRAY
    [ ho ho ho ho ho ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi hi ]
 
-
 // VECTOR C INFO
    size:       25
    capacity:   26
@@ -445,7 +411,6 @@ new element is ho
 
 // VECTOR C ARRAY
    [ ho ho ho ho ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi hi ]
-
 
 // VECTOR C INFO
    size:       24
@@ -458,7 +423,6 @@ new element is hi
 // VECTOR C ARRAY
    [ ho ho ho ho ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi ]
 
-
 // VECTOR C INFO
    size:       23
    capacity:   26
@@ -468,7 +432,6 @@ new element is hi
 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 
 0 1 2 3 4 5 6 8 9 10 11 12 13 14 
 0 1 6 8 9 10 11 12 13 14 
-
 // VECTOR F INFO
    size:       10
    capacity:   16
@@ -480,7 +443,6 @@ new element is hi
    [ 1 2 3 4 5 6 7 8 9 10 ]
 
    ERASE RETURNS 7
-
 // VECTOR F INFO
    size:       9
    capacity:   16
@@ -492,7 +454,6 @@ new element is hi
    [ 1 2 3 4 5 7 8 9 10 ]
 
    ERASE RETURNS 10
-
 // VECTOR F INFO
    size:       6
    capacity:   16
@@ -508,7 +469,6 @@ new element is hi
 // VECTOR C ARRAY
    [ ho ho ho ho HO HO HO HO HO HO ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi ]
 
-
 // VECTOR C INFO
    size:       29
    capacity:   46
@@ -518,7 +478,6 @@ new element is hi
 
 // VECTOR C ARRAY
    [ ho ho ho ho HA HA HA HA HA HA HO HO HO HO HO HO ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi ]
-
 
 // VECTOR C INFO
    size:       35
@@ -530,7 +489,6 @@ new element is hi
 // VECTOR C ARRAY
    [ ho ho ho ho HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HO HO HO HO HO HO ho ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi ]
 
-
 // VECTOR C INFO
    size:       45
    capacity:   46
@@ -541,7 +499,6 @@ new element is hi
 // VECTOR E ARRAY
    [ HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE ]
 
-
 // VECTOR E INFO
    size:       20
    capacity:   20
@@ -551,7 +508,6 @@ new element is hi
 
 // VECTOR E ARRAY
    [ HE HE HE HE HE ha hi hi hi hi HE HE HE HE HE HE HE HE HE HE HE HE HE HE HE ]
-
 
 // VECTOR E INFO
    size:       25
@@ -570,7 +526,6 @@ NEW VALUES WOW:
 // VECTOR G ARRAY
    [ 6 5 4 3 2 1 ]
 
-
 // VECTOR G INFO
    size:       6
    capacity:   8
@@ -579,7 +534,6 @@ NEW VALUES WOW:
 
 NEW VALUES AGAIN: 
 7 8 9 10 11 12 
-
 // VECTOR G INFO
    size:       6
    capacity:   8
@@ -592,13 +546,11 @@ NEW VALUES AGAIN:
 RESIZE TESTS
 
 INSERT TESTS
-
 // VECTOR TEST INFO
    size:       201
    capacity:   201
    max_size:   2305843009213693951
    front/back: [ 12 ... 1 ]
-
 
 // VECTOR TEST INFO
    size:       401
@@ -606,20 +558,17 @@ INSERT TESTS
    max_size:   2305843009213693951
    front/back: [ 12 ... 1 ]
 
-
 // VECTOR TEST INFO
    size:       413
    capacity:   802
    max_size:   2305843009213693951
    front/back: [ 12 ... 50 ]
 
-
 // VECTOR TEST INFO
    size:       413
    capacity:   802
    max_size:   2305843009213693951
    front/back: [ 12 ... 50 ]
-
 
 // VECTOR TEST INFO
    size:       414
@@ -627,20 +576,17 @@ INSERT TESTS
    max_size:   2305843009213693951
    front/back: [ 12 ... 50 ]
 
-
 // VECTOR TEST INFO
    size:       419
    capacity:   802
    max_size:   2305843009213693951
    front/back: [ 12 ... 50 ]
 
-
 // VECTOR TEST INFO
    size:       424
    capacity:   802
    max_size:   2305843009213693951
    front/back: [ 12 ... 50 ]
-
 
 // VECTOR TEST INFO
    size:       429
@@ -649,18 +595,64 @@ INSERT TESTS
    front/back: [ 12 ... 5 ]
 
 
-RESERVE TESTS
-s: 65, c: 65
-s: 65, c: 65
-s: 65, c: 66
-s: 65, c: 128
-s: 65, c: 1023
-s: 65, c: 10252
-length error
+SIZE TESTS
+0. size: 0
+1. size: 10
+2. size: 20
+3. size: 19
+
+COPY && SWAP TESTS
+// VECTOR TEST_COPY INFO
+   size:       50
+   capacity:   64
+   max_size:   2305843009213693951
+   front/back: [ 100 ... 149 ]
+
+// VECTOR TEST_RANGE INFO
+   size:       10
+   capacity:   10
+   max_size:   2305843009213693951
+   front/back: [ 20 ... 29 ]
 
 // VECTOR TEST INFO
-   size:       65
-   capacity:   10252
+   size:       50
+   capacity:   64
    max_size:   2305843009213693951
-   front/back: [ 7 ... 7 ]
+   front/back: [ 100 ... 149 ]
+
+// VECTOR TEST_COPY INFO
+   size:       50
+   capacity:   64
+   max_size:   2305843009213693951
+   front/back: [ 0 ... 49 ]
+
+// VECTOR TEST_RANGE INFO
+   size:       10
+   capacity:   10
+   max_size:   2305843009213693951
+   front/back: [ 20 ... 29 ]
+
+// VECTOR TEST_RANGE INFO
+   size:       10
+   capacity:   10
+   max_size:   2305843009213693951
+   front/back: [ 20 ... 29 ]
+
+// VECTOR TEST_COPY INFO
+   size:       50
+   capacity:   64
+   max_size:   2305843009213693951
+   front/back: [ 0 ... 49 ]
+
+// VECTOR TEST INFO
+   size:       50
+   capacity:   64
+   max_size:   2305843009213693951
+   front/back: [ 0 ... 49 ]
+
+// VECTOR TEST_COPY INFO
+   size:       50
+   capacity:   64
+   max_size:   2305843009213693951
+   front/back: [ 100 ... 149 ]
 

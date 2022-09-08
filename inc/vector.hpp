@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/08 11:32:17 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/08 16:21:45 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,11 @@ namespace ft {
 				if (dis > this->capacity())
 					this->reserve(dis);	
 				this->clear();
-				for (; first != last; first++) 
-					this->push_back(*first);	
+				// not opti >> use fill?
+				//for (; first != last; first++) 
+					//this->push_back(*first);
+				this->_fill(&(*this->begin()), first, last);
+				this->_end = this->_begin + dis;
 			}
 
 			void	assign(size_type n, const value_type& value) {
@@ -452,8 +455,10 @@ namespace ft {
 					this->_alloc.construct(start + s, value);
 			}
 
-			void		_fill(pointer start, iterator first, iterator last) {
-				for (iterator it = first; it != last; it++) {
+			// call it range
+			template<class Iterator>
+			void		_fill(pointer start, Iterator first, Iterator last) {
+				for (Iterator it = first; it != last; it++) {
 					this->_alloc.construct(start++, *it);
 				}
 			}

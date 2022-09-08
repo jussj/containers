@@ -6,12 +6,12 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/08 11:14:40 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/08 15:57:06 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE ft
+# define NAMESPACE std
 
 #endif
 
