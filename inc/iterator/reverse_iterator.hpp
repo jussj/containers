@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 14:40:45 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/05 14:45:59 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:44:07 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ namespace ft {
 						return tmp;
 					}
 					reverse_iterator 	operator+(difference_type n) const {
-						return reverse_iterator(base() + n);
+						return reverse_iterator(base() - n);
 					}
 					reverse_iterator& 	operator+=(difference_type n) {
 						this->_current -= n;
@@ -106,7 +106,7 @@ namespace ft {
 		}
 		template <class It>
 		bool 	operator<(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
-			return x < y;
+			return x.base() < y.base();
 		}
 		template <class It>
 		bool 	operator!=(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
@@ -114,25 +114,25 @@ namespace ft {
 		}
 		template <class It>
 		bool 	operator>(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
-			return x > y;
+			return y > x;
 		}
 		template <class It>
 		bool 	operator>=(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
-			return x >= y;
+			return !(x < y);
 		}
 		template <class It>
 		bool 	operator<=(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
-			return x <= y;
+			return !(x < y);
 		}
 		template <class It>
 		typename reverse_iterator<It>::difference_type
 		operator-(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
-			return x.base() - y.base();
+			return y.base() - x.base();
 		}
 		template <class It>
 		reverse_iterator<It>
 		operator+(typename reverse_iterator<It>::difference_type n, const reverse_iterator<It>& x) {
-			return x.base() + n;
+			return reverse_iterator<It>(x.base() - n);
 		}
 }	/* namespace ft */
 

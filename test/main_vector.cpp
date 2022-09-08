@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/08 16:45:37 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/08 17:46:08 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -653,7 +653,8 @@ int 	main() {
 				if (!((revbeg - it) % 10) && it != revbeg)
 					std::cout << std::endl;
 			}
-			std::cout << *(test.rbegin() + 2) << std::endl;
+			std::cout << *(test.rbegin()) << std::endl;
+			std::cout << *(test.rbegin() + 2) << std::endl; // should be 9
 			std::cout << *(test.rend() - 8) << std::endl;
 			std::cout << (test.rbegin() == revbeg) << std::endl;
 			revbeg++;
