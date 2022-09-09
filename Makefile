@@ -8,7 +8,7 @@ CXX				=	c++
 
 RM				=	rm -rf
 
-SRCS				=	main_stack.cpp
+SRCS				=	main_vector.cpp
 
 SRCS_DIR			=	test
 

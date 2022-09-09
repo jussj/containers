@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/08 17:20:51 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/09 17:08:51 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ namespace ft {
 			VectorIterator(pointer it) 	: _ptr(it) 		{}
 			template<class I>
 			VectorIterator(VectorIterator<I> it)		: _ptr(it.current()) {}
-			//VectorIterator(const VectorIterator<I> it) 	: _ptr(it.current()) {}
 			~VectorIterator() {}
 
 		// ACCESS
@@ -84,23 +83,19 @@ namespace ft {
 
 			// RANDOM ACCESS
 			VectorIterator	operator+(difference_type n) const {
-			//pointer		operator+(difference_type n) const {
 				return current() + n;
 			}
 			VectorIterator	operator-(difference_type n) const {
-			//pointer		operator-(difference_type n) const {
 				return current() - n;
 			}
 			difference_type operator-(const VectorIterator<T>& x) {
 				return this->current() - x.current();
 			}
 			VectorIterator&	operator+=(int n) {
-			//VectorIterator&	operator+=(difference_type n) {
 				this->_ptr += n;
 				return *this;
 			}
 			VectorIterator&	operator-=(int n) {
-			//VectorIterator&	operator-=(difference_type n) {
 				this->_ptr -= n;
 				return *this;
 			}
@@ -132,14 +127,22 @@ namespace ft {
 
 			pointer		_ptr;
 		
-	};
-template<class T>
-VectorIterator<T>	operator+(typename VectorIterator<T>::difference_type n, VectorIterator<T> it ) {
-//pointer		operator+(difference_type n) const {
-	return it.operator+(n);
-}
+	};	/* class vectorIterator */
 
-}
+	template<class T>
+	VectorIterator<T>	operator+(typename VectorIterator<T>::difference_type n, VectorIterator<T> it ) {
+		return it.operator+(n);
+	}
+	template<class T>
+	VectorIterator<T>	operator-(typename VectorIterator<T>::difference_type n, VectorIterator<T> it ) {
+		return it.operator-(n);
+	}
+	template<class T>
+	typename VectorIterator<T>::difference_type
+	operator-(const VectorIterator<T>& x, const VectorIterator<T>& y) {
+		return x.current() - y.current();
+	}
+}	/* namespace ft */
 
 
 
