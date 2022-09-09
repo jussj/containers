@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 09:41:46 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/05 17:57:55 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/09 12:04:37 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 # include <stdexcept>
 # include <vector>
-# define VEC_NS std
+# include "vector.hpp"
 
 namespace ft {
 
-	template <class T, class Container = VEC_NS::vector<T> >
+	// FT WORD
+	template <class T, class Container = ft::vector<T> >
 	class stack {
 
 		public:
@@ -50,7 +51,7 @@ namespace ft {
 			size_type		size() const {
 				return c.size();
 			}
-			value_type &		top() {
+			value_type &	top() {
 				if (this->empty()) 
 					throw EmptyStack();
 				return c.back();
@@ -80,6 +81,7 @@ namespace ft {
 			};
 
 		protected:
+
 			Container		c;
 	};
 
@@ -92,8 +94,12 @@ namespace ft {
 		return x != y;	
 	}
 	template <class T, class Cont>
-	bool operator> (const stack<T, Cont>& x, const stack<T, Cont>& y) {
+	bool operator>(const stack<T, Cont>& x, const stack<T, Cont>& y) {
 		return x > y;	
+	}
+	template <class T, class Cont>
+	bool operator<(const stack<T, Cont>& x, const stack<T, Cont>& y) {
+		return x < y;	
 	}
 	template <class T, class Cont>
 	bool operator>=(const stack<T, Cont>& x, const stack<T, Cont>& y) {

@@ -2,13 +2,13 @@ NAME				=	containers
 
 CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98
 
-DEBUGFLAGS			=	-g3# -fsanitize=address
+DEBUGFLAGS			=	-g3	#-fsanitize=address
 
 CXX				=	c++
 
 RM				=	rm -rf
 
-SRCS				=	main_vector.cpp
+SRCS				=	main_stack.cpp
 
 SRCS_DIR			=	test
 
@@ -30,24 +30,14 @@ vpath %.d			$(DEPS_DIR)
 
 all:				$(NAME)
 
-vector:	 			test/main_vector.cpp
-	${CXX} ${CXXFLAGS} -I inc -DNAMESPACE=ft \
-	test/main_vector.cpp -o ft_vector -D${ARG}
-	./ft_vector > outs/ft_vector.txt
-	${CXX} ${CXXFLAGS} -I inc -DNAMESPACE=std \
-	test/main_vector.cpp -o std_vector -D${ARG}
-	./std_vector > outs/std_vector.txt
-	cat -n test/outfiles/ft_vector.txt
-	diff test/outfiles/std_vector.txt test/outfiles/ft_vector.txt
-
 $(NAME):			$(DEPS) $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(NAME)
 
-std_vec:			$(DEPS) $(OBJS)
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -DNAMESPACE=std $(addprefix $(OBJS_DIR)/,$(OBJS)) -o "std_vec"
+std_vector:			$(DEPS) $(OBJS)
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -DNAMESPACE=std $(addprefix $(OBJS_DIR)/,$(OBJS)) -o "std_vector"
 
-ft_vec:				$(DEPS) $(OBJS)
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -DNAMESPACE=ft $(addprefix $(OBJS_DIR)/,$(OBJS)) -o "ft_vec"
+ft_vector:				$(DEPS) $(OBJS)
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -DNAMESPACE=ft $(addprefix $(OBJS_DIR)/,$(OBJS)) -o "ft_vector"
 
 %.d:				%.cpp
 	$(CXX) $(INC) -MM $< -MF $(DEPS_DIR)/$@ 
@@ -71,7 +61,7 @@ clean:
 	$(RM) $(OBJS_DIR) $(DEPS_DIR)
 
 fclean:				clean
-	$(RM) $(NAME) ft_vec std_vec
+	$(RM) $(NAME) ft_vector std_vector
 
 re:				fclean all
 

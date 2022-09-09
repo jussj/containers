@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/09 11:21:31 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/09 11:24:53 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -614,7 +614,6 @@ int 	main() {
 		std::cout << (test.rbegin() == test.rend()) << std::endl;
 		std::cout << (test.rbegin() <= test.rbegin()) << std::endl;
 		
-		std::cout << "HERE: " << std::endl;
 		std::cout << (test.rbegin() < test.rend()) << std::endl;
 		std::cout << (test.rbegin() >= test.rend()) << std::endl;
 		
