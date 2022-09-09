@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 09:41:46 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/09 12:04:37 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/09 16:15:34 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,18 @@ namespace ft {
 
 		// MEMBER TYPES
 
-			typedef Container				container_type;
-			//typedef T 					value_type;
+			typedef Container							container_type;
+			//typedef T									value_type;
 			typedef typename Container::value_type 		value_type;
-			typedef typename Container::size_type		size_type;		// size_t is default
+			typedef typename Container::size_type		size_type;
 			typedef typename Container::const_reference	const_reference;
 			typedef typename Container::reference		reference;
 
-		// cpy and dtor??
-		// overload for assign elements from one cont to another
+		// overload for assign elements from one cont to another?
 		// CTOR
 
-			explicit stack (const container_type& cont = container_type())		// stack init with copy of
-				: c(cont) {}							// cont elements or nothing
+			explicit stack(const Container& container = Container())		// stack init with copy of
+				: c(container) {}											// container elements or nothing
 		
 		// MEMBER FUNCTIONS
 
@@ -70,9 +69,8 @@ namespace ft {
 				c.pop_back();
 			}
 
-		// EXCEPTIONS
+		// EXCEPTION
 
-			//class EmptyStackException : public std::exception {
 			class EmptyStack : public std::exception {
 				public:
 					virtual const char* what() const throw() { 
@@ -83,32 +81,30 @@ namespace ft {
 		protected:
 
 			Container		c;
-	};
 
-	template <class T, class Cont>
-	bool operator==(const stack<T, Cont>& x, const stack<T, Cont>& y) {
-		return x == y;	
-	}
-	template <class T, class Cont>
-	bool operator!=(const stack<T, Cont>& x, const stack<T, Cont>& y) {
-		return x != y;	
-	}
-	template <class T, class Cont>
-	bool operator>(const stack<T, Cont>& x, const stack<T, Cont>& y) {
-		return x > y;	
-	}
-	template <class T, class Cont>
-	bool operator<(const stack<T, Cont>& x, const stack<T, Cont>& y) {
-		return x < y;	
-	}
-	template <class T, class Cont>
-	bool operator>=(const stack<T, Cont>& x, const stack<T, Cont>& y) {
-		return x >= y;	
-	}
-	template <class T, class Cont>
-	bool operator<=(const stack<T, Cont>& x, const stack<T, Cont>& y) {
-		return x <= y;	
-	}
-}
+		public:
+		
+		// NON-MEMBER FRIENDS OPERATOR OVERLOADS
 
-#endif
+			friend bool	operator==(const stack<T, Container>& x, const stack<T, Container>& y) {
+				return x.c == y.c;
+			}
+			friend bool operator!=(const stack<T, Container>& x, const stack<T, Container>& y) {
+				return !(x == y);
+			}
+			friend bool operator>(const stack<T, Container>& x, const stack<T, Container>& y) {
+				return y < x;
+			}
+			friend bool operator<(const stack<T, Container>& x, const stack<T, Container>& y) {
+				return x.c < y.c;	
+			}
+			friend bool operator>=(const stack<T, Container>& x, const stack<T, Container>& y) {
+				return !(x < y);
+			}
+			friend bool operator<=(const stack<T, Container>& x, const stack<T, Container>& y) {
+				return !(y < x);
+			}
+	};	/* class stack */
+}	/* namespace ft */
+
+#endif	/* STACK_HPP */
