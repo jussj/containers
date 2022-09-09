@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 14:40:45 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/08 17:44:07 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/09 11:20:48 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ namespace ft {
 		}
 		template <class It>
 		bool 	operator<(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
-			return x.base() < y.base();
+			return y.base() < x.base();
 		}
 		template <class It>
 		bool 	operator!=(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
@@ -114,7 +114,7 @@ namespace ft {
 		}
 		template <class It>
 		bool 	operator>(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
-			return y > x;
+			return y < x;
 		}
 		template <class It>
 		bool 	operator>=(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
@@ -122,7 +122,7 @@ namespace ft {
 		}
 		template <class It>
 		bool 	operator<=(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
-			return !(x < y);
+			return !(y < x);
 		}
 		template <class It>
 		typename reverse_iterator<It>::difference_type

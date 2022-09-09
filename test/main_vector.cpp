@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/08 17:46:08 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/09 11:21:31 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int 	main() {
 	NAMESPACE::vector<int>						b(50, 5);	
 	NAMESPACE::vector<std::string>				c(4, "he");
 	NAMESPACE::vector<IncrediblyComplex<int> >	d(5);
-	//NAMESPACE::vector<IncrediblyComplex>	d(5);
+	//NAMESPACE::vector<IncrediblyComplex>	d(5); // WoooooOOOOwwwww compliqueyy
 
 	print_info(a, "A");
 	print_info(c, "C");
@@ -72,7 +72,33 @@ int 	main() {
 		print_content(john, "JOHN");
 		print_content(mike, "MIKE");
 		print_content(bob, "BOB");
+		{
+			std::cout << std::endl << "COPY && SWAP" << std::endl;
+			NAMESPACE::vector<int> test;
+			NAMESPACE::vector<int>::const_iterator cit;
+			for (size_t i = 0; i < 50; i++)
+				test.push_back(i);
 
+			print_info(test, "TEST");	
+			NAMESPACE::vector<int> test_copy(test);
+			for (size_t i = 0; i < test_copy.size(); i++)
+				test_copy[i] += 100;
+			print_info(test_copy, "TEST_COPY");
+
+			NAMESPACE::vector<int> test_range(test.begin() + 20, test.begin() + 30);
+			print_info(test_range, "TEST_RANGE");
+			
+			test_copy.swap(test);
+			print_info(test, "TEST");
+			print_info(test_copy, "TEST_COPY");
+			print_info(test_range, "TEST_RANGE");
+			print_info(test_range, "TEST_RANGE");
+			print_info(test_copy, "TEST_COPY");
+			
+			test.swap(test_copy);
+			print_info(test, "TEST");
+			print_info(test_copy, "TEST_COPY");
+		}
 		std::cout	<< "//// RELATIONAL OPERATORS ////" << std::endl << std::endl;
 		
 		NAMESPACE::vector<int> mike_2(mike);
@@ -86,8 +112,8 @@ int 	main() {
 			std::cout << *it << " ";
 		std::cout << std::endl << std::endl;
 		
-		NAMESPACE::vector<int> foo (3,100);   // three ints with a value of 100
-		NAMESPACE::vector<int> bar (2,200);   // two ints with a value of 200
+		NAMESPACE::vector<int> foo (3,100); 
+		NAMESPACE::vector<int> bar (2,200);
 
 		if (foo == bar) 
 			std::cout << "foo and bar are equal\n";
@@ -105,7 +131,7 @@ int 	main() {
 		std::cout << std::endl;
 	}
 	{
-		std::cout	<< "//// OPERATOR= ASSIGNATION YE ////" << std::endl << std::endl;
+		std::cout	<< "//// OPERATOR= ASSIGNATION ////" << std::endl << std::endl;
 		
 		NAMESPACE::vector<int> foo (3,0);
 		NAMESPACE::vector<int> bar (5,0);
@@ -126,6 +152,21 @@ int 	main() {
 		std::cout << "size of orvoir: " << int(orvoir.size()) << '\n';
 
 		std::cout << std::endl;
+	}
+	{
+		std::cout << std::endl << "//// SIZE TESTS ////" << std::endl;
+		NAMESPACE::vector<int> myints;
+		std::cout << "0. size: " << myints.size() << '\n';
+
+		for (int i=0; i<10; i++)
+			myints.push_back(i);
+		std::cout << "1. size: " << myints.size() << '\n';
+
+		myints.insert (myints.end(),10,100);
+		std::cout << "2. size: " << myints.size() << '\n';
+
+		myints.pop_back();
+		std::cout << "3. size: " << myints.size() << '\n';
 	}
 	std::cout	<< "//// RESERVE W PUSH & POP ////" << std::endl << std::endl;
 	
@@ -153,42 +194,31 @@ int 	main() {
 	a.push_back(12);
 	a.push_back(-89);
 	a.push_back(021321);
-
 	print_content(a, "A");
 
-
-	//NAMESPACE::vector<IncrediblyComplex<int> >	e(9);
-
-//	std::cout	<< "d.push_back(9)..." << std::endl;
-//	d.push_back(d(9));
 	std::cout	<< "d.pop_back()..." << std::endl;
-	
 	d.pop_back();
-//	print_content(d, "D");
+	
 	std::cout	<< "//// RESERVE ////" << std::endl;
 
 	std::cout 	<< "c.reserve(4)..." << std::endl;
 	c.reserve(4);
-
 	print_info(c, "C");
 
 	std::cout 	<< "c.reserve(9)..." << std::endl;
 	c.reserve(9);
-	
 	print_info(c, "C");
 
 	std::cout	<< "//// PUSH & POP ////" << std::endl;
 	
 	std::cout	<< "c.pop_back()..." << std::endl;
 	c.pop_back();
-	
 	print_info(c, "C");
 	print_content(c, "C");
 	
 	std::cout << std::endl;
 	std::cout	<< "c.push_back(ha)..." << std::endl;
 	c.push_back("ha");
-	
 	print_info(c, "C");
 	print_content(c, "C");
 
@@ -218,7 +248,6 @@ int 	main() {
 	print_info(c, "C");
 	{
 		NAMESPACE::vector<int> test(12, 12);
-		//vector<T> test();		// nasty axel test with empty vec
 
 		test.resize(72);
 		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
@@ -230,6 +259,9 @@ int 	main() {
 		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
 		test.resize(62);
 		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+
+		// EMPTY VECTOR
+		//vector<T> test();		// nasty axel test with empty vec
 	}
 	std::cout	<< "//// AT ////" << std::endl;
 
@@ -276,63 +308,11 @@ int 	main() {
 	print_info(c, "C");
 	print_content(c, "C");
 
-	//std::cout 	<< "//// ITERATOR TRAITS //// " << std::endl 
-	//typedef std::iterator_traits<int*> traits;
-	  
-	//if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
-		    //std::cout << "int* is a random-access iterator";
-
-	NAMESPACE::vector<std::string>::iterator vbegin	= c.begin();
-	NAMESPACE::vector<std::string>::iterator vend	= c.end();
-	std::cout 	<< "//// ITERATORS //// " << std::endl 
-			<< "c.begin is " << *vbegin << std::endl;
-	//std::cout << "c.end is " << *vend << std::endl; // will segf
-
-	std::cout 	<< "iterating through vector... " << std::endl 
-			<< "[ ";
-	for (	NAMESPACE::vector<std::string>::iterator it = vbegin;
-		it != vend;
-		it++		) {
-		std::cout << *it << " "; 
-	}
-	std::cout	<< "]" << std::endl << std::endl;
-	
-	NAMESPACE::vector<std::string>::const_iterator cvbegin	= c.begin();
-	NAMESPACE::vector<std::string>::const_iterator cvend	= c.end();
-	std::cout 	<< "const iterators... " << std::endl 
-			<< "c.begin is " << *cvbegin << std::endl;
-	//std::cout << "c.end is " << *vend << std::endl; // will segf
-
-	std::cout 	<< "iterating through vector..." << std::endl 
-			<< "[ ";
-	for (	NAMESPACE::vector<std::string>::const_iterator it = cvbegin;
-		it != cvend;
-		it++		) {
-		std::cout << *it << " "; 
-	}
-	std::cout	<< "]" << std::endl << std::endl;
-	
-	{
-		//std::cout	<< "//// ACCESS ////" << std::endl;
-		 
-		NAMESPACE::vector<int> f;
-
-		f.push_back(10);
-
-		while (f.back() != 0)
-			f.push_back(f.back() - 1);
-		std::cout	<< std::endl
-					<< "access to f:";
-		for (unsigned i = 0; i < f.size() ; i++)
-			std::cout << ' ' << f[i];
-		print_info(f, "F");
-	}
-
 	std::cout	<< "//// ASSIGN(IT, IT) ////" << std::endl;
 	
 	NAMESPACE::vector<std::string>		e(20, "HE");
 //	NAMESPACE::vector<IncrediblyComplex<IncrediblyComplex<float> > >	f(42);
-//	NAMESPACE::vector<IncrediblyComplex<std::string> >			g(6);
+//	NAMESPACE::vector<IncrediblyComplex<std::string> >					g(6);
 
 	print_content(c, "C");
 	print_info(c, "C");
@@ -349,30 +329,33 @@ int 	main() {
 	print_content(c, "C");
 	print_info(c, "C");
 
-	NAMESPACE::vector<std::string>::iterator				ite;
+	NAMESPACE::vector<std::string>::iterator							ite;
 	NAMESPACE::vector<IncrediblyComplex<std::string> >::iterator		itg;
 
 	std::cout	<< "assign to c.end() - 1 =" << *(c.end() - 1) << std::endl;
 	e.assign(c.begin() + 10, c.end() - 1);
 	print_content(e, "E");
 	print_info(e, "E");
-	
+
+	// IS UNDEFINED	
 	//std::cout	<< "assign to c.end() =" << *(c.end()) << std::endl;
-	// is undefined? protect against segf?
+	
 	std::cout	<< "assign to c.end()" << std::endl;
 	e.assign(c.begin() + 10, c.end());
 	print_content(e, "E");
 	print_info(e, "E");
 
-	std::cout	<< "assign to c.end() + 1" << std::endl;
-	e.assign(c.begin() + 10, c.end() + 1);
-	print_content(e, "E");
-	print_info(e, "E");
+	// CAUSES INVALID READ
+	//std::cout	<< "assign to c.end() + 1" << std::endl;
+	//e.assign(c.begin() + 10, c.end() + 1);
+	//print_content(e, "E");
+	//print_info(e, "E");
 	
-	std::cout	<< "assign from c.begin() - 1" << std::endl;
-	e.assign(c.begin() - 1, c.end() - 10);
-	print_content(e, "E");
-	print_info(e, "E");
+	// CAUSES INVALID READ
+	//std::cout	<< "assign from c.begin() - 1" << std::endl;
+	//e.assign(c.begin() - 1, c.end() - 10);
+	//print_content(e, "E");
+	//print_info(e, "E");
 
 	c.resize(25, "hi");
 	print_content(c, "C");
@@ -380,25 +363,78 @@ int 	main() {
 	print_content(e, "E");
 	print_info(e, "E");
 	
+	//std::cout 	<< "//// ITERATOR TRAITS //// " << std::endl 
+	//typedef std::iterator_traits<int*> traits;
+	  
+	//if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
+		    //std::cout << "int* is a random-access iterator";
+
+	NAMESPACE::vector<std::string>::iterator vbegin	= c.begin();
+	NAMESPACE::vector<std::string>::iterator vend	= c.end();
+	std::cout 	<< "//// ITERATORS //// " << std::endl 
+			<< "c.begin is " << *vbegin << std::endl;
+	
+	// CAUSES SEGF
+	//std::cout << "c.end is " << *vend << std::endl;
+
+	std::cout 	<< "iterating through vector... " << std::endl 
+			<< "[ ";
+	for (	NAMESPACE::vector<std::string>::iterator it = vbegin;
+		it != vend;
+		it++		) {
+		std::cout << *it << " "; 
+	}
+	std::cout	<< "]" << std::endl << std::endl;
+	
+	NAMESPACE::vector<std::string>::const_iterator cvbegin	= c.begin();
+	NAMESPACE::vector<std::string>::const_iterator cvend	= c.end();
+	std::cout 	<< "const iterators... " << std::endl 
+			<< "c.begin is " << *cvbegin << std::endl;
+	
+	// CAUSES SEGF
+	//std::cout << "c.end is " << *vend << std::endl;
+
+	std::cout 	<< "iterating through vector..." << std::endl 
+			<< "[ ";
+	for (	NAMESPACE::vector<std::string>::const_iterator it = cvbegin;
+		it != cvend;
+		it++		) {
+		std::cout << *it << " "; 
+	}
+	std::cout	<< "]" << std::endl << std::endl;
+	
+	{
+		std::cout	<< "//// ACCESS OPERATOR[] ////" << std::endl;
+		 
+		NAMESPACE::vector<int> f;
+
+		f.push_back(10);
+
+		while (f.back() != 0)
+			f.push_back(f.back() - 1);
+		std::cout	<< std::endl
+					<< "access to f:";
+		for (unsigned i = 0; i < f.size() ; i++)
+			std::cout << ' ' << f[i];
+		print_info(f, "F");
+	}
+
 	std::cout	<< "//// SWAP ////" << std::endl;
 
 	e.swap(c);
-	print_content(c, "C"); // capacity differs 
+	print_content(c, "C");
 	print_info(c, "C");
 	
 	std::cout	<< "clearing src..." << std::endl;
 	c.clear();	
-	
 	print_content(e, "E");
 	print_info(e, "E");
 
 	std::cout	<< "swap overload!" << std::endl;
-
 	swap(c, e);
-
 	print_content(c, "C");
 	print_info(c, "C");
-	print_content(e, "E"); // capacity differs
+	print_content(e, "E");
 	print_info(e, "E");
 	
 	//std::cout	<< "//// CLEAR ////" << std::endl;
@@ -410,12 +446,13 @@ int 	main() {
 	std::cout	<< "//// INSERT ////" << std::endl << std::endl;
 
 	NAMESPACE::vector<std::string>::iterator				pos;
-	//pos = e.insert(e.begin(), "he");	// empty array, segf
-						// it on wrong vector
+
+	// OTHER SHITTY CASES
+	//pos = e.insert(e.begin(), "he");					// empty array, segf
 	//c.reserve(30);
-	//pos = c.insert(e.end(), "HE");	// past size, segf
-	//pos = c.insert(e.capacity() + 1, "HE"); 
-						// past cap, compile not
+	//pos = c.insert(e.end(), "HE");					// past size, segf
+	//pos = c.insert(e.capacity() + 1, "HE");			// past cap, compile not
+	
 	pos = c.insert(c.begin() + 6, "HO");
 
 	std::cout	<< "new element is " << *pos << std::endl;
@@ -423,29 +460,28 @@ int 	main() {
 	print_content(c, "C");
 	print_info(c, "C");
 	
-	std::cout	<< "//// ERASE ////" << std::endl << std::endl;
-	
-	pos = c.erase(c.begin() + 6);
+	std::cout	<< "//// INSERT MULTIPLE VALUES ////" << std::endl;
 
-	std::cout	<< "new element is " << *pos << std::endl;
-
+	c.insert(c.begin() + 4, 6, "HO");
 	print_content(c, "C");
 	print_info(c, "C");
 	
-	pos = c.erase(c.begin());
-
-	std::cout	<< "new element is " << *pos << std::endl;
-
-	print_content(c, "C");
-	print_info(c, "C");
-
-	pos = c.erase(c.end());
-
-	std::cout	<< "new element is " << *pos << std::endl;
-
+	c.insert(c.begin() + 4, 6, "HA");
 	print_content(c, "C");
 	print_info(c, "C");
 	
+	c.insert(c.begin() + 4, 10, "HA");
+	print_content(c, "C");
+	print_info(c, "C");
+	
+	e.assign(20, "HE");
+	print_content(e, "E");
+	print_info(e, "E");
+
+	e.insert(e.begin() + 5, c.end() - 10, c.end() - 5);
+	print_content(e, "E");
+	print_info(e, "E");
+
 	//std::cout	<< "clearing c" << std::endl;
 	//c.clear();
 
@@ -453,6 +489,22 @@ int 	main() {
 
 	//std::cout	<< "new element is " << *pos << std::endl;
 
+	std::cout	<< "//// ERASE ////" << std::endl << std::endl;
+	
+	pos = c.erase(c.begin() + 6);
+	std::cout	<< "new element is " << *pos << std::endl;
+	print_content(c, "C");
+	print_info(c, "C");
+	
+	pos = c.erase(c.begin());
+	std::cout	<< "new element is " << *pos << std::endl;
+	print_content(c, "C");
+	print_info(c, "C");
+
+	pos = c.erase(c.end());
+	std::cout	<< "new element is " << *pos << std::endl;
+	print_content(c, "C");
+	print_info(c, "C");
 	{
 		NAMESPACE::vector<NAMESPACE::vector<int> >	erase_in_me;
 		
@@ -462,16 +514,16 @@ int 	main() {
 		}
 		for (size_t i = 0; i < erase_in_me.size(); i++)
 			std::cout << erase_in_me.at(i).front() << ' ';
-		std::cout << '\n';
+		std::cout << std::endl;
 
 		erase_in_me.erase(erase_in_me.begin() + 7);
 		for (size_t i = 0; i < erase_in_me.size(); i++)
 			std::cout << erase_in_me.at(i).front() << ' ';
-		std::cout << '\n';
+		std::cout << std::endl;
 		erase_in_me.erase(erase_in_me.begin() + 2, erase_in_me.begin() + 6);
 		for (size_t i = 0; i < erase_in_me.size(); i++)
 			std::cout << erase_in_me.at(i).front() << ' ';
-		std::cout << '\n';
+		std::cout << std::endl;
 	}
 	{
 		NAMESPACE::vector<int>::iterator	ret;	
@@ -480,50 +532,19 @@ int 	main() {
 		// set some values (from 1 to 10)
 		for (int i = 1; i <= 10; i++)
 			f.push_back(i);		// invalid read
-
 		print_info(f, "F");
 		print_content(f, "F");
 		
-		// erase the 6th element
 		ret = f.erase(f.begin() + 5);
 		std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
 		print_info(f, "F");
 		print_content(f, "F");
 
-		// erase the first 3 elements:
-		f.erase (f.begin(),f.begin()+3);
+		ret = f.erase (f.begin(),f.begin()+3);
 		std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
 		print_info(f, "F");
 		print_content(f, "F");
 	}
-
-	std::cout	<< "//// INSERT MULTIPLE VALUES ////" << std::endl;
-
-	c.insert(c.begin() + 4, 6, "HO");
-
-	print_content(c, "C"); // diff capacity
-	print_info(c, "C");
-	
-	c.insert(c.begin() + 4, 6, "HA");
-
-	print_content(c, "C"); // diff capacity
-	print_info(c, "C");
-	
-	c.insert(c.begin() + 4, 10, "HA");
-
-	print_content(c, "C"); // diff capacity
-	print_info(c, "C");
-	
-	e.assign(20, "HE");
-	
-	print_content(e, "E");
-	print_info(e, "E");
-
-	// capacity differs, should be 40
-	e.insert(e.begin() + 5, c.end() - 10, c.end() - 5);
-
-	print_content(e, "E");
-	print_info(e, "E");
 
 	// test with non broken complex classes
 
@@ -550,7 +571,7 @@ int 	main() {
 		std::cout << *rit_end << std::endl;
 
 		int i = 0;
-		std::cout << "NEW VALUES WOW: " << std::endl;
+		std::cout << "NEW VALUES WOWwwwwWWW: " << std::endl;
 		for (rit = g.rbegin(); rit != g.rend(); ++rit) {
 			std::cout << *rit << ' ';
 			*rit = ++i;
@@ -569,6 +590,38 @@ int 	main() {
 		std::cout << std::endl;
 		print_info(g, "G");
 	}
+	{
+		std::cout	<< std::endl
+					<< "TESTING REVERSE OPERATORS" << std::endl;
+		
+		NAMESPACE::vector<int> test;
+		for (size_t i = 0; i < 12; i++) 
+			test.push_back(i);
+
+		NAMESPACE::vector<int>::reverse_iterator revbeg = test.rbegin();
+		for (	NAMESPACE::vector<int>::reverse_iterator it = revbeg;
+				it != test.rend(); it++	) {
+			std::cout << *it << " ";
+			if (!((revbeg - it) % 10) && it != revbeg)
+				std::cout << std::endl;
+		}
+		std::cout << *(test.rbegin()) << std::endl;
+		std::cout << *(test.rbegin() + 2) << std::endl; // should be 9
+		std::cout << *(test.rend() - 8) << std::endl;
+		std::cout << (test.rbegin() == revbeg) << std::endl;
+		revbeg++;
+		std::cout << *revbeg << std::endl;
+		std::cout << (test.rbegin() == test.rend()) << std::endl;
+		std::cout << (test.rbegin() <= test.rbegin()) << std::endl;
+		
+		std::cout << "HERE: " << std::endl;
+		std::cout << (test.rbegin() < test.rend()) << std::endl;
+		std::cout << (test.rbegin() >= test.rend()) << std::endl;
+		
+		revbeg += 3;
+		std::cout << *revbeg << std::endl;
+		std::cout << std::endl;
+	}	
 	std::cout	<< "//// MER TESTS ////" << std::endl << std::endl;
 	{
 		{
@@ -597,76 +650,6 @@ int 	main() {
 			test.insert(test.end(), test2.begin(), test2.end());
 			print_info(test, "TEST");
 		}
-		{
-			std::cout << std::endl << "SIZE TESTS" << std::endl;
-			NAMESPACE::vector<int> myints;
-			std::cout << "0. size: " << myints.size() << '\n';
-
-			for (int i=0; i<10; i++)
-				myints.push_back(i);
-			std::cout << "1. size: " << myints.size() << '\n';
-
-			myints.insert (myints.end(),10,100); // invalid read 4
-			std::cout << "2. size: " << myints.size() << '\n';
-
-			myints.pop_back();
-			std::cout << "3. size: " << myints.size() << '\n';
-		}
-		{
-			std::cout << std::endl << "COPY && SWAP TESTS" << std::endl;
-			NAMESPACE::vector<int> test;
-			NAMESPACE::vector<int>::const_iterator cit;
-			for (size_t i = 0; i < 50; i++)
-				test.push_back(i);
-
-			print_info(test, "TEST");	
-			NAMESPACE::vector<int> test_copy(test);
-			for (size_t i = 0; i < test_copy.size(); i++)
-				test_copy[i] += 100;
-			print_info(test_copy, "TEST_COPY");
-
-			NAMESPACE::vector<int> test_range(test.begin() + 20, test.begin() + 30);
-			print_info(test_range, "TEST_RANGE");
-			
-			test_copy.swap(test);
-			print_info(test, "TEST");
-			print_info(test_copy, "TEST_COPY");
-			print_info(test_range, "TEST_RANGE");
-			print_info(test_range, "TEST_RANGE");
-			print_info(test_copy, "TEST_COPY");
-			
-			test.swap(test_copy);
-			print_info(test, "TEST");
-			print_info(test_copy, "TEST_COPY");
-					
-		}
-		{
-			std::cout << std::endl << "REVERSE IT TESTS" << std::endl;
-			NAMESPACE::vector<int> test;
-			
-			for (size_t i = 0; i < 12; i++) 
-				test.push_back(i);
-			NAMESPACE::vector<int>::reverse_iterator		revbeg = test.rbegin();
-			for (	NAMESPACE::vector<int>::reverse_iterator it = revbeg;
-					it != test.rend(); it++	) {
-				std::cout << *it << " ";
-				if (!((revbeg - it) % 10) && it != revbeg)
-					std::cout << std::endl;
-			}
-			std::cout << *(test.rbegin()) << std::endl;
-			std::cout << *(test.rbegin() + 2) << std::endl; // should be 9
-			std::cout << *(test.rend() - 8) << std::endl;
-			std::cout << (test.rbegin() == revbeg) << std::endl;
-			revbeg++;
-			std::cout << *revbeg << std::endl;
-			std::cout << (test.rbegin() == test.rend()) << std::endl;
-			std::cout << (test.rbegin() <= test.rbegin()) << std::endl;
-			std::cout << (test.rbegin() < test.rend()) << std::endl;
-			std::cout << (test.rbegin() >= test.rend()) << std::endl;
-			revbeg += 3;
-			std::cout << *revbeg << std::endl;
-			std::cout << std::endl;
-		}	
 	}
 	return 0;
 }
