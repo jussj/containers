@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/09 11:24:53 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/09 17:47:35 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -648,6 +648,18 @@ int 	main() {
 			print_info(test, "TEST");
 			test.insert(test.end(), test2.begin(), test2.end());
 			print_info(test, "TEST");
+		}
+		{
+			std::cout << std::endl << "CONST IT TESTS" << std::endl;
+		
+			std::cout << "comparing normal_iterator and const_iterator..." << std::endl;
+			const int size = 5;
+			NAMESPACE::vector<int> vct(size);
+			NAMESPACE::vector<int>::iterator it(vct.begin());
+			NAMESPACE::vector<int>::const_iterator ite(vct.end());
+			
+			for (int i = 1; it != ite; ++i)
+				*it++ = i;
 		}
 	}
 	return 0;

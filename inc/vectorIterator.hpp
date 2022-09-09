@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/09 17:08:51 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/09 18:16:48 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,9 @@ namespace ft {
 
 			VectorIterator() 			: _ptr(NULL) 	{}
 			VectorIterator(pointer it) 	: _ptr(it) 		{}
-			template<class I>
-			VectorIterator(VectorIterator<I> it)		: _ptr(it.current()) {}
+			template<class It>
+			VectorIterator(VectorIterator<It> it)		: _ptr(it.current()) {}
 			~VectorIterator() {}
-
-		// ACCESS
-		// private must be		
-			pointer		current() const {
-				return this->_ptr;
-			}
 
 		// OPERATORS
 
@@ -103,38 +97,45 @@ namespace ft {
 				return this->_ptr[n];
 			}
 
-			// COMPARISON
-			bool	operator==(const VectorIterator& src) const {
-				return _ptr == src._ptr;
-			}
-			bool	operator!=(const VectorIterator& src) const {
-				return _ptr != src._ptr;
-			}
-			bool	operator<(const VectorIterator& src) const {
-				return _ptr < src._ptr;
-			}
-			bool	operator>(const VectorIterator& src) const {
-				return _ptr > src._ptr;
-			}
-			bool	operator>=(const VectorIterator& src) const {
-				return _ptr >= src._ptr;
-			}
-			bool	operator<=(const VectorIterator& src) const {
-				return _ptr <= src._ptr;
-			}
-		
+		// NON-MEMBER OPERATORS FRIENDSHIP DECLARATIONS
+
+			template<class W, class U>
+			friend bool	operator==(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
+			template<class W, class U>
+			friend bool	operator!=(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
+			template<class W, class U>
+			friend bool	operator<(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
+			template<class W, class U>
+			friend bool	operator>(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
+			template<class W, class U>
+			friend bool	operator>=(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
+			template<class W, class U>
+			friend bool	operator<=(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
+	
 		private:
 
+		// ATTRIBUTE
+
 			pointer		_ptr;
-		
+	
+		public:
+		// private must be	
+		// ACCESS
+
+			pointer		current() const {
+				return this->_ptr;
+			}
+			
 	};	/* class vectorIterator */
 
+	// NON-MEMBER OPERATORS
+
 	template<class T>
-	VectorIterator<T>	operator+(typename VectorIterator<T>::difference_type n, VectorIterator<T> it ) {
+	VectorIterator<T>	operator+(typename VectorIterator<T>::difference_type n, VectorIterator<T> it) {
 		return it.operator+(n);
 	}
 	template<class T>
-	VectorIterator<T>	operator-(typename VectorIterator<T>::difference_type n, VectorIterator<T> it ) {
+	VectorIterator<T>	operator-(typename VectorIterator<T>::difference_type n, VectorIterator<T> it) {
 		return it.operator-(n);
 	}
 	template<class T>
@@ -142,6 +143,37 @@ namespace ft {
 	operator-(const VectorIterator<T>& x, const VectorIterator<T>& y) {
 		return x.current() - y.current();
 	}
+
+	template<class T, class U>
+	bool	operator==(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+		return lhs._ptr == rhs._ptr;
+	}
+
+	template<class T, class U>
+	bool	operator!=(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+		return lhs._ptr != rhs._ptr;
+	}
+
+	template<class T, class U>
+	bool	operator<(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+		return lhs._ptr < rhs._ptr;
+	}
+
+	template<class T, class U>
+	bool	operator>(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+		return lhs._ptr > rhs._ptr;
+	}
+
+	template<class T, class U>
+	bool	operator>=(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+		return lhs._ptr >= rhs._ptr;
+	}
+
+	template<class T, class U>
+	bool	operator<=(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+		return lhs._ptr <= rhs._ptr;
+	}
+		
 }	/* namespace ft */
 
 
