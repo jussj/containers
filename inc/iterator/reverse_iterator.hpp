@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 14:40:45 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/09 11:20:48 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/10 19:13:20 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define REVERSE_ITERATOR_HPP
 
 # include "iterator_traits.hpp"
-
-// reverse_iterator not compatible with map iterators?? how to make it compatible
 
 namespace ft {
 		template <class It>
@@ -34,11 +32,14 @@ namespace ft {
 
 					reverse_iterator() {}
 					explicit reverse_iterator(It it) : _current(it) {}
-					reverse_iterator(const reverse_iterator<It>& rit) {
-						this->_current = rit._current;
+					template<class I>
+					reverse_iterator(const reverse_iterator<I>& rit) {
+						this->_current = rit.base();
 					}
 					// class that accept const and non-const it in ctor?
-				
+			
+				// ACCESS
+
 					It	base() const {	// explicit
 						return this->_current;
 					}
@@ -92,41 +93,60 @@ namespace ft {
 					reference 			operator[](difference_type n) const {
 						return *(this->_current - n - 1);
 					}
-				
+					template< class U >
+					reverse_iterator&	operator=(const reverse_iterator<U>& src) {
+						this->_current = src.base();
+						return *this;
+					}
+			
+				// NON-MEMBER OPERATORS FRIEND DECLARATION
+			
+					template <class I, class J>
+					friend bool	operator==(const reverse_iterator<I>& x, const reverse_iterator<J>& y);
+					template <class I, class J>
+					friend bool	operator<(const reverse_iterator<I>& x, const reverse_iterator<J>& y);
+					template <class I, class J>
+					friend bool	operator!=(const reverse_iterator<I>& x, const reverse_iterator<J>& y);
+					template <class I, class J>
+					friend bool	operator>(const reverse_iterator<I>& x, const reverse_iterator<J>& y);
+					template <class I, class J>
+					friend bool	operator>=(const reverse_iterator<I>& x, const reverse_iterator<J>& y);
+					template <class I, class J>
+					friend bool	operator<=(const reverse_iterator<I>& x, const reverse_iterator<J>& y);
+
 				private:
 
 					It	_current;							// why is implemented as protected?
 		
 		};	/* reverse_iterator class */
 
-		template <class It>
-		bool 	operator==(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
+		template <class I, class J>
+		bool 	operator==(const reverse_iterator<I>& x, const reverse_iterator<J>& y) {
 			return x.base() == y.base();
-			// compare base directly instead of entire class?
 		}
-		template <class It>
-		bool 	operator<(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
+		template <class I, class J>
+		bool 	operator<(const reverse_iterator<I>& x, const reverse_iterator<J>& y) {
 			return y.base() < x.base();
 		}
-		template <class It>
-		bool 	operator!=(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
+		template <class I, class J>
+		bool 	operator!=(const reverse_iterator<I>& x, const reverse_iterator<J>& y) {
 			return !(x == y);
 		}
-		template <class It>
-		bool 	operator>(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
+		template <class I, class J>
+		bool 	operator>(const reverse_iterator<I>& x, const reverse_iterator<J>& y) {
 			return y < x;
 		}
-		template <class It>
-		bool 	operator>=(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
+		template <class I, class J>
+		bool 	operator>=(const reverse_iterator<I>& x, const reverse_iterator<J>& y) {
 			return !(x < y);
 		}
-		template <class It>
-		bool 	operator<=(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
+		template <class I, class J>
+		bool 	operator<=(const reverse_iterator<I>& x, const reverse_iterator<J>& y) {
 			return !(y < x);
 		}
-		template <class It>
-		typename reverse_iterator<It>::difference_type
-		operator-(const reverse_iterator<It>& x, const reverse_iterator<It>& y) {
+		template <class I, class J>
+		typename reverse_iterator<I>::difference_type
+		operator-(const reverse_iterator<I>& x, const reverse_iterator<J>& y) {
 			return y.base() - x.base();
 		}
 		template <class It>

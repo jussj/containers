@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/09 17:47:35 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/10 19:18:16 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <iostream>
 #include "../test/vector/TestVector.hpp"
 #include "../test/vector/ComplexClass.hpp"
-//#include "TestVecIterators.hpp"
 #include <cstddef>		// ptrdiff_t
 #include <typeinfo>		// typeid
 
@@ -259,9 +258,13 @@ int 	main() {
 		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
 		test.resize(62);
 		std::cout << "s: " << test.size() << ", c: " << test.capacity() << std::endl;
+	}
+	{
+		std::cout << "TESTING RESIZE ON EMPTY VECTOR" << std::endl;
 
-		// EMPTY VECTOR
-		//vector<T> test();		// nasty axel test with empty vec
+		NAMESPACE::vector<int> test;		// nasty axel test with empty vec
+		test.resize(72);
+		print_info(test, "TEST");
 	}
 	std::cout	<< "//// AT ////" << std::endl;
 
@@ -311,8 +314,9 @@ int 	main() {
 	std::cout	<< "//// ASSIGN(IT, IT) ////" << std::endl;
 	
 	NAMESPACE::vector<std::string>		e(20, "HE");
-//	NAMESPACE::vector<IncrediblyComplex<IncrediblyComplex<float> > >	f(42);
-//	NAMESPACE::vector<IncrediblyComplex<std::string> >					g(6);
+	NAMESPACE::vector<std::string>		ee;
+	//NAMESPACE::vector<IncrediblyComplex<IncrediblyComplex<float> > >	f(42);
+	//NAMESPACE::vector<IncrediblyComplex<std::string> >					g(6);
 
 	print_content(c, "C");
 	print_info(c, "C");
@@ -362,6 +366,17 @@ int 	main() {
 	print_info(c, "C");
 	print_content(e, "E");
 	print_info(e, "E");
+
+	// SHOULD THROW AN EXCEPTION
+	//std::cout << "assign from empty vec" << std::endl;
+	//e.assign(ee.begin(), ee.end() - 1);
+	//print_content(e, "E");
+	//print_info(e, "E");
+
+	std::cout << "assign to empty vec" << std::endl;
+	ee.assign(e.begin(), e.end() - 1);
+	print_content(ee, "EE");
+	print_info(ee, "EE");
 	
 	//std::cout 	<< "//// ITERATOR TRAITS //// " << std::endl 
 	//typedef std::iterator_traits<int*> traits;
@@ -485,7 +500,8 @@ int 	main() {
 	//std::cout	<< "clearing c" << std::endl;
 	//c.clear();
 
-	//pos = c.erase(c.begin());	// will segf
+	// CAUSES SEGF
+	//pos = c.erase(c.begin());
 
 	//std::cout	<< "new element is " << *pos << std::endl;
 
@@ -529,9 +545,8 @@ int 	main() {
 		NAMESPACE::vector<int>::iterator	ret;	
 		NAMESPACE::vector<int>				f;
 		
-		// set some values (from 1 to 10)
 		for (int i = 1; i <= 10; i++)
-			f.push_back(i);		// invalid read
+			f.push_back(i);
 		print_info(f, "F");
 		print_content(f, "F");
 		
@@ -624,33 +639,30 @@ int 	main() {
 	std::cout	<< "//// MER TESTS ////" << std::endl << std::endl;
 	{
 		{
-			std::cout << std::endl << "RESIZE TESTS" << std::endl;
-			//vector<T> test();		// nasty axel test with empty vec
-			//test.resize(72);
 			std::cout << std::endl << "INSERT TESTS" << std::endl;
 			//redo insert to optimize when all tests are good
-			NAMESPACE::vector<int> test(1, 1);
-			NAMESPACE::vector<int> test2(5, 5);
+			//NAMESPACE::vector<int> test(1, 1);
+			//NAMESPACE::vector<int> test2(5, 5);
 
-			test.insert(test.begin(), 200, 12);
-			print_info(test, "TEST");
-			test.insert(test.begin() + 12, 200, 30);
-			print_info(test, "TEST");
-			test.insert(test.end(), 12, 50);
-			print_info(test, "TEST");
-			test.insert(test.end() - 1, 0, 60);
-			print_info(test, "TEST");
-			test.insert(test.end() - 1, 1, 70);
-			print_info(test, "TEST");
-			test.insert(test.begin() + 412, test2.begin(), test2.end());
-			print_info(test, "TEST");
-			test.insert(test.begin() + 6, test2.begin(), test2.end());
-			print_info(test, "TEST");
-			test.insert(test.end(), test2.begin(), test2.end());
-			print_info(test, "TEST");
+			//test.insert(test.begin(), 200, 12);
+			//print_info(test, "TEST");
+			//test.insert(test.begin() + 12, 200, 30);
+			//print_info(test, "TEST");
+			//test.insert(test.end(), 12, 50);
+			//print_info(test, "TEST");
+			//test.insert(test.end() - 1, 0, 60);
+			//print_info(test, "TEST");
+			//test.insert(test.end() - 1, 1, 70);
+			//print_info(test, "TEST");
+			//test.insert(test.begin() + 412, test2.begin(), test2.end());
+			//print_info(test, "TEST");
+			//test.insert(test.begin() + 6, test2.begin(), test2.end());
+			//print_info(test, "TEST");
+			//test.insert(test.end(), test2.begin(), test2.end());
+			//print_info(test, "TEST");
 		}
 		{
-			std::cout << std::endl << "CONST IT TESTS" << std::endl;
+			std::cout << std::endl << "CONST ITERATORS TESTS" << std::endl;
 		
 			std::cout << "comparing normal_iterator and const_iterator..." << std::endl;
 			const int size = 5;
@@ -660,6 +672,52 @@ int 	main() {
 			
 			for (int i = 1; it != ite; ++i)
 				*it++ = i;
+		}
+		{		
+			std::cout << std::endl << "CONST REVERSE ITERATORS TESTS" << std::endl;
+			NAMESPACE::vector<int>							vct;
+			NAMESPACE::vector<int>::iterator				it = vct.begin();
+			NAMESPACE::vector<int>::reverse_iterator		rit(it);
+			NAMESPACE::vector<int>::const_reverse_iterator	crit(rit);
+		}
+		{
+			const int size = 5;
+			NAMESPACE::vector<int> vct(size);
+			NAMESPACE::vector<int>::reverse_iterator it(vct.rbegin());
+			NAMESPACE::vector<int>::const_reverse_iterator ite(vct.rend());
+
+			for (int i = 1; it != ite; ++i)
+				*it++ = (i * 7);
+			print_info(vct, "VCT");
+
+			it = vct.rbegin();
+			ite = vct.rbegin();
+
+			std::cout << *(++ite) << std::endl;
+			std::cout << *(ite++) << std::endl;
+			std::cout << *ite++ << std::endl;
+			std::cout << *++ite << std::endl;
+
+			//it->m();
+			//ite->m();
+
+			std::cout << *(++it) << std::endl;
+			std::cout << *(it++) << std::endl;
+			std::cout << *it++ << std::endl;
+			std::cout << *++it << std::endl;
+
+			std::cout << *(--ite) << std::endl;
+			std::cout << *(ite--) << std::endl;
+			std::cout << *--ite << std::endl;
+			std::cout << *ite-- << std::endl;
+
+			//(*it).m();
+			//(*ite).m();
+
+			std::cout << *(--it) << std::endl;
+			std::cout << *(it--) << std::endl;
+			std::cout << *it-- << std::endl;
+			std::cout << *--it << std::endl;
 		}
 	}
 	return 0;

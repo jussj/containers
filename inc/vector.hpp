@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/08 16:36:56 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/10 18:41:51 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ namespace ft {
 	
 	template <class T, class Alloc = std::allocator<T> >
 	class vector {
+
 		public:
 
 		// TYPES
-			typedef	VectorIterator<T>				iterator;
-			typedef	VectorIterator<const T>			const_iterator;
+
 			typedef	size_t							size_type;
 			typedef	ptrdiff_t						difference_type;
 
@@ -45,6 +45,8 @@ namespace ft {
 			typedef typename Alloc::pointer			pointer;
 			typedef typename Alloc::const_pointer	const_pointer;
 			
+			typedef	VectorIterator<T>						iterator;
+			typedef	VectorIterator<const T>					const_iterator;
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
@@ -72,8 +74,7 @@ namespace ft {
 
 			// put it first in overloads?
 			template<class InputIt>
-			vector(	//typename ft::enable_if<!ft::is_integral<InputIt>::value, InputIt>::type first,
-					InputIt first,
+			vector(	InputIt first,
 					InputIt last,
 					const Alloc& Allocator = Alloc(),
 					typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
@@ -82,7 +83,6 @@ namespace ft {
 				this->_end		= this->_begin;
 				this->_capacity = this->_begin;
 				this->_alloc	= Alloc();
-				
 				this->assign(first, last);
 			}
 			
@@ -100,7 +100,6 @@ namespace ft {
 			~vector() {
 				for (size_type s = 0; s < this->size(); s++)
 					this->_alloc.destroy(this->_begin + s);
-				//this->_alloc.deallocate(this->_begin, this->size());
 				this->_alloc.deallocate(this->_begin, this->capacity());
 			}
 			
@@ -110,15 +109,12 @@ namespace ft {
 							typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
 							) {
 				size_type dis	= ft::distance(first, last);
-				//iterator it		= first;
-				
-				// assign on empty vec??
+			
+				// assign from empty vec?
+				// stl distance ft throws length error exception
 				if (dis > this->capacity())
 					this->reserve(dis);	
 				this->clear();
-				// not opti >> use fill?
-				//for (; first != last; first++) 
-					//this->push_back(*first);
 				this->_fill(&(*this->begin()), first, last);
 				this->_end = this->_begin + dis;
 			}
@@ -126,8 +122,6 @@ namespace ft {
 			void	assign(size_type n, const value_type& value) {
 				if (n > this->capacity())
 					reserve(n);
-				// not destroying elements???
-				// assign on empty vec??
 				// FUNC construct param size + value + new end
 				for (size_type s = 0; s < n; s++)
 					this->_alloc.construct(this->_begin + s, value);	
@@ -140,7 +134,6 @@ namespace ft {
 				return this->_alloc;
 			}
 			
-			//vector&		operator=(const vector& src) {
 			vector<T,Alloc>&	operator=(const vector<T,Alloc>& src) {
 				if (&src == this)
 					return *this;
@@ -186,9 +179,9 @@ namespace ft {
 			void 		resize(size_type n, T value = T()) {
 				if (n > this->size()) {
 					if (n > this->capacity()) {
-						if (this->size() * 2 > n)						// !!!
-							this->reserve(this->size() * 2);			// !!!
-						else											// !!!
+						if (this->size() * 2 > n)
+							this->reserve(this->size() * 2);
+						else
 							this->reserve(n);
 					}
 					// FUNC construct param size + value + new end
@@ -392,8 +385,8 @@ namespace ft {
 					erase(first);
 					//ret = erase(it);
 				}
-				//return ret; // ???? 
-				return it; // ???? 
+				//return ret;	// ???? 
+				return it;		// ???? 
 			}
 
 			iterator 	erase(iterator position) {
@@ -482,12 +475,9 @@ namespace ft {
 	bool operator==(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
 		return (x.size() == y.size()
 	      && !(ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end())));
-		  //&& std::equal(x.begin(), x.end(), y.begin()));
-		  //careful, using std::equal!!!!
 	}
 	template <class T, class Alloc>
 	bool operator<(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
-		//return x < y;
 		return ft::lexicographical_compare(	x.begin(), x.end(),
 											y.begin(), y.end() );	
 	}

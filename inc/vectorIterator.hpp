@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/09 18:16:48 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/10 17:46:15 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <memory>		// allocator
 # include "iterator/iterator_traits.hpp"
 # include <iterator>
-
-# define TAG_NS	ft
 
 namespace ft {
 
@@ -33,7 +31,7 @@ namespace ft {
 			typedef ptrdiff_t				difference_type;
 			typedef T*						pointer;
 			typedef T&						reference;
-			typedef typename TAG_NS::random_access_iterator_tag	iterator_category;
+			typedef typename ft::random_access_iterator_tag	iterator_category;
 
 		// CTOR, CPY, DTOR
 
@@ -44,6 +42,8 @@ namespace ft {
 			~VectorIterator() {}
 
 		// OPERATORS
+
+			//operator=
 
 			// FORWARD
 			reference	operator*() const {
@@ -99,18 +99,18 @@ namespace ft {
 
 		// NON-MEMBER OPERATORS FRIENDSHIP DECLARATIONS
 
-			template<class W, class U>
-			friend bool	operator==(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
-			template<class W, class U>
-			friend bool	operator!=(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
-			template<class W, class U>
-			friend bool	operator<(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
-			template<class W, class U>
-			friend bool	operator>(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
-			template<class W, class U>
-			friend bool	operator>=(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
-			template<class W, class U>
-			friend bool	operator<=(const VectorIterator<W> & lhs, const VectorIterator<U> & rhs);
+			template<class V, class W>
+			friend bool	operator==(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
+			template<class V, class W>
+			friend bool	operator!=(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
+			template<class V, class W>
+			friend bool	operator<(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
+			template<class V, class W>
+			friend bool	operator>(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
+			template<class V, class W>
+			friend bool	operator>=(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
+			template<class V, class W>
+			friend bool	operator<=(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
 	
 		private:
 
@@ -131,11 +131,13 @@ namespace ft {
 	// NON-MEMBER OPERATORS
 
 	template<class T>
-	VectorIterator<T>	operator+(typename VectorIterator<T>::difference_type n, VectorIterator<T> it) {
+	VectorIterator<T>	operator+(	typename VectorIterator<T>::difference_type n,
+									VectorIterator<T> it) {
 		return it.operator+(n);
 	}
 	template<class T>
-	VectorIterator<T>	operator-(typename VectorIterator<T>::difference_type n, VectorIterator<T> it) {
+	VectorIterator<T>	operator-(	typename VectorIterator<T>::difference_type n,
+									VectorIterator<T> it) {
 		return it.operator-(n);
 	}
 	template<class T>
