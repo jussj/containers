@@ -626,3 +626,32 @@ INSERT TESTS
 
 CONST ITERATORS TESTS
 comparing normal_iterator and const_iterator...
+(const_iterator - iterator): 0
+
+CONST REVERSE ITERATORS TESTS
+(const_reverse_iterator - reverse_iterator): 0
+(const_reverse_iterator - reverse_iterator): -3424689
+(const_reverse_iterator - const_reverse_iterator): 3424689
+(const_reverse_iterator - const_reverse_iterator): -3424689
+// VECTOR VCT INFO
+   size:       5
+   capacity:   5
+   max_size:   2305843009213693951
+   front/back: [ 35 ... 7 ]
+
+14
+14
+21
+35
+14
+14
+21
+35
+28
+28
+14
+14
+28
+28
+21
+7

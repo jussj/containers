@@ -6,13 +6,12 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/11 17:27:56 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/11 19:36:28 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE ft
-
+# define NAMESPACE std
 #endif
 
 #include <vector>
@@ -682,8 +681,22 @@ int 	main() {
 			NAMESPACE::vector<int>::reverse_iterator		rit(it);
 			NAMESPACE::vector<int>::const_reverse_iterator	crit(rit);
 			
-			//std::cout	<< "(const_reverse_iterator - reverse_iterator): "
-						//<< (crit - rit) << std::endl;
+			std::cout	<< "(const_reverse_iterator - reverse_iterator): "
+						<< (crit - rit) << std::endl;
+
+			vct.assign(20, 15);
+			it = vct.end() - 1;
+			NAMESPACE::vector<int>::const_reverse_iterator	crit2(it);
+			for (int i = 0; i < 10; ++i) {
+				++crit2;
+			}
+			std::cout	<< "(const_reverse_iterator - reverse_iterator): "
+						<< (crit2 - rit) << std::endl;
+						//<< "(const_reverse_iterator - const_reverse_iterator): "
+						//<< (crit - crit2) << std::endl
+						//<< "(const_reverse_iterator - const_reverse_iterator): "
+						//<< (crit2 - crit) << std::endl;
+
 		}
 		{
 			const int size = 5;
@@ -703,10 +716,6 @@ int 	main() {
 			std::cout << *ite++ << std::endl;
 			std::cout << *++ite << std::endl;
 
-			// MLI ARROW TEST
-			//it->m();
-			//ite->m();
-
 			std::cout << *(++it) << std::endl;
 			std::cout << *(it++) << std::endl;
 			std::cout << *it++ << std::endl;
@@ -717,15 +726,12 @@ int 	main() {
 			std::cout << *--ite << std::endl;
 			std::cout << *ite-- << std::endl;
 
-			// MLI ARROW TEST
-			//(*it).m();
-			//(*ite).m();
-
 			std::cout << *(--it) << std::endl;
 			std::cout << *(it--) << std::endl;
 			std::cout << *it-- << std::endl;
 			std::cout << *--it << std::endl;
 		}
+		// test reverse operator-
 	}
 	return 0;
 }

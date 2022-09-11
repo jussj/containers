@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 12:42:09 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/10 18:41:51 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/11 19:06:44 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ namespace ft {
 			void	assign(size_type n, const value_type& value) {
 				if (n > this->capacity())
 					reserve(n);
-				// FUNC construct param size + value + new end
+				// NEW FUNC: construct param size + value + new end
 				for (size_type s = 0; s < n; s++)
 					this->_alloc.construct(this->_begin + s, value);	
 				this->_end	= this->_begin + n;
@@ -184,7 +184,7 @@ namespace ft {
 						else
 							this->reserve(n);
 					}
-					// FUNC construct param size + value + new end
+					// NEW FUNC: construct param size + value + new end
 					for (size_type s = this->size(); s < n; s++)
 						this->_alloc.construct(_begin + s, value);	
 					this->_end = this->_begin + n;
