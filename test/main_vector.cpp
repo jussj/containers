@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/11 19:36:28 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/11 19:49:50 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -412,11 +412,23 @@ int 	main() {
 			<< "[ ";
 	for (	NAMESPACE::vector<std::string>::const_iterator it = cvbegin;
 		it != cvend;
-		it++		) {
+		it++		)
 		std::cout << *it << " "; 
-	}
 	std::cout	<< "]" << std::endl << std::endl;
+	{
+		std::cout << std::endl << "CONST ITERATORS TESTS" << std::endl;
 	
+		std::cout << "comparing normal_iterator and const_iterator..." << std::endl;
+		const int size = 5;
+		NAMESPACE::vector<int> vct(size);
+		NAMESPACE::vector<int>::iterator it(vct.begin());
+		NAMESPACE::vector<int>::const_iterator ite(vct.end());
+		
+		for (int i = 1; it != ite; ++i)
+			*it++ = i;
+		
+		std::cout << "(const_iterator - iterator): " << (ite - it) << std::endl;
+	}
 	{
 		std::cout	<< "//// ACCESS OPERATOR[] ////" << std::endl;
 		 
@@ -634,46 +646,7 @@ int 	main() {
 		revbeg += 3;
 		std::cout << *revbeg << std::endl;
 		std::cout << std::endl;
-	}	
-	std::cout	<< "//// MER TESTS ////" << std::endl << std::endl;
-	{
-		{
-			std::cout << std::endl << "INSERT TESTS" << std::endl;
-			//redo insert to optimize when all tests are good
-			//NAMESPACE::vector<int> test(1, 1);
-			//NAMESPACE::vector<int> test2(5, 5);
 
-			//test.insert(test.begin(), 200, 12);
-			//print_info(test, "TEST");
-			//test.insert(test.begin() + 12, 200, 30);
-			//print_info(test, "TEST");
-			//test.insert(test.end(), 12, 50);
-			//print_info(test, "TEST");
-			//test.insert(test.end() - 1, 0, 60);
-			//print_info(test, "TEST");
-			//test.insert(test.end() - 1, 1, 70);
-			//print_info(test, "TEST");
-			//test.insert(test.begin() + 412, test2.begin(), test2.end());
-			//print_info(test, "TEST");
-			//test.insert(test.begin() + 6, test2.begin(), test2.end());
-			//print_info(test, "TEST");
-			//test.insert(test.end(), test2.begin(), test2.end());
-			//print_info(test, "TEST");
-		}
-		{
-			std::cout << std::endl << "CONST ITERATORS TESTS" << std::endl;
-		
-			std::cout << "comparing normal_iterator and const_iterator..." << std::endl;
-			const int size = 5;
-			NAMESPACE::vector<int> vct(size);
-			NAMESPACE::vector<int>::iterator it(vct.begin());
-			NAMESPACE::vector<int>::const_iterator ite(vct.end());
-			
-			for (int i = 1; it != ite; ++i)
-				*it++ = i;
-			
-			std::cout << "(const_iterator - iterator): " << (ite - it) << std::endl;
-		}
 		{		
 			std::cout << std::endl << "CONST REVERSE ITERATORS TESTS" << std::endl;
 			NAMESPACE::vector<int>							vct;
@@ -696,6 +669,7 @@ int 	main() {
 						//<< (crit - crit2) << std::endl
 						//<< "(const_reverse_iterator - const_reverse_iterator): "
 						//<< (crit2 - crit) << std::endl;
+						// INVESTIGATE THOSE CASES!!!!!!!!!
 
 		}
 		{
@@ -732,6 +706,32 @@ int 	main() {
 			std::cout << *--it << std::endl;
 		}
 		// test reverse operator-
+	}	
+	std::cout	<< "//// MER TESTS ////" << std::endl << std::endl;
+	{
+		{
+			std::cout << std::endl << "INSERT TESTS" << std::endl;
+			//redo insert to optimize when all tests are good
+			NAMESPACE::vector<int> test(1, 1);
+			NAMESPACE::vector<int> test2(5, 5);
+
+			test.insert(test.begin(), 200, 12);
+			print_info(test, "TEST");
+			test.insert(test.begin() + 12, 200, 30);
+			print_info(test, "TEST");
+			test.insert(test.end(), 12, 50);
+			print_info(test, "TEST");
+			test.insert(test.end() - 1, 0, 60);
+			print_info(test, "TEST");
+			test.insert(test.end() - 1, 1, 70);
+			print_info(test, "TEST");
+			test.insert(test.begin() + 412, test2.begin(), test2.end());
+			print_info(test, "TEST");
+			test.insert(test.begin() + 6, test2.begin(), test2.end());
+			print_info(test, "TEST");
+			test.insert(test.end(), test2.begin(), test2.end());
+			print_info(test, "TEST");
+		}
 	}
 	return 0;
 }

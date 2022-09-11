@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/05 14:40:45 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/11 19:32:26 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/11 19:40:59 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,6 @@ namespace ft {
 		typename reverse_iterator<ItL>::difference_type
 		operator-(const reverse_iterator<ItL>& x, const reverse_iterator<ItR>& y) {
 			return y.base() - x.base();
-			//return x.base() - y.base();
-			//return y.base().operator-(x.base());
 		}
 		template <class It>
 		reverse_iterator<It>
