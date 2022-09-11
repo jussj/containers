@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/10 19:18:16 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/11 17:27:56 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -672,6 +672,8 @@ int 	main() {
 			
 			for (int i = 1; it != ite; ++i)
 				*it++ = i;
+			
+			std::cout << "(const_iterator - iterator): " << (ite - it) << std::endl;
 		}
 		{		
 			std::cout << std::endl << "CONST REVERSE ITERATORS TESTS" << std::endl;
@@ -679,6 +681,9 @@ int 	main() {
 			NAMESPACE::vector<int>::iterator				it = vct.begin();
 			NAMESPACE::vector<int>::reverse_iterator		rit(it);
 			NAMESPACE::vector<int>::const_reverse_iterator	crit(rit);
+			
+			//std::cout	<< "(const_reverse_iterator - reverse_iterator): "
+						//<< (crit - rit) << std::endl;
 		}
 		{
 			const int size = 5;
@@ -698,6 +703,7 @@ int 	main() {
 			std::cout << *ite++ << std::endl;
 			std::cout << *++ite << std::endl;
 
+			// MLI ARROW TEST
 			//it->m();
 			//ite->m();
 
@@ -711,6 +717,7 @@ int 	main() {
 			std::cout << *--ite << std::endl;
 			std::cout << *ite-- << std::endl;
 
+			// MLI ARROW TEST
 			//(*it).m();
 			//(*ite).m();
 

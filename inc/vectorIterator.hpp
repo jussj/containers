@@ -6,7 +6,7 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 10:12:12 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/10 17:46:15 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/11 17:10:11 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ namespace ft {
 
 			VectorIterator() 			: _ptr(NULL) 	{}
 			VectorIterator(pointer it) 	: _ptr(it) 		{}
-			template<class It>
-			VectorIterator(VectorIterator<It> it)		: _ptr(it.current()) {}
+			template<class U>
+			VectorIterator(VectorIterator<U> it)		: _ptr(it.current()) {}
 			~VectorIterator() {}
 
 		// OPERATORS
@@ -99,18 +99,18 @@ namespace ft {
 
 		// NON-MEMBER OPERATORS FRIENDSHIP DECLARATIONS
 
-			template<class V, class W>
-			friend bool	operator==(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
-			template<class V, class W>
-			friend bool	operator!=(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
-			template<class V, class W>
-			friend bool	operator<(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
-			template<class V, class W>
-			friend bool	operator>(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
-			template<class V, class W>
-			friend bool	operator>=(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
-			template<class V, class W>
-			friend bool	operator<=(const VectorIterator<V> & lhs, const VectorIterator<W> & rhs);
+			template<class L, class R>
+			friend bool	operator==(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
+			template<class L, class R>
+			friend bool	operator!=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
+			template<class L, class R>
+			friend bool	operator<(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
+			template<class L, class R>
+			friend bool	operator>(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
+			template<class L, class R>
+			friend bool	operator>=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
+			template<class L, class R>
+			friend bool	operator<=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
 	
 		private:
 
@@ -146,33 +146,33 @@ namespace ft {
 		return x.current() - y.current();
 	}
 
-	template<class T, class U>
-	bool	operator==(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+	template<class L, class R>
+	bool	operator==(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
 		return lhs._ptr == rhs._ptr;
 	}
 
-	template<class T, class U>
-	bool	operator!=(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+	template<class L, class R>
+	bool	operator!=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
 		return lhs._ptr != rhs._ptr;
 	}
 
-	template<class T, class U>
-	bool	operator<(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+	template<class L, class R>
+	bool	operator<(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
 		return lhs._ptr < rhs._ptr;
 	}
 
-	template<class T, class U>
-	bool	operator>(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+	template<class L, class R>
+	bool	operator>(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
 		return lhs._ptr > rhs._ptr;
 	}
 
-	template<class T, class U>
-	bool	operator>=(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+	template<class L, class R>
+	bool	operator>=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
 		return lhs._ptr >= rhs._ptr;
 	}
 
-	template<class T, class U>
-	bool	operator<=(const VectorIterator<T> & lhs, const VectorIterator<U> & rhs) {
+	template<class L, class R>
+	bool	operator<=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
 		return lhs._ptr <= rhs._ptr;
 	}
 		
