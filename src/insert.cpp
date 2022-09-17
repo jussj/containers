@@ -3,7 +3,7 @@ void	insert(iterator position, size_type n, const T& x) {
 	
 	if (n < 1)
 		return ;
-	// free space in array is enough to insert
+	// capacity is enough to insert
 	else if (new_size <= this->capacity) {
 		size_type elems_after = this->end() - position;
 		if (elems_after > n) {
@@ -13,12 +13,13 @@ void	insert(iterator position, size_type n, const T& x) {
 			this->_fill(position, n, x);
 		}
 		else {
-			// fill forwards
+			// fill forwards (here is backwards)
+			this->_copy_backwards(position, n, x);
 			// fill the freed space with n x elements
 			this->_fill(position, n, x);
 		}
 	}
-	// free space in array not enough to insert, reallocate:
+	// capacity not enough to insert, reallocate:
 	else {
 		size_type	new_capacity	= this->capacity();
 		// optimize capacity depending on new size
@@ -43,7 +44,9 @@ void	_copy_backwards(iterator position, size_type new_size) {
 
 	for (reverse_iterator rit = rbegin_insert; rit != rlast_insert; ++rit) {
 		// construct on rbegin with copy_from
+		this->_alloc.construct(rbegin_insert, *(this->begin() + copy_from));
 		// destroy copy_from
+		this->_alloc.destroy(this->_begin + copy_from);
 		--copy_from;
 	}
 }
@@ -65,6 +68,4 @@ void	_reallocate(size_type new_capacity, new_size, iterator position, const T& x
 	this->clear();
 	this->_alloc.deallocate(this->_begin, this->size());
 	this->_begin 	= new_array;
-	//this->_end 		= this->_begin + new_size;
-	//this->_capacity	= this->_begin + new_capacity;
 }
