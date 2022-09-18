@@ -6,12 +6,12 @@
 /*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/11 19:49:50 by jusaint-         ###   ########.fr       */
+/*   Updated: 2022/09/18 17:12:28 by jusaint-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE std
+# define NAMESPACE ft
 #endif
 
 #include <vector>
@@ -496,9 +496,9 @@ int 	main() {
 	print_content(c, "C");
 	print_info(c, "C");
 	
-	c.insert(c.begin() + 4, 10, "HA");
-	print_content(c, "C");
-	print_info(c, "C");
+	//c.insert(c.begin() + 4, 10, "HA");
+	//print_content(c, "C");
+	//print_info(c, "C");
 	
 	e.assign(20, "HE");
 	print_content(e, "E");
@@ -508,6 +508,10 @@ int 	main() {
 	print_content(e, "E");
 	print_info(e, "E");
 
+//	e.insert(e.begin() + 5, 6, "he");
+//	print_content(e, "E");
+//	print_info(e, "E");
+	
 	//std::cout	<< "clearing c" << std::endl;
 	//c.clear();
 
@@ -517,6 +521,7 @@ int 	main() {
 	//std::cout	<< "new element is " << *pos << std::endl;
 
 	std::cout	<< "//// ERASE ////" << std::endl << std::endl;
+	/*
 	
 	pos = c.erase(c.begin() + 6);
 	std::cout	<< "new element is " << *pos << std::endl;
@@ -706,7 +711,7 @@ int 	main() {
 			std::cout << *--it << std::endl;
 		}
 		// test reverse operator-
-	}	
+	}
 	std::cout	<< "//// MER TESTS ////" << std::endl << std::endl;
 	{
 		{
@@ -717,21 +722,30 @@ int 	main() {
 
 			test.insert(test.begin(), 200, 12);
 			print_info(test, "TEST");
+			print_content(test, "TEST");
 			test.insert(test.begin() + 12, 200, 30);
 			print_info(test, "TEST");
+			print_content(test, "TEST");
 			test.insert(test.end(), 12, 50);
 			print_info(test, "TEST");
+			print_content(test, "TEST");
 			test.insert(test.end() - 1, 0, 60);
 			print_info(test, "TEST");
+			print_content(test, "TEST");
 			test.insert(test.end() - 1, 1, 70);
 			print_info(test, "TEST");
+			print_content(test, "TEST");
 			test.insert(test.begin() + 412, test2.begin(), test2.end());
 			print_info(test, "TEST");
+			print_content(test, "TEST");
 			test.insert(test.begin() + 6, test2.begin(), test2.end());
 			print_info(test, "TEST");
+			print_content(test, "TEST");
 			test.insert(test.end(), test2.begin(), test2.end());
 			print_info(test, "TEST");
+			print_content(test, "TEST");
 		}
 	}
+	*/
 	return 0;
 }

@@ -267,44 +267,80 @@ namespace ft {
 				return this->begin() + offset;
 			}
 
-			void 		insert(iterator position, size_type n, const T& x) {
-				pointer		new_array;
-				size_type	new_capacity;
-				size_type	new_size 		= this->size() + n;
-				//iterator	rbegin_insert	= position + n - 1;
-				//iterator	rlast_insert	= position;
-				//size_type	copy_to			= new_size - 1;
-				//size_type	copy_from		= this->size() - 1;
 
-				// new vector each time insert is called??	
-				// check whether capacity calculation is ok or not ok
+			void	insert(iterator position, size_type n, const T& x) {
+				size_type	new_size		= this->size() + n;
+				size_type	new_capacity	= this->capacity();
+				
 				if (n < 1)
 					return ;
-				//if position is last() you know what to do
-				if (new_size > this->capacity()) {
-					if (new_size > this->size() * 2)
-						//this->reserve(new_size);
-						new_capacity = new_size;
-					else
-						//this->reserve(this->size() * 2);
-						new_capacity = this->size() * 2;
+				// capacity is enough to insert
+				else if (new_size <= this->capacity()) {
+					size_type elems_after = this->end() - position;
+					if (elems_after > n) {
+						// copy elements past position from backwards
+						this->_copy_backwards(position, new_size);
+						// fill the freed space with n x elements
+						this->_fill(&(*position), n, x);
+					}
+					else {
+						// fill forwards (here is backwards)
+						this->_copy_backwards(position, new_size);
+						// fill the freed space with n x elements
+						this->_fill(&(*position), n, x);
+					}
 				}
-				else 
-					new_capacity = this->capacity();
-				// NEW INSERT: COPY/CONSTRUCT FROM THE END
-				//for (iterator it = rbegin_insert; it != rlast_insert; ++it) {
-					//std::cout<<"RBEGIN "<<*it<<" RLAST "<<*rlast_insert<<" CPY TO "<<copy_to<<" CPY FROM "<<copy_from<<std::endl;
-					//this->_alloc.construct(this->_begin + copy_to, *(this->begin() + copy_from));
-					//this->_alloc.destroy(this->_begin + copy_from);
-					//--copy_to;
-					//--copy_from;
-					//this->_alloc.construct(this->_begin + copy_from, x);
-				//}
+				// capacity not enough to insert, reallocate:
+				else {
+					// optimize capacity depending on new size
+					if (new_size > this->capacity()) {
+						if (new_size > this->size() * 2)
+							new_capacity = new_size;
+						else
+							new_capacity = this->size() * 2;
+					}
+					// copy everything in a brand new allocation <3
+					this->_reallocate(new_capacity, new_size, n, position, x);
+				}
+				// adapt end and capacity to new size
+				this->_end 		= this->_begin + new_size;
+				this->_capacity	= this->_begin + new_capacity;
+				std::cout << "---POS IS " << *(this->_end - 1) << std::endl;
+			}
 
-				// OLD INSERT: FULL REALLOCATION
-				// add capacity + 1 IS IT BAD ???? :((((((
-				new_array 	= this->_alloc.allocate(new_capacity + 1);
-				iterator it	= this->begin();
+			// private functions
+
+			void	_copy_backwards(iterator position, size_type new_size) {
+				reverse_iterator	rlast_insert(position - 1);
+				reverse_iterator	rbegin_insert(this->_begin + new_size - 1);
+				size_type			copy_from = this->size() - 1;
+
+				std::cout << "---POS IS " << *position << std::endl;
+				std::cout << "---POS IS " << *rlast_insert << std::endl;
+				std::cout << "---POS IS " << *(this->_begin + copy_from) << std::endl;
+				//std::cout << "---POS IS " << *rbegin_insert << std::endl;
+				std::cout << "---" << std::endl;
+
+				for (reverse_iterator rit = rbegin_insert; rit != rlast_insert; ++rit) {
+					// construct on rbegin with copy_from
+					this->_alloc.construct(&(*rbegin_insert.base()), *(this->begin() + copy_from));
+					// destroy copy_from
+					this->_alloc.destroy(this->_begin + copy_from);
+					if (this->_begin + copy_from == &(*position))
+							break ;
+					--copy_from;
+				}
+				std::cout << "---END" << std::endl;
+			}
+	
+			void	_reallocate(size_type new_capacity,
+								size_type new_size,
+								size_type n,
+								iterator position,
+								const T& x) {
+				iterator	it			= this->begin();
+				pointer		new_array	= this->_alloc.allocate(new_capacity + 1);
+				
 				for (size_type s = 0; s < new_size; s++) {
 					if (it == position) {
 						this->_fill(new_array + s, n, x);
@@ -318,10 +354,9 @@ namespace ft {
 				this->clear();
 				this->_alloc.deallocate(this->_begin, this->size());
 				this->_begin 	= new_array;
-
-				this->_end 		= this->_begin + new_size;
-				this->_capacity	= this->_begin + new_capacity;
 			}
+			// end of private functions
+
 
 			// enable_if?
 			template <class InputIt>
