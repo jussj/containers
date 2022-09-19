@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef NAMESPACE
-# define NAMESPACE ft
+# define NAMESPACE std
 #endif
 
 #include <vector>
@@ -496,9 +496,9 @@ int 	main() {
 	print_content(c, "C");
 	print_info(c, "C");
 	
-	//c.insert(c.begin() + 4, 10, "HA");
-	//print_content(c, "C");
-	//print_info(c, "C");
+	c.insert(c.begin() + 4, 10, "HA");
+	print_content(c, "C");
+	print_info(c, "C");
 	
 	e.assign(20, "HE");
 	print_content(e, "E");
@@ -508,9 +508,9 @@ int 	main() {
 	print_content(e, "E");
 	print_info(e, "E");
 
-//	e.insert(e.begin() + 5, 6, "he");
-//	print_content(e, "E");
-//	print_info(e, "E");
+	e.insert(e.begin() + 5, 6, "he");
+	print_content(e, "E");
+	print_info(e, "E");
 	
 	//std::cout	<< "clearing c" << std::endl;
 	//c.clear();

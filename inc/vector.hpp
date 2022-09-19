@@ -305,7 +305,6 @@ namespace ft {
 				// adapt end and capacity to new size
 				this->_end 		= this->_begin + new_size;
 				this->_capacity	= this->_begin + new_capacity;
-				std::cout << "---POS IS " << *(this->_end - 1) << std::endl;
 			}
 
 			// private functions
@@ -315,22 +314,15 @@ namespace ft {
 				reverse_iterator	rbegin_insert(this->_begin + new_size - 1);
 				size_type			copy_from = this->size() - 1;
 
-				std::cout << "---POS IS " << *position << std::endl;
-				std::cout << "---POS IS " << *rlast_insert << std::endl;
-				std::cout << "---POS IS " << *(this->_begin + copy_from) << std::endl;
-				//std::cout << "---POS IS " << *rbegin_insert << std::endl;
-				std::cout << "---" << std::endl;
-
 				for (reverse_iterator rit = rbegin_insert; rit != rlast_insert; ++rit) {
 					// construct on rbegin with copy_from
-					this->_alloc.construct(&(*rbegin_insert.base()), *(this->begin() + copy_from));
+					this->_alloc.construct(&(*rit.base()), *(this->begin() + copy_from));
 					// destroy copy_from
 					this->_alloc.destroy(this->_begin + copy_from);
 					if (this->_begin + copy_from == &(*position))
 							break ;
 					--copy_from;
 				}
-				std::cout << "---END" << std::endl;
 			}
 	
 			void	_reallocate(size_type new_capacity,
