@@ -1,17 +1,5 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main_vector.cpp                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/06 10:38:03 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/18 17:12:28 by jusaint-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef NAMESPACE
-# define NAMESPACE std
+# define NAMESPACE ft
 #endif
 
 #include <vector>
@@ -488,6 +476,23 @@ int 	main() {
 	
 	std::cout	<< "//// INSERT MULTIPLE VALUES ////" << std::endl;
 
+	NAMESPACE::vector<int>	hehe;
+
+	hehe.reserve(20);
+	for (int v = 0; v < 10; ++v)
+		hehe.push_back(v);
+
+	print_content(hehe, "HEHE");
+	print_info(hehe, "HEHE");
+	
+	hehe.insert(hehe.end() - 2, 3, 42);
+	print_content(hehe, "HEHE");
+	print_info(hehe, "HEHE");
+	
+	hehe.insert(hehe.begin() + 5, 4, 42);
+	print_content(hehe, "HEHE");
+	print_info(hehe, "HEHE");
+	
 	c.insert(c.begin() + 4, 6, "HO");
 	print_content(c, "C");
 	print_info(c, "C");
@@ -520,8 +525,48 @@ int 	main() {
 
 	//std::cout	<< "new element is " << *pos << std::endl;
 
+	{
+		std::cout << std::endl << "MORE MAZOISE INSPIRED INSERT TESTS" << std::endl;
+		//redo insert to optimize when all tests are good
+		//double check return values on insert
+		NAMESPACE::vector<int> test(1, 1);
+		NAMESPACE::vector<int> test2(5, 5);
+		NAMESPACE::vector<std::string> test3(414, "yo");
+		NAMESPACE::vector<std::string> test4(5, "YO");
+
+		test3.reserve(802);
+
+		test.insert(test.begin(), 200, 12);
+		print_info(test, "TEST");
+		print_content(test, "TEST");
+		test.insert(test.begin() + 12, 200, 30);
+		print_info(test, "TEST");
+		print_content(test, "TEST");
+		test.insert(test.end(), 12, 50);
+		print_info(test, "TEST");
+		print_content(test, "TEST");
+		test.insert(test.end() - 1, 0, 60);
+		print_info(test, "TEST");
+		print_content(test, "TEST");
+		test.insert(test.end() - 1, 1, 70);
+		print_info(test, "TEST");
+		print_content(test, "TEST");
+		print_info(test3, "TEST3");
+		print_content(test3, "TEST3");
+		test.insert(test.begin() + 412, test2.begin(), test2.end());
+		test3.insert(test3.begin() + 412, test4.begin(), test4.end());
+		print_info(test, "TEST");
+		print_content(test, "TEST");
+		print_info(test3, "TEST3");
+		print_content(test3, "TEST3");
+		test.insert(test.begin() + 6, test2.begin(), test2.end());
+		print_info(test, "TEST");
+		print_content(test, "TEST");
+		test.insert(test.end(), test2.begin(), test2.end());
+		print_info(test, "TEST");
+		print_content(test, "TEST");
+	}
 	std::cout	<< "//// ERASE ////" << std::endl << std::endl;
-	/*
 	
 	pos = c.erase(c.begin() + 6);
 	std::cout	<< "new element is " << *pos << std::endl;
@@ -712,40 +757,5 @@ int 	main() {
 		}
 		// test reverse operator-
 	}
-	std::cout	<< "//// MER TESTS ////" << std::endl << std::endl;
-	{
-		{
-			std::cout << std::endl << "INSERT TESTS" << std::endl;
-			//redo insert to optimize when all tests are good
-			NAMESPACE::vector<int> test(1, 1);
-			NAMESPACE::vector<int> test2(5, 5);
-
-			test.insert(test.begin(), 200, 12);
-			print_info(test, "TEST");
-			print_content(test, "TEST");
-			test.insert(test.begin() + 12, 200, 30);
-			print_info(test, "TEST");
-			print_content(test, "TEST");
-			test.insert(test.end(), 12, 50);
-			print_info(test, "TEST");
-			print_content(test, "TEST");
-			test.insert(test.end() - 1, 0, 60);
-			print_info(test, "TEST");
-			print_content(test, "TEST");
-			test.insert(test.end() - 1, 1, 70);
-			print_info(test, "TEST");
-			print_content(test, "TEST");
-			test.insert(test.begin() + 412, test2.begin(), test2.end());
-			print_info(test, "TEST");
-			print_content(test, "TEST");
-			test.insert(test.begin() + 6, test2.begin(), test2.end());
-			print_info(test, "TEST");
-			print_content(test, "TEST");
-			test.insert(test.end(), test2.begin(), test2.end());
-			print_info(test, "TEST");
-			print_content(test, "TEST");
-		}
-	}
-	*/
 	return 0;
 }

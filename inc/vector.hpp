@@ -274,81 +274,29 @@ namespace ft {
 				
 				if (n < 1)
 					return ;
-				// capacity is enough to insert
 				else if (new_size <= this->capacity()) {
 					size_type elems_after = this->end() - position;
 					if (elems_after > n) {
-						// copy elements past position from backwards
 						this->_copy_backwards(position, new_size);
-						// fill the freed space with n x elements
 						this->_fill(&(*position), n, x);
 					}
 					else {
-						// fill forwards (here is backwards)
-						this->_copy_backwards(position, new_size);
-						// fill the freed space with n x elements
+						this->_copy_forward(position, elems_after, n, new_size);
 						this->_fill(&(*position), n, x);
 					}
 				}
-				// capacity not enough to insert, reallocate:
 				else {
-					// optimize capacity depending on new size
 					if (new_size > this->capacity()) {
 						if (new_size > this->size() * 2)
 							new_capacity = new_size;
 						else
 							new_capacity = this->size() * 2;
 					}
-					// copy everything in a brand new allocation <3
 					this->_reallocate(new_capacity, new_size, n, position, x);
 				}
-				// adapt end and capacity to new size
 				this->_end 		= this->_begin + new_size;
 				this->_capacity	= this->_begin + new_capacity;
 			}
-
-			// private functions
-
-			void	_copy_backwards(iterator position, size_type new_size) {
-				reverse_iterator	rlast_insert(position - 1);
-				reverse_iterator	rbegin_insert(this->_begin + new_size - 1);
-				size_type			copy_from = this->size() - 1;
-
-				for (reverse_iterator rit = rbegin_insert; rit != rlast_insert; ++rit) {
-					// construct on rbegin with copy_from
-					this->_alloc.construct(&(*rit.base()), *(this->begin() + copy_from));
-					// destroy copy_from
-					this->_alloc.destroy(this->_begin + copy_from);
-					if (this->_begin + copy_from == &(*position))
-							break ;
-					--copy_from;
-				}
-			}
-	
-			void	_reallocate(size_type new_capacity,
-								size_type new_size,
-								size_type n,
-								iterator position,
-								const T& x) {
-				iterator	it			= this->begin();
-				pointer		new_array	= this->_alloc.allocate(new_capacity + 1);
-				
-				for (size_type s = 0; s < new_size; s++) {
-					if (it == position) {
-						this->_fill(new_array + s, n, x);
-						s += n;
-						this->_alloc.construct(new_array + s, *it);
-					}
-					else
-						this->_alloc.construct(new_array + s, *it);
-					it++;
-				}
-				this->clear();
-				this->_alloc.deallocate(this->_begin, this->size());
-				this->_begin 	= new_array;
-			}
-			// end of private functions
-
 
 			// enable_if?
 			template <class InputIt>
@@ -357,40 +305,36 @@ namespace ft {
 							InputIt last,	
 							typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
 							) {
-				pointer		new_array;
-				size_type	new_capacity;
-				size_type 	length		= ft::distance(first, last);
-				size_type	new_size	= this->size() + length;
+				size_type 	length			= ft::distance(first, last);
+				size_type	new_size		= this->size() + length;
+				size_type	new_capacity	= this->capacity();
 				
-				if (this->size() + length > this->capacity()) {
-					//new_capacity = new_size;
-					if (new_size > this->size() * 2)
-						new_capacity = new_size;
-					else
-						new_capacity = this->size() * 2;
-				}
-				else
-					new_capacity = this->capacity();
-
-				new_array 	= this->_alloc.allocate(new_capacity);
-				iterator it	= this->begin();
-				for (size_type s = 0; s < new_size; s++) {
-					if (it == position) {
-						this->_fill(new_array + s, first, last);
-						s += length;
-						this->_alloc.construct(new_array + s, *it);
+				if (length < 1)
+					return ;
+				else if (new_size <= this->capacity()) {
+					size_type elems_after = this->end() - position;
+					if (elems_after > length) {
+						this->_copy_backwards(position, new_size);
+						this->_fill(&(*position), first, last);
 					}
-					else
-						this->_alloc.construct(new_array + s, *it);
-					it++;
+					else {
+						this->_copy_forward(position, elems_after, length, new_size);
+						this->_fill(&(*position), first, last);
+					}
 				}
-				this->clear();
-				this->_alloc.deallocate(this->_begin, this->size());
-				this->_begin 	= new_array;
+				else {
+					if (new_size > this->capacity()) {
+						if (new_size > this->size() * 2)
+							new_capacity = new_size;
+						else
+							new_capacity = this->size() * 2;
+					}
+					this->_reallocate(new_capacity, new_size, position, first, last);
+				}
 				this->_end 		= this->_begin + new_size;
 				this->_capacity	= this->_begin + new_capacity;
 			}
-			
+
 			iterator 	erase(iterator first, iterator last) {
 				//iterator	ret;
 				size_t		dis		= ft::distance(first, last);
@@ -473,7 +417,6 @@ namespace ft {
 			
 			void		_range_check(size_type n) const {
 				std::string	fmt;
-				//fmt = "vector::_M_range_check: __n (which is ";
 				fmt = "vector::_range_check: n (which is ";
 
 				fmt.append(ft::long_to_str(n));
@@ -483,7 +426,85 @@ namespace ft {
 				if (n >= this->size())
 					throw std::out_of_range(fmt);
 			}
-		
+
+			void	_copy_backwards(iterator position, size_type new_size) {
+				reverse_iterator	rlast_insert(position - 1);
+				reverse_iterator	rbegin_insert(this->_begin + new_size - 1);
+				size_type			copy_from = this->size() - 1;
+
+				// condition NOT GOOD THOUGH
+				for (reverse_iterator rit = rbegin_insert; rit != rlast_insert; ++rit) {
+					this->_alloc.construct(&(*rit.base()), *(this->begin() + copy_from));
+					this->_alloc.destroy(this->_begin + copy_from);
+					if (this->_begin + copy_from == &(*position))
+							break ;
+					--copy_from;
+				}
+			}
+			
+			void	_copy_forward(	iterator position,
+									size_type elems_after,
+									size_type n,
+									size_type new_size) {
+				iterator	new_end = this->begin() + new_size - 1;
+				iterator	it		= position;
+					
+				for (size_type i = 0; i < elems_after; ++i) {
+					this->_alloc.construct(&(*it) + n, *it);
+					this->_alloc.destroy(&(*it));
+					++it;
+				}
+			}
+
+
+			void	_reallocate(size_type new_capacity,
+								size_type new_size,
+								size_type n,
+								iterator position,
+								const T& x) {
+				iterator	it			= this->begin();
+				pointer		new_array	= this->_alloc.allocate(new_capacity + 1);
+				
+				for (size_type s = 0; s < new_size; s++) {
+					if (it == position) {
+						this->_fill(new_array + s, n, x);
+						s += n;
+						this->_alloc.construct(new_array + s, *it);
+					}
+					else
+						this->_alloc.construct(new_array + s, *it);
+					it++;
+				}
+				this->clear();
+				this->_alloc.deallocate(this->_begin, this->size());
+				this->_begin 	= new_array;
+			}
+			
+			template<class InputIt>	
+			void	_reallocate(size_type new_capacity,
+								size_type new_size,
+								iterator position,
+								InputIt first,
+								InputIt last) {
+				pointer new_array	= this->_alloc.allocate(new_capacity);
+				iterator	it		= this->begin();
+				size_type 	length	= ft::distance(first, last);
+
+				for (size_type s = 0; s < new_size; s++) {
+					if (it == position) {
+						this->_fill(new_array + s, first, last);
+						s += length;
+						this->_alloc.construct(new_array + s, *it);
+					}
+					else
+						this->_alloc.construct(new_array + s, *it);
+					it++;
+				}
+				this->clear();
+				this->_alloc.deallocate(this->_begin, this->size());
+				this->_begin 	= new_array;
+			}
+			
 	};	/* class vector */
 
 	template <class T, class Alloc>
