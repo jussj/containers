@@ -275,7 +275,7 @@ namespace ft {
 				if (n < 1)
 					return ;
 				else if (new_size <= this->capacity()) {
-					size_type elems_after = this->end() - position;
+					size_type	elems_after	= this->end() - position;
 					if (elems_after > n) {
 						this->_copy_backwards(position, new_size);
 						this->_fill(&(*position), n, x);
@@ -456,7 +456,6 @@ namespace ft {
 				}
 			}
 
-
 			void	_reallocate(size_type new_capacity,
 								size_type new_size,
 								size_type n,
@@ -498,7 +497,7 @@ namespace ft {
 					}
 					else
 						this->_alloc.construct(new_array + s, *it);
-					it++;
+					++it;
 				}
 				this->clear();
 				this->_alloc.deallocate(this->_begin, this->size());
