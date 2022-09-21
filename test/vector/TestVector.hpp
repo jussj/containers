@@ -5,12 +5,10 @@
 
 template<class Vec>
 void	print_info(const Vec& v, std::string name) {
-	//std::cout	<< std::endl
-	std::cout
-			<< "// VECTOR " << name << " INFO" << std::endl
-			<< "   size:       " << v.size() << std::endl
-			<< "   capacity:   " << v.capacity() << std::endl
-			<< "   max_size:   " << v.max_size() << std::endl;
+	std::cout	<< "// VECTOR " << name << " INFO" << std::endl
+				<< "   size:       " << v.size() << std::endl
+				<< "   capacity:   " << v.capacity() << std::endl
+				<< "   max_size:   " << v.max_size() << std::endl;
 			if (!v.empty()) {
 				std::cout	<< "   front/back: [ " << v.front()
 						<< " ... " << v.back() << " ]" << std::endl;
@@ -20,8 +18,7 @@ void	print_info(const Vec& v, std::string name) {
 
 template<class Vec>
 void	print_content(const Vec& v, std::string name) {
-	std::cout	<< std::endl
-			<< "// VECTOR " << name << " ARRAY" << std::endl;
+	std::cout	<< "// VECTOR " << name << " ARRAY" << std::endl;
 	if (v.empty()) {
 		std::cout << "   [ IS EMPTY ]" << std::endl;
 		return ;

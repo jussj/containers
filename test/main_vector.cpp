@@ -11,7 +11,8 @@
 #include <typeinfo>		// typeid
 
 int 	main() {
-	std::cout	<< "//// CONSTRUCTOR ////" << std::endl;
+	std::cout	<< "//// CONSTRUCTOR ////"	<< std::endl
+											<< std::endl;
 	
 	NAMESPACE::vector<int>						a;
 	NAMESPACE::vector<int>						b(50, 5);	
@@ -34,7 +35,8 @@ int 	main() {
 		std::cout << "D is NOT empty" << std::endl;
 
 	{
-		std::cout	<< "//// COPY CTOR ////" << std::endl;
+		std::cout	<< std::endl
+					<< "//// COPY CTOR ////"	<< std::endl << std::endl;
 			
 		NAMESPACE::vector<std::string> marc(5, "bjr");
 		NAMESPACE::vector<std::string> jean(marc);
@@ -85,7 +87,8 @@ int 	main() {
 			print_info(test, "TEST");
 			print_info(test_copy, "TEST_COPY");
 		}
-		std::cout	<< "//// RELATIONAL OPERATORS ////" << std::endl << std::endl;
+		std::cout	<< std::endl
+					<< "//// RELATIONAL OPERATORS ////" << std::endl << std::endl;
 		
 		NAMESPACE::vector<int> mike_2(mike);
 		std::cout << "mike and bob are equal ? " << (mike == bob) << '\n';
@@ -113,11 +116,10 @@ int 	main() {
 			std::cout << "foo is less than or equal to bar\n";
 		if (foo >= bar)
 			std::cout << "foo is greater than or equal to bar\n";
-
-		std::cout << std::endl;
 	}
 	{
-		std::cout	<< "//// OPERATOR= ASSIGNATION ////" << std::endl << std::endl;
+		std::cout	<< std::endl
+					<< "//// OPERATOR= ASSIGNATION ////" << std::endl << std::endl;
 		
 		NAMESPACE::vector<int> foo (3,0);
 		NAMESPACE::vector<int> bar (5,0);
@@ -131,30 +133,31 @@ int 	main() {
 		bjr = orvoir;
 		orvoir = NAMESPACE::vector<std::string>();
 		
-		std::cout << "size of foo: " << int(foo.size()) << '\n';
-		std::cout << "size of bar: " << int(bar.size()) << '\n';
+		std::cout << "size of foo: " << int(foo.size()) << std::endl;
+		std::cout << "size of bar: " << int(bar.size()) << std::endl;
 		
-		std::cout << "size of bjr: " << int(bjr.size()) << '\n';
-		std::cout << "size of orvoir: " << int(orvoir.size()) << '\n';
-
-		std::cout << std::endl;
+		std::cout << "size of bjr: " << int(bjr.size()) << std::endl;
+		std::cout << "size of orvoir: " << int(orvoir.size()) << std::endl;
 	}
 	{
-		std::cout << std::endl << "//// SIZE TESTS ////" << std::endl;
+		std::cout	<< std::endl
+					<< std::endl << "//// SIZE TESTS ////" << std::endl;
+		
 		NAMESPACE::vector<int> myints;
-		std::cout << "0. size: " << myints.size() << '\n';
+		std::cout << "0. size: " << myints.size() << std::endl;
 
 		for (int i=0; i<10; i++)
 			myints.push_back(i);
-		std::cout << "1. size: " << myints.size() << '\n';
+		std::cout << "1. size: " << myints.size() << std::endl;
 
 		myints.insert (myints.end(),10,100);
-		std::cout << "2. size: " << myints.size() << '\n';
+		std::cout << "2. size: " << myints.size() << std::endl;
 
 		myints.pop_back();
-		std::cout << "3. size: " << myints.size() << '\n';
+		std::cout << "3. size: " << myints.size() << std::endl;
 	}
-	std::cout	<< "//// RESERVE W PUSH & POP ////" << std::endl << std::endl;
+	std::cout	<< std::endl
+				<< "//// RESERVE W PUSH & POP ////" << std::endl << std::endl;
 	
 	std::cout 	<< "a.reserve(0)..." << std::endl;
 	a.reserve(0);
@@ -185,7 +188,8 @@ int 	main() {
 	std::cout	<< "d.pop_back()..." << std::endl;
 	d.pop_back();
 	
-	std::cout	<< "//// RESERVE ////" << std::endl;
+	std::cout	<< std::endl
+				<< "//// RESERVE ////" << std::endl << std::endl;
 
 	std::cout 	<< "c.reserve(4)..." << std::endl;
 	c.reserve(4);
@@ -208,7 +212,8 @@ int 	main() {
 	print_info(c, "C");
 	print_content(c, "C");
 
-	std::cout	<< "//// RESIZE ////" << std::endl;
+	std::cout	<< std::endl
+				<< "//// RESIZE ////" << std::endl << std::endl;
 	
 	std::cout 	<< "c.resize(10, hi).." << std::endl;
 	c.resize(10, "hi");
@@ -253,7 +258,9 @@ int 	main() {
 		test.resize(72);
 		print_info(test, "TEST");
 	}
-	std::cout	<< "//// AT ////" << std::endl;
+	std::cout	<< std::endl
+				<< "//// AT ////"	<< std::endl
+									<< std::endl;
 
 	std::cout	<< "in range: element at(0) is "
 			<< c.at(0) << std::endl;
@@ -272,7 +279,8 @@ int 	main() {
 		std::cerr << "error thrown: " << e.what() << std::endl;
 	}
 
-	std::cout	<< "//// ASSIGN(NB, T) ////" << std::endl;
+	std::cout	<< std::endl
+				<< "//// ASSIGN(NB, T) ////" << std::endl << std::endl;
 	
 	std::cout	<< "c.assign(6, hi)..." << std::endl;
 
@@ -292,13 +300,15 @@ int 	main() {
 	print_info(c, "C");
 	print_content(c, "C");
 
-	std::cout	<< "c.assign(13, ho)..." << std::endl;
+	std::cout	<< "c.assign(13, ho)..."	<< std::endl
+											<< std::endl;
 
 	c.assign(13, "ho");
 	print_info(c, "C");
 	print_content(c, "C");
 
-	std::cout	<< "//// ASSIGN(IT, IT) ////" << std::endl;
+	std::cout	<< std::endl
+				<< "//// ASSIGN(IT, IT) ////" << std::endl << std::endl;
 	
 	NAMESPACE::vector<std::string>		e(20, "HE");
 	NAMESPACE::vector<std::string>		ee;
@@ -365,16 +375,20 @@ int 	main() {
 	print_content(ee, "EE");
 	print_info(ee, "EE");
 	
-	//std::cout 	<< "//// ITERATOR TRAITS //// " << std::endl 
-	//typedef std::iterator_traits<int*> traits;
+	std::cout 	<< std::endl
+				<< "//// ITERATOR TRAITS //// " << std::endl; 
+	
+	typedef std::iterator_traits<int*> traits;
 	  
-	//if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
-		    //std::cout << "int* is a random-access iterator";
+	if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
+			std::cout << "int* is a random-access iterator";
 
 	NAMESPACE::vector<std::string>::iterator vbegin	= c.begin();
 	NAMESPACE::vector<std::string>::iterator vend	= c.end();
-	std::cout 	<< "//// ITERATORS //// " << std::endl 
-			<< "c.begin is " << *vbegin << std::endl;
+	std::cout 	<< std::endl
+				<< "//// ITERATORS //// " << std::endl 
+				
+				<< "c.begin is " << *vbegin << std::endl;
 	
 	// CAUSES SEGF
 	//std::cout << "c.end is " << *vend << std::endl;
@@ -418,7 +432,8 @@ int 	main() {
 		std::cout << "(const_iterator - iterator): " << (ite - it) << std::endl;
 	}
 	{
-		std::cout	<< "//// ACCESS OPERATOR[] ////" << std::endl;
+		std::cout	<< std::endl
+					<< "//// ACCESS OPERATOR[] ////" << std::endl << std::endl;
 		 
 		NAMESPACE::vector<int> f;
 
@@ -433,7 +448,8 @@ int 	main() {
 		print_info(f, "F");
 	}
 
-	std::cout	<< "//// SWAP ////" << std::endl;
+	std::cout	<< std::endl
+				<< "//// SWAP ////" << std::endl << std::endl;
 
 	e.swap(c);
 	print_content(c, "C");
@@ -457,7 +473,8 @@ int 	main() {
 	//a.clear();
 	//print_info(a, "A");
 
-	std::cout	<< "//// INSERT ////" << std::endl << std::endl;
+	std::cout	<< std::endl
+				<< "//// INSERT ////" << std::endl << std::endl;
 
 	NAMESPACE::vector<std::string>::iterator				pos;
 
@@ -474,7 +491,8 @@ int 	main() {
 	print_content(c, "C");
 	print_info(c, "C");
 	
-	std::cout	<< "//// INSERT MULTIPLE VALUES ////" << std::endl;
+	std::cout	<< std::endl
+				<< "//// INSERT MULTIPLE VALUES ////" << std::endl << std::endl;
 
 	NAMESPACE::vector<int>	hehe;
 
@@ -566,7 +584,8 @@ int 	main() {
 		print_info(test, "TEST");
 		print_content(test, "TEST");
 	}
-	std::cout	<< "//// ERASE ////" << std::endl << std::endl;
+	std::cout	<< std::endl
+				<< "//// ERASE ////" << std::endl << std::endl;
 	
 	pos = c.erase(c.begin() + 6);
 	std::cout	<< "new element is " << *pos << std::endl;
@@ -620,6 +639,20 @@ int 	main() {
 		std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
 		print_info(f, "F");
 		print_content(f, "F");
+		
+		for (int i = 11; i <= 20; i++)
+			f.push_back(i);
+
+		// CAUSES SEGFAULT		
+		//ret = f.erase (f.end());
+		//std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
+		//print_info(f, "F");
+		//print_content(f, "F");
+		
+		ret = f.erase (f.end()-3,f.end());
+		std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
+		print_info(f, "F");
+		print_content(f, "F");
 	}
 
 	// test with non broken complex classes
@@ -630,7 +663,8 @@ int 	main() {
 	//test_capacity(c, "C");
 	//test_capacity(d, "D");
 	{	
-		std::cout	<< "//// REVERSE_ITERATOR FUNCTIONS ////" << std::endl;
+		std::cout	<< std::endl
+					<< "//// REVERSE_ITERATOR FUNCTIONS ////" << std::endl;
 		
 		NAMESPACE::vector<int> g;  // 5 default-constructed ints
 
@@ -735,25 +769,25 @@ int 	main() {
 			it = vct.rbegin();
 			ite = vct.rbegin();
 
-			std::cout << *(++ite) << std::endl;
-			std::cout << *(ite++) << std::endl;
-			std::cout << *ite++ << std::endl;
-			std::cout << *++ite << std::endl;
+			std::cout << *(++ite)	<< std::endl;
+			std::cout << *(ite++)	<< std::endl;
+			std::cout << *ite++		<< std::endl;
+			std::cout << *++ite		<< std::endl;
 
-			std::cout << *(++it) << std::endl;
-			std::cout << *(it++) << std::endl;
-			std::cout << *it++ << std::endl;
-			std::cout << *++it << std::endl;
+			std::cout << *(++it)	<< std::endl;
+			std::cout << *(it++)	<< std::endl;
+			std::cout << *it++		<< std::endl;
+			std::cout << *++it		<< std::endl;
 
-			std::cout << *(--ite) << std::endl;
-			std::cout << *(ite--) << std::endl;
-			std::cout << *--ite << std::endl;
-			std::cout << *ite-- << std::endl;
+			std::cout << *(--ite)	<< std::endl;
+			std::cout << *(ite--)	<< std::endl;
+			std::cout << *--ite		<< std::endl;
+			std::cout << *ite--		<< std::endl;
 
-			std::cout << *(--it) << std::endl;
-			std::cout << *(it--) << std::endl;
-			std::cout << *it-- << std::endl;
-			std::cout << *--it << std::endl;
+			std::cout << *(--it)	<< std::endl;
+			std::cout << *(it--)	<< std::endl;
+			std::cout << *it--		<< std::endl;
+			std::cout << *--it		<< std::endl;
 		}
 		// test reverse operator-
 	}

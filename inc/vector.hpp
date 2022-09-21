@@ -50,7 +50,6 @@ namespace ft {
 			explicit vector(size_type n, const T& value = T(),
 					const Alloc& Allocator = Alloc()) 
 				: _alloc(Allocator) {
-				//why not using reserve
 				this->_begin 	= this->_alloc.allocate(n + 1);
 				pointer p 		= this->_begin;
 				
@@ -60,7 +59,6 @@ namespace ft {
 				this->_capacity = this->_end;
 			}
 
-			// put it first in overloads?
 			template<class InputIt>
 			vector(	InputIt first,
 					InputIt last,
@@ -75,6 +73,8 @@ namespace ft {
 			}
 			
 			vector(const vector<T,Alloc>& src) {
+				if (this == &src)
+					return ;
 				this->_begin	= this->_alloc.allocate(src.size());
 				pointer p		= this->_begin;
 				for (size_type s = 0; s < src.size(); s++) {
@@ -82,7 +82,6 @@ namespace ft {
 				}
 				this->_end		= this->_begin + src.size();
 				this->_capacity	= this->_begin + src.size();
-				//use operator=?
 			}
 			
 			~vector() {
@@ -110,7 +109,6 @@ namespace ft {
 			void	assign(size_type n, const value_type& value) {
 				if (n > this->capacity())
 					reserve(n);
-				// NEW FUNC: construct param size + value + new end
 				for (size_type s = 0; s < n; s++)
 					this->_alloc.construct(this->_begin + s, value);	
 				this->_end	= this->_begin + n;
@@ -172,7 +170,6 @@ namespace ft {
 						else
 							this->reserve(n);
 					}
-					// NEW FUNC: construct param size + value + new end
 					for (size_type s = this->size(); s < n; s++)
 						this->_alloc.construct(_begin + s, value);	
 					this->_end = this->_begin + n;
@@ -199,7 +196,6 @@ namespace ft {
 					throw std::length_error("vector::reserve");
 
 				else if (n > this->capacity()) {
-					//pointer tmp				= this->_alloc.allocate(n + 1);
 					pointer		tmp			= this->_alloc.allocate(n);
 					size_type	array_size	= this->size();
 					
@@ -298,7 +294,6 @@ namespace ft {
 				this->_capacity	= this->_begin + new_capacity;
 			}
 
-			// enable_if?
 			template <class InputIt>
 			void 	insert(	iterator position, 
 							InputIt first, 
