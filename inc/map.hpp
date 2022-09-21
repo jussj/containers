@@ -2,6 +2,7 @@
 # define MAP_HPP
 
 # include "iterator/reverse_iterator.hpp"
+# include <map>
 
 namespace ft {
 
@@ -28,9 +29,10 @@ namespace ft {
 
 			typedef typename Alloc::pointer			pointer;
 			typedef typename Alloc::const_pointer	const_pointer;
-			
-			typedef /* ... */								iterator;
-			typedef /* ... */								const_iterator;
+		
+			// STD ITERATORS	
+			typedef /* ... */ std::map::iterator			iterator;
+			typedef /* ... */ std::map::const_iterator		const_iterator;
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
