@@ -90,9 +90,10 @@ namespace ft {
 			}
 			
 			template <class InputIt>
-			void 	assign(	InputIt first,
-							InputIt last,
-							typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
+			void 	assign(
+					InputIt first,
+					InputIt last,
+					typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
 							) {
 				size_type dis	= ft::distance(first, last);
 			
@@ -294,10 +295,11 @@ namespace ft {
 			}
 
 			template <class InputIt>
-			void 	insert(	iterator position, 
-							InputIt first, 
-							InputIt last,	
-							typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
+			void 	insert(
+					iterator position, 
+					InputIt first, 
+					InputIt last,	
+					typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
 							) {
 				size_type 	length			= ft::distance(first, last);
 				size_type	new_size		= this->size() + length;
