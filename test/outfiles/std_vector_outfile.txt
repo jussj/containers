@@ -380,7 +380,7 @@ assign to empty vec
 
 
 //// ITERATOR TRAITS //// 
-int* is a random-access iterator
+
 //// ITERATORS //// 
 c.begin is ho
 iterating through vector... 
@@ -698,7 +698,7 @@ new element is hi
 // VECTOR F ARRAY
    [ 4 5 7 8 9 10 ]
 
-   ERASE RETURNS 18
+   ERASE RETURNS 20
 // VECTOR F INFO
    size:       13
    capacity:   16
@@ -750,7 +750,7 @@ TESTING REVERSE OPERATORS
 
 CONST REVERSE ITERATORS TESTS
 (const_reverse_iterator - reverse_iterator): 0
-(const_reverse_iterator - reverse_iterator): -20441005
+(const_reverse_iterator - reverse_iterator): -2445
 // VECTOR VCT INFO
    size:       5
    capacity:   5

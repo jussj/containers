@@ -1,9 +1,8 @@
 #ifndef UTILS_HPP
 # define UTILS_HPP
 
-# include "type_traits/enable_if.hpp"
-# include "type_traits/is_integral.hpp"
-# include "vectorIterator.hpp"
+# include "type_traits.hpp"
+# include "vector_iterator.hpp"
 # include "vector.hpp"
 
 namespace ft {

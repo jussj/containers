@@ -33,12 +33,6 @@ all:				$(NAME)
 $(NAME):			$(DEPS) $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(NAME)
 
-std_vector:			$(DEPS) $(OBJS)
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -DNAMESPACE=std $(addprefix $(OBJS_DIR)/,$(OBJS)) -o "std_vector"
-
-ft_vector:				$(DEPS) $(OBJS)
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) -DNAMESPACE=ft $(addprefix $(OBJS_DIR)/,$(OBJS)) -o "ft_vector"
-
 %.d:				%.cpp
 	$(CXX) $(INC) -MM $< -MF $(DEPS_DIR)/$@ 
 
@@ -61,7 +55,7 @@ clean:
 	$(RM) $(OBJS_DIR) $(DEPS_DIR)
 
 fclean:				clean
-	$(RM) $(NAME) ft_vector std_vector
+	$(RM) $(NAME)
 
 re:				fclean all
 

@@ -1,18 +1,17 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-# include <cstddef>		// ptrdiff_t
-# include <memory>		// allocator
-# include <stdexcept>	// exceptions
-# include <sstream>		// stream
+# include <cstddef>				// ptrdiff_t
+# include <memory>				// allocator
+# include <stdexcept>			// exceptions
+# include <sstream>				// stream
 # include <iostream>
-# include <algorithm>	// equal
-# include "vectorIterator.hpp"
+# include <algorithm>			// equal
+# include "vector_iterator.hpp"
 # include "utils.hpp"
-# include "type_traits/enable_if.hpp"
-# include "type_traits/is_integral.hpp"
-# include "iterator/reverse_iterator.hpp"
-# include "algorithm/equal.hpp"
+# include "type_traits.hpp"
+# include "iterator.hpp"
+# include "algorithm.hpp"
 
 namespace ft {
 	
@@ -33,8 +32,8 @@ namespace ft {
 			typedef typename Alloc::pointer			pointer;
 			typedef typename Alloc::const_pointer	const_pointer;
 			
-			typedef	VectorIterator<T>						iterator;
-			typedef	VectorIterator<const T>					const_iterator;
+			typedef	vectorIterator<T>						iterator;
+			typedef	vectorIterator<const T>					const_iterator;
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
@@ -428,8 +427,11 @@ namespace ft {
 				size_type			copy_from = this->size() - 1;
 
 				// condition NOT GOOD THOUGH
-				for (reverse_iterator rit = rbegin_insert; rit != rlast_insert; ++rit) {
-					this->_alloc.construct(&(*rit.base()), *(this->begin() + copy_from));
+				for	(	reverse_iterator rit = rbegin_insert;
+						rit != rlast_insert; 
+						++rit	) {
+					this->_alloc.construct(	&(*rit.base()),
+											*(this->begin() + copy_from));
 					this->_alloc.destroy(this->_begin + copy_from);
 					if (this->_begin + copy_from == &(*position))
 							break ;
@@ -504,12 +506,13 @@ namespace ft {
 	template <class T, class Alloc>
 	bool operator==(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
 		return (x.size() == y.size()
-	      && !(ft::lexicographical_compare(x.begin(), x.end(), y.begin(), y.end())));
+	      && !(ft::lexicographical_compare(	x.begin(), x.end(),
+											y.begin(), y.end())));
 	}
 	template <class T, class Alloc>
 	bool operator<(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
 		return ft::lexicographical_compare(	x.begin(), x.end(),
-											y.begin(), y.end() );	
+											y.begin(), y.end());	
 	}
 	template <class T, class Alloc>
 	bool operator!=(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {

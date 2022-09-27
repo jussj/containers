@@ -3,13 +3,13 @@
 
 # include <cstddef>		// ptrdiff_t
 # include <memory>		// allocator
-# include "iterator/iterator_traits.hpp"
 # include <iterator>
+# include "iterator.hpp"
 
 namespace ft {
 
 	template<class T>
-	class VectorIterator {
+	class vectorIterator {
 	
 		public:
 			
@@ -23,11 +23,11 @@ namespace ft {
 
 		// CTOR, CPY, DTOR
 
-			VectorIterator() 			: _ptr(NULL) 	{}
-			VectorIterator(pointer it) 	: _ptr(it) 		{}
+			vectorIterator() 			: _ptr(NULL) 	{}
+			vectorIterator(pointer it) 	: _ptr(it) 		{}
 			template<class U>
-			VectorIterator(VectorIterator<U> it)		: _ptr(it.current()) {}
-			~VectorIterator() {}
+			vectorIterator(vectorIterator<U> it)		: _ptr(it.current()) {}
+			~vectorIterator() {}
 
 		// OPERATORS
 
@@ -37,12 +37,12 @@ namespace ft {
 			reference	operator*() const {
 				return *(current());
 			}
-			VectorIterator&	operator++() {
+			vectorIterator&	operator++() {
 				++_ptr;
 				return *this;
 			}
-			VectorIterator	operator++(int) {
-				VectorIterator tmp = *this;
+			vectorIterator	operator++(int) {
+				vectorIterator tmp = *this;
 				
 				++_ptr;
 				return tmp;
@@ -52,33 +52,33 @@ namespace ft {
 			}
 
 			// BIDIRECTIONAL
-			VectorIterator&	operator--(void) {
+			vectorIterator&	operator--(void) {
 				--_ptr;
 				return *this;
 			}
-			VectorIterator	operator--(int) {
-				VectorIterator	tmp = *this;
+			vectorIterator	operator--(int) {
+				vectorIterator	tmp = *this;
 
 				--_ptr;
 				return tmp;
 			}
 
 			// RANDOM ACCESS
-			VectorIterator	operator+(difference_type n) const {
+			vectorIterator	operator+(difference_type n) const {
 				return current() + n;
 			}
-			VectorIterator	operator-(difference_type n) const {
+			vectorIterator	operator-(difference_type n) const {
 				return current() - n;
 			}
 			template<class U>
-			difference_type operator-(const VectorIterator<U>& x) {
+			difference_type operator-(const vectorIterator<U>& x) {
 				return this->current() - x.current();
 			}
-			VectorIterator&	operator+=(int n) {
+			vectorIterator&	operator+=(int n) {
 				this->_ptr += n;
 				return *this;
 			}
-			VectorIterator&	operator-=(int n) {
+			vectorIterator&	operator-=(int n) {
 				this->_ptr -= n;
 				return *this;
 			}
@@ -89,17 +89,29 @@ namespace ft {
 		// NON-MEMBER OPERATORS FRIENDSHIP DECLARATIONS
 
 			template<class L, class R>
-			friend bool	operator==(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
+			friend bool
+			operator==(	const vectorIterator<L> & lhs,
+						const vectorIterator<R> & rhs);
 			template<class L, class R>
-			friend bool	operator!=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
+			friend bool
+			operator!=(	const vectorIterator<L> & lhs,
+						const vectorIterator<R> & rhs);
 			template<class L, class R>
-			friend bool	operator<(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
+			friend bool
+			operator<(	const vectorIterator<L> & lhs,
+						const vectorIterator<R> & rhs);
 			template<class L, class R>
-			friend bool	operator>(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
+			friend bool
+			operator>(	const vectorIterator<L> & lhs,
+						const vectorIterator<R> & rhs);
 			template<class L, class R>
-			friend bool	operator>=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
+			friend bool
+			operator>=(	const vectorIterator<L> & lhs,
+						const vectorIterator<R> & rhs);
 			template<class L, class R>
-			friend bool	operator<=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs);
+			friend bool
+			operator<=(	const vectorIterator<L> & lhs,
+						const vectorIterator<R> & rhs);
 	
 		private:
 
@@ -120,48 +132,54 @@ namespace ft {
 	// NON-MEMBER OPERATORS
 
 	template<class T>
-	VectorIterator<T>	operator+(	typename VectorIterator<T>::difference_type n,
-									VectorIterator<T> it) {
+	vectorIterator<T>	operator+(	typename vectorIterator<T>::difference_type n,
+									vectorIterator<T> it) {
 		return it.operator+(n);
 	}
 	template<class T>
-	VectorIterator<T>	operator-(	typename VectorIterator<T>::difference_type n,
-									VectorIterator<T> it) {
+	vectorIterator<T>	operator-(	typename vectorIterator<T>::difference_type n,
+									vectorIterator<T> it) {
 		return it.operator-(n);
 	}
 	template<class T>
-	typename VectorIterator<T>::difference_type
-	operator-(const VectorIterator<T>& x, const VectorIterator<T>& y) {
+	typename vectorIterator<T>::difference_type
+	operator-(const vectorIterator<T>& x, const vectorIterator<T>& y) {
 		return x.current() - y.current();
 	}
 
 	template<class L, class R>
-	bool	operator==(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
+	bool	operator==(	const vectorIterator<L> & lhs, 
+						const vectorIterator<R> & rhs) {
 		return lhs._ptr == rhs._ptr;
 	}
 
 	template<class L, class R>
-	bool	operator!=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
+	bool	operator!=(	const vectorIterator<L> & lhs,
+						const vectorIterator<R> & rhs) {
 		return lhs._ptr != rhs._ptr;
 	}
 
 	template<class L, class R>
-	bool	operator<(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
+	bool	operator<(	const vectorIterator<L> & lhs,
+						const vectorIterator<R> & rhs) {
 		return lhs._ptr < rhs._ptr;
 	}
 
 	template<class L, class R>
-	bool	operator>(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
+	bool	operator>(	const vectorIterator<L> & lhs,
+						const vectorIterator<R> & rhs) {
 		return lhs._ptr > rhs._ptr;
 	}
 
 	template<class L, class R>
-	bool	operator>=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
+	bool	operator>=(	const vectorIterator<L> & lhs,
+						const vectorIterator<R> & rhs) {
 		return lhs._ptr >= rhs._ptr;
 	}
 
 	template<class L, class R>
-	bool	operator<=(const VectorIterator<L> & lhs, const VectorIterator<R> & rhs) {
+	bool	operator<=(	const vectorIterator<L> & lhs,
+						const vectorIterator<R> & rhs) {
 		return lhs._ptr <= rhs._ptr;
 	}
 		
