@@ -1,5 +1,5 @@
 #ifndef NAMESPACE
-# define NAMESPACE ft
+# define NAMESPACE std
 #endif
 
 #include <vector>
@@ -790,6 +790,14 @@ int 	main() {
 			std::cout << *--it		<< std::endl;
 		}
 		// test reverse operator-
+		{
+			std::cout << "TESTING INSERT FOURTH PARAM (SHOULD NOT COMPILE)" << std::endl;
+			
+			NAMESPACE::vector<int> hector;
+			int	array[] = {-5, 4, 6, 3, 2};
+			
+			hector.insert(hector.begin(), array, array + 5, NULL);
+		}
 	}
 	return 0;
 }

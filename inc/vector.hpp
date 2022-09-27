@@ -63,6 +63,7 @@ namespace ft {
 					InputIt last,
 					const Alloc& Allocator = Alloc(),
 					typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
+					// FIND ANOTHER SOLUTION THAN A FOURTH PARAM GODAMMIT
 					) : _alloc(Allocator) {
 				this->_begin	= this->_alloc.allocate(0);
 				this->_end		= this->_begin;
@@ -94,6 +95,7 @@ namespace ft {
 					InputIt first,
 					InputIt last,
 					typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
+					// FIND ANOTHER SOLUTION THAN A FOURTH PARAM GODAMMIT
 							) {
 				size_type dis	= ft::distance(first, last);
 			
@@ -300,6 +302,7 @@ namespace ft {
 					InputIt first, 
 					InputIt last,	
 					typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
+					// FIND ANOTHER SOLUTION THAN A FOURTH PARAM GODAMMIT
 							) {
 				size_type 	length			= ft::distance(first, last);
 				size_type	new_size		= this->size() + length;
