@@ -2,6 +2,7 @@
 # define RB_TREE_HPP
 
 # include <memory>				// allocator
+# include <cstddef>				// ptrdiff_t
 # include "type_traits.hpp"
 # include "iterator.hpp"
 # include "algorithm.hpp"
@@ -12,11 +13,10 @@
 # define D_BLACK	2
 
 template<class T>
-struct rb_tree_node {
+struct rb_tree_node_base {
 
-	typedef	rb_tree_node*		ptr;
-	typedef const rb_tree_node*	const_ptr;
-	typedef T					value_type;
+	typedef	rb_tree_node_base*			ptr;
+	typedef const rb_tree_node_base*	const_ptr;
 
 	// ATTRIBUTES
 
@@ -51,19 +51,35 @@ struct rb_tree_node {
 			x = x->right;
 		return x;	
 	}		
-};	/* rb_tree_node struct */
+};	/* rb_tree_node_base struct	*/
+	/* has node base infos, gives max and min */
 
 struct rb_tree_header {
 
 	// ATTRIBUTES
 
-	rb_tree_node	header;
-	size_t			node_count;
+	rb_tree_node_base	header;
+	size_t				node_count;
 
-	rb_tree_header();				// color + reset init
-	move_data(rb_tree_header& src); // cpy from src and reset src
-									// also, _M_header._M_parent->_M_parent = &_M_header;
-	reset() {						// reset all but color
+	// MEMBER FUNCTIONS
+
+	void
+	rb_tree_header() {
+		header.color = RED;
+		reset();
+	}
+	void
+	move_data(rb_tree_header& src) {	// cpy from src and reset src
+		header.color = src.header.color;
+		header.parent = src.header.parent;
+		header.left = src.header.left;
+		header.right = src.header.right;
+		header.parent.parent = &header;
+		
+		src.reset();	
+	}
+	void
+	reset() {							// reset all but color
 		header.parent	= 0;
 		header.left		= &header;
 		header.right	= &header;
@@ -71,8 +87,19 @@ struct rb_tree_header {
 	}
 
 }	/* rb_tree_header struct */
+	/* keeps track of the tree size, allows to reset and move data*/
 
-// helper to init elements to compare with COMPARE?
+// helper to init elements to compare with COMPARE? in a struct
+
+template<class V>
+struct rb_tree_node : public rb_tree_node_base {
+
+	typedef rb_tree_node<V>*	value;
+
+	// returns pointer to value in a const and normal way
+
+}	/* rb_tree_node */ 
+	/* inherites from base, bears vddalue and gives ptr to that value */
 
 template<class Key, class Val, class ValueKey, 
 		 class Compare, class Alloc = std::allocator<T> >
@@ -80,7 +107,61 @@ class rb_tree {
 	
 	// TYPES
 	
-	typedef
+	// typedef node allocator
+	// typedef alloc traits
+
+	public:
+
+	// TYPES
+
+		typedef Key 				key_type;
+		typedef Val 				value_type;
+		typedef value_type* 		pointer;
+		typedef const value_type* 	const_pointer;
+		typedef value_type& 		reference;
+		typedef const value_type& 	const_reference;
+		typedef size_t 				size_type;
+		typedef ptrdiff_t 			difference_type;
+		typedef Alloc 				allocator_type;	
+
+	// MANIPULATE NODES
+	
+	//// get_node_allocator() const & non-const
+	//// get_allocator()
+	//// get_node() allocates
+	//// put_node() deallocates
+	//// constructs_node() >> will throw exception and erase node if doesn't work
+	// create_node() >> get and construct and return node
+	// destroy_node() >> destroy and put
+	// clone_node() >> generate a node from a src, copy and return it
+
+	protected:
+
+	// TYPES
+
+		typedef rb_tree_node_base*			base_ptr;
+		typedef const rb_tree_node_base*	const_base_ptr;
+		typedef	rb_tree_node<Val>*			node_ptr;
+		typedef	const rb_tree_node<Val>*	const_node_ptr;
+
+	// ACCESS
+	
+	//	struct tree_impl >> inherites allocator, key_compare, header
+
+	private:
+
+	// ALLOCATION
+
+	// struct reuse or realloc
+	// reuse or alloc >> recycle a pool of nodes, using alloc only once pool empty
+	//		operator() to destroy/construct a node
+	//		extract() from the pool, return a node
+	//		attributes: root, nodes and tree
+	
+	// struct alloc without reusing
+	//		operator()
+	//		attribute tree	
+	
 };
 
 #endif

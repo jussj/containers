@@ -34,29 +34,35 @@ namespace ft {
 			//operator=
 
 			// FORWARD
-			reference	operator*() const {
+			reference
+			operator*() const {
 				return *(current());
 			}
-			vectorIterator&	operator++() {
+			vectorIterator&
+			operator++() {
 				++_ptr;
 				return *this;
 			}
-			vectorIterator	operator++(int) {
+			vectorIterator
+			operator++(int) {
 				vectorIterator tmp = *this;
 				
 				++_ptr;
 				return tmp;
 			}
-			pointer		operator->() const {
+			pointer
+			operator->() const {
 				return current();
 			}
 
 			// BIDIRECTIONAL
-			vectorIterator&	operator--(void) {
+			vectorIterator&
+			operator--(void) {
 				--_ptr;
 				return *this;
 			}
-			vectorIterator	operator--(int) {
+			vectorIterator
+			operator--(int) {
 				vectorIterator	tmp = *this;
 
 				--_ptr;
@@ -64,25 +70,31 @@ namespace ft {
 			}
 
 			// RANDOM ACCESS
-			vectorIterator	operator+(difference_type n) const {
+			vectorIterator
+			operator+(difference_type n) const {
 				return current() + n;
 			}
-			vectorIterator	operator-(difference_type n) const {
+			vectorIterator
+			operator-(difference_type n) const {
 				return current() - n;
 			}
 			template<class U>
-			difference_type operator-(const vectorIterator<U>& x) {
+			difference_type
+			operator-(const vectorIterator<U>& x) {
 				return this->current() - x.current();
 			}
-			vectorIterator&	operator+=(int n) {
+			vectorIterator&
+			operator+=(int n) {
 				this->_ptr += n;
 				return *this;
 			}
-			vectorIterator&	operator-=(int n) {
+			vectorIterator&
+			operator-=(int n) {
 				this->_ptr -= n;
 				return *this;
 			}
-			reference	operator[](difference_type n) {
+			reference
+			operator[](difference_type n) {
 				return this->_ptr[n];
 			}
 

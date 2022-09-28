@@ -1,5 +1,5 @@
 #ifndef NAMESPACE
-# define NAMESPACE std
+# define NAMESPACE ft
 #endif
 
 #include <vector>
@@ -34,6 +34,15 @@ int 	main() {
 	if (!d.empty())
 		std::cout << "D is NOT empty" << std::endl;
 
+	{
+		std::cout << "TESTING INSERT/ASSIGN/CTOR FOURTH PARAM (SHOULD NOT COMPILE)" << std::endl;
+		
+		NAMESPACE::vector<int>	hector;
+		int	array[] = {-5, 4, 6, 3, 2};
+	
+		//should not compile	
+		hector.insert(hector.begin(), array, array + 5, 0);
+	}
 	{
 		std::cout	<< std::endl
 					<< "//// COPY CTOR ////"	<< std::endl << std::endl;
@@ -790,14 +799,6 @@ int 	main() {
 			std::cout << *--it		<< std::endl;
 		}
 		// test reverse operator-
-		{
-			std::cout << "TESTING INSERT FOURTH PARAM (SHOULD NOT COMPILE)" << std::endl;
-			
-			NAMESPACE::vector<int> hector;
-			int	array[] = {-5, 4, 6, 3, 2};
-			
-			hector.insert(hector.begin(), array, array + 5, NULL);
-		}
 	}
 	return 0;
 }
