@@ -1,7 +1,9 @@
 #ifndef MAP_HPP
 # define MAP_HPP
 
-# include "iterator/reverse_iterator.hpp"
+# include "iterator.hpp"
+# include "utility.hpp"
+# include "rb_tree.hpp"
 # include <map>
 
 namespace ft {
@@ -39,7 +41,7 @@ namespace ft {
 		// ???????
 
 			class value_compare
-			: public binary_function<value_type, value_type, bool> {
+				: public binary_function<value_type, value_type, bool> {
 				friend class map;
 				
 				protected:
@@ -47,8 +49,9 @@ namespace ft {
 					value_compare(Compare c) : comp(c) {}
 
 				public:
-					bool operator()(	const value_type& x,
-										const value_type& y	) const {
+					bool
+					operator()(	const value_type& x,
+								const value_type& y	) const {
 						return comp(x.first, y.first);
 					}
 			};
@@ -59,10 +62,10 @@ namespace ft {
 							const allocator_type& = Allocator()	);
 
 			template <class InputIterator>
-			map(	InputIterator first,
-					InputIterator last,
-					const key_compare& comp = Compare(),
-					const allocator_type& = Allocator()	);
+			map(InputIterator first,
+				InputIterator last,
+				const key_compare& comp = Compare(),
+				const allocator_type& = Allocator()	);
 
 			map(const map<key_type, T, key_compare, allocator_type>& x);
 			~map();
@@ -71,83 +74,145 @@ namespace ft {
 
 		// ITERATORS
 
-			iterator				begin();
-			const_iterator			begin() const;
-			iterator				end();
-			const_iterator			end() const;
-			reverse_iterator		rbegin();
-			const_reverse_iterator	rbegin() const;
-			reverse_iterator		rend();
-			const_reverse_iterator	rend() const;
+			iterator
+			begin();
+
+			const_iterator
+			begin() const;
+			
+			iterator
+			end();
+			
+			const_iterator
+			end() const;
+			
+			reverse_iterator
+			rbegin();
+			
+			const_reverse_iterator
+			rbegin() const;
+			
+			reverse_iterator
+			rend();
+			
+			const_reverse_iterator
+			rend() const;
 		
 		// CAPACITY
 
-			bool		empty() const;
-			size_type	size() const;
-			size_type	max_size() const;
+			bool
+			empty() const;
+
+			size_type
+			size() const;
+			
+			size_type
+			max_size() const;
 
 		// ACCESS
 
-			T& operator[](const key_type& x);
+			T&
+			operator[](const key_type& x);
 
 		// MODIFIERS
 
-			pair<iterator, bool>	insert(const value_type& x);
-			iterator	insert(iterator position, const value_type& x);
-			template <class InputIterator>
-			void		insert(InputIterator first, InputIterator last);
+			pair<iterator, bool>
+			insert(const value_type& x);
 			
-			void		erase(iterator position);
-			size_type	erase(const key_type& x);
-			void		erase(iterator first, iterator last);
-			void		swap(map<Key,T,Compare,Allocator>&);
-			void		clear();
+			iterator
+			insert(iterator position, const value_type& x);
+			
+			template <class InputIterator>
+			void
+			insert(InputIterator first, InputIterator last);
+			
+			void
+			erase(iterator position);
+			
+			size_type
+			erase(const key_type& x);
+			
+			void
+			erase(iterator first, iterator last);
+			
+			void
+			swap(map<Key,T,Compare,Allocator>&);
+			
+			void
+			clear();
 			
 		// OBSERVERS
 
-		I	key_compare		key_comp() const;
-			value_compare	value_comp() const;
+		I	key_compare
+			key_comp() const;
+			
+			value_compare
+			value_comp() const;
 I
 		// MAP OPERATIONS
 
-		I	const_iterator		find(const key_type& x) const;
-			size_type			count(const key_type& x) const;
-			iterator			lower_bound(const key_type& x);
-			const_iterator I	lower_bound(const key_type& x) const;
-			iterator			upper_bound(const key_type& x);
-			const_iterator		upper_bound(const key_type& x) const;
+		I	const_iterator
+			find(const key_type& x) const;
 			
-			pair<iterator,iterator>
+			size_type
+			count(const key_type& x) const;
+			
+			iterator
+			lower_bound(const key_type& x);
+			
+			const_iterator
+			lower_bound(const key_type& x) const;
+			
+			iterator
+			upper_bound(const key_type& x);
+			
+			const_iterator
+			upper_bound(const key_type& x) const;
+			
+			ft::pair<iterator,iterator>
 			equal_range(const key_type& x);
-			pair<const_iterator,const_iterator>
+			
+			ft::pair<const_iterator,const_iterator>
 			equal_range(const key_type& x) const;
 	
 };	/* class map */
 
 template <class Key, class T, class Compare, class Allocator>
-bool	operator==(	const map<Key,T,Compare,Allocator>& x,
-					const map<Key,T,Compare,Allocator>& y	);
+bool
+operator==(	const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y	);
+
 template <class Key, class T, class Compare, class Allocator>
-bool	operator<(	const map<Key,T,Compare,Allocator>& x,
-					const map<Key,T,Compare,Allocator>& y	);
+bool
+operator<(	const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y	);
+
 template <class Key, class T, class Compare, class Allocator>
-bool	operator!=(	const map<Key,T,Compare,Allocator>& x,
-					const map<Key,T,Compare,Allocator>& y	);
+bool
+operator!=(	const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y	);
+
 template <class Key, class T, class Compare, class Allocator>
-bool	operator>(	const map<Key,T,Compare,Allocator>& x,
-					const map<Key,T,Compare,Allocator>& y	);
+bool
+operator>(	const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y	);
+
 template <class Key, class T, class Compare, class Allocator>
-bool	operator>=(	const map<Key,T,Compare,Allocator>& x,
-					const map<Key,T,Compare,Allocator>& y);
+bool
+operator>=(	const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y);
+
 template <class Key, class T, class Compare, class Allocator>
-bool	operator<=(	const map<Key,T,Compare,Allocator>& x,
-					const map<Key,T,Compare,Allocator>& y	);
+bool
+operator<=(	const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y	);
 
 // SPECIALIZED ALGOS
 
 template <class Key, class T, class Compare, class Allocator>
-void	swap(	map<Key,T,Compare,Allocator>& x,
-				map<Key,T,Compare,Allocator>& y		);
+void
+swap(	map<Key,T,Compare,Allocator>& x,
+		map<Key,T,Compare,Allocator>& y		);
 
 }	/* namespace ft */
 

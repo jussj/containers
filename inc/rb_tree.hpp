@@ -52,7 +52,6 @@ struct rb_tree_node_base {
 		return x;	
 	}		
 };	/* rb_tree_node_base struct	*/
-	/* has node base infos, gives max and min */
 
 struct rb_tree_header {
 
@@ -69,7 +68,7 @@ struct rb_tree_header {
 		reset();
 	}
 	void
-	move_data(rb_tree_header& src) {	// cpy from src and reset src
+	move_data(rb_tree_header& src) {
 		header.color = src.header.color;
 		header.parent = src.header.parent;
 		header.left = src.header.left;
@@ -79,17 +78,14 @@ struct rb_tree_header {
 		src.reset();	
 	}
 	void
-	reset() {							// reset all but color
+	reset() {
 		header.parent	= 0;
 		header.left		= &header;
 		header.right	= &header;
 		node_count		= 0;
 	}
 
-}	/* rb_tree_header struct */
-	/* keeps track of the tree size, allows to reset and move data*/
-
-// helper to init elements to compare with COMPARE? in a struct
+};	/* rb_tree_header struct */
 
 template<class V>
 struct rb_tree_node : public rb_tree_node_base {
@@ -98,18 +94,65 @@ struct rb_tree_node : public rb_tree_node_base {
 
 	// returns pointer to value in a const and normal way
 
-}	/* rb_tree_node */ 
-	/* inherites from base, bears vddalue and gives ptr to that value */
+}	/* rb_tree_node struct */ 
+
+template<typename Compare>
+struct rb_tree_key_compare {
+
+	// ATTRIBUTES
+
+	Compare			key_compare;
+
+	// CTOR
+
+	rb_tree_key_compare()
+		: key_compare() {}
+
+	rb_tree_key_compare(const key_compare* comp)
+		: key_compare(comp) {}
+		
+};	/* rb_tree_key_compare struct */
+
+template<class T>
+struct rb_tree_iterator {
+
+	// TYPES
+
+	typedef T			value_type;
+	typedef T&			reference;
+	typedef T*			pointer;
+
+	typedef bidirectional_iterator_tag	iterator_category;
+	typedef ptrdiff_t					difference_type;
+	
+	typedef rb_tree_iterator<T>			self;
+	typedef rb_tree_node_base::base_ptr	base_ptr;
+	typedef rb_tree_node<T>*			node_ptr;
+
+};	/* rb_tree_iterator */
+
+template<class T>
+struct const_rb_tree_iterator {
+
+	// TYPES
+
+	typedef T			value_type;
+	typedef const T&	reference;
+	typedef const T*	pointer;
+
+	typedef bidirectional_iterator_tag	iterator_category;
+	typedef ptrdiff_t					difference_type;
+	
+	typedef rb_tree_iterator<T>			self;
+	typedef rb_tree_node_base::base_ptr	base_ptr;
+	typedef rb_tree_node<T>*			node_ptr;
+
+};	/* rb_tree_const_iterator */
 
 template<class Key, class Val, class ValueKey, 
 		 class Compare, class Alloc = std::allocator<T> >
 class rb_tree {
 	
-	// TYPES
-	
-	// typedef node allocator
-	// typedef alloc traits
-
 	public:
 
 	// TYPES
@@ -124,8 +167,32 @@ class rb_tree {
 		typedef ptrdiff_t 			difference_type;
 		typedef Alloc 				allocator_type;	
 
+	// MEMBER FUNCTIONS
+
+	// ACCESS
+
+		node_ptr
+		begin() {
+			return 
+		}	
+      //_Link_type
+      //_M_begin() _GLIBCXX_NOEXCEPT
+      //{ return static_cast<_Link_type>(this->_M_impl._M_header._M_parent); }
+      //_Const_Link_type
+      //_M_begin() const _GLIBCXX_NOEXCEPT
+      //{
+	//return static_cast<_Const_Link_type>
+	  //(this->_M_impl._M_header._M_parent);
+      //}
+      //_Base_ptr
+      //_M_end() _GLIBCXX_NOEXCEPT
+      //{ return &this->_M_impl._M_header; }
+      //_Const_Base_ptr
+      //_M_end() const _GLIBCXX_NOEXCEPT
+      //{ return &this->_M_impl._M_header; }
+
 	// MANIPULATE NODES
-	
+
 	//// get_node_allocator() const & non-const
 	//// get_allocator()
 	//// get_node() allocates
@@ -150,7 +217,25 @@ class rb_tree {
 
 	private:
 
+	// ATTRIBUTES
+
+		allocator_type	_alloc;
+		base_ptr		_root;
+		base_ptr		_nodes;
+		rb_tree&		_t;
+
+	// MEMBER FUNCTIONS
+
+		template<class Val>
+		node_ptr
+		create_node();
+			// allocate and append or reuse >> return addr and construct
+			// check for balance
+
 	// ALLOCATION
+
+		//_allocate();
+		//_recycle();
 
 	// struct reuse or realloc
 	// reuse or alloc >> recycle a pool of nodes, using alloc only once pool empty
@@ -162,6 +247,6 @@ class rb_tree {
 	//		operator()
 	//		attribute tree	
 	
-};
+};	/* rb_tree class */
 
 #endif
