@@ -588,6 +588,7 @@ namespace ft {
 	swap(vector<T,Alloc>& x, vector<T,Alloc>& y) {
 		x.swap(y);
 	}
+
 } 	/* namespace ft */
 
 #endif	/* VECTOR_HPP */
