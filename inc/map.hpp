@@ -23,8 +23,8 @@ namespace ft {
 			typedef pair<const Key, T>	value_type;
 			typedef Compare				key_compare;
 			typedef Alloc				allocator_type;
-			typedef size_t				size_type;			// impl defined
-			typedef ptrdiff_t			difference_type;	// impl defined
+			typedef size_t				size_type;		
+			typedef ptrdiff_t			difference_type;
 
 			typedef typename Alloc::reference		reference;
 			typedef typename Alloc::const_reference	const_reference;

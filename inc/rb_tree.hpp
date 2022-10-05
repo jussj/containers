@@ -8,13 +8,14 @@
 # include "algorithm.hpp"
 # include "utility.hpp"
 
-# define RED		0			// nodes color
-# define BLACK		1
-# define D_BLACK	2
-
 namespace ft {
 
-	template<class T>
+	typedef enum	e_color {
+		RED,
+		BLACK,
+		D_BLACK
+	}				t_color;
+
 	struct rb_tree_node_base {
 
 		typedef	rb_tree_node_base*			ptr;
@@ -22,7 +23,7 @@ namespace ft {
 
 		// ATTRIBUTES
 
-		int			color;
+		t_color		color;
 		ptr			parent;
 		ptr			left;
 		ptr			right;
@@ -64,20 +65,22 @@ namespace ft {
 		rb_tree_node_base	header;
 		size_t				node_count;
 
-		// MEMBER FUNCTIONS
+		// CTOR
 
-		void
 		rb_tree_header() {
 			header.color = RED;
 			reset();
 		}
+
+		// MEMBER FUNCTIONS
+
 		void
 		move_data(rb_tree_header& src) {
 			header.color = src.header.color;
 			header.parent = src.header.parent;
 			header.left = src.header.left;
 			header.right = src.header.right;
-			header.parent.parent = &header;
+			header.parent->parent = &header;
 			
 			src.reset();	
 		}
@@ -98,17 +101,17 @@ namespace ft {
 		typedef rb_tree_node<V>*	ptr;
 		typedef V					value_type;
 
-		ptr	_value;
+		V							_value;
 
 		ptr
 		value() const {
 			return this->_value;
 		}
 
-	}	/* rb_tree_node struct */
+	};	/* rb_tree_node struct */
 		/* inherites base_node and holds value ptr */
 
-	template<typename Compare>
+/*	template<typename Compare>
 	struct rb_tree_key_compare {
 
 		// ATTRIBUTES
@@ -123,7 +126,7 @@ namespace ft {
 		rb_tree_key_compare(const key_compare* comp)
 			: key_compare(comp) {}
 			
-	};	/* rb_tree_key_compare struct */
+	};	 rb_tree_key_compare struct */
 
 
 	struct rb_tree_base_iterator {
@@ -190,12 +193,12 @@ namespace ft {
 		typedef ptrdiff_t					difference_type;
 
 		typedef rb_tree_iterator<T>			self;
-		typedef rb_tree_node_base::base_ptr	base_ptr;
+		typedef rb_tree_node_base::ptr		base_ptr;
 		typedef rb_tree_node<T>*			node_ptr;
 
 		// ATTRIBUTES
 
-		base_ptr	node;
+		node_ptr	node;
 
 		// CTORS
 		
@@ -216,38 +219,48 @@ namespace ft {
 
 		self
 		operator++() {
-			node = rb_tree_increment(node);
+			increment();
 		}
 
 		self
 		operator++(int) {
 			self tmp = *this;
 
-			node = rb_tree_increment(node);
+			increment();
 			return tmp;
 		}
 		self
 		operator--() {
-			node = rb_tree_decrement(node);
+			decrement();
 		}
 
 		self
 		operator--(int) {
 			self tmp = *this;
 
-			node = rb_tree_decrement(node);
+			decrement();
 			return tmp;
 		}
 	
 		bool
-		operator==(const self& x, const self& y) {
-			return x.node == y.node;
+		operator==(const self& src) {
+			return this.node == src.node;
 		}
 
 		bool
-		operator!=(const self& x, const self& y) {
-			return x.node != y.node;
+		operator!=(const self& src) {
+			return this.node != src.node;
 		}
+		
+		//bool
+		//operator==(const self& x, const self& y) {
+			//return x.node == y.node;
+		//}
+
+		//bool
+		//operator!=(const self& x, const self& y) {
+			//return x.node != y.node;
+		//}
 
 	};	/* rb_tree_iterator */
 
@@ -264,20 +277,20 @@ namespace ft {
 		typedef ptrdiff_t					difference_type;
 		
 		typedef rb_tree_iterator<T>			self;
-		typedef rb_tree_node_base::base_ptr	base_ptr;
+		typedef rb_tree_node_base::ptr		base_ptr;
 		typedef rb_tree_node<T>*			node_ptr;
 		
 		// ...
 
 	};	/* rb_tree_const_iterator */
 
-	template<class Key, class Val, class ValueKey, 
+	template<class T, class Key, class Val, class ValueKey, 
 			 class Compare, class Alloc = std::allocator<T> >
 	class rb_tree {
-		
-		public:
 
 		// TYPES
+
+		public:
 
 			typedef Key 				key_type;
 			typedef Val 				value_type;
@@ -288,16 +301,25 @@ namespace ft {
 			typedef size_t 				size_type;
 			typedef ptrdiff_t 			difference_type;
 			typedef Alloc 				allocator_type;	
+			
+		protected:
+
+			typedef rb_tree_node_base::ptr			base_ptr;
+			typedef rb_tree_node_base::const_ptr	const_base_ptr;
+			typedef	rb_tree_node<Val>*				node_ptr;
+			typedef	const rb_tree_node<Val>*		const_node_ptr;
+		
+		public:
 
 		// MEMBER FUNCTIONS
 
 		// ACCESS
 
-			node_ptr
+			base_ptr
 			begin() {
 				return this->_header->parent;
 			}
-			const_node_ptr
+			const_base_ptr
 			begin() const {
 				return this->_header->parent;
 			}
@@ -312,23 +334,33 @@ namespace ft {
 
 		// MANIPULATE NODES
 
-		//// get_node_allocator() const & non-const
-		//// get_allocator()
-		//// get_node() allocates
-		//// put_node() deallocates
-		//// constructs_node() >> will throw exception and erase node if doesn't work
+		allocator_type
+		get_allocator() {
+			return this->_alloc;
+		}
+		node_ptr
+		alloc_node() {
+			return this->_alloc.allocate(1);
+		}
+		void
+		dealloc_node(node_ptr n) {
+			this->_alloc.deallocate(n);
+		}
+		//void
+		//construct_node(node_ptr n) {
+			//this->_alloc.construct
+		//}
+
+
+		
+
+		// get_node_allocator() const & non-const
+		// constructs_node() >> will throw exception and erase node if doesn't work
 		// create_node() >> get and construct and return node
-		// destroy_node() >> destroy and put
+		// destroy_node() >> destroy
 		// clone_node() >> generate a node from a src, copy and return it
 
 		protected:
-
-		// TYPES
-
-			typedef rb_tree_node_base*			base_ptr;
-			typedef const rb_tree_node_base*	const_base_ptr;
-			typedef	rb_tree_node<Val>*			node_ptr;
-			typedef	const rb_tree_node<Val>*	const_node_ptr;
 
 		// ACCESS
 		
@@ -346,7 +378,7 @@ namespace ft {
 
 		// MEMBER FUNCTIONS
 
-			template<class Val>
+			template<class V>
 			node_ptr
 			create_node();
 				// allocate and append or reuse >> return addr and construct
