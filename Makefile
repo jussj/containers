@@ -8,7 +8,7 @@ CXX				=	c++
 
 RM				=	rm -rf
 
-SRCS				=	main_vector.cpp
+SRCS				=	main_map.cpp
 
 SRCS_DIR			=	test
 
@@ -22,7 +22,7 @@ DEPS				=	$(SRCS:.cpp=.d)
 
 DEPS_DIR			=	.dep
 
-vpath %.cpp 			$(SRCS_DIR)
+vpath %.cpp 		$(SRCS_DIR)
 
 vpath %.o			$(OBJS_DIR)
 

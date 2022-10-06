@@ -202,8 +202,8 @@ namespace ft {
 
 		// CTORS
 		
-		rb_tree_iterator()				: node() {}
-		rb_tree_iterator(base_ptr x)	: node(x) {}
+		rb_tree_iterator()				: node()	{}
+		rb_tree_iterator(base_ptr x)	: node(x)	{}
 
 		// OVERLOADS
 
@@ -212,7 +212,7 @@ namespace ft {
 			return *node->_value;
 		}
 
-		self&
+		pointer
 		operator->() const {
 			return *node->_value;
 		}
@@ -244,28 +244,28 @@ namespace ft {
 	
 		bool
 		operator==(const self& src) {
-			return this.node == src.node;
+			return this->node == src.node;
 		}
 
 		bool
 		operator!=(const self& src) {
-			return this.node != src.node;
+			return this->node != src.node;
 		}
 		
-		//bool
-		//operator==(const self& x, const self& y) {
-			//return x.node == y.node;
-		//}
+		friend bool
+		operator==(const self& x, const self& y) {
+			return x->node == y->node;
+		}
 
-		//bool
-		//operator!=(const self& x, const self& y) {
-			//return x.node != y.node;
-		//}
+		friend bool
+		operator!=(const self& x, const self& y) {
+			return x->node != y->node;
+		}
 
 	};	/* rb_tree_iterator */
 
 	template<class T>
-	struct const_rb_tree_iterator : public rb_tree_base_iterator {
+	struct rb_tree_const_iterator : public rb_tree_base_iterator {
 
 		// TYPES
 
@@ -276,15 +276,80 @@ namespace ft {
 		typedef bidirectional_iterator_tag	iterator_category;
 		typedef ptrdiff_t					difference_type;
 		
-		typedef rb_tree_iterator<T>			self;
-		typedef rb_tree_node_base::ptr		base_ptr;
-		typedef rb_tree_node<T>*			node_ptr;
+		typedef rb_tree_iterator<T>				self;
+		typedef rb_tree_node_base::const_ptr	base_ptr;
+		typedef const rb_tree_node<T>*			node_ptr;
 		
-		// ...
+		// ATTRIBUTES
+
+		node_ptr	node;
+
+		// CTORS
+		
+		rb_tree_const_iterator()			: node()	{}
+		rb_tree_const_iterator(base_ptr x)	: node(x)	{}
+
+		// OVERLOADS
+
+		reference
+		operator*() const {
+			return *node->_value;
+		}
+
+		pointer
+		operator->() const {
+			return *node->_value;
+		}
+
+		self
+		operator++() {
+			increment();
+		}
+
+		self
+		operator++(int) {
+			self tmp = *this;
+
+			increment();
+			return tmp;
+		}
+		self
+		operator--() {
+			decrement();
+		}
+
+		self
+		operator--(int) {
+			self tmp = *this;
+
+			decrement();
+			return tmp;
+		}
+	
+		bool
+		operator==(const self& src) {
+			return this->node == src->node;
+		}
+
+		bool
+		operator!=(const self& src) {
+			return this->node != src->node;
+		}
+		
+		friend bool
+		operator==(const self& x, const self& y) {
+			return x->node == y->node;
+		}
+
+		friend bool
+		operator!=(const self& x, const self& y) {
+			return x->node != y->node;
+		}
+
 
 	};	/* rb_tree_const_iterator */
 
-	template<class T, class Key, class Val, class ValueKey, 
+	template<class T, class Key, class Val, class KeyOfValue, 
 			 class Compare, class Alloc = std::allocator<T> >
 	class rb_tree {
 
@@ -293,67 +358,88 @@ namespace ft {
 		public:
 
 			typedef Key 				key_type;
-			typedef Val 				value_type;
+			typedef T					value_type;
+			typedef Val					pair;
+
 			typedef value_type* 		pointer;
 			typedef const value_type* 	const_pointer;
 			typedef value_type& 		reference;
 			typedef const value_type& 	const_reference;
+		
 			typedef size_t 				size_type;
 			typedef ptrdiff_t 			difference_type;
-			typedef Alloc 				allocator_type;	
-			
+		
+			typedef Alloc 				allocator_type;
+			typedef Compare				key_compare;	
+		
+			typedef rb_tree_iterator<value_type>			iterator;
+			typedef rb_tree_const_iterator<value_type>		const_iterator;
+			typedef std::reverse_iterator<iterator>			reverse_iterator;
+			typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
+
 		protected:
 
 			typedef rb_tree_node_base::ptr			base_ptr;
 			typedef rb_tree_node_base::const_ptr	const_base_ptr;
+			typedef rb_tree_header					header;
 			typedef	rb_tree_node<Val>*				node_ptr;
 			typedef	const rb_tree_node<Val>*		const_node_ptr;
-		
-		public:
-
+	
 		// MEMBER FUNCTIONS
 
-		// ACCESS
-
-			base_ptr
-			begin() {
-				return this->_header->parent;
-			}
-			const_base_ptr
-			begin() const {
-				return this->_header->parent;
-			}
-			base_ptr
-			end() {
-				return this->_header;
-			}
-			const_base_ptr
-			end() const {
-				return this->_header;
-			}
-
-		// MANIPULATE NODES
-
-		allocator_type
-		get_allocator() {
-			return this->_alloc;
-		}
-		node_ptr
-		alloc_node() {
-			return this->_alloc.allocate(1);
-		}
-		void
-		dealloc_node(node_ptr n) {
-			this->_alloc.deallocate(n);
-		}
-		//void
-		//construct_node(node_ptr n) {
-			//this->_alloc.construct
-		//}
-
-
+		public:
 		
+			// CTOR / DTOR
 
+			rb_tree(const key_compare& comp,
+					const allocator_type& alloc) 
+				:	_alloc(alloc),
+					_comp(comp) {}
+			
+			~rb_tree();
+
+			// ACCESS
+
+			iterator
+			begin() {
+				return iterator(_header.header.parent);
+			}
+			const_iterator
+			begin() const {
+				return const_iterator(_header.header.parent);
+			}
+			iterator
+			end() {
+				return iterator(_header);
+			}
+			const_iterator
+			end() const {
+				return const_iterator(_header);
+			}
+			size_type
+			size() const {
+				return _header.node_count;
+			}
+			
+			bool
+			empty() const {
+				return _header.node_count == 0;
+			}
+
+			// MANIPULATE NODES
+
+			allocator_type
+			get_allocator() {
+				return _alloc;
+			}
+		//node_ptr
+		//alloc_node() {
+			//return this->_alloc.allocate(1);
+		//}
+		//void
+		//dealloc_node(node_ptr n) {
+			//this->_alloc.deallocate(n);
+		//}
 		// get_node_allocator() const & non-const
 		// constructs_node() >> will throw exception and erase node if doesn't work
 		// create_node() >> get and construct and return node
@@ -362,8 +448,29 @@ namespace ft {
 
 		protected:
 
-		// ACCESS
-		
+			// ACCESS
+	
+			static base_ptr
+			minimum(base_ptr x)	{ 
+				return rb_tree_node_base::minimum(x);
+			}
+			
+			static const_base_ptr
+			minimum(const_base_ptr x)	{ 
+				return rb_tree_node_base::minimum(x);
+			}
+			
+			static base_ptr
+			maximum(base_ptr x)	{ 
+				return rb_tree_node_base::maximum(x);
+			}
+			
+			static const_base_ptr
+			maximum(const_base_ptr x)	{ 
+				return rb_tree_node_base::maximum(x);
+			}
+
+
 		//	struct tree_impl >> inherites allocator, key_compare, header
 
 		private:
@@ -371,8 +478,9 @@ namespace ft {
 		// ATTRIBUTES
 
 			allocator_type	_alloc;
+			key_compare		_comp;
 			base_ptr		_root;
-			base_ptr		_header;
+			header			_header;
 			base_ptr		_nodes;
 			rb_tree&		_t;
 
@@ -380,7 +488,7 @@ namespace ft {
 
 			template<class V>
 			node_ptr
-			create_node();
+			_create_node();
 				// allocate and append or reuse >> return addr and construct
 				// check for balance
 

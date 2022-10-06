@@ -434,7 +434,7 @@ namespace ft {
 			pointer			_end;
 			pointer			_capacity;
 
-		// UTILS
+		// AUX MEMBER FUNCTIONS
 
 			void
 			_fill(pointer start, size_type size, const T& value) {

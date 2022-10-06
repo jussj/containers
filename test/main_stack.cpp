@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main_stack.cpp                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jusaint- <jusaint-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 10:33:14 by jusaint-          #+#    #+#             */
-/*   Updated: 2022/09/09 16:10:06 by jusaint-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include <iostream>       // std::cout
 #include <stack>          // std::stack
 #include <vector>         // std::vector
@@ -36,7 +24,7 @@ void	print_stack(Stack s, std::string name) {
 	std::cout << "]" << std::endl;
 }
 
-int 	main() {
+int 	main_stack() {
 		// CTOR IS WORKING ON ANY UNDERLYING CONTAINER WITH ANY CONTAINER IN INPUT
 		// BUILDING STACKS AND SIZE
 		// TEST COPY CTOR AND COPY

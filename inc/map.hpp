@@ -10,8 +10,8 @@ namespace ft {
 
 	template <	class Key,
 				class T,
-				class Compare = less<Key>,
-				class Alloc = allocator<pair<const Key, T> > >
+				class Compare	= std::less<Key>,
+				class Alloc		= std::allocator<pair<const Key, T> > >
 	class map {
 
 		public:
@@ -28,20 +28,19 @@ namespace ft {
 
 			typedef typename Alloc::reference		reference;
 			typedef typename Alloc::const_reference	const_reference;
-
 			typedef typename Alloc::pointer			pointer;
 			typedef typename Alloc::const_pointer	const_pointer;
-		
-			// STD ITERATORS	
-			typedef /* ... */ std::map::iterator			iterator;
-			typedef /* ... */ std::map::const_iterator		const_iterator;
+
+			typedef ft::rb_tree_iterator<T>			iterator;
+			typedef ft::rb_tree_const_iterator<T>	const_iterator;
+
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		// ???????
 
 			class value_compare
-				: public binary_function<value_type, value_type, bool> {
+				: public std::binary_function<value_type, value_type, bool> {
 				friend class map;
 				
 				protected:
@@ -58,56 +57,82 @@ namespace ft {
 
 		// CTOR, DTOR AND COPY
 
-			explicit map(	const key_compare& comp = Compare(),
-							const allocator_type& = Allocator()	);
+			explicit
+			map(const key_compare& comp, 
+				const allocator_type& alloc = Alloc()) 
+				: _tree(comp, alloc) {}
 
 			template <class InputIterator>
 			map(InputIterator first,
 				InputIterator last,
 				const key_compare& comp = Compare(),
-				const allocator_type& = Allocator()	);
+				const allocator_type& = Alloc()	);
 
 			map(const map<key_type, T, key_compare, allocator_type>& x);
-			~map();
+			
+			~map() {}
+
 			map<key_type, T, key_compare, allocator_type>&
 			operator=(const map<key_type, T, key_compare, allocator_type>& x);
 
 		// ITERATORS
 
 			iterator
-			begin();
+			begin() {
+				return _tree.begin();
+			}
 
 			const_iterator
-			begin() const;
+			begin() const {
+				return _tree.begin();
+			}
 			
 			iterator
-			end();
+			end() {
+				return _tree.end();
+			}
 			
 			const_iterator
-			end() const;
+			end() const {
+				return _tree.end();
+			}
 			
 			reverse_iterator
-			rbegin();
+			rbegin() {
+				return reverse_iterator(_tree.begin());
+			}
 			
 			const_reverse_iterator
-			rbegin() const;
+			rbegin() const {
+				return const_reverse_iterator(_tree.begin());
+			}
 			
 			reverse_iterator
-			rend();
+			rend() {
+				return reverse_iterator(_tree.end());
+			}
 			
 			const_reverse_iterator
-			rend() const;
+			rend() const {
+				return const_reverse_iterator(_tree.end());
+			}
 		
 		// CAPACITY
 
 			bool
-			empty() const;
+			empty() const {
+				return _tree.empty();
+			}
 
 			size_type
-			size() const;
+			size() const {
+				return _tree.size();	
+			}
 			
 			size_type
-			max_size() const;
+			max_size() const {
+				return _alloc.max_size();
+			}
 
 		// ACCESS
 
@@ -136,22 +161,22 @@ namespace ft {
 			erase(iterator first, iterator last);
 			
 			void
-			swap(map<Key,T,Compare,Allocator>&);
+			swap(map<Key, T, Compare, Alloc>&);
 			
 			void
 			clear();
 			
 		// OBSERVERS
 
-		I	key_compare
+			key_compare
 			key_comp() const;
 			
 			value_compare
 			value_comp() const;
-I
+
 		// MAP OPERATIONS
 
-		I	const_iterator
+			const_iterator
 			find(const key_type& x) const;
 			
 			size_type
@@ -174,45 +199,61 @@ I
 			
 			ft::pair<const_iterator,const_iterator>
 			equal_range(const key_type& x) const;
+
+		private:
+
+		// TYPES
+
+			typedef rb_tree<mapped_type, 
+							key_type,
+							value_type,
+							key_compare,
+							allocator_type>		rb_tree;
+
+		// ATTRIBUTES
+		
+			rb_tree			_tree;
+			allocator_type	_alloc;
+
 	
-};	/* class map */
+	};	/* class map */
 
-template <class Key, class T, class Compare, class Allocator>
-bool
-operator==(	const map<Key,T,Compare,Allocator>& x,
-			const map<Key,T,Compare,Allocator>& y	);
+	template <class Key, class T, class Compare, class Allocator>
+	bool
+	operator==(	const map<Key,T,Compare,Allocator>& x,
+				const map<Key,T,Compare,Allocator>& y	);
 
-template <class Key, class T, class Compare, class Allocator>
-bool
-operator<(	const map<Key,T,Compare,Allocator>& x,
-			const map<Key,T,Compare,Allocator>& y	);
+	template <class Key, class T, class Compare, class Allocator>
+	bool
+	operator<(	const map<Key,T,Compare,Allocator>& x,
+				const map<Key,T,Compare,Allocator>& y	);
 
-template <class Key, class T, class Compare, class Allocator>
-bool
-operator!=(	const map<Key,T,Compare,Allocator>& x,
-			const map<Key,T,Compare,Allocator>& y	);
+	template <class Key, class T, class Compare, class Allocator>
+	bool
+	operator!=(	const map<Key,T,Compare,Allocator>& x,
+				const map<Key,T,Compare,Allocator>& y	);
 
-template <class Key, class T, class Compare, class Allocator>
-bool
-operator>(	const map<Key,T,Compare,Allocator>& x,
-			const map<Key,T,Compare,Allocator>& y	);
+	template <class Key, class T, class Compare, class Allocator>
+	bool
+	operator>(	const map<Key,T,Compare,Allocator>& x,
+				const map<Key,T,Compare,Allocator>& y	);
 
-template <class Key, class T, class Compare, class Allocator>
-bool
-operator>=(	const map<Key,T,Compare,Allocator>& x,
-			const map<Key,T,Compare,Allocator>& y);
+	template <class Key, class T, class Compare, class Allocator>
+	bool
+	operator>=(	const map<Key,T,Compare,Allocator>& x,
+				const map<Key,T,Compare,Allocator>& y);
 
-template <class Key, class T, class Compare, class Allocator>
-bool
-operator<=(	const map<Key,T,Compare,Allocator>& x,
-			const map<Key,T,Compare,Allocator>& y	);
+	template <class Key, class T, class Compare, class Allocator>
+	bool
+	operator<=(	const map<Key,T,Compare,Allocator>& x,
+				const map<Key,T,Compare,Allocator>& y	);
 
-// SPECIALIZED ALGOS
+	// SPECIALIZED ALGOS
 
-template <class Key, class T, class Compare, class Allocator>
-void
-swap(	map<Key,T,Compare,Allocator>& x,
-		map<Key,T,Compare,Allocator>& y		);
+	template <class Key, class T, class Compare, class Allocator>
+	void
+	swap(	map<Key,T,Compare,Allocator>& x,
+			map<Key,T,Compare,Allocator>& y		);
 
 }	/* namespace ft */
 
