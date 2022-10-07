@@ -37,7 +37,7 @@ namespace ft {
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
-		// ???????
+		// VALUE COMPARE
 
 			class value_compare
 				: public std::binary_function<value_type, value_type, bool> {
@@ -58,9 +58,9 @@ namespace ft {
 		// CTOR, DTOR AND COPY
 
 			explicit
-			map(const key_compare& comp, 
+			map(const key_compare& comp = Compare(), 
 				const allocator_type& alloc = Alloc()) 
-				: _tree(comp, alloc) {}
+				: _alloc(alloc), _tree(comp) {}
 
 			template <class InputIterator>
 			map(InputIterator first,
@@ -204,16 +204,13 @@ namespace ft {
 
 		// TYPES
 
-			typedef rb_tree<mapped_type, 
-							key_type,
-							value_type,
-							key_compare,
-							allocator_type>		rb_tree;
+			typedef rb_tree_impl <T, Key, pair<const Key, T>, Compare>	
+			rb_tree;
 
 		// ATTRIBUTES
 		
-			rb_tree			_tree;
 			allocator_type	_alloc;
+			rb_tree			_tree;
 
 	
 	};	/* class map */

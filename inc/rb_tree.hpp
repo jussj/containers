@@ -349,9 +349,9 @@ namespace ft {
 
 	};	/* rb_tree_const_iterator */
 
-	template<class T, class Key, class Val, class KeyOfValue, 
-			 class Compare, class Alloc = std::allocator<T> >
-	class rb_tree {
+	template<	class T, class Key, class Val, class Compare, 
+				class Alloc = std::allocator<rb_tree_node<T> > >
+	class rb_tree_impl {
 
 		// TYPES
 
@@ -391,12 +391,17 @@ namespace ft {
 		
 			// CTOR / DTOR
 
-			rb_tree(const key_compare& comp,
+			rb_tree_impl() {}
+
+			rb_tree_impl(const key_compare& comp) 
+				:	_comp(comp) {}
+
+			rb_tree_impl(const key_compare& comp,
 					const allocator_type& alloc) 
 				:	_alloc(alloc),
 					_comp(comp) {}
 			
-			~rb_tree();
+			~rb_tree_impl();
 
 			// ACCESS
 
@@ -482,7 +487,7 @@ namespace ft {
 			base_ptr		_root;
 			header			_header;
 			base_ptr		_nodes;
-			rb_tree&		_t;
+			rb_tree_impl&	_t;
 
 		// MEMBER FUNCTIONS
 
