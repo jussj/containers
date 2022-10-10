@@ -10,11 +10,10 @@
 #endif
 
 template<class Map>
-void	print_map(Map m, std::string name) {
+void	print_map(Map& m, const std::string name) {
 	std::cout	<< std::endl
 				<< "// MAP " << name << std::endl
 				<< "   size: " << m.size() << std::endl;
-				//<< "   top:	\"" << s.top() << "\"" << std::endl;
 	if (m.empty())
 		std::cout << "[ EMPTY MAP ]";
 	std::cout << std::endl;
@@ -24,7 +23,8 @@ int 	main() {
 	{
 		NAMESPACE::map<int, std::string>	a;
 
-		//print_map(a, "A");
+		a.insert(NAMESPACE::pair<int, std::string>(0, "hehehe"));
+		print_map(a, "A");
 	}
 	return 0;
 }

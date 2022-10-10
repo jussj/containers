@@ -30,11 +30,11 @@ namespace ft {
 		pair(const pair<U1, U2>& p)
 			: first(p.first), second(p.second) {}
 		
-		pair(const pair& src) {
-			*this = src;
-		}
+		//pair(const pair& src) {
+			//*this = src;
+		//}
 
-		// OPERATORS
+		// OPERATOR
 		
 		pair&	operator=(const pair& src) {
 			if (&src == this)

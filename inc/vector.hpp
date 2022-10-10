@@ -304,7 +304,7 @@ namespace ft {
 				if (n < 1)
 					return ;
 				else if (new_size <= this->capacity()) {
-					size_type	elems_after	= this->end() - position;
+					size_type elems_after = this->end() - position;
 					if (elems_after > n) {
 						this->_copy_backwards(position, new_size);
 						this->_fill(&(*position), n, x);

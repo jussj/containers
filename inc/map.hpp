@@ -154,7 +154,13 @@ namespace ft {
 		// MODIFIERS
 
 			pair<iterator, bool>
-			insert(const value_type& x);
+			insert(const value_type& x) {
+				bool		key		= true;
+				iterator	it;		// newly inserted 
+
+				_tree.insert_one_element(x);
+				return pair<iterator, bool>(it, key);
+			}
 			
 			iterator
 			insert(iterator position, const value_type& x);
@@ -188,6 +194,11 @@ namespace ft {
 
 		// MAP OPERATIONS
 
+			iterator
+			find(const key_type& x) {
+				_tree.find(x);
+			}
+			
 			const_iterator
 			find(const key_type& x) const;
 			
@@ -195,7 +206,9 @@ namespace ft {
 			count(const key_type& x) const;
 			
 			iterator
-			lower_bound(const key_type& x);
+			lower_bound(const key_type& x) {
+				return _tree.lower_bound(x);
+			}
 			
 			const_iterator
 			lower_bound(const key_type& x) const;
