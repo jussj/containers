@@ -37,6 +37,18 @@ namespace ft {
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
+		private:
+
+			typedef rb_tree_impl <T, Key, pair<const Key, T>, Compare>	
+			rb_tree;
+
+		// ATTRIBUTES
+		
+			allocator_type	_alloc;
+			rb_tree			_tree;
+
+		public:
+
 		// VALUE COMPARE
 
 			class value_compare
@@ -199,19 +211,6 @@ namespace ft {
 			
 			ft::pair<const_iterator,const_iterator>
 			equal_range(const key_type& x) const;
-
-		private:
-
-		// TYPES
-
-			typedef rb_tree_impl <T, Key, pair<const Key, T>, Compare>	
-			rb_tree;
-
-		// ATTRIBUTES
-		
-			allocator_type	_alloc;
-			rb_tree			_tree;
-
 	
 	};	/* class map */
 

@@ -86,7 +86,7 @@ namespace ft {
 		}
 		void
 		reset() {
-			header.parent	= 0;
+			header.parent	= 0;			// root
 			header.left		= &header;
 			header.right	= &header;
 			node_count		= 0;
@@ -385,6 +385,17 @@ namespace ft {
 			typedef	rb_tree_node<Val>*				node_ptr;
 			typedef	const rb_tree_node<Val>*		const_node_ptr;
 	
+		// ATTRIBUTES
+
+		private:
+
+			allocator_type	_alloc;
+			key_compare		_comp;
+			base_ptr		_root;
+			header			_header;
+			base_ptr		_nodes;
+			//rb_tree_impl&	_t;			// second tree layer?
+
 		// MEMBER FUNCTIONS
 
 		public:
@@ -394,7 +405,10 @@ namespace ft {
 			rb_tree_impl() {}
 
 			rb_tree_impl(const key_compare& comp) 
-				:	_comp(comp) {}
+				:	_alloc(),
+					_comp(comp),
+					_root(NULL),
+					_header()	{}
 
 			rb_tree_impl(const key_compare& comp,
 					const allocator_type& alloc) 
@@ -479,17 +493,6 @@ namespace ft {
 		//	struct tree_impl >> inherites allocator, key_compare, header
 
 		private:
-
-		// ATTRIBUTES
-
-			allocator_type	_alloc;
-			key_compare		_comp;
-			base_ptr		_root;
-			header			_header;
-			base_ptr		_nodes;
-			rb_tree_impl&	_t;
-
-		// MEMBER FUNCTIONS
 
 			template<class V>
 			node_ptr
