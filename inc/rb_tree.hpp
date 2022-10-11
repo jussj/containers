@@ -7,6 +7,7 @@
 # include "iterator.hpp"
 # include "algorithm.hpp"
 # include "utility.hpp"
+# include "utils.hpp"
 
 namespace ft {
 
@@ -62,13 +63,13 @@ namespace ft {
 
 		// ATTRIBUTES
 
-		rb_tree_node_base	header;
+		rb_tree_node_base	node;
 		size_t				node_count;
 
 		// CTOR
 
 		rb_tree_header() {
-			header.color = RED;
+			node.color = RED;
 			reset();
 		}
 
@@ -76,20 +77,20 @@ namespace ft {
 
 		void
 		move_data(rb_tree_header& src) {
-			header.color = src.header.color;
-			header.parent = src.header.parent;
-			header.left = src.header.left;
-			header.right = src.header.right;
-			header.parent->parent = &header;
+			node.color = src.node.color;
+			node.parent = src.node.parent;
+			node.left = src.node.left;
+			node.right = src.node.right;
+			node.parent->parent = &node;
 			
 			src.reset();	
 		}
 		void
 		reset() {
-			header.parent	= 0;			// root
-			header.left		= &header;
-			header.right	= &header;
-			node_count		= 0;
+			node.parent	= 0;			// root
+			node.left	= &node;
+			node.right	= &node;
+			node_count	= 0;
 		}
 
 	};	/* rb_tree_header struct */
@@ -101,13 +102,16 @@ namespace ft {
 		typedef rb_tree_node<V>*	ptr;
 		typedef V					value_type;
 
-		V							_value;
+		V							value;
+
+		rb_tree_node(value_type v)
+			: value(v) {}
 
 		ptr
-		value() const {
+		value_ptr() const {
 			return this->_value;
 		}
-
+	
 	};	/* rb_tree_node struct */
 		/* inherites base_node and holds value ptr */
 
@@ -350,7 +354,7 @@ namespace ft {
 	};	/* rb_tree_const_iterator */
 
 	template<	class T, class Key, class Val, class Compare, 
-				class Alloc = std::allocator<rb_tree_node<T> > >
+				class Alloc = std::allocator<rb_tree_node<Val> > >
 	class rb_tree_impl {
 
 		// TYPES
@@ -391,7 +395,7 @@ namespace ft {
 
 			allocator_type	_alloc;
 			key_compare		_comp;
-			base_ptr		_root;
+			node_ptr		_root;
 			header			_header;
 			base_ptr		_nodes;
 			//rb_tree_impl&	_t;			// second tree layer?
@@ -400,7 +404,7 @@ namespace ft {
 
 		public:
 		
-			// CTOR / DTOR
+			// CTOR / DTOR 
 
 			rb_tree_impl() {}
 
@@ -411,21 +415,22 @@ namespace ft {
 					_header()	{}
 
 			rb_tree_impl(const key_compare& comp,
-					const allocator_type& alloc) 
+						 const allocator_type& alloc) 
 				:	_alloc(alloc),
 					_comp(comp) {}
 			
 			~rb_tree_impl() {}
 
-			// ACCESS
+			// ACCESS 
 
+			// ITERATORS
 			iterator
 			begin() {
-				return iterator(_header.header.parent);
+				return iterator(_header.node.parent);
 			}
 			const_iterator
 			begin() const {
-				return const_iterator(_header.header.parent);
+				return const_iterator(_header.node.parent);
 			}
 			iterator
 			end() {
@@ -435,6 +440,8 @@ namespace ft {
 			end() const {
 				return const_iterator(_header);
 			}
+
+			// CAPACITY
 			size_type
 			size() const {
 				return _header.node_count;
@@ -445,11 +452,18 @@ namespace ft {
 				return _header.node_count == 0;
 			}
 
+			// ATTRIBUTES
 			allocator_type
 			get_allocator() {
 				return _alloc;
 			}
 
+			key_type
+			key(node_ptr& n) const {
+				return n->value.first;
+			}
+
+			// MIN/MAX
 			static base_ptr
 			minimum(base_ptr x)	{ 
 				return rb_tree_node_base::minimum(x);
@@ -473,23 +487,32 @@ namespace ft {
 			// MODIFIERS
 
 			void	
-			insert_one_element(const value_type& v) {
-				if (empty())
-					_root = _header->parent;	// init root?
+			insert_unique(const value_type& v) {
 				node_ptr	n	= _create_node(v);
-				node ptr	y	= _header;
+				node_ptr	y	= 0;
 				node_ptr	x	= _root;
 
-				while (x != _header) {
+				if (x == 0) {
+					_root			= n;
+					_root->left		= _header.node.parent;
+					_root->right	= _header.node.parent;
+					_root->parent	= &_header.node;
+					_root->color	= BLACK;
+					_header.node_count++;
+					return ;
+				}
+				while (x != 0) {
 					y = x;
-					if (n->key < x->key)
+					if (key(n) < key(x))
 						x = x->left;
 					else
-
+						x = x->right;
 				}
-				
-
-				
+				n->parent = y;
+				if (y == 0) 
+					_root = n;
+				else if (key(n) < key(y))
+					y->left = n;
 			}
 
 			// OPERATIONS
@@ -532,7 +555,7 @@ namespace ft {
 	
 			void
 			_dealloc_node(node_ptr& n) {
-				_alloc.deallocate(n);
+				_alloc.deallocate(n, 1);
 			}
 
 			node_ptr
@@ -559,31 +582,36 @@ namespace ft {
 			node_ptr
 			_clone_node(node_ptr src);
 			
-			//template<class V>			// if const
 			node_ptr
-			//_create_node(V val) {		// if const
-			_create_node(value_type val, node_ptr pos = 0) {
-				node_ptr	n;
-
-				n = _alloc_node();		// replace with an allocator dispatch
-				_construct_node(n, val);
-				n->parent = 0;
+			_init_node_ptr(node_ptr n, node_ptr pos = 0) {
+				n->parent = pos;
 				n->left = 0;
 				n->right = 0;
-				n->value = val;
 				n->color = RED;
 				return n;
 			}
 
-			//struct reuse or realloc
-			//reuse or alloc >> recycle a pool of nodes, using alloc only once pool empty
-				 //operator() to destroy/construct a node
-				 //extract() from the pool, return a node
-				 //attributes: root, nodes and tree
+			//template<class V>			// if const
+			node_ptr
+			_create_node(value_type val, node_ptr pos = 0) {
+				node_ptr	n;
+
+				n = _alloc_node();		// replace w allocator dispatch
+				_construct_node(n, val);
+				_init_node_ptr(n, pos);
+				return n;
+			}
+
+			// struct reuse or realloc
+			// reuse or alloc >> recycle a pool of nodes,
+			// using alloc only once pool empty
+				 // operator() to destroy/construct a node
+				 // extract() from the pool, return a node
+				 // attributes: root, nodes and tree
 			
-			//struct alloc without reusing
-				 //operator()
-				 //attribute tree	
+			// struct alloc without reusing
+			      // operator()
+			      // attribute tree	
 		
 	};	/* rb_tree class */
 

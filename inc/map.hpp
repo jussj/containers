@@ -155,10 +155,13 @@ namespace ft {
 
 			pair<iterator, bool>
 			insert(const value_type& x) {
-				bool		key		= true;
-				iterator	it;		// newly inserted 
+				bool		key		= false;
+				iterator	it		= find(x);
 
-				_tree.insert_one_element(x);
+				if (it == end()) {
+					_tree.insert_unique(x);
+					it = find(x);
+				}
 				return pair<iterator, bool>(it, key);
 			}
 			
