@@ -199,7 +199,7 @@ namespace ft {
 
 			iterator
 			find(const key_type& x) {
-				return find(x);
+				return _tree.find(x);
 			}
 			
 			const_iterator

@@ -107,9 +107,9 @@ namespace ft {
 		rb_tree_node(value_type v)
 			: value(v) {}
 
-		ptr
-		value_ptr() const {
-			return this->_value;
+		rb_tree_node<V>&
+		value_ptr() {
+			return *this;
 		}
 	
 	};	/* rb_tree_node struct */
@@ -213,12 +213,12 @@ namespace ft {
 
 		reference
 		operator*() const {
-			return *static_cast<node_ptr>(node)->_value;
+			return *static_cast<node_ptr>(node)->value_ptr();
 		}
 
 		pointer
 		operator->() const {
-			return static_cast<node_ptr>(node)->_value;
+			return static_cast<node_ptr>(node)->value_ptr();
 		}
 
 		self
@@ -297,12 +297,12 @@ namespace ft {
 
 		reference
 		operator*() const {
-			return *node->_value;
+			return *static_cast<node_ptr>(node)->value;
 		}
 
 		pointer
 		operator->() const {
-			return *node->_value;
+			return static_cast<node_ptr>(node)->value;
 		}
 
 		self
@@ -504,9 +504,9 @@ namespace ft {
 				while (x != 0) {
 					y = x;
 					if (key(n) < key(x))
-						x = x->left;
+						(base_ptr&)x = x->left;
 					else
-						x = x->right;
+						(base_ptr&)x = x->right;
 				}
 				n->parent = y;
 				if (y == 0) 
@@ -526,10 +526,10 @@ namespace ft {
 				node_ptr n = _root;
 				
 				while (n != 0) {
-					if (!(_compare(n->key, x)))
-						n = n->left;
+					if (!(_comp(key(n), x)))
+						(base_ptr&)n = n->left;
 					else
-						n = n->right;	
+						(base_ptr&)n = n->right;	
 				}
 				return iterator(n);
 			}
@@ -540,7 +540,7 @@ namespace ft {
 			iterator
 			find(const key_type& x) {
 				iterator y = lower_bound(x);
-				if (y->key == x->key)
+				if (key(*y) == key(*x))
 					return y;
 				return end();
 			}
