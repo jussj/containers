@@ -202,7 +202,7 @@ namespace ft {
 
 		// ATTRIBUTES
 
-		node_ptr	node;
+		base_ptr	node;
 
 		// CTORS
 		
@@ -213,12 +213,12 @@ namespace ft {
 
 		reference
 		operator*() const {
-			return *node->_value;
+			return *static_cast<node_ptr>(node)->_value;
 		}
 
 		pointer
 		operator->() const {
-			return *node->_value;
+			return static_cast<node_ptr>(node)->_value;
 		}
 
 		self
@@ -383,8 +383,8 @@ namespace ft {
 
 		protected:
 
-			typedef rb_tree_node_base::ptr			base_ptr;
-			typedef rb_tree_node_base::const_ptr	const_base_ptr;
+			typedef rb_tree_node_base*				base_ptr;
+			typedef const rb_tree_node_base*		const_base_ptr;
 			typedef rb_tree_header					header;
 			typedef	rb_tree_node<Val>*				node_ptr;
 			typedef	const rb_tree_node<Val>*		const_node_ptr;
@@ -426,19 +426,19 @@ namespace ft {
 			// ITERATORS
 			iterator
 			begin() {
-				return iterator(_header.node.parent);
+				return iterator(_header.node.left);
 			}
 			const_iterator
 			begin() const {
-				return const_iterator(_header.node.parent);
+				return const_iterator(_header.node.left);
 			}
 			iterator
 			end() {
-				return iterator(_header);
+				return iterator(&_header.node);
 			}
 			const_iterator
 			end() const {
-				return const_iterator(_header);
+				return const_iterator(&_header.node);
 			}
 
 			// CAPACITY
@@ -458,7 +458,7 @@ namespace ft {
 				return _alloc;
 			}
 
-			key_type
+			const key_type
 			key(node_ptr& n) const {
 				return n->value.first;
 			}
@@ -486,7 +486,7 @@ namespace ft {
 
 			// MODIFIERS
 
-			void	
+			iterator	
 			insert_unique(const value_type& v) {
 				node_ptr	n	= _create_node(v);
 				node_ptr	y	= 0;
@@ -499,7 +499,7 @@ namespace ft {
 					_root->parent	= &_header.node;
 					_root->color	= BLACK;
 					_header.node_count++;
-					return ;
+					return iterator(n);
 				}
 				while (x != 0) {
 					y = x;
@@ -513,6 +513,7 @@ namespace ft {
 					_root = n;
 				else if (key(n) < key(y))
 					y->left = n;
+				return iterator(n);
 			}
 
 			// OPERATIONS

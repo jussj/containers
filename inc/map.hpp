@@ -31,8 +31,8 @@ namespace ft {
 			typedef typename Alloc::pointer			pointer;
 			typedef typename Alloc::const_pointer	const_pointer;
 
-			typedef ft::rb_tree_iterator<T>			iterator;
-			typedef ft::rb_tree_const_iterator<T>	const_iterator;
+			typedef ft::rb_tree_iterator<value_type>		iterator;
+			typedef ft::rb_tree_const_iterator<value_type>	const_iterator;
 
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
@@ -111,22 +111,22 @@ namespace ft {
 			
 			reverse_iterator
 			rbegin() {
-				return reverse_iterator(_tree.begin());
-			}
-			
-			const_reverse_iterator
-			rbegin() const {
-				return const_reverse_iterator(_tree.begin());
-			}
-			
-			reverse_iterator
-			rend() {
 				return reverse_iterator(_tree.end());
 			}
 			
 			const_reverse_iterator
-			rend() const {
+			rbegin() const {
 				return const_reverse_iterator(_tree.end());
+			}
+			
+			reverse_iterator
+			rend() {
+				return reverse_iterator(_tree.begin());
+			}
+			
+			const_reverse_iterator
+			rend() const {
+				return const_reverse_iterator(_tree.begin());
 			}
 		
 		// CAPACITY
@@ -156,11 +156,11 @@ namespace ft {
 			pair<iterator, bool>
 			insert(const value_type& x) {
 				bool		key		= false;
-				iterator	it		= find(x);
+				iterator	it		= find(x.first);
 
 				if (it == end()) {
-					_tree.insert_unique(x);
-					it = find(x);
+					it	= _tree.insert_unique(x);
+					key = true;
 				}
 				return pair<iterator, bool>(it, key);
 			}
@@ -199,7 +199,7 @@ namespace ft {
 
 			iterator
 			find(const key_type& x) {
-				_tree.find(x);
+				return find(x);
 			}
 			
 			const_iterator
