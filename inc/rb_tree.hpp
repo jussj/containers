@@ -230,6 +230,7 @@ namespace ft {
 		self
 		operator++() {
 			increment();
+			return *this;
 		}
 
 		self
@@ -242,6 +243,7 @@ namespace ft {
 		self
 		operator--() {
 			decrement();
+			return *this;
 		}
 
 		self
@@ -520,6 +522,8 @@ namespace ft {
 					_root = n;
 				else if (key(**n) < key(**y))
 					y->left = n;
+
+				_header.node_count++;
 				return iterator(n);
 			}
 

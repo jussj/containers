@@ -32,8 +32,8 @@ namespace ft {
 			typedef typename Alloc::pointer			pointer;
 			typedef typename Alloc::const_pointer	const_pointer;
 			
-			typedef	vectorIterator<T>						iterator;
-			typedef	vectorIterator<const T>					const_iterator;
+			typedef	vector_iterator<T>						iterator;
+			typedef	vector_iterator<const T>					const_iterator;
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
