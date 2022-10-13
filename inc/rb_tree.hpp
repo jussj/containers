@@ -99,17 +99,23 @@ namespace ft {
 	template<class V>
 	struct rb_tree_node : public rb_tree_node_base {
 
-		typedef rb_tree_node<V>*	ptr;
+		typedef rb_tree_node<V>*	node_ptr;
 		typedef V					value_type;
+		typedef V*					value_ptr;
 
-		V							value;
+		value_ptr					value;
 
-		rb_tree_node(value_type v)
-			: value(v) {}
+		//rb_tree_node(value_type v)
+			//: value(v) {}
 
-		rb_tree_node<V>&
-		value_ptr() {
-			return *this;
+		value_ptr
+		node_content() {
+			return this->value;
+		}
+
+		value_type&
+		operator*() {
+			return *(this->value);
 		}
 	
 	};	/* rb_tree_node struct */
@@ -213,12 +219,12 @@ namespace ft {
 
 		reference
 		operator*() const {
-			return *static_cast<node_ptr>(node)->value_ptr();
+			return *static_cast<node_ptr>(node)->node_content();
 		}
 
 		pointer
 		operator->() const {
-			return static_cast<node_ptr>(node)->value_ptr();
+			return &(static_cast<node_ptr>(node)->node_content());
 		}
 
 		self
@@ -297,12 +303,12 @@ namespace ft {
 
 		reference
 		operator*() const {
-			return *static_cast<node_ptr>(node)->value;
+			return *static_cast<node_ptr>(node)->node_content();
 		}
 
 		pointer
 		operator->() const {
-			return static_cast<node_ptr>(node)->value;
+			return static_cast<node_ptr>(node)->node_content();
 		}
 
 		self
@@ -353,51 +359,45 @@ namespace ft {
 
 	};	/* rb_tree_const_iterator */
 
-	template<	class T, class Key, class Val, class Compare, 
-				class Alloc = std::allocator<rb_tree_node<Val> > >
+	template<class T, class Key, class Val, class Compare, class Alloc>
 	class rb_tree_impl {
 
 		// TYPES
 
 		public:
 
+			typedef Val					value_type;
 			typedef Key 				key_type;
 			typedef T					mapped_value;
-			typedef Val					value_type;
 
-			//typedef mapped_value* 		pointer;
-			//typedef const mapped_value* const_pointer;
-			//typedef mapped_value& 		reference;
-			//typedef const mapped_value& const_reference;
-		
 			typedef size_t 				size_type;
 			typedef ptrdiff_t 			difference_type;
+		 
+			typedef rb_tree_node_base*				base_ptr;
+			typedef const rb_tree_node_base*		const_base_ptr;
+			typedef	rb_tree_node<Val>*				node_ptr;
+			typedef	const rb_tree_node<Val>*		const_node_ptr;
+			typedef rb_tree_header					header;
 		
-			typedef Alloc 				allocator_type;
-			typedef Compare				key_compare;	
+			typedef typename Alloc::template	rebind<rb_tree_node<Val> >::other 
+												node_allocator_type;
+			typedef Alloc						pair_allocator_type;
+			typedef Compare						key_compare;	
 		
 			typedef rb_tree_iterator<value_type>			iterator;
 			typedef rb_tree_const_iterator<value_type>		const_iterator;
 			typedef std::reverse_iterator<iterator>			reverse_iterator;
 			typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
 
-		protected:
-
-			typedef rb_tree_node_base*				base_ptr;
-			typedef const rb_tree_node_base*		const_base_ptr;
-			typedef rb_tree_header					header;
-			typedef	rb_tree_node<Val>*				node_ptr;
-			typedef	const rb_tree_node<Val>*		const_node_ptr;
-	
 		// ATTRIBUTES
 
 		private:
 
-			allocator_type	_alloc;
-			key_compare		_comp;
-			node_ptr		_root;
-			header			_header;
-			base_ptr		_nodes;
+			pair_allocator_type		_alloc;
+			node_allocator_type		_nodalloc;
+			key_compare				_comp;
+			node_ptr				_root;
+			header					_header;
 			//rb_tree_impl&	_t;			// second tree layer?
 
 		// MEMBER FUNCTIONS
@@ -415,8 +415,10 @@ namespace ft {
 					_header()	{}
 
 			rb_tree_impl(const key_compare& comp,
-						 const allocator_type& alloc) 
-				:	_alloc(alloc),
+						 const pair_allocator_type& pair_alloc, 
+						 const node_allocator_type& node_alloc) 
+				:	_alloc(pair_alloc),
+				 	_nodalloc(node_alloc),
 					_comp(comp) {}
 			
 			~rb_tree_impl() {}
@@ -452,15 +454,20 @@ namespace ft {
 				return _header.node_count == 0;
 			}
 
-			// ATTRIBUTES
-			allocator_type
-			get_allocator() {
+			// GET
+			pair_allocator_type
+			pair_allocator() {
+				return _alloc;
+			}
+			
+			node_allocator_type
+			node_allocator() {
 				return _alloc;
 			}
 
 			const key_type
-			key(node_ptr& n) const {
-				return n->value.first;
+			key(value_type& v) const {
+				return v.first;
 			}
 
 			// MIN/MAX
@@ -503,7 +510,7 @@ namespace ft {
 				}
 				while (x != 0) {
 					y = x;
-					if (key(n) < key(x))
+					if (key(**n) < key(**x))
 						(base_ptr&)x = x->left;
 					else
 						(base_ptr&)x = x->right;
@@ -511,7 +518,7 @@ namespace ft {
 				n->parent = y;
 				if (y == 0) 
 					_root = n;
-				else if (key(n) < key(y))
+				else if (key(**n) < key(**y))
 					y->left = n;
 				return iterator(n);
 			}
@@ -526,7 +533,7 @@ namespace ft {
 				node_ptr n = _root;
 				
 				while (n != 0) {
-					if (!(_comp(key(n), x)))
+					if (!(_comp(key(**n), x)))
 						(base_ptr&)n = n->left;
 					else
 						(base_ptr&)n = n->right;	
@@ -540,7 +547,7 @@ namespace ft {
 			iterator
 			find(const key_type& x) {
 				iterator y = lower_bound(x);
-				if (key(*y) == key(*x))
+				if (y != 0 && key(*y) == x)
 					return y;
 				return end();
 			}
@@ -551,12 +558,19 @@ namespace ft {
 			
 			node_ptr
 			_alloc_node() {
-				return _alloc.allocate(1);
+				return _nodalloc.allocate(1);
+			}
+
+			value_type*
+			_construct_pair(value_type v) {
+				value_type*	pair = _alloc.allocate(1);
+				_alloc.construct(pair, v);
+				return pair;
 			}
 	
 			void
 			_dealloc_node(node_ptr& n) {
-				_alloc.deallocate(n, 1);
+				_nodalloc.deallocate(n, 1);
 			}
 
 			node_ptr
@@ -597,8 +611,8 @@ namespace ft {
 			_create_node(value_type val, node_ptr pos = 0) {
 				node_ptr	n;
 
-				n = _alloc_node();		// replace w allocator dispatch
-				_construct_node(n, val);
+				n			= _alloc_node();		// replace w allocator dispatch
+				n->value	= _construct_pair(val);
 				_init_node_ptr(n, pos);
 				return n;
 			}

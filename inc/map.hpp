@@ -39,7 +39,7 @@ namespace ft {
 
 		private:
 
-			typedef rb_tree_impl <T, Key, pair<const Key, T>, Compare>	
+			typedef rb_tree_impl <T, Key, pair<const Key, T>, Compare, Alloc>	
 			rb_tree;
 
 		// ATTRIBUTES
