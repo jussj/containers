@@ -41,6 +41,7 @@ namespace ft {
 				return *this;
 			this->first		= src.first;
 			this->second	= src.second;
+			return *this;
 		}
 
 	};

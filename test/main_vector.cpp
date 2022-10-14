@@ -35,13 +35,14 @@ int 	main() {
 		std::cout << "D is NOT empty" << std::endl;
 
 	{
-		std::cout << "TESTING INSERT/ASSIGN/CTOR FOURTH PARAM (SHOULD NOT COMPILE)" << std::endl;
+		std::cout	<< "TESTING INSERT/ASSIGN/CTOR FOURTH PARAM (SHOULD NOT COMPILE)"
+					<< std::endl;
 		
-		NAMESPACE::vector<int>	hector;
-		int	array[] = {-5, 4, 6, 3, 2};
+		//NAMESPACE::vector<int>	hector;
+		//int	array[] = {-5, 4, 6, 3, 2};
 	
-		//should not compile	
-		hector.insert(hector.begin(), array, array + 5, 0);
+		// SHOULD NOT COMPILE	
+		//hector.insert(hector.begin(), array, array + 5, 0);
 	}
 	{
 		std::cout	<< std::endl

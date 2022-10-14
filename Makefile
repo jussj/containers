@@ -2,7 +2,7 @@ NAME				=	containers
 
 CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98
 
-DEBUGFLAGS			=	-g3	#-fsanitize=address
+DEBUGFLAGS			=	-g3	# -fsanitize=address
 
 CXX				=	c++
 

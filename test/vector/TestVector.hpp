@@ -11,7 +11,7 @@ void	print_info(const Vec& v, std::string name) {
 				<< "   max_size:   " << v.max_size() << std::endl;
 			if (!v.empty()) {
 				std::cout	<< "   front/back: [ " << v.front()
-						<< " ... " << v.back() << " ]" << std::endl;
+							<< " ... " << v.back() << " ]" << std::endl;
 			}
 	std::cout	<< std::endl;
 }

@@ -83,6 +83,10 @@ namespace ft {
 			map(const map<key_type, T, key_compare, allocator_type>& x);
 			
 			~map() {}
+				// destroy pairs
+				// destroy nodes
+				// deallocate both
+				// deallocate node pool
 
 			map<key_type, T, key_compare, allocator_type>&
 			operator=(const map<key_type, T, key_compare, allocator_type>& x);
