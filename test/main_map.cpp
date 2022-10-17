@@ -28,6 +28,7 @@ void	print_map(Map& m, const std::string name) {
 		std::cout << "   MAP: " << std::endl;
 		for (It it = m.begin(); it != m.end(); ++it) {
 			print_pair<It>(it);
+			
 		}
 	}
 	std::cout	<< std::endl;
@@ -41,12 +42,13 @@ int 	main() {
 		NAMESPACE::pair<NAMESPACE::map<int, std::string>::iterator,
 						bool>						ret;
 
-		ret = a.insert(NAMESPACE::pair<int, std::string>(1, "one"));
+		ret = a.insert(NAMESPACE::pair<int, std::string>(4, "four"));
 
 		print_pair(ret.first);
 
+		a.insert(NAMESPACE::pair<int, std::string>(1, "one"));
+		//a.insert(NAMESPACE::pair<int, std::string>(5, "five"));
 		a.insert(NAMESPACE::pair<int, std::string>(0, "zero"));
-		//a.insert(NAMESPACE::pair<int, std::string>(4, "four"));
 		//a.insert(NAMESPACE::pair<int, std::string>(3, "three"));
 		//a.insert(NAMESPACE::pair<int, std::string>(10, "ten"));
 

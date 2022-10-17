@@ -16,7 +16,7 @@ namespace ft {
 
 		public:
 
-		// TYPES
+		//// TYPES ////
 
 			typedef Key					key_type;
 			typedef T					mapped_type;
@@ -42,14 +42,14 @@ namespace ft {
 			typedef rb_tree_impl <T, Key, pair<const Key, T>, Compare, Alloc>	
 			rb_tree;
 
-		// ATTRIBUTES
+		//// ATTRIBUTES ////
 		
 			allocator_type	_alloc;
 			rb_tree			_tree;
 
 		public:
 
-		// VALUE COMPARE
+		//// VALUE COMPARE ////
 
 			class value_compare
 				: public std::binary_function<value_type, value_type, bool> {
@@ -67,7 +67,7 @@ namespace ft {
 					}
 			};
 
-		// CTOR, DTOR AND COPY
+		//// CTOR, DTOR AND COPY ////
 
 			explicit
 			map(const key_compare& comp = Compare(), 
@@ -91,7 +91,7 @@ namespace ft {
 			map<key_type, T, key_compare, allocator_type>&
 			operator=(const map<key_type, T, key_compare, allocator_type>& x);
 
-		// ITERATORS
+		//// ITERATORS ////
 
 			iterator
 			begin() {
@@ -133,7 +133,7 @@ namespace ft {
 				return const_reverse_iterator(_tree.begin());
 			}
 		
-		// CAPACITY
+		//// CAPACITY ////
 
 			bool
 			empty() const {
@@ -150,12 +150,12 @@ namespace ft {
 				return _alloc.max_size();
 			}
 
-		// ACCESS
+		//// ACCESS ////
 
 			T&
 			operator[](const key_type& x);
 
-		// MODIFIERS
+		//// MODIFIERS ////
 
 			pair<iterator, bool>
 			insert(const value_type& x) {
@@ -191,7 +191,7 @@ namespace ft {
 			void
 			clear();
 			
-		// OBSERVERS
+		//// OBSERVERS ////
 
 			key_compare
 			key_comp() const;
@@ -199,7 +199,7 @@ namespace ft {
 			value_compare
 			value_comp() const;
 
-		// MAP OPERATIONS
+		//// MAP OPERATIONS ////
 
 			iterator
 			find(const key_type& x) {
@@ -264,7 +264,7 @@ namespace ft {
 	operator<=(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	);
 
-	// SPECIALIZED ALGOS
+	//// SPECIALIZED ALGOS ////
 
 	template <class Key, class T, class Compare, class Allocator>
 	void

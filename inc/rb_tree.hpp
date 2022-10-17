@@ -138,57 +138,6 @@ namespace ft {
 
 // find a solution to keep the base without loosing the const qualifier 
 
-/*	struct rb_tree_base_iterator {
-
-		typedef rb_tree_node_base::ptr		base_ptr;
-		typedef bidirectional_iterator_tag	iterator_category;
-		typedef ptrdiff_t					difference_type;
-
-		base_ptr	node;
-
-		void
-		increment() {
-			if (node->right != 0) {
-				node = node->right;
-				while (node->left != 0)
-					node = node->left;
-			}
-			else {
-				base_ptr x = node->parent;
-				while (node == x->parent) {
-					node = x;
-					x = x->parent;
-				}
-				if (node->right != x)
-					node = x;
-			}
-		}
-
-		void
-		decrement() {
-			if (node->color == RED
-					&& node->parent->parent == node)
-				node = node->right;
-			else if (node->left != 0) {
-				base_ptr x = node->left;
-				while (x->right != 0)
-					x = x->right;
-				node = x;
-			}
-			else {
-				base_ptr x = node->parent;
-				while (node == x->left) {
-					node = x;
-					x = x->parent;
-				}
-				node = x;
-			}
-
-		}
-
-	};*//* rb_tree_base_iterator */
-		/* base_ptr node and decrem/increm func */
-
 	template<class T>
 	struct rb_tree_iterator /* : public rb_tree_base_iterator*/ {
 
@@ -444,7 +393,7 @@ namespace ft {
 	template<class T, class Key, class Val, class Compare, class Alloc>
 	class rb_tree_impl {
 
-		// TYPES
+		//// TYPES ////
 
 		public:
 
@@ -471,7 +420,7 @@ namespace ft {
 			typedef std::reverse_iterator<iterator>			reverse_iterator;
 			typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
 
-		// ATTRIBUTES
+		//// ATTRIBUTES /////
 
 		private:
 
@@ -482,10 +431,10 @@ namespace ft {
 			header					_header;
 			//rb_tree_impl&	_t;			// second tree layer?
 
-		// MEMBER FUNCTIONS
+		//// MEMBER FUNCTIONS ////
 
 		public:
-		
+
 			// CTOR / DTOR 
 
 			rb_tree_impl() {}
@@ -505,7 +454,7 @@ namespace ft {
 			
 			~rb_tree_impl() {}
 
-			// ACCESS 
+			//// ACCESS ////
 
 			// ITERATORS
 			iterator
@@ -536,7 +485,43 @@ namespace ft {
 				return _header.node_count == 0;
 			}
 
-			// MODIFIERS
+			//// MODIFIERS ////
+
+			void
+			left_rotate(base_ptr x) {
+				base_ptr y	= x->right;
+				x->right	= y->left;
+
+				if (y->left != 0)
+					y->left->parent = x;
+				y->parent = x->parent;
+				if (x->parent == 0)
+					(base_ptr&)_root = y;
+				else if (x == x->parent->left)
+					x->parent->left = y;
+				else
+					x->parent->right = y;
+				y->left		= x;
+				x->parent	= y;
+			}
+
+			void
+			right_rotate(base_ptr x) {
+				base_ptr y	= x->left;
+				x->left		= y->right;
+
+				if (y->right != 0)
+					y->right->parent = x;
+				y->parent = x->parent;
+				if (x->parent == 0)
+					(base_ptr&)_root = y;
+				else if (x == x->parent->right)
+					x->parent->right = y;
+				else
+					x->parent->left = y;
+				y->right	= x;
+				x->parent	= y;
+			}
 
 			iterator
 			insert_rebalance(node_ptr n) {
@@ -544,7 +529,7 @@ namespace ft {
 
 				while (n->parent->color == RED) {
 					if (n->parent == n->parent->parent->left) {	
-						y = n->parent->parent->right;
+						(base_ptr&)y = n->parent->parent->right;
 						// case 1
 						if (y->color == RED) {
 							n->parent->color = BLACK;
@@ -554,17 +539,17 @@ namespace ft {
 						else {
 							// case 2
 							if (n == n->parent->right) {
-								n = n->parent;
-								// LEFT_ROTATE
+								(base_ptr&)n = n->parent;
+								left_rotate((base_ptr&)n);
 							}	
 							// case 3
 							n->parent->color = BLACK;
 							n->parent->parent->color = RED;
-							// RIGHT_ROTATE
+							right_rotate(n->parent->parent);
 						}
 					}
 					else {
-						y = n->parent->parent->left;
+						(base_ptr&)y = n->parent->parent->left;
 						// case 4
 						if (y->color == RED) {
 							n->parent->color = BLACK;
@@ -574,17 +559,18 @@ namespace ft {
 						else {
 							// case 5
 							if (n == n->parent->left) {
-								n = n->parent;
-								// RIGHT_ROTATE
+								(base_ptr&)n = n->parent;
+								right_rotate(n);
 							}	
 							// case 6
 							n->parent->color = BLACK;
 							n->parent->parent->color = RED;
-							// LEFT_ROTATE
+							left_rotate(n->parent->parent);
 						}
 					}
 				}
 				_root->color = BLACK;
+				return iterator(n);
 			}
 
 			iterator	
@@ -595,14 +581,15 @@ namespace ft {
 
 				while (x != 0) {
 					y = x;
-					if (key(**n) < key(**x))
-						(base_ptr&)x = x->left;
-					else
-						(base_ptr&)x = x->right;
-				}
-				// set new node's parent
-				n->parent = y;
-				if (y == 0) {
+				std::cout<<"X IS "<<key(**x)<<" N IS "<< key(**n)<<std::endl;
+				if (key(**n) < key(**x))
+					(base_ptr&)x = x->left;
+				else
+					(base_ptr&)x = x->right;
+			}
+			// set new node's parent
+			n->parent = y;
+			if (y == 0) {
 					_root				= n;
 					_root->parent		= &_header.node;
 					_root->color		= BLACK;
@@ -628,11 +615,12 @@ namespace ft {
 				_header.node_count++;
 
 				// return rebalanced tree iterator on node	
-				//return iterator(insert_rebalance(n));
-				return iterator(n);
+				return iterator(insert_rebalance(n));
+				//return iterator(n);
 			}
 
-			// OPERATIONS
+			//// MAP OPERATIONS ////
+
 			const_iterator
 			lower_bound(const key_type& x) const;
 			
@@ -662,7 +650,9 @@ namespace ft {
 
 		protected:
      
-			// ACCESS
+			//// ACCESS ////
+
+			// ATTRIBUTES
 			pair_allocator_type
 			pair_allocator() {
 				return _alloc;
@@ -798,23 +788,6 @@ namespace ft {
 			      // attribute tree	
 		
 	};	/* rb_tree class */
-
-	template<class V>
-	std::ostream &
-	operator<<(std::ostream& o, rb_tree_node<V>& n) {
-		std::cout	<< "// NODE [" << n.value.first
-					<< "|" << n.value.second << "] //"
-					<< std::endl
-					<< "// address:   " << &n 
-					<< std::endl
-					<< "// left:   " << n.left 
-					<< std::endl
-					<< "// right:  " << n.right
-					<< std::endl
-					<< "// parent: " << n.parent
-					<< std::endl;
-		return o;
-	}
 		
 }	/* namespace ft */
 
