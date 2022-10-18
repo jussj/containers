@@ -88,7 +88,7 @@ namespace ft {
 		}
 		void
 		reset() {
-			node.parent	= 0;			// root
+			node.parent	= 0;		// root
 			node.left	= &node;
 			node.right	= &node;
 			node_count	= 0;
@@ -241,18 +241,23 @@ namespace ft {
 				}
 				node = x;
 			}
-
 		}
 
 		void
 		print_node_ptr() {
-			std::cout	<< "   addr   " << &(*node)
+			std::cout	<< "   color  ";
+			if (node->color == BLACK)
+				std::cout << "BLACK";
+			else
+				std::cout << "RED";				
+			std::cout	<< std::endl
+						<< "   addr   " << &(*node)
 						<< std::endl
-						<< "   left   " << node->left 
+						<< "   left   " << node->left
 						<< std::endl
 						<< "   right  " << node->right
 						<< std::endl
-						<< "   parent " << node->parent 
+						<< "   parent " << &(*(node->parent))
 						<< std::endl << std::endl;
 		}
 
@@ -607,9 +612,9 @@ namespace ft {
 			_header.node_count++;
 
 			// return rebalanced tree iterator on node
-			//if (_header.node_count > 2)
-				//return iterator(insert_rebalance(n));
-			//else
+			if (_header.node_count > 2)
+				return iterator(insert_rebalance(n));
+			else
 				return iterator(n);
 			}
 
