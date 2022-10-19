@@ -183,13 +183,12 @@ namespace ft {
 		}
 		self&
 		operator--() {
-			//if (node->parent->color == RED	// look for header
-					//&& node->parent->parent == node) {
-				//std::cout<<"OK1"<<std::endl;
-				//node = node->right;			// return rightmost
-			//}
-			//else if (node->left != 0) {
-			if (node->left != 0) {
+			if (node->color == RED			// look for header
+					&& node->parent->parent == node) {
+				node = node->right;			// return rightmost
+			}
+			else if (node->left != 0) {
+			//if (node->left != 0) {
 				base_ptr x = node->left;
 				while (x->right != 0)
 					x = x->right;
@@ -224,7 +223,7 @@ namespace ft {
 		operator!=(const self& src) {
 			return this->node != src.node;
 		}
-		
+
 		friend bool
 		operator==(const self& x, const self& y) {
 			return x->node == y->node;
