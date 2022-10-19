@@ -476,6 +476,8 @@ namespace ft {
 
 			//// MODIFIERS ////
 
+			// ROTATIONS
+
 			void
 			left_rotate(base_ptr x) {
 				base_ptr y	= x->right;
@@ -511,6 +513,8 @@ namespace ft {
 				y->right	= x;
 				x->parent	= y;
 			}
+
+			// INSERTIONS
 
 			iterator
 			insert_rebalance(node_ptr n) {
@@ -613,8 +617,76 @@ namespace ft {
 			//// MAP OPERATIONS ////
 
 			const_iterator
-			lower_bound(const key_type& x) const;
+			lower_bound(const key_type& x) const {
+				node_ptr n = _root;
+				node_ptr m = n;
+				// init m to header node? last node not less than x
+				
+				while (n != 0) {
+					if (!(_comp(key(**n), x)))
+						m = n, n = left(n);
+					else
+						n = right(n);
+				}
+				return const_iterator(m);
+			}
+
+			// DELETIONS
 			
+			void
+			transplant(base_ptr x, base_ptr y) {
+				if (x->parent == 0)
+					(base_ptr&)_root = y;
+				else if (y == y->parent->left)
+					x->parent->left = y;
+				else
+					x->parent->right = y;
+				y->parent = x->parent;	
+			}
+
+			iterator
+			erase(iterator pos) {
+				base_ptr n				= pos.node;
+				base_ptr y				= n;	
+				base_ptr x;
+
+				// saving erased node original color
+				t_color original_color	= y->color;
+
+				if (left(n) == 0) {
+				   x = n->right;
+				   transplant(n, n->right);
+				}
+				else if (n->right == 0) {
+				   x = n->left;	
+				   transplant(n, n->left);
+				}
+				else {
+					y = minimum(n->right);
+					original_color = y->color;
+					x = y->right;
+					if (y->parent == n)
+						x->parent = y;
+					else {
+						transplant(y, y->right);
+						y->right = n->right;
+						y->right->parent = y;
+					}
+					transplant(n, y);
+					y->left = n->left;
+					y->left->parent = y;
+					y->color = n->color;
+				}
+				if (original_color == BLACK)
+					return iterator(x);
+					//return erase_rebalance(x);
+				else
+					return iterator(y);
+					
+			}
+
+			// FIND
+
 			iterator
 			lower_bound(const key_type& x) {
 				node_ptr n = _root;

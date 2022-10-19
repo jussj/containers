@@ -37,59 +37,63 @@ void	print_map(Map& m, const std::string name) {
 }
 
 int 	main() {
-	{
-		NAMESPACE::map<int, std::string>			a;
-		NAMESPACE::map<int, std::string>::iterator	it;
+	NAMESPACE::map<int, std::string>			a;
+	NAMESPACE::map<int, std::string>::iterator	it;
 
-		NAMESPACE::pair<NAMESPACE::map<int, std::string>::iterator,
-						bool>						ret;
+	NAMESPACE::pair<NAMESPACE::map<int, std::string>::iterator,
+					bool>						ret;
 
-		std::cout	<< "// INSERT" << std::endl;
-		
-		ret = a.insert(NAMESPACE::pair<int, std::string>(4, "four"));
+	std::cout	<< "// INSERT ONE ELEMENT" << std::endl;
+	
+	ret = a.insert(NAMESPACE::pair<int, std::string>(4, "four"));
 
-		print_pair(ret.first);
+	print_pair(ret.first);
 
-		a.insert(NAMESPACE::pair<int, std::string>(1, "one"));
-		a.insert(NAMESPACE::pair<int, std::string>(5, "five"));
-		a.insert(NAMESPACE::pair<int, std::string>(0, "zero"));
-		a.insert(NAMESPACE::pair<int, std::string>(3, "three"));
-		ret = a.insert(NAMESPACE::pair<int, std::string>(10, "ten"));
-		print_pair(ret.first);
+	a.insert(NAMESPACE::pair<int, std::string>(1, "one"));
+	a.insert(NAMESPACE::pair<int, std::string>(5, "five"));
+	a.insert(NAMESPACE::pair<int, std::string>(0, "zero"));
+	a.insert(NAMESPACE::pair<int, std::string>(3, "three"));
+	ret = a.insert(NAMESPACE::pair<int, std::string>(10, "ten"));
+	print_pair(ret.first);
 
-		std::cout	<< std::endl
-					<< "// DECREM" << std::endl;
-		it = ret.first;
-		for (size_t i = 0; i != a.size(); ++i) {
-			print_pair(it);
-			--it;
-		}
-
-		std::cout	<< std::endl
-					<< "// BEGIN" << std::endl;
-		print_pair(a.begin());
-		print_pair(++a.begin());
-		//print_pair(a.begin() + 2);	// DOESN'T COMPILE (BIDIR)
-		
-		std::cout	<< std::endl
-					<< "// END" << std::endl;
-		print_pair(--a.end());
-		
-		std::cout	<< std::endl
-					<< "// FIND" << std::endl;
-		print_pair(a.find(10));
-		
-		std::cout	<< std::endl
-					<< "// LOWER_BOUND" << std::endl;
-		it = a.lower_bound(3);
+	std::cout	<< std::endl
+				<< "// DECREM" << std::endl;
+	it = ret.first;
+	for (size_t i = 0; i != a.size(); ++i) {
 		print_pair(it);
-		it = a.lower_bound(1);
-		print_pair(it);
-		//it = a.lower_bound(11);		// SHOULD SEGF
-		//print_pair(it);
-
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(a, "A");
+		--it;
 	}
+
+	std::cout	<< std::endl
+				<< "// BEGIN" << std::endl;
+	print_pair(a.begin());
+	print_pair(++a.begin());
+	//print_pair(a.begin() + 2);	// DOESN'T COMPILE (BIDIR)
+	
+	std::cout	<< std::endl
+				<< "// END" << std::endl;
+	print_pair(--a.end());
+	
+	std::cout	<< std::endl
+				<< "// FIND" << std::endl;
+	print_pair(a.find(10));
+	
+	std::cout	<< std::endl
+				<< "// LOWER_BOUND" << std::endl;
+	it = a.lower_bound(3);
+	print_pair(it);
+	it = a.lower_bound(1);
+	print_pair(it);
+	//it = a.lower_bound(11);		// SHOULD SEGF
+	//print_pair(it);
+
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(a, "A");
+
+	std::cout	<< "// ERASE ONE ELEMENT" << std::endl;
+	
+	it = a.erase(a.find(10));
+	print_pair(it);
+
 	return 0;
 }
