@@ -13,8 +13,7 @@ namespace ft {
 
 	typedef enum	e_color {
 		RED,
-		BLACK,
-		D_BLACK
+		BLACK
 	}				t_color;
 
 	struct rb_tree_node_base {
@@ -70,7 +69,6 @@ namespace ft {
 
 		rb_tree_header() {
 			node.color = RED;
-			//node.color = BLACK;
 			reset();
 		}
 
@@ -157,9 +155,22 @@ namespace ft {
 			return &(static_cast<node_ptr>(node)->node_content());
 		}
 
-		self
+		self&
 		operator++() {
-			increment();
+			if (node->right != 0) {
+				node = node->right;
+				while (node->left != 0)
+					node = node->left;
+			}
+			else {
+				base_ptr x = node->parent;
+				while (node == x->right) {
+					node = x;
+					x = x->parent;
+				}
+				if (node->right != x) // rightmost
+					node = x;
+			}
 			return *this;
 		}
 
@@ -167,12 +178,31 @@ namespace ft {
 		operator++(int) {
 			self tmp = *this;
 
-			increment();
+			++node;
 			return tmp;
 		}
-		self
+		self&
 		operator--() {
-			decrement();
+			//if (node->parent->color == RED	// look for header
+					//&& node->parent->parent == node) {
+				//std::cout<<"OK1"<<std::endl;
+				//node = node->right;			// return rightmost
+			//}
+			//else if (node->left != 0) {
+			if (node->left != 0) {
+				base_ptr x = node->left;
+				while (x->right != 0)
+					x = x->right;
+				node = x;
+			}
+			else {
+				base_ptr x = node->parent;
+				while (node == x->left) {
+					node = x;
+					x = x->parent;
+				}
+				node = x;
+			}
 			return *this;
 		}
 
@@ -180,7 +210,8 @@ namespace ft {
 		operator--(int) {
 			self tmp = *this;
 
-			decrement();
+			//decrement();
+			--node;
 			return tmp;
 		}
 	
@@ -204,45 +235,6 @@ namespace ft {
 			return x->node != y->node;
 		}
 		
-		void
-		increment() {
-			if (node->right != 0) {
-				node = node->right;
-				while (node->left != 0)
-					node = node->left;
-			}
-			else {
-				base_ptr x = node->parent;
-				while (node == x->parent) {
-					node = x;
-					x = x->parent;
-				}
-				if (node->right != x)
-					node = x;
-			}
-		}
-
-		void
-		decrement() {
-			if (node->color == RED
-					&& node->parent->parent == node)
-				node = node->right;
-			else if (node->left != 0) {
-				base_ptr x = node->left;
-				while (x->right != 0)
-					x = x->right;
-				node = x;
-			}
-			else {
-				base_ptr x = node->parent;
-				while (node == x->left) {
-					node = x;
-					x = x->parent;
-				}
-				node = x;
-			}
-		}
-
 		void
 		print_node_ptr() {
 			std::cout	<< "   color  ";
@@ -367,8 +359,9 @@ namespace ft {
 		void
 		decrement() {
 			if (node->color == RED
-					&& node->parent->parent == node)
+					&& node->parent->parent == node) {
 				node = node->right;
+			}
 			else if (node->left != 0) {
 				base_ptr x = node->left;
 				while (x->right != 0)
@@ -383,7 +376,6 @@ namespace ft {
 				}
 				node = x;
 			}
-
 		}
 
 	};	/* rb_tree_const_iterator */
@@ -591,16 +583,17 @@ namespace ft {
 					_root->parent		= &_header.node;
 					_root->color		= BLACK;
 					
-					// set leftmost/rightmost
+					// set leftmost/rightmost and parent
 					_header.node.left	= _root;
 					_header.node.right	= _root;
+					_header.node.parent	= _root;
 				}
 			else if (key(**n) < key(**y) || _header.node_count == 1)
 				y->left = n;
 			else
 				y->right = n;
-			n->left		= _header.node.parent; // T.nil
-			n->right	= _header.node.parent;
+			n->left		= 0;
+			n->right	= 0;
 			
 			// maintain leftmost/rightmost
 			if (key(**n) < key(**left(&_header.node)))

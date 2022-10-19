@@ -23,10 +23,10 @@ namespace ft {
 
 		// CTOR, CPY, DTOR
 
-			vector_iterator() 			: _ptr(NULL) 	{}
-			vector_iterator(pointer it) 	: _ptr(it) 		{}
+			vector_iterator()						: _ptr(NULL) {}
+			vector_iterator(pointer it)				: _ptr(it) {}
 			template<class U>
-			vector_iterator(vector_iterator<U> it)		: _ptr(it.current()) {}
+			vector_iterator(vector_iterator<U> it)	: _ptr(it.current()) {}
 			~vector_iterator() {}
 
 		// OPERATORS
