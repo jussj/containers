@@ -619,14 +619,16 @@ namespace ft {
 			iterator
 			lower_bound(const key_type& x) {
 				node_ptr n = _root;
+				node_ptr m = n;
+				// init m to header node? last node not less than x
 				
 				while (n != 0) {
 					if (!(_comp(key(**n), x)))
-						n = left(n);
+						m = n, n = left(n);
 					else
-						n = right(n);	
+						n = right(n);
 				}
-				return iterator(n);
+				return iterator(m);
 			}
 
 			const_iterator

@@ -14,7 +14,7 @@ void	print_pair(It it) {
 		std::cout	<< "   [ "	<< (*it).first 
 					<< "\t| "	<< (*it).second 
 					<< "\t]"	<< std::endl;
-		it.print_node_ptr();
+		//it.print_node_ptr();
 }
 
 template<class Map, class It>
@@ -26,11 +26,11 @@ void	print_map(Map& m, const std::string name) {
 	if (m.empty())
 		std::cout << "   [ EMPTY MAP ]";
 	else {
-		//for (It it = m.begin(); it != m.end(); ++it) {
-		It it = m.begin();
-		for (size_t i = 0; i != m.size(); ++i) {
+		for (It it = m.begin(); it != m.end(); ++it) {
+		//It it = m.begin();
+		//for (size_t i = 0; i != m.size(); ++i) {
 			print_pair<It>(it);
-			++it;
+			//++it;
 		}
 	}
 	std::cout	<< std::endl;
@@ -64,14 +64,8 @@ int 	main() {
 			--it;
 		}
 
-		std::cout	<< "// INCREM" << std::endl;
-		it = a.begin();
-		for (size_t i = 0; i != a.size(); ++i) {
-			print_pair(it);
-			++it;
-		}
-		
-		std::cout	<< "// BEGIN" << std::endl;
+		std::cout	<< std::endl
+					<< "// BEGIN" << std::endl;
 		print_pair(a.begin());
 		
 		std::cout	<< "// END" << std::endl;
@@ -79,14 +73,17 @@ int 	main() {
 		
 		std::cout	<< std::endl
 					<< "// FIND" << std::endl;
-		//print_pair(a.find(10));
+		print_pair(a.find(10));
 		
 		std::cout	<< std::endl
 					<< "// LOWER_BOUND" << std::endl;
-		//print_pair(a.lower_bound(3));
+		it = a.lower_bound(3);
+		print_pair(it);
+		//it = a.lower_bound(11);		// SHOULD SEGF
+		//print_pair(it);
 
-		//print_map<NAMESPACE::map<int, std::string>, 
-			//NAMESPACE::map<int, std::string>::iterator>(a, "A");
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(a, "A");
 	}
 	return 0;
 }
