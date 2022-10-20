@@ -21,16 +21,16 @@ template<class Map, class It>
 void	print_map(Map& m, const std::string name) {
 	std::cout	<< std::endl
 				<< "// MAP       "	<< name << std::endl
-				<< "   size:     "	<< m.size() << std::endl
+				<< "   size:     "	<< m.size()
 				<< std::endl;
 	if (m.empty())
 		std::cout << "   [ EMPTY MAP ]";
 	else {
-		for (It it = m.begin(); it != m.end(); ++it) {
-		//It it = m.begin();
-		//for (size_t i = 0; i < m.size(); ++i) {
+	//for (It it = m.begin(); it != m.end(); ++it) {
+		It it = m.begin();
+		for (size_t i = 0; i < m.size(); ++i) {
 			print_pair<It>(it);
-			//++it;
+			++it;
 		}
 	}
 	std::cout	<< std::endl;
@@ -92,8 +92,12 @@ int 	main() {
 
 	std::cout	<< "// ERASE ONE ELEMENT" << std::endl;
 	
-	//a.erase(a.find(10));
-	a.erase(a.find(5));
+	a.erase(a.find(4));
+	//a.erase(a.find(5));
+	
+	std::cout	<< "   NEW END:" << std::endl;
+
+	print_pair(--a.end());
 
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");

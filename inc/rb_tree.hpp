@@ -630,14 +630,89 @@ namespace ft {
 			}
 
 			void
+			erase_rebalance(base_ptr x) {
+				base_ptr w;
+
+				while (x != _root && x->color == BLACK) {
+					if (x == x->parent->left) {
+						w = x->parent->right;
+						// case 1
+						if (w->color == RED) {
+							w->color = BLACK;
+							x->parent->color = RED;
+							left_rotate(x->parent);
+							w = x->parent->right;
+						}
+						// case 2
+						if (w->left->color == BLACK 
+								&& w->right->color == BLACK) {
+							w->color = RED;
+							x = x->parent;
+						}
+						else {
+							// case 3
+							if (w->left->color == BLACK 
+									&& w->right->color == BLACK) {
+								w->color = RED;
+								x = x->parent;
+								right_rotate(w);
+								w = x->parent->right;
+							}
+							// case 4
+							w->color = x->parent->color;
+							x->parent->color = BLACK;
+							w->right->color = BLACK;
+							left_rotate(x->parent);
+							x = _root;
+						}
+					}
+					else {
+						w = x->parent->left;
+						// case 5
+						if (w->color == RED) {
+							w->color = BLACK;
+							x->parent->color = RED;
+							right_rotate(x->parent);
+							w = x->parent->left;
+						}
+						// case 6
+						if (w->right->color == BLACK 
+								&& w->left->color == BLACK) {
+							w->color = RED;
+							x = x->parent;
+						}
+						else {
+							// case 7
+							if (w->right->color == BLACK 
+									&& w->left->color == BLACK) {
+								w->color = RED;
+								x = x->parent;
+								left_rotate(w);
+								w = x->parent->left;
+							}
+							// case 8
+							w->color = x->parent->color;
+							x->parent->color = BLACK;
+							w->left->color = BLACK;
+							right_rotate(x->parent);
+							x = _root;
+						}
+					}
+				}
+				x->color = BLACK;
+			}
+
+			void
 			erase(iterator pos) {
-				base_ptr n				= pos.node;
-				base_ptr y				= n;	// successor	
+				base_ptr n	= pos.node;
+				base_ptr y	= n;	// successor	
 				base_ptr x;
 
 				// saving erased node original color
 				t_color original_color	= y->color;
 
+				//std::cout<<"---RIGHTMOST "<<_header.node.right<<std::endl;
+				//std::cout<<"---LEFTMOST  "<<_header.node.left<<std::endl;
 				// maintain leftmost/rightmost
 				if (_header.node.left == n)
 					_header.node.left = n->parent;
@@ -673,8 +748,9 @@ namespace ft {
 				// delete node instead
 				_dealloc_node((node_ptr&)pos.node);
 				if (original_color == BLACK)
-					std::cout<<std::endl;
-					//erase_rebalance(x);
+					erase_rebalance(x);
+				//std::cout<<"---RIGHTMOST "<<_header.node.right<<std::endl;
+				//std::cout<<"---LEFTMOST  "<<_header.node.left<<std::endl;
 			}
 
 			//// MAP OPERATIONS ////
@@ -805,11 +881,6 @@ namespace ft {
 				return key(static_cast<const_node_ptr>(x));
 			}
 			
-			static node_ptr
-			current(base_ptr x) { 
-				return key(static_cast<node_ptr>(x));
-			}
-
 		private:
 
 			//// NODES ////
