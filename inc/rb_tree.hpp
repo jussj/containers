@@ -183,12 +183,11 @@ namespace ft {
 		}
 		self&
 		operator--() {
-			if (node->color == RED			// look for header
-					&& node->parent->parent == node) {
-				node = node->right;			// return rightmost
+			if (node->parent->parent == node
+					&& node->color == RED) {	// look for header
+				node = node->right;				// return rightmost
 			}
 			else if (node->left != 0) {
-			//if (node->left != 0) {
 				base_ptr x = node->left;
 				while (x->right != 0)
 					x = x->right;
@@ -209,7 +208,6 @@ namespace ft {
 		operator--(int) {
 			self tmp = *this;
 
-			//decrement();
 			--node;
 			return tmp;
 		}
@@ -240,7 +238,7 @@ namespace ft {
 			if (node->color == BLACK)
 				std::cout << "BLACK";
 			else
-				std::cout << "RED";				
+				std::cout << "RED";	
 			std::cout	<< std::endl
 						<< "   addr   " << &(*node)
 						<< std::endl
@@ -446,6 +444,7 @@ namespace ft {
 			//// ACCESS ////
 
 			// ITERATORS
+
 			iterator
 			begin() {
 				return iterator(_header.node.left);
@@ -614,6 +613,70 @@ namespace ft {
 				return iterator(n);
 			}
 
+			// DELETIONS
+			
+			void
+			transplant(base_ptr u, base_ptr v) {
+				if (u->parent == 0)
+					(base_ptr&)_root = v;
+				else if (u->parent->left == u)	// is node p left child
+					u->parent->left = v;		// set parent left to
+				else							// its child or 0
+					u->parent->right = v;
+				if (v != 0)
+					v = u->parent;	
+				else
+					u = u->parent;	
+			}
+
+			void
+			erase(iterator pos) {
+				base_ptr n				= pos.node;
+				base_ptr y				= n;	// successor	
+				base_ptr x;
+
+				// saving erased node original color
+				t_color original_color	= y->color;
+
+				// maintain leftmost/rightmost
+				if (_header.node.left == n)
+					_header.node.left = n->parent;
+				if (_header.node.right == n)
+					_header.node.right = n->parent;
+				// has 0 to 1 child
+				if (left(n) == 0) {					
+					x = n->right;
+					transplant(n, n->right);
+				}
+				else if (n->right == 0) {
+					x = n->left;	
+					transplant(n, n->left);
+				}
+				// has 2 children
+				else {		
+					y = minimum(n->right);
+					original_color = y->color;
+					x = y->right;
+					if (y->parent == n)
+						x->parent = y;
+					else {
+						transplant(y, y->right);
+						y->right = n->right;
+						y->right->parent = y;
+					}
+					transplant(n, y);
+					y->left = n->left;
+					y->left->parent = y;
+					y->color = n->color;
+				}
+				_header.node_count--;
+				// delete node instead
+				_dealloc_node((node_ptr&)pos.node);
+				if (original_color == BLACK)
+					std::cout<<std::endl;
+					//erase_rebalance(x);
+			}
+
 			//// MAP OPERATIONS ////
 
 			const_iterator
@@ -631,62 +694,6 @@ namespace ft {
 				return const_iterator(m);
 			}
 
-			// DELETIONS
-			
-			void
-			transplant(base_ptr x, base_ptr y) {
-				if (x->parent == 0)
-					(base_ptr&)_root = y;
-				else if (y == y->parent->left)
-					x->parent->left = y;
-				else
-					x->parent->right = y;
-				y->parent = x->parent;	
-			}
-
-			iterator
-			erase(iterator pos) {
-				base_ptr n				= pos.node;
-				base_ptr y				= n;	
-				base_ptr x;
-
-				// saving erased node original color
-				t_color original_color	= y->color;
-
-				if (left(n) == 0) {
-				   x = n->right;
-				   transplant(n, n->right);
-				}
-				else if (n->right == 0) {
-				   x = n->left;	
-				   transplant(n, n->left);
-				}
-				else {
-					y = minimum(n->right);
-					original_color = y->color;
-					x = y->right;
-					if (y->parent == n)
-						x->parent = y;
-					else {
-						transplant(y, y->right);
-						y->right = n->right;
-						y->right->parent = y;
-					}
-					transplant(n, y);
-					y->left = n->left;
-					y->left->parent = y;
-					y->color = n->color;
-				}
-				if (original_color == BLACK)
-					return iterator(x);
-					//return erase_rebalance(x);
-				else
-					return iterator(y);
-					
-			}
-
-			// FIND
-
 			iterator
 			lower_bound(const key_type& x) {
 				node_ptr n = _root;
@@ -703,7 +710,12 @@ namespace ft {
 			}
 
 			const_iterator
-			find(const key_type& x) const;
+			find(const key_type& x) const {
+				const_iterator y = lower_bound(x);
+				if (y != 0 && key(*y) == x)
+					return y;
+				return end();
+			}
 
 			iterator
 			find(const key_type& x) {
@@ -791,6 +803,11 @@ namespace ft {
 			static const key_type&
 			key(const_base_ptr x) { 
 				return key(static_cast<const_node_ptr>(x));
+			}
+			
+			static node_ptr
+			current(base_ptr x) { 
+				return key(static_cast<node_ptr>(x));
 			}
 
 		private:

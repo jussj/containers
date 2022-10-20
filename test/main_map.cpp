@@ -28,7 +28,7 @@ void	print_map(Map& m, const std::string name) {
 	else {
 		for (It it = m.begin(); it != m.end(); ++it) {
 		//It it = m.begin();
-		//for (size_t i = 0; i != m.size(); ++i) {
+		//for (size_t i = 0; i < m.size(); ++i) {
 			print_pair<It>(it);
 			//++it;
 		}
@@ -92,8 +92,11 @@ int 	main() {
 
 	std::cout	<< "// ERASE ONE ELEMENT" << std::endl;
 	
-	it = a.erase(a.find(10));
-	print_pair(it);
+	//a.erase(a.find(10));
+	a.erase(a.find(5));
 
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(a, "A");
+	
 	return 0;
 }

@@ -176,15 +176,15 @@ namespace ft {
 			void
 			insert(InputIterator first, InputIterator last);
 			
-			iterator
+			void
 			erase(iterator position) {
-				return _tree.erase(position);
+				_tree.erase(position);
 			}
 			
 			size_type
 			erase(const key_type& x);
 			
-			iterator
+			void
 			erase(iterator first, iterator last);
 			
 			void
