@@ -616,20 +616,6 @@ namespace ft {
 			}
 
 			// DELETIONS
-			
-			void
-			transplant(base_ptr u, base_ptr v) {
-				if (u->parent == 0)
-					(base_ptr&)_root = v;
-				else if (u->parent->left == u)	// is node p left child
-					u->parent->left = v;		// set parent left to
-				else							// its child or 0
-					u->parent->right = v;
-				if (v != 0)
-					v = u->parent;				// unconditional in algo bible	
-				else
-					u = u->parent;	
-			}
 
 			void
 			erase_rebalance(base_ptr x) {
@@ -705,6 +691,18 @@ namespace ft {
 			}
 
 			void
+			transplant(base_ptr u, base_ptr v) {
+				if (u->parent == 0)
+					(base_ptr&)_root = v;
+				else if (u->parent->left == u)	// is node p left child
+					u->parent->left = v;		// set parent left to
+				else							// its child or 0
+					u->parent->right = v;
+				if (v != 0)
+					v->parent = u->parent;		// unconditional in algo bible
+			}
+
+			void
 			erase(iterator pos) {
 				base_ptr n	= pos.node;
 				base_ptr y	= n;	// successor	
@@ -722,9 +720,9 @@ namespace ft {
 					_header.node.right = n->parent;
 				// has 0 to 1 child
 				if (left(n) == 0) {					
-					x = n->right;
-					transplant(n, n->right);
-				}
+					x = n->right;				// save only child
+					transplant(n, n->right);	// replace parent child 
+				}								// by its own child
 				else if (n->right == 0) {
 					x = n->left;	
 					transplant(n, n->left);
@@ -732,6 +730,7 @@ namespace ft {
 				// has 2 children
 				else {		
 					y = minimum(n->right);
+					std::cout<<"---MIN "<<y<<std::endl;
 					original_color = y->color;
 					x = y->right;
 					if (y->parent == n)
@@ -747,14 +746,12 @@ namespace ft {
 					y->color = n->color;
 				}
 				_header.node_count--;
-				//_delete_node instead
-				//_dealloc_node((node_ptr&)pos.node);
-				_destroy_node((node_ptr&)pos.node);
 				if (original_color == BLACK)
 					std::cout<<"---NEEDS FIXUP MATE"<<std::endl;
 					//erase_rebalance(x);
 				//std::cout<<"---RIGHTMOST "<<_header.node.right<<std::endl;
 				//std::cout<<"---LEFTMOST  "<<_header.node.left<<std::endl;
+				//_destroy_node((node_ptr&)pos.node);
 			}
 
 			//// MAP OPERATIONS ////

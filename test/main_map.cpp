@@ -115,12 +115,15 @@ int 	main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 	
-	//std::cout	<< "   root, two children..." << std::endl;
-	//a.erase(a.find(4));
-	//std::cout	<< "   >> size: " << a.size() << std::endl;
-	
 	std::cout	<< "   one child..." << std::endl;
 	a.erase(a.find(5));
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(a, "A");
+	
+	std::cout	<< "   two children..." << std::endl;
+	a.erase(a.find(1));
+	std::cout	<< "   >> size: " << a.size() << std::endl;
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
