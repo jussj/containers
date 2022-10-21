@@ -92,13 +92,36 @@ int 	main() {
 
 	std::cout	<< "// ERASE ONE ELEMENT" << std::endl;
 	
-	a.erase(a.find(4));
-	//a.erase(a.find(5));
 	
-	std::cout	<< "   NEW END:" << std::endl;
-
+	std::cout	<< "   rightmost..." << std::endl;
+	a.erase(a.find(10));	
+	
+	std::cout	<< "   >> size: " << a.size() << std::endl
+				<< "   >> new end:" << std::endl;
 	print_pair(--a.end());
+	
+	std::cout	<< "   leftmost..." << std::endl;
+	a.erase(a.find(0));	
+	
+	std::cout	<< "   >> size: " << a.size() << std::endl
+				<< "   >> new begin:" << std::endl;
+	print_pair(a.begin());
 
+	std::cout	<< "   reinserting deleted elements..." << std::endl;
+	
+	a.insert(NAMESPACE::pair<int, std::string>(0, "zero"));
+	a.insert(NAMESPACE::pair<int, std::string>(10, "ten"));
+
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(a, "A");
+	
+	//std::cout	<< "   root, two children..." << std::endl;
+	//a.erase(a.find(4));
+	//std::cout	<< "   >> size: " << a.size() << std::endl;
+	
+	std::cout	<< "   one child..." << std::endl;
+	a.erase(a.find(5));
+	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 	

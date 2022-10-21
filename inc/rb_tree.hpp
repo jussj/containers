@@ -117,7 +117,8 @@ namespace ft {
 	};	/* rb_tree_node struct */
 		/* inherites base_node and holds value ptr */
 
-	// find a solution to keep the base iterator without loosing the const qualifier 
+	// find a solution to keep the base iterator
+	// without loosing the const qualifier 
 	template<class T>
 	struct rb_tree_iterator {
 
@@ -253,7 +254,7 @@ namespace ft {
 	};	/* rb_tree_iterator */
 
 	template<class T>
-	struct rb_tree_const_iterator/* : public rb_tree_base_iterator*/ {
+	struct rb_tree_const_iterator {
 
 		// TYPES
 
@@ -391,11 +392,11 @@ namespace ft {
 			typedef size_t 				size_type;
 			typedef ptrdiff_t 			difference_type;
 		 
-			typedef rb_tree_node_base*				base_ptr;
-			typedef const rb_tree_node_base*		const_base_ptr;
-			typedef	rb_tree_node<Val>*				node_ptr;
-			typedef	const rb_tree_node<Val>*		const_node_ptr;
-			typedef rb_tree_header					header;
+			typedef rb_tree_node_base*			base_ptr;
+			typedef const rb_tree_node_base*	const_base_ptr;
+			typedef	rb_tree_node<Val>*			node_ptr;
+			typedef	const rb_tree_node<Val>*	const_node_ptr;
+			typedef rb_tree_header				header;
 		
 			typedef typename Alloc::template	rebind<rb_tree_node<Val> >::other 
 												node_allocator_type;
@@ -404,8 +405,8 @@ namespace ft {
 		
 			typedef rb_tree_iterator<value_type>			iterator;
 			typedef rb_tree_const_iterator<value_type>		const_iterator;
-			typedef std::reverse_iterator<iterator>			reverse_iterator;
-			typedef std::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef ft::reverse_iterator<iterator>			reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		//// ATTRIBUTES /////
 
@@ -416,7 +417,7 @@ namespace ft {
 			key_compare				_comp;
 			node_ptr				_root;
 			header					_header;
-			//rb_tree_impl&	_t;			// second tree layer?
+			//rb_tree_impl&	_t;			// implement second tree layer?
 
 		//// MEMBER FUNCTIONS ////
 
@@ -438,7 +439,8 @@ namespace ft {
 				:	_alloc(pair_alloc),
 				 	_nodalloc(node_alloc),
 					_comp(comp) {}
-			
+		
+			// not destroying anything	
 			~rb_tree_impl() {}
 
 			//// ACCESS ////
@@ -624,7 +626,7 @@ namespace ft {
 				else							// its child or 0
 					u->parent->right = v;
 				if (v != 0)
-					v = u->parent;	
+					v = u->parent;				// unconditional in algo bible	
 				else
 					u = u->parent;	
 			}
@@ -708,7 +710,7 @@ namespace ft {
 				base_ptr y	= n;	// successor	
 				base_ptr x;
 
-				// saving erased node original color
+				// save erased node original color
 				t_color original_color	= y->color;
 
 				//std::cout<<"---RIGHTMOST "<<_header.node.right<<std::endl;
@@ -745,10 +747,12 @@ namespace ft {
 					y->color = n->color;
 				}
 				_header.node_count--;
-				// delete node instead
-				_dealloc_node((node_ptr&)pos.node);
+				//_delete_node instead
+				//_dealloc_node((node_ptr&)pos.node);
+				_destroy_node((node_ptr&)pos.node);
 				if (original_color == BLACK)
-					erase_rebalance(x);
+					std::cout<<"---NEEDS FIXUP MATE"<<std::endl;
+					//erase_rebalance(x);
 				//std::cout<<"---RIGHTMOST "<<_header.node.right<<std::endl;
 				//std::cout<<"---LEFTMOST  "<<_header.node.left<<std::endl;
 			}
@@ -883,50 +887,31 @@ namespace ft {
 			
 		private:
 
-			//// NODES ////
+			//// NODES AND VALUE MEMORY ////
 
-			// ALLOCATION
-
-			node_ptr
-			_allocate();
-			node_ptr
-			_recycle();
-
-			void
-			_dealloc_node(node_ptr& n) {
-				_nodalloc.deallocate(n, 1);
-			}
+			// NODES
 
 			node_ptr
 			_alloc_node() {
 				return _nodalloc.allocate(1);
 			}
-
-			// CONSTRUCTION
-
-			value_type*
-			_construct_pair(value_type v) {
-				value_type*	pair = _alloc.allocate(1);
-				_alloc.construct(pair, v);
-				return pair;
-			}
-	
+			
 			void
-			_destroy_node(node_ptr n);
-
-			void
-			_construct_node(node_ptr& n, value_type v) {
-				try {
-					_alloc.construct(n, v);
-				}
-				catch (...) {
-					_dealloc_node(n);
-					// throw exception in case construction didn't work
-				}
+			_dealloc_node(node_ptr& n) {
+				_nodalloc.deallocate(n, 1);
 			}
 
-			// CREATION
-
+			//void
+			//_construct_node(node_ptr& n, value_type v) {
+				//try {
+					//_alloc.construct(n, v);
+				//}
+				//catch (...) {
+					//_dealloc_node(n);
+					//// throw exception in case construction didn't work
+				//}
+			//}
+			
 			node_ptr
 			_init_node_ptr(node_ptr n, node_ptr pos = 0) {
 				n->parent = pos;
@@ -936,6 +921,32 @@ namespace ft {
 				return n;
 			}
 
+			node_ptr
+			_clone_node(node_ptr src); // copy ctor?
+
+			// UPCYCLING	
+
+			node_ptr
+			_allocate();
+			node_ptr
+			_recycle();
+
+			// PAIRS
+
+			// try catch STL like to implement, see construct_node
+			value_type*
+			_construct_pair(value_type v) {
+				value_type*	pair = _alloc.allocate(1);
+				_alloc.construct(pair, v);
+				return pair;
+			}
+			
+			void
+			_destroy_pair(node_ptr& n) {
+				_alloc.deallocate(n->value, 1);
+				_alloc.destroy(n->value);
+			}
+		
 			//template<class V>			// if const
 			node_ptr
 			_create_node(value_type val, node_ptr pos = 0) {
@@ -946,10 +957,14 @@ namespace ft {
 				_init_node_ptr(n, pos);
 				return n;
 			}
+
+			void
+			_destroy_node(node_ptr& n) {
+				_destroy_pair(n);
+				_dealloc_node(n);	
+			}
 			
-			node_ptr
-			_clone_node(node_ptr src);
-			
+
 			// struct reuse or realloc
 			// reuse or alloc >> recycle a pool of nodes,
 			// using alloc only once pool empty
