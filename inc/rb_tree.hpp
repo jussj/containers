@@ -531,7 +531,11 @@ namespace ft {
 			right_rotate(base_ptr x) {
 				base_ptr y	= x->left;
 				x->left		= y->right;
-
+				
+				// maintain leftmost and rightmost
+				base_ptr	lmost = _header.leftmost();
+				base_ptr	rmost = _header.rightmost();
+			
 				if (y->right != 0)
 					y->right->parent = x;
 				y->parent = x->parent;
@@ -543,19 +547,35 @@ namespace ft {
 					x->parent->left = y;
 				y->right	= x;
 				x->parent	= y;
+				
+				_header.set_leftmost(lmost);
+				_header.set_rightmost(rmost);
 			}
 
 			// INSERTIONS
 
+			void
+			maintain_root(node_ptr n) {
+				node_ptr new_root	= n;
+				
+				while (new_root->parent != &(_header.node)) // find root
+					new_root = parent(new_root);
+				
+				this->_root			= new_root;
+				this->_root->color	= BLACK;
+			}
+
 			iterator
 			insert_rebalance(node_ptr n) {
 				node_ptr	y;
-				
+			
+				std::cout<<"---NODE "<<key(**n)<<std::endl;	
 				while (n->parent->color == RED) {
 					if (n->parent == n->parent->parent->left) {
 						y = right(n->parent->parent);
 						// case 1
 						if (y && y->color == RED) {
+							std::cout<<"---1"<<std::endl;
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
@@ -563,10 +583,12 @@ namespace ft {
 						else {
 							// case 2
 							if (n == n->parent->right) {
+								std::cout<<"---2"<<std::endl;
 								(base_ptr&)n = parent(n);
 								left_rotate((base_ptr&)n);
 							}	
 							// case 3
+							std::cout<<"---3"<<std::endl;
 							n->parent->color = BLACK;
 							n->parent->parent->color = RED;
 							right_rotate(n->parent->parent);
@@ -576,6 +598,7 @@ namespace ft {
 						y = left(n->parent->parent);
 						// case 4
 						if (y && y->color == RED) {
+							std::cout<<"---4"<<std::endl;
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
@@ -583,17 +606,21 @@ namespace ft {
 						else {
 							// case 5
 							if (n == n->parent->left) {
+								std::cout<<"---5"<<std::endl;
 								n = parent(n);
 								right_rotate(n);
 							}	
 							// case 6
+							std::cout<<"---6"<<std::endl;
 							n->parent->color = BLACK;
+							std::cout<<"---NPP IS "<<key(**parent(n->parent))<<std::endl;
 							n->parent->parent->color = RED;
 							left_rotate(n->parent->parent);
 						}
 					}
 				}
-				_root->color = BLACK;
+				maintain_root(n);
+				std::cout << "ROOT: "<< _root << std::endl;
 				return iterator(n);
 			}
 
@@ -623,7 +650,7 @@ namespace ft {
 					_header.node.parent	= n;
 				}
 			//else if (key(**n) < key(**y)
-			//	|| _header.node_count == 1) // insert first node left?
+				//|| _header.node_count == 1) // insert first node left?
 			else if (key(**n) < key(**y))
 				y->left = n;
 			else

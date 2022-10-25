@@ -22,15 +22,15 @@ void	print_map(Map& m, const std::string name) {
 	std::cout	<< std::endl
 				<< "// MAP       "	<< name << std::endl
 				<< "   size:     "	<< m.size()
-				<< std::endl;
+				<< std::endl << std::endl;
 	if (m.empty())
 		std::cout << "   [ EMPTY MAP ]";
 	else {
-	//for (It it = m.begin(); it != m.end(); ++it) {
-		It it = m.begin();
-		for (size_t i = 0; i < m.size(); ++i) {
+	for (It it = m.begin(); it != m.end(); ++it) {
+		//It it = m.begin();
+		//for (size_t i = 0; i < m.size(); ++i) {
 			print_pair<It>(it);
-			++it;
+			//++it;
 		}
 	}
 	std::cout	<< std::endl;
@@ -59,17 +59,17 @@ int 	main() {
 	std::cout << "   last element..." << std::endl;	
 	print_pair(ret.first);
 
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(a, "A");
+
 	{
 		NAMESPACE::map<int, std::string>			b;
 		
 		b.insert(NAMESPACE::pair<int, std::string>(1, "one"));
-		ret = b.insert(NAMESPACE::pair<int, std::string>(2, "two"));
+		b.insert(NAMESPACE::pair<int, std::string>(2, "two"));
 		b.insert(NAMESPACE::pair<int, std::string>(5, "five"));
 		//b.insert(NAMESPACE::pair<int, std::string>(3, "three"));
 		b.insert(NAMESPACE::pair<int, std::string>(4, "four"));
-
-		std::cout << "   begin..." << std::endl;	
-		print_pair(b.begin());
 
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(b, "B");
