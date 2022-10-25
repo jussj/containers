@@ -72,6 +72,29 @@ namespace ft {
 			reset();
 		}
 
+		// SET
+		
+		void
+		set_leftmost(rb_tree_node_base* n) {
+			node.left = n;
+		}
+		
+		void
+		set_rightmost(rb_tree_node_base* n) {
+			node.right = n;
+		}
+
+		rb_tree_node_base*
+		leftmost() {
+			return node.left;
+		}
+
+		rb_tree_node_base*
+		rightmost() {
+			return node.right;
+		}
+
+
 		// MEMBER FUNCTIONS
 
 		void
@@ -483,6 +506,10 @@ namespace ft {
 			left_rotate(base_ptr x) {
 				base_ptr y	= x->right;
 				x->right	= y->left;
+				
+				// maintain leftmost and rightmost
+				base_ptr	lmost = _header.leftmost();
+				base_ptr	rmost = _header.rightmost();
 
 				if (y->left != 0)
 					y->left->parent = x;
@@ -495,6 +522,9 @@ namespace ft {
 					x->parent->right = y;
 				y->left		= x;
 				x->parent	= y;
+
+				_header.set_leftmost(lmost);
+				_header.set_rightmost(rmost);
 			}
 
 			void
@@ -520,9 +550,9 @@ namespace ft {
 			iterator
 			insert_rebalance(node_ptr n) {
 				node_ptr	y;
-
+				
 				while (n->parent->color == RED) {
-					if (n->parent == n->parent->parent->left) {	
+					if (n->parent == n->parent->parent->left) {
 						y = right(n->parent->parent);
 						// case 1
 						if (y && y->color == RED) {
@@ -545,7 +575,7 @@ namespace ft {
 					else {
 						y = left(n->parent->parent);
 						// case 4
-						if (y->color == RED) {
+						if (y && y->color == RED) {
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
@@ -588,11 +618,13 @@ namespace ft {
 					_root->color		= BLACK;
 					
 					// set leftmost/rightmost and parent
-					_header.node.left	= _root;
-					_header.node.right	= _root;
-					_header.node.parent	= _root;
+					_header.node.left	= n;
+					_header.node.right	= n;
+					_header.node.parent	= n;
 				}
-			else if (key(**n) < key(**y) || _header.node_count == 1)
+			//else if (key(**n) < key(**y)
+			//	|| _header.node_count == 1) // insert first node left?
+			else if (key(**n) < key(**y))
 				y->left = n;
 			else
 				y->right = n;
@@ -604,7 +636,7 @@ namespace ft {
 				_header.node.left = (base_ptr&)n; 
 			else if (key(**n) > key(**right(&_header.node)))
 				_header.node.right = (base_ptr&)n; 
-			
+
 			// updt count	
 			_header.node_count++;
 
@@ -875,11 +907,6 @@ namespace ft {
 			static const_node_ptr
 			parent(const_base_ptr x) { 
 				return static_cast<const_node_ptr>(x->parent);
-			}
-
-			static const key_type&
-			key(const_base_ptr x) { 
-				return key(static_cast<const_node_ptr>(x));
 			}
 			
 		private:
