@@ -559,8 +559,8 @@ namespace ft {
 			insert_rebalance(node_ptr n) {
 				node_ptr	y;
 			
-				std::cout<<"---NODE "<<key_of_value(**n)<<std::endl;	
 				while (n->parent->color == RED) {
+					std::cout<<"---NODE "<<key_of_value(**n)<<std::endl;	
 					if (n->parent == n->parent->parent->left) {
 						y = right(n->parent->parent);
 						// case 1: red uncle
@@ -569,8 +569,9 @@ namespace ft {
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
-							(base_ptr&)n = n->parent->parent;
-							// repeat with n being grandpa
+							// repeat with n being gp, do not if root
+							if (parent(parent(n)) != _root)
+								(base_ptr&)n = n->parent->parent;
 						}
 						else {
 							// case 2: uncle black, n is right child
@@ -588,13 +589,14 @@ namespace ft {
 					}
 					else {
 						y = left(n->parent->parent);
-						// case 4: red uncle
+						// case 4
 						if (y && y->color == RED) {
 							std::cout<<"---4"<<std::endl;
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
-							(base_ptr&)n = n->parent->parent;
+							if (parent(parent(n)) != _root)
+								(base_ptr&)n = n->parent->parent;
 						}
 						else {
 							// case 5

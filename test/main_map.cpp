@@ -46,20 +46,13 @@ int 	main() {
 
 	std::cout	<< "// INSERT ONE ELEMENT" << std::endl;
 
-	std::cout << "   first element..." << std::endl;	
-	ret = a.insert(NAMESPACE::pair<int, std::string>(4, "four"));
-
-	print_pair(ret.first);
-
+	a.insert(NAMESPACE::pair<int, std::string>(4, "four"));
 	a.insert(NAMESPACE::pair<int, std::string>(1, "one"));
 	a.insert(NAMESPACE::pair<int, std::string>(5, "five"));
 	a.insert(NAMESPACE::pair<int, std::string>(0, "zero"));
 	a.insert(NAMESPACE::pair<int, std::string>(3, "three"));
-	ret = a.insert(NAMESPACE::pair<int, std::string>(10, "ten"));
+	a.insert(NAMESPACE::pair<int, std::string>(10, "ten"));
 	
-	std::cout << "   last element..." << std::endl;	
-	print_pair(ret.first);
-
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 
@@ -85,39 +78,39 @@ int 	main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 
-	//std::cout	<< std::endl
-				//<< "// DECREM" << std::endl;
-	//it = ret.first;
-	//for (size_t i = 0; i != a.size(); ++i) {
-		//print_pair(it);
-		//--it;
-	//}
+	std::cout	<< "// DECREM" << std::endl;
+	
+	it = --a.end();
+	for (size_t i = 0; i != a.size(); ++i) {
+		print_pair(it);
+		--it;
+	}
 
-	//std::cout	<< std::endl
-				//<< "// BEGIN" << std::endl;
-	//print_pair(a.begin());
-	//print_pair(++a.begin());
-	////print_pair(a.begin() + 2);	// DOESN'T COMPILE (BIDIR)
+	std::cout	<< std::endl
+				<< "// BEGIN" << std::endl;
+	print_pair(a.begin());
+	print_pair(++a.begin());
+	//print_pair(a.begin() + 2);	// DOESN'T COMPILE (BIDIR)
 	
-	//std::cout	<< std::endl
-				//<< "// END" << std::endl;
-	//print_pair(--a.end());
+	std::cout	<< std::endl
+				<< "// END" << std::endl;
+	print_pair(--a.end());
 	
-	//std::cout	<< std::endl
-				//<< "// FIND" << std::endl;
+	std::cout	<< std::endl
+				<< "// FIND" << std::endl;
 	//print_pair(a.find(10));
 	
-	//std::cout	<< std::endl
-				//<< "// LOWER_BOUND" << std::endl;
-	//it = a.lower_bound(3);
+	std::cout	<< std::endl
+				<< "// LOWER_BOUND" << std::endl;
+	it = a.lower_bound(3);
+	print_pair(it);
+	it = a.lower_bound(1);
+	print_pair(it);
+	//it = a.lower_bound(11);		// SHOULD SEGF
 	//print_pair(it);
-	//it = a.lower_bound(1);
-	//print_pair(it);
-	////it = a.lower_bound(11);		// SHOULD SEGF
-	////print_pair(it);
 
-	//print_map<NAMESPACE::map<int, std::string>, 
-		//NAMESPACE::map<int, std::string>::iterator>(a, "A");
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 
 	//std::cout	<< "// ERASE ONE ELEMENT" << std::endl;
 	
