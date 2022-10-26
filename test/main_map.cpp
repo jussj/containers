@@ -117,8 +117,11 @@ int 	main() {
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 
 	std::cout	<< "// ERASE ONE ELEMENT" << std::endl;
-	
-	std::cout	<< "   rightmost..." << std::endl;
+	// zero children
+	// one children
+	// two children
+
+	std::cout	<< "   RIGHTMOST:" << std::endl;
 	std::cout	<< "   >> A size: " << a.size() << std::endl
 				<< "   >> A end:" << std::endl;
 	print_pair(--a.end());
@@ -143,7 +146,7 @@ int 	main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	
-	std::cout	<< "   leftmost..." << std::endl;
+	std::cout	<< "   LEFTMOST:" << std::endl;
 	std::cout	<< "   >> A size: " << a.size() << std::endl
 				<< "   >> A begin:" << std::endl;
 	print_pair(a.begin());
@@ -153,6 +156,14 @@ int 	main() {
 				<< "   >> A new begin:" << std::endl;
 	print_pair(a.begin());
 
+	std::cout	<< "   >> B size: " << b.size() << std::endl
+				<< "   >> B begin:" << std::endl;
+	print_pair(b.begin());
+	b.erase(b.begin());	
+	
+	std::cout	<< "   >> B size: " << b.size() << std::endl
+				<< "   >> B new begin:" << std::endl;
+	print_pair(b.begin());
 	//std::cout	<< "   reinserting deleted elements..." << std::endl;
 	
 	//a.insert(NAMESPACE::pair<int, std::string>(0, "zero"));

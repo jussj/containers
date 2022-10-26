@@ -126,12 +126,12 @@ namespace ft {
 	
 	};	/* rb_tree_node struct */
 
-	// find a solution to keep the base iterator
+	// TO-DO find a solution to keep the base iterator
 	// without loosing the const qualifier 
 	template<class T>
 	struct rb_tree_iterator {
 
-		//// TYPES ////
+		// TYPES ////
 
 		typedef T			value_type;
 		typedef T&			reference;
@@ -155,6 +155,8 @@ namespace ft {
 
 		//// OVERLOADS ////
 
+		// ACCESS
+
 		reference
 		operator*() const {
 			return *static_cast<node_ptr>(node)->node_content();
@@ -164,6 +166,8 @@ namespace ft {
 		operator->() const {
 			return &(static_cast<node_ptr>(node)->node_content());
 		}
+
+		// DECREM/INCREMENTATION OPERATIONS
 
 		self&
 		operator++() {
@@ -221,6 +225,8 @@ namespace ft {
 			--node;
 			return tmp;
 		}
+
+		// COMPARISON
 	
 		bool
 		operator==(const self& src) {
@@ -428,7 +434,7 @@ namespace ft {
 			key_compare				_comp;
 			node_ptr				_root;
 			header					_header;
-			//rb_tree_impl&	_t;			// implement second tree layer?
+			//rb_tree_impl&			_t;			// implement second tree layer?
 
 		//// MEMBER FUNCTIONS ////
 
@@ -451,7 +457,6 @@ namespace ft {
 				 	_nodalloc(node_alloc),
 					_comp(comp) {}
 		
-			// not destroying anything	
 			~rb_tree_impl() {}
 
 			//// ACCESS ////
@@ -476,6 +481,7 @@ namespace ft {
 			}
 
 			// CAPACITY
+
 			size_type
 			size() const {
 				return _header.node_count;
@@ -540,7 +546,7 @@ namespace ft {
 				_header.set_rightmost(rmost);
 			}
 
-			// INSERTIONS
+			// MARKERS MAINTENANCE
 
 			void
 			maintain_root(node_ptr n) {
@@ -552,8 +558,11 @@ namespace ft {
 				this->_root			= new_root;
 				this->_root->color	= BLACK;
 				
-				_header.node.parent	= _root;				// make root be a ptr on a node
+				_header.node.parent	= _root;
+				// TO-DO make root be a ptr on a node
 			}
+
+			// INSERTIONS
 
 			iterator
 			insert_rebalance(node_ptr n) {
@@ -634,7 +643,7 @@ namespace ft {
 					_header.node.right	= n;
 					_header.node.parent	= _root;
 				}
-			// insert first node left?
+			// TO-DO insert first node left?
 			else if (key_of_value(**n) < key_of_value(**y))
 				y->left = n;
 			else
@@ -648,7 +657,7 @@ namespace ft {
 			else if (key_of_value(**n) > key_of_value(**right(&_header.node)))
 				_header.node.right = (base_ptr&)n; 
 
-			// updt count	
+			// update count	
 			_header.node_count++;
 
 			// return rebalanced tree iterator on node
@@ -682,10 +691,9 @@ namespace ft {
 						}
 						else {
 							// case 3
-							if (w->left->color == BLACK 
-									&& w->right->color == BLACK) {
+							if (w->right->color == BLACK) {
+								w->left->color = RED;
 								w->color = RED;
-								x = x->parent;
 								right_rotate(w);
 								w = x->parent->right;
 							}
@@ -714,10 +722,9 @@ namespace ft {
 						}
 						else {
 							// case 7
-							if (w->right->color == BLACK 
-									&& w->left->color == BLACK) {
+							if (w->left->color == BLACK) { 
+								w->left->color = RED;
 								w->color = RED;
-								x = x->parent;
 								left_rotate(w);
 								w = x->parent->left;
 							}
@@ -730,7 +737,7 @@ namespace ft {
 						}
 					}
 				}
-				// maintain root + color
+				// TO-DO maintain root + color?
 				x->color = BLACK;
 			}
 
@@ -743,14 +750,14 @@ namespace ft {
 				else							// its child or 0
 					u->parent->right = v;
 				if (v != 0)
-					v->parent = u->parent;		// unconditional in algo bible
+					v->parent = u->parent;		// TO-DO unconditional in algo bible
 			}
 
 			void
 			erase(iterator pos) {
-				base_ptr n	= pos.node;
-				base_ptr y	= n;			// successor	
-				base_ptr x;
+				base_ptr n	= pos.node;		// node to be deleted
+				base_ptr y	= n;			// successor to n
+				base_ptr x;					// successor to y
 
 				// save erased node original color
 				t_color original_color	= y->color;
@@ -760,6 +767,7 @@ namespace ft {
 					_header.node.left = n->parent;
 				if (_header.node.right == n)
 					_header.node.right = n->parent;
+				
 				// has 0 to 1 child
 				if (left(n) == 0) {					
 					x = n->right;				// save only child
@@ -769,10 +777,10 @@ namespace ft {
 					x = n->left;	
 					transplant(n, n->left);
 				}
+				
 				// has 2 children
 				else {		
 					y = minimum(n->right);
-					//std::cout<<"---MIN "<<y<<std::endl;
 					original_color = y->color;
 					x = y->right;
 					if (y->parent == n)
@@ -788,12 +796,13 @@ namespace ft {
 					y->color = n->color;
 				}
 				_header.node_count--;
-				if (original_color == BLACK)
+				if (original_color == BLACK) {
 					std::cout<<"---NEEDS FIXUP MATE"<<std::endl;
-					//erase_rebalance(x);
+					erase_rebalance(x);
+				}
 				
-				// maintain leftmost/rightmost
-				_header.node.left	= minimum(n->parent);
+				// maintain rightmost
+				// TO-DO maintain leftmost?
 				_header.node.right	= maximum(n->parent);
 				_destroy_node((node_ptr&)pos.node);
 			}
@@ -804,7 +813,7 @@ namespace ft {
 			lower_bound(const key_type& x) const {
 				node_ptr n = _root;
 				node_ptr m = n;
-				// init m to header node? last node not less than x
+				// TO-DO init m to header node? last node not less than x
 				
 				while (n != 0) {
 					if (!(_comp(key_of_value(**n), x)))
@@ -819,7 +828,7 @@ namespace ft {
 			lower_bound(const key_type& x) {
 				node_ptr n = _root;
 				node_ptr m = n;
-				// init m to header node? last node not less than x
+				// TO-DO init m to header node? last node not less than x
 				
 				while (n != 0) {
 					if (!(_comp(key_of_value(**n), x)))
@@ -884,7 +893,7 @@ namespace ft {
 				return key_of_value(static_cast<node_ptr>(n->value));
 			}
 
-			// MIN/MAX
+			// MIN/MAX ACCESS
 			
 			static base_ptr
 			minimum(base_ptr x)	{ 
@@ -906,7 +915,7 @@ namespace ft {
 				return rb_tree_node_base::maximum(x);
 			}
 
-			// PTR
+			// POINTERS ACCESS
 			
 			static node_ptr
 			left(base_ptr x) {
@@ -938,7 +947,7 @@ namespace ft {
 				return static_cast<const_node_ptr>(x->parent);
 			}
 
-			// HEADER
+			// HEADER DATA ACCESS
 		
 			node_ptr
 			root() {
@@ -957,7 +966,7 @@ namespace ft {
 
 		private:
 
-			//// NODES AND VALUE MEMORY ////
+			//// NODES AND VALUES MEMORY ////
 
 			// NODES
 
@@ -992,10 +1001,21 @@ namespace ft {
 			}
 
 			node_ptr
-			_clone_node(node_ptr src); // copy ctor?
+			_clone_node(node_ptr src); // TO-DO copy ctor?
 
-			// UPCYCLING	
+			// RECYCLING NODES POOL
 
+			// struct reuse or realloc
+			// reuse or alloc >> recycle a pool of nodes,
+			// using alloc only once pool empty
+				 // operator() to destroy/construct a node
+				 // extract() from the pool, return a node
+				 // attributes: root, nodes and tree
+			
+			// struct alloc without reusing
+			      // operator()
+			      // attribute tree	
+		
 			node_ptr
 			_allocate();
 			node_ptr
@@ -1003,7 +1023,7 @@ namespace ft {
 
 			// PAIRS
 
-			// try catch STL like to implement, see construct_node
+			// TO-DO try catch STL like to implement, see construct_node
 			value_type*
 			_construct_pair(value_type v) {
 				value_type*	pair = _alloc.allocate(1);
@@ -1017,13 +1037,14 @@ namespace ft {
 				_alloc.deallocate(n->value, 1);
 			}
 		
-			//template<class V>			// if const
+			//template<class V>			// if const?
 			node_ptr
 			_create_node(value_type val, node_ptr pos = 0) {
 				node_ptr	n;
 
-				n			= _alloc_node();		// replace w allocator dispatch
+				n			= _alloc_node();		// TO-DO replace w allocator dispatch
 				n->value	= _construct_pair(val);
+				
 				_init_node_ptr(n, pos);
 				return n;
 			}
@@ -1033,19 +1054,7 @@ namespace ft {
 				_destroy_pair(n);
 				_dealloc_node(n);	
 			}
-			
 
-			// struct reuse or realloc
-			// reuse or alloc >> recycle a pool of nodes,
-			// using alloc only once pool empty
-				 // operator() to destroy/construct a node
-				 // extract() from the pool, return a node
-				 // attributes: root, nodes and tree
-			
-			// struct alloc without reusing
-			      // operator()
-			      // attribute tree	
-		
 	};	/* rb_tree class */
 		
 }	/* namespace ft */
