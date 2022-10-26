@@ -22,6 +22,7 @@ void	print_map(Map& m, const std::string name) {
 	std::cout	<< std::endl
 				<< "// MAP    "	<< name << std::endl
 				<< "   size:  "	<< m.size() << std::endl;
+	if (!m.empty())
 	m.print_header();
 	std::cout	<< std::endl;
 	if (m.empty())
@@ -44,6 +45,11 @@ int 	main() {
 	NAMESPACE::pair<NAMESPACE::map<int, std::string>::iterator,
 					bool>						ret;
 
+	std::cout	<< "// EMPTY MAP" << std::endl;
+
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(a, "A");
+	
 	std::cout	<< "// INSERT ONE ELEMENT" << std::endl;
 
 	a.insert(NAMESPACE::pair<int, std::string>(4, "four"));
@@ -98,7 +104,7 @@ int 	main() {
 	
 	std::cout	<< std::endl
 				<< "// FIND" << std::endl;
-	//print_pair(a.find(10));
+	print_pair(a.find(10));
 	
 	std::cout	<< std::endl
 				<< "// LOWER_BOUND" << std::endl;
@@ -106,28 +112,46 @@ int 	main() {
 	print_pair(it);
 	it = a.lower_bound(1);
 	print_pair(it);
-	//it = a.lower_bound(11);		// SHOULD SEGF
-	//print_pair(it);
-
+	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 
-	//std::cout	<< "// ERASE ONE ELEMENT" << std::endl;
+	std::cout	<< "// ERASE ONE ELEMENT" << std::endl;
 	
+	std::cout	<< "   rightmost..." << std::endl;
+	std::cout	<< "   >> A size: " << a.size() << std::endl
+				<< "   >> A end:" << std::endl;
+	print_pair(--a.end());
+	a.erase(a.find(10));	
 	
-	//std::cout	<< "   rightmost..." << std::endl;
-	//a.erase(a.find(10));	
+	std::cout	<< "   >> A size: " << a.size() << std::endl
+				<< "   >> A new end:" << std::endl;
+	print_pair(--a.end());
 	
-	//std::cout	<< "   >> size: " << a.size() << std::endl
-				//<< "   >> new end:" << std::endl;
-	//print_pair(--a.end());
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	
-	//std::cout	<< "   leftmost..." << std::endl;
-	//a.erase(a.find(0));	
+	std::cout	<< "   >> B size: " << b.size() << std::endl
+				<< "   >> B end:" << std::endl;
+	print_pair(--b.end());
+	b.erase(--b.end());	
 	
-	//std::cout	<< "   >> size: " << a.size() << std::endl
-				//<< "   >> new begin:" << std::endl;
-	//print_pair(a.begin());
+	std::cout	<< "   >> B size: " << b.size() << std::endl
+				<< "   >> B new end:" << std::endl;
+	print_pair(--b.end());
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
+	
+	std::cout	<< "   leftmost..." << std::endl;
+	std::cout	<< "   >> A size: " << a.size() << std::endl
+				<< "   >> A begin:" << std::endl;
+	print_pair(a.begin());
+	a.erase(a.find(0));	
+	
+	std::cout	<< "   >> A size: " << a.size() << std::endl
+				<< "   >> A new begin:" << std::endl;
+	print_pair(a.begin());
 
 	//std::cout	<< "   reinserting deleted elements..." << std::endl;
 	

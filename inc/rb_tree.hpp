@@ -560,12 +560,10 @@ namespace ft {
 				node_ptr	y;
 			
 				while (n->parent->color == RED) {
-					std::cout<<"---NODE "<<key_of_value(**n)<<std::endl;	
 					if (n->parent == n->parent->parent->left) {
 						y = right(n->parent->parent);
 						// case 1: red uncle
 						if (y && y->color == RED) {
-							std::cout<<"---1"<<std::endl;
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
@@ -576,12 +574,10 @@ namespace ft {
 						else {
 							// case 2: uncle black, n is right child
 							if (n == n->parent->right) {
-								std::cout<<"---2"<<std::endl;
 								(base_ptr&)n = parent(n);
 								left_rotate((base_ptr&)n); // turn n left
 							}	
 							// case 3: uncle black, n is left child
-							std::cout<<"---3"<<std::endl;
 							n->parent->color = BLACK;
 							n->parent->parent->color = RED;
 							right_rotate(n->parent->parent);
@@ -591,7 +587,6 @@ namespace ft {
 						y = left(n->parent->parent);
 						// case 4
 						if (y && y->color == RED) {
-							std::cout<<"---4"<<std::endl;
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
@@ -601,12 +596,10 @@ namespace ft {
 						else {
 							// case 5
 							if (n == n->parent->left) {
-								std::cout<<"---5"<<std::endl;
 								n = parent(n);
 								right_rotate(n);
 							}	
 							// case 6
-							std::cout<<"---6"<<std::endl;
 							n->parent->color = BLACK;
 							n->parent->parent->color = RED;
 							left_rotate(n->parent->parent);
@@ -737,6 +730,7 @@ namespace ft {
 						}
 					}
 				}
+				// maintain root + color
 				x->color = BLACK;
 			}
 
@@ -797,7 +791,11 @@ namespace ft {
 				if (original_color == BLACK)
 					std::cout<<"---NEEDS FIXUP MATE"<<std::endl;
 					//erase_rebalance(x);
-				//_destroy_node((node_ptr&)pos.node);
+				
+				// maintain leftmost/rightmost
+				_header.node.left	= minimum(n->parent);
+				_header.node.right	= maximum(n->parent);
+				_destroy_node((node_ptr&)pos.node);
 			}
 
 			//// MAP OPERATIONS ////
