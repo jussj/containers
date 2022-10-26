@@ -20,9 +20,10 @@ void	print_pair(It it) {
 template<class Map, class It>
 void	print_map(Map& m, const std::string name) {
 	std::cout	<< std::endl
-				<< "// MAP       "	<< name << std::endl
-				<< "   size:     "	<< m.size()
-				<< std::endl << std::endl;
+				<< "// MAP    "	<< name << std::endl
+				<< "   size:  "	<< m.size() << std::endl;
+	m.print_header();
+	std::cout	<< std::endl;
 	if (m.empty())
 		std::cout << "   [ EMPTY MAP ]";
 	else {
@@ -62,19 +63,27 @@ int 	main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 
-	{
-		NAMESPACE::map<int, std::string>			b;
-		
-		b.insert(NAMESPACE::pair<int, std::string>(1, "one"));
-		b.insert(NAMESPACE::pair<int, std::string>(2, "two"));
-		b.insert(NAMESPACE::pair<int, std::string>(5, "five"));
-		//b.insert(NAMESPACE::pair<int, std::string>(3, "three"));
-		b.insert(NAMESPACE::pair<int, std::string>(4, "four"));
+	NAMESPACE::map<int, std::string>			b;
+	
+	b.insert(NAMESPACE::pair<int, std::string>(1, "one"));
+	b.insert(NAMESPACE::pair<int, std::string>(2, "two"));
 
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(b, "B");
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 
-	}
+	b.insert(NAMESPACE::pair<int, std::string>(5, "five"));
+	b.insert(NAMESPACE::pair<int, std::string>(4, "four"));
+	b.insert(NAMESPACE::pair<int, std::string>(7, "seven"));
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
+	
+	b.insert(NAMESPACE::pair<int, std::string>(9, "nine"));
+	b.insert(NAMESPACE::pair<int, std::string>(11, "elev"));
+	b.insert(NAMESPACE::pair<int, std::string>(10, "ten"));
+
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 
 	//std::cout	<< std::endl
 				//<< "// DECREM" << std::endl;

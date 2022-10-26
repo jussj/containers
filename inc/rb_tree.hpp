@@ -56,7 +56,6 @@ namespace ft {
 		}
 
 	};	/* rb_tree_node_base struct	*/
-		/* holds node base pointers, color and max/min func */
 
 	struct rb_tree_header {
 
@@ -84,17 +83,6 @@ namespace ft {
 			node.right = n;
 		}
 
-		rb_tree_node_base*
-		leftmost() {
-			return node.left;
-		}
-
-		rb_tree_node_base*
-		rightmost() {
-			return node.right;
-		}
-
-
 		// MEMBER FUNCTIONS
 
 		void
@@ -116,7 +104,6 @@ namespace ft {
 		}
 
 	};	/* rb_tree_header struct */
-		/* holds node_count and ends */
 
 	template<class V>
 	struct rb_tree_node : public rb_tree_node_base {
@@ -138,7 +125,6 @@ namespace ft {
 		}
 	
 	};	/* rb_tree_node struct */
-		/* inherites base_node and holds value ptr */
 
 	// find a solution to keep the base iterator
 	// without loosing the const qualifier 
@@ -255,7 +241,9 @@ namespace ft {
 		operator!=(const self& x, const self& y) {
 			return x->node != y->node;
 		}
-		
+
+		// DEBUG
+
 		void
 		print_node_ptr() {
 			std::cout	<< "   color  ";
@@ -508,8 +496,8 @@ namespace ft {
 				x->right	= y->left;
 				
 				// maintain leftmost and rightmost
-				base_ptr	lmost = _header.leftmost();
-				base_ptr	rmost = _header.rightmost();
+				base_ptr	lmost = _header.node.left;
+				base_ptr	rmost = _header.node.right;
 
 				if (y->left != 0)
 					y->left->parent = x;
@@ -533,8 +521,8 @@ namespace ft {
 				x->left		= y->right;
 				
 				// maintain leftmost and rightmost
-				base_ptr	lmost = _header.leftmost();
-				base_ptr	rmost = _header.rightmost();
+				base_ptr	lmost = _header.node.left;
+				base_ptr	rmost = _header.node.right;
 			
 				if (y->right != 0)
 					y->right->parent = x;
@@ -563,31 +551,35 @@ namespace ft {
 				
 				this->_root			= new_root;
 				this->_root->color	= BLACK;
+				
+				_header.node.parent	= _root;				// make root be a ptr on a node
 			}
 
 			iterator
 			insert_rebalance(node_ptr n) {
 				node_ptr	y;
 			
-				std::cout<<"---NODE "<<key(**n)<<std::endl;	
+				std::cout<<"---NODE "<<key_of_value(**n)<<std::endl;	
 				while (n->parent->color == RED) {
 					if (n->parent == n->parent->parent->left) {
 						y = right(n->parent->parent);
-						// case 1
+						// case 1: red uncle
 						if (y && y->color == RED) {
 							std::cout<<"---1"<<std::endl;
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
+							(base_ptr&)n = n->parent->parent;
+							// repeat with n being grandpa
 						}
 						else {
-							// case 2
+							// case 2: uncle black, n is right child
 							if (n == n->parent->right) {
 								std::cout<<"---2"<<std::endl;
 								(base_ptr&)n = parent(n);
-								left_rotate((base_ptr&)n);
+								left_rotate((base_ptr&)n); // turn n left
 							}	
-							// case 3
+							// case 3: uncle black, n is left child
 							std::cout<<"---3"<<std::endl;
 							n->parent->color = BLACK;
 							n->parent->parent->color = RED;
@@ -596,12 +588,13 @@ namespace ft {
 					}
 					else {
 						y = left(n->parent->parent);
-						// case 4
+						// case 4: red uncle
 						if (y && y->color == RED) {
 							std::cout<<"---4"<<std::endl;
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
+							(base_ptr&)n = n->parent->parent;
 						}
 						else {
 							// case 5
@@ -613,14 +606,12 @@ namespace ft {
 							// case 6
 							std::cout<<"---6"<<std::endl;
 							n->parent->color = BLACK;
-							std::cout<<"---NPP IS "<<key(**parent(n->parent))<<std::endl;
 							n->parent->parent->color = RED;
 							left_rotate(n->parent->parent);
 						}
 					}
 				}
 				maintain_root(n);
-				std::cout << "ROOT: "<< _root << std::endl;
 				return iterator(n);
 			}
 
@@ -632,7 +623,7 @@ namespace ft {
 
 				while (x != 0) {
 					y = x;
-				if (key(**n) < key(**x))
+				if (key_of_value(**n) < key_of_value(**x))
 					x = left(x);
 				else
 					x = right(x);
@@ -643,15 +634,13 @@ namespace ft {
 					_root				= n;
 					_root->parent		= &_header.node;
 					_root->color		= BLACK;
-					
 					// set leftmost/rightmost and parent
 					_header.node.left	= n;
 					_header.node.right	= n;
-					_header.node.parent	= n;
+					_header.node.parent	= _root;
 				}
-			//else if (key(**n) < key(**y)
-				//|| _header.node_count == 1) // insert first node left?
-			else if (key(**n) < key(**y))
+			// insert first node left?
+			else if (key_of_value(**n) < key_of_value(**y))
 				y->left = n;
 			else
 				y->right = n;
@@ -659,9 +648,9 @@ namespace ft {
 			n->right	= 0;
 			
 			// maintain leftmost/rightmost
-			if (key(**n) < key(**left(&_header.node)))
+			if (key_of_value(**n) < key_of_value(**left(&_header.node)))
 				_header.node.left = (base_ptr&)n; 
-			else if (key(**n) > key(**right(&_header.node)))
+			else if (key_of_value(**n) > key_of_value(**right(&_header.node)))
 				_header.node.right = (base_ptr&)n; 
 
 			// updt count	
@@ -764,14 +753,12 @@ namespace ft {
 			void
 			erase(iterator pos) {
 				base_ptr n	= pos.node;
-				base_ptr y	= n;	// successor	
+				base_ptr y	= n;			// successor	
 				base_ptr x;
 
 				// save erased node original color
 				t_color original_color	= y->color;
 
-				//std::cout<<"---RIGHTMOST "<<_header.node.right<<std::endl;
-				//std::cout<<"---LEFTMOST  "<<_header.node.left<<std::endl;
 				// maintain leftmost/rightmost
 				if (_header.node.left == n)
 					_header.node.left = n->parent;
@@ -789,7 +776,7 @@ namespace ft {
 				// has 2 children
 				else {		
 					y = minimum(n->right);
-					std::cout<<"---MIN "<<y<<std::endl;
+					//std::cout<<"---MIN "<<y<<std::endl;
 					original_color = y->color;
 					x = y->right;
 					if (y->parent == n)
@@ -808,8 +795,6 @@ namespace ft {
 				if (original_color == BLACK)
 					std::cout<<"---NEEDS FIXUP MATE"<<std::endl;
 					//erase_rebalance(x);
-				//std::cout<<"---RIGHTMOST "<<_header.node.right<<std::endl;
-				//std::cout<<"---LEFTMOST  "<<_header.node.left<<std::endl;
 				//_destroy_node((node_ptr&)pos.node);
 			}
 
@@ -822,7 +807,7 @@ namespace ft {
 				// init m to header node? last node not less than x
 				
 				while (n != 0) {
-					if (!(_comp(key(**n), x)))
+					if (!(_comp(key_of_value(**n), x)))
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -837,7 +822,7 @@ namespace ft {
 				// init m to header node? last node not less than x
 				
 				while (n != 0) {
-					if (!(_comp(key(**n), x)))
+					if (!(_comp(key_of_value(**n), x)))
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -848,7 +833,7 @@ namespace ft {
 			const_iterator
 			find(const key_type& x) const {
 				const_iterator y = lower_bound(x);
-				if (y != 0 && key(*y) == x)
+				if (y != 0 && key_of_value(*y) == x)
 					return y;
 				return end();
 			}
@@ -856,11 +841,23 @@ namespace ft {
 			iterator
 			find(const key_type& x) {
 				iterator y = lower_bound(x);
-				if (y != 0 && key(*y) == x)
+				if (y != 0 && key_of_value(*y) == x)
 					return y;
 				return end();
 			}
-
+			
+			// DEBUG
+			
+			void
+			print_header() {
+				std::cout	<< "   root:  " << key_of_value(**root())
+							<< "\t(" << root() << ")" << std::endl
+							<< "   lmost: " << key_of_value(**leftmost()) 
+							<< "\t(" << leftmost() << ")" << std::endl
+							<< "   rmost: " << key_of_value(**rightmost()) 
+							<< "\t(" << rightmost() << ")" << std::endl;
+			}
+			
 		protected:
      
 			//// ACCESS ////
@@ -878,8 +875,13 @@ namespace ft {
 			}
 
 			const key_type
-			key(value_type& v) const {
+			key_of_value(value_type& v) const {
 				return v.first;
+			}
+			
+			const key_type
+			key(node_ptr n) const {
+				return key_of_value(static_cast<node_ptr>(n->value));
 			}
 
 			// MIN/MAX
@@ -935,7 +937,24 @@ namespace ft {
 			parent(const_base_ptr x) { 
 				return static_cast<const_node_ptr>(x->parent);
 			}
+
+			// HEADER
+		
+			node_ptr
+			root() {
+				return static_cast<node_ptr>(_header.node.parent);
+			}
 			
+			node_ptr
+			leftmost() {
+				return static_cast<node_ptr>(_header.node.left);
+			}
+			
+			node_ptr
+			rightmost() {
+				return static_cast<node_ptr>(_header.node.right);
+			}
+
 		private:
 
 			//// NODES AND VALUE MEMORY ////
@@ -993,9 +1012,9 @@ namespace ft {
 			}
 			
 			void
-			_destroy_pair(node_ptr& n) {
-				_alloc.deallocate(n->value, 1);
+			_destroy_pair(node_ptr n) {
 				_alloc.destroy(n->value);
+				_alloc.deallocate(n->value, 1);
 			}
 		
 			//template<class V>			// if const

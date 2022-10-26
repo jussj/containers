@@ -220,7 +220,9 @@ namespace ft {
 			}
 			
 			const_iterator
-			lower_bound(const key_type& x) const;
+			lower_bound(const key_type& x) const {
+				return _tree.lower_bound(x);
+			}
 			
 			iterator
 			upper_bound(const key_type& x);
@@ -233,6 +235,13 @@ namespace ft {
 			
 			ft::pair<const_iterator,const_iterator>
 			equal_range(const key_type& x) const;
+
+		// DEBUG
+
+			void
+			print_header() {
+				_tree.print_header();
+			}
 	
 	};	/* class map */
 
