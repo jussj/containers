@@ -58,6 +58,19 @@ namespace ft {
 
 	};	/* rb_tree_node_base struct	*/
 
+	struct rb_tree_sentinel : public rb_tree_node_base {
+		
+		// CTOR
+		
+		rb_tree_sentinel() {
+			color	= BLACK;
+			left	= 0;
+			right	= 0;
+			parent	= 0;
+		}	
+
+	};	/* rb_tree_sentinel struct */
+
 	struct rb_tree_header {
 
 		// ATTRIBUTES
@@ -415,6 +428,7 @@ namespace ft {
 			typedef	rb_tree_node<Val>*			node_ptr;
 			typedef	const rb_tree_node<Val>*	const_node_ptr;
 			typedef rb_tree_header				header;
+			typedef rb_tree_sentinel			sentinel;
 		
 			typedef typename Alloc::template	rebind<rb_tree_node<Val> >::other 
 												node_allocator_type;
@@ -434,7 +448,7 @@ namespace ft {
 			node_allocator_type		_nodalloc;
 			key_compare				_comp;
 			node_ptr				_root;
-			node_ptr				_nodes_pool;
+			sentinel				_sentinel;
 			header					_header;
 			//rb_tree_impl&			_t;			// implement second tree layer?
 
@@ -751,7 +765,6 @@ namespace ft {
 						}
 					}
 				}
-				// TO-DO maintain root + color?
 				x->color = BLACK;
 			}
 
@@ -818,7 +831,7 @@ namespace ft {
 				
 				// has 2 children
 				else {		
-					y = minimum(n->right);
+					y = minimum(n->right);			// n closest successor
 					original_color = y->color;
 					x = y->right;
 					if (y->parent == n)

@@ -23,7 +23,7 @@ void	print_map(Map& m, const std::string name) {
 				<< "// MAP    "	<< name << std::endl
 				<< "   size:  "	<< m.size() << std::endl;
 	if (!m.empty())
-	m.print_header();
+		m.print_header();
 	std::cout	<< std::endl;
 	if (m.empty())
 		std::cout << "   [ EMPTY MAP ]";
@@ -130,7 +130,7 @@ int 	main() {
 				<< ">> A new end:" << std::endl;
 	print_pair(--a.end());
 	
-	a.erase(a.find(5));	
+	a.erase(a.find(5));
 	
 	std::cout	<< ">> A size: " << a.size() << std::endl
 				<< ">> A new new end:" << std::endl;
@@ -139,7 +139,9 @@ int 	main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 
-/*	print_map<NAMESPACE::map<int, std::string>, 
+	a.insert(NAMESPACE::pair<int, std::string>(5, "five"));
+	
+	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	
 	// one child
@@ -178,10 +180,33 @@ int 	main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 
-	std::cout	<< "   ROOT:" << std::endl;
+	std::cout	<< "   NODE W 2 CHILDREN:" << std::endl;
 
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
+
+	b.erase(b.find(9));
+	
+	// huge tree but same problem than the small tree
+	//NAMESPACE::map<int, std::string>			c;
+	
+	//for (size_t size = 0; size < 20; ++size) {
+		//c.insert(NAMESPACE::pair<int, std::string>(size, "hehe"));
+	//}
+
+	//print_map<NAMESPACE::map<int, std::string>, 
+		//NAMESPACE::map<int, std::string>::iterator>(c, "C");
+
+	//c.erase(c.find(3));
+
+	//print_map<NAMESPACE::map<int, std::string>, 
+		//NAMESPACE::map<int, std::string>::iterator>(c, "C");
+	
+	// but closest have NIL children
+	// but is root
+
+	//print_map<NAMESPACE::map<int, std::string>, 
+		//NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	
 	//std::cout	<< "   reinserting deleted elements..." << std::endl;
 	
@@ -202,7 +227,7 @@ int 	main() {
 	//std::cout	<< "   >> size: " << a.size() << std::endl;
 	
 	//print_map<NAMESPACE::map<int, std::string>, 
-		//NAMESPACE::map<int, std::string>::iterator>(a, "A");*/
+		//NAMESPACE::map<int, std::string>::iterator>(a, "A");
 	
 	return 0;
 }
