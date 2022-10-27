@@ -14,6 +14,7 @@ namespace ft {
 	typedef enum	e_color {
 		RED,
 		BLACK
+
 	}				t_color;
 
 	struct rb_tree_node_base {
@@ -433,6 +434,7 @@ namespace ft {
 			node_allocator_type		_nodalloc;
 			key_compare				_comp;
 			node_ptr				_root;
+			node_ptr				_nodes_pool;
 			header					_header;
 			//rb_tree_impl&			_t;			// implement second tree layer?
 
@@ -652,6 +654,7 @@ namespace ft {
 			n->right	= 0;
 			
 			// maintain leftmost/rightmost
+			// TO-DO use key-compare for comparing values
 			if (key_of_value(**n) < key_of_value(**left(&_header.node)))
 				_header.node.left = (base_ptr&)n; 
 			else if (key_of_value(**n) > key_of_value(**right(&_header.node)))
@@ -673,31 +676,38 @@ namespace ft {
 			erase_rebalance(base_ptr x) {
 				base_ptr w;
 
+				std::cout<<"---NODE X "<<x<<std::endl;
 				while (x != _root && x->color == BLACK) {
 					if (x == x->parent->left) {
 						w = x->parent->right;
-						// case 1
-						if (w->color == RED) {
+						// case 1: sibling is red
+						if (w && w->color == RED) {
+							std::cout<<"---case 1"<<std::endl;
 							w->color = BLACK;
 							x->parent->color = RED;
 							left_rotate(x->parent);
 							w = x->parent->right;
 						}
-						// case 2
-						if (w->left->color == BLACK 
-								&& w->right->color == BLACK) {
+						// case 2: sibling is black
+						// and nephews are blacks (OR NULL)
+						if ((w->left == 0 || w->left->color == BLACK)
+								&& (w->right == 0 || w->right->color == BLACK)) {
+							std::cout<<"---case 2"<<std::endl;
 							w->color = RED;
 							x = x->parent;
 						}
 						else {
-							// case 3
-							if (w->right->color == BLACK) {
+							// case 3: sibling is black, 
+							// left nephew red, right is black
+							if (w->right == 0 || w->right->color == BLACK) {
+								std::cout<<"---case 3"<<std::endl;
 								w->left->color = RED;
 								w->color = RED;
 								right_rotate(w);
 								w = x->parent->right;
 							}
-							// case 4
+							// case 4: the other way
+							std::cout<<"---case 4"<<std::endl;
 							w->color = x->parent->color;
 							x->parent->color = BLACK;
 							w->right->color = BLACK;
@@ -708,27 +718,31 @@ namespace ft {
 					else {
 						w = x->parent->left;
 						// case 5
-						if (w->color == RED) {
+						if (w && w->color == RED) {
+							std::cout<<"---case 5"<<std::endl;
 							w->color = BLACK;
 							x->parent->color = RED;
 							right_rotate(x->parent);
 							w = x->parent->left;
 						}
 						// case 6
-						if (w->right->color == BLACK 
-								&& w->left->color == BLACK) {
+						if ((w->right == 0 || w->right->color == BLACK) 
+								&& (w->left == 0 || w->left->color == BLACK)) {
+							std::cout<<"---case 6"<<std::endl;
 							w->color = RED;
 							x = x->parent;
 						}
 						else {
 							// case 7
 							if (w->left->color == BLACK) { 
+								std::cout<<"---case 7"<<std::endl;
 								w->left->color = RED;
 								w->color = RED;
 								left_rotate(w);
 								w = x->parent->left;
 							}
 							// case 8
+							std::cout<<"---case 8"<<std::endl;
 							w->color = x->parent->color;
 							x->parent->color = BLACK;
 							w->left->color = BLACK;
@@ -751,6 +765,30 @@ namespace ft {
 					u->parent->right = v;
 				if (v != 0)
 					v->parent = u->parent;		// TO-DO unconditional in algo bible
+			}
+
+			void
+			erase_leaf_and_rebalance(base_ptr n, base_ptr y) {
+				// create double black node to rebalance the tree
+				node_ptr x	= _alloc_node();
+				y			= n->parent;
+				// parent is n old parent
+				x->parent	= y;
+				x->left		= 0;
+				x->right	= 0;
+				x->color	= BLACK;
+				if (y->left == 0)
+					y->left = x;
+				else
+					y->right = x;
+				// rebalance with NIL node
+				erase_rebalance(x);
+				// delete node
+				if (y->left == x)
+					y->left = 0;
+				else
+					y->right = 0;
+				_dealloc_node(x);
 			}
 
 			void
@@ -798,9 +836,14 @@ namespace ft {
 				_header.node_count--;
 				if (original_color == BLACK) {
 					std::cout<<"---NEEDS FIXUP MATE"<<std::endl;
-					erase_rebalance(x);
+					// n was last node with no child
+					if (x == 0 && y == n)
+						erase_leaf_and_rebalance(n, y);
+					else
+						erase_rebalance(x);
 				}
-				
+				// maintain root
+				maintain_root(parent(n));
 				// maintain rightmost
 				// TO-DO maintain leftmost?
 				_header.node.right	= maximum(n->parent);
@@ -985,6 +1028,7 @@ namespace ft {
 						lcount += 1;
 					x = x->left;
 				}
+				// if ret = 0, tree empty or unbalanced
 				if (count != lcount)
 					return 0;
 				
@@ -993,13 +1037,11 @@ namespace ft {
 
 			size_type
 			black_height() {
-				// if ret = 0, tree empty or unbalanced
 				return black_node_count(root());
 			}
 			
 			size_type
 			black_height(base_ptr pos) {
-				// if ret = 0, tree empty or unbalanced
 				return black_node_count(pos);
 			}
 
@@ -1081,7 +1123,8 @@ namespace ft {
 			_create_node(value_type val, node_ptr pos = 0) {
 				node_ptr	n;
 
-				n			= _alloc_node();		// TO-DO replace w allocator dispatch
+				// TO-DO replace w allocator dispatch
+				n			= _alloc_node();
 				n->value	= _construct_pair(val);
 				
 				_init_node_ptr(n, pos);
