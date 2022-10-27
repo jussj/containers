@@ -864,7 +864,8 @@ namespace ft {
 							<< "   lmost: " << key_of_value(**leftmost()) 
 							<< "\t(" << leftmost() << ")" << std::endl
 							<< "   rmost: " << key_of_value(**rightmost()) 
-							<< "\t(" << rightmost() << ")" << std::endl;
+							<< "\t(" << rightmost() << ")" << std::endl
+							<< "   bh:    " << black_height() << std::endl;
 			}
 			
 		protected:
@@ -962,6 +963,44 @@ namespace ft {
 			node_ptr
 			rightmost() {
 				return static_cast<node_ptr>(_header.node.right);
+			}
+
+			//// BLACK HEIGHT ////
+
+			size_type
+			black_node_count(base_ptr pos) {
+				base_ptr	x		= pos;
+				size_type	count	= 0;
+				size_type	lcount	= 0;
+
+				while (x != 0) {
+					if (x->color == BLACK)
+						count += 1;
+					x = x->right;
+				}
+				// control tree balance
+				x = pos;
+				while (x != 0) {
+					if (x->color == BLACK)
+						lcount += 1;
+					x = x->left;
+				}
+				if (count != lcount)
+					return 0;
+				
+				return count;
+			}
+
+			size_type
+			black_height() {
+				// if ret = 0, tree empty or unbalanced
+				return black_node_count(root());
+			}
+			
+			size_type
+			black_height(base_ptr pos) {
+				// if ret = 0, tree empty or unbalanced
+				return black_node_count(pos);
 			}
 
 		private:
