@@ -187,6 +187,8 @@ int 	main() {
 
 	b.erase(b.find(9));
 	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	// huge tree but same problem than the small tree
 	//NAMESPACE::map<int, std::string>			c;
 	
