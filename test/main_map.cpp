@@ -26,14 +26,10 @@ void	print_map(Map& m, const std::string name) {
 		m.print_header();
 	std::cout	<< std::endl;
 	if (m.empty())
-		std::cout << "   [ EMPTY MAP ]";
+		std::cout << "   [ EMPTY MAP ]" << std::endl;
 	else {
-	for (It it = m.begin(); it != m.end(); ++it) {
-		//It it = m.begin();
-		//for (size_t i = 0; i < m.size(); ++i) {
+	for (It it = m.begin(); it != m.end(); ++it)
 			print_pair<It>(it);
-			//++it;
-		}
 	}
 	std::cout	<< std::endl;
 }
@@ -182,6 +178,18 @@ int 	main() {
 
 	std::cout	<< "   NODE W 2 CHILDREN:" << std::endl;
 
+	// but is root
+
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
+	
+	b.erase(b.find(5));
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
+	
+	// but closest have NIL children
+	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 
@@ -189,47 +197,63 @@ int 	main() {
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
-	// huge tree but same problem than the small tree
-	//NAMESPACE::map<int, std::string>			c;
 	
-	//for (size_t size = 0; size < 20; ++size) {
-		//c.insert(NAMESPACE::pair<int, std::string>(size, "hehe"));
-	//}
+	// huge tree
 
-	//print_map<NAMESPACE::map<int, std::string>, 
-		//NAMESPACE::map<int, std::string>::iterator>(c, "C");
+	NAMESPACE::map<int, std::string>			c;
+	
+	for (size_t size = 0; size < 20; ++size) {
+		c.insert(NAMESPACE::pair<int, std::string>(size, "hehe"));
+	}
 
-	//c.erase(c.find(3));
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(c, "C");
 
-	//print_map<NAMESPACE::map<int, std::string>, 
-		//NAMESPACE::map<int, std::string>::iterator>(c, "C");
-	
-	// but closest have NIL children
-	// but is root
+	c.erase(c.find(3));
 
-	//print_map<NAMESPACE::map<int, std::string>, 
-		//NAMESPACE::map<int, std::string>::iterator>(b, "B");
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(c, "C");
 	
-	//std::cout	<< "   reinserting deleted elements..." << std::endl;
+	std::cout	<< "   reinserting deleted elements..." << std::endl;
 	
-	//a.insert(NAMESPACE::pair<int, std::string>(0, "zero"));
-	//a.insert(NAMESPACE::pair<int, std::string>(10, "ten"));
+	a.insert(NAMESPACE::pair<int, std::string>(0, "zero"));
+	a.insert(NAMESPACE::pair<int, std::string>(10, "ten"));
 
-	//print_map<NAMESPACE::map<int, std::string>, 
-		//NAMESPACE::map<int, std::string>::iterator>(a, "A");
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(a, "A");
+
+	std::cout	<< "   erasing last element..." << std::endl;
+
+	NAMESPACE::map<int, std::string>			d;
+
+	d.insert(NAMESPACE::pair<int, std::string>(0, "zero"));
+
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(d, "D");
+
+	d.erase(d.find(0));
 	
-	//std::cout	<< "   one child..." << std::endl;
-	//a.erase(a.find(5));
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(d, "D");
+
+	std::cout	<< "   emptying A tree from begin..." << std::endl;
+
+	std::cout	<< std::endl
+				<< "   A HEADER INFOS:" << std::endl;
+	a.print_header();
+
+	std::cout	<< std::endl;
+
+	//while (!a.empty()) {
+	while (a.size() > 2) {
+		print_pair(a.begin());
+		a.erase(a.begin());
+	}
 	
-	//print_map<NAMESPACE::map<int, std::string>, 
-		//NAMESPACE::map<int, std::string>::iterator>(a, "A");
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 	
-	//std::cout	<< "   two children..." << std::endl;
-	//a.erase(a.find(1));
-	//std::cout	<< "   >> size: " << a.size() << std::endl;
-	
-	//print_map<NAMESPACE::map<int, std::string>, 
-		//NAMESPACE::map<int, std::string>::iterator>(a, "A");
+	std::cout	<< "   emptying B tree from end..." << std::endl;
 	
 	return 0;
 }

@@ -97,7 +97,7 @@ namespace ft {
 			return *(this->value);
 		}
 
-		// declaring a unique ptr to a bottom NIL sentinel
+		// declaring a unique ptr to bottom NIL sentinel
 		static node_ptr			   _nil;
 
 	private:
@@ -408,13 +408,12 @@ namespace ft {
 			erase_rebalance(base_ptr x) {
 				base_ptr w;
 
-				std::cout<<"---NODE X "<<x<<std::endl;
 				while (x != _root && x->color == BLACK) {
 					if (x == x->parent->left) {
 						w = x->parent->right;
 						// case 1: sibling is red
 						if (w->color == RED) {
-							std::cout<<"---case 1"<<std::endl;
+							//std::cout<<"---case 1"<<std::endl;
 							w->color = BLACK;
 							x->parent->color = RED;
 							left_rotate(x->parent);
@@ -424,7 +423,7 @@ namespace ft {
 						// and nephews are blacks (OR NULL)
 						if (w->left->color == BLACK // 0
 								&& w->right->color == BLACK) { // 0
-							std::cout<<"---case 2"<<std::endl;
+							//std::cout<<"---case 2"<<std::endl;
 							w->color = RED;
 							x = x->parent;
 						}
@@ -432,14 +431,14 @@ namespace ft {
 							// case 3: sibling is black, 
 							// left nephew red, right is black
 							if (w->right->color == BLACK) { // 0
-								std::cout<<"---case 3"<<std::endl;
+								//std::cout<<"---case 3"<<std::endl;
 								w->left->color = RED;
 								w->color = RED;
 								right_rotate(w);
 								w = x->parent->right;
 							}
 							// case 4: the other way
-							std::cout<<"---case 4"<<std::endl;
+							//std::cout<<"---case 4"<<std::endl;
 							w->color = x->parent->color;
 							x->parent->color = BLACK;
 							w->right->color = BLACK;
@@ -451,30 +450,30 @@ namespace ft {
 						w = x->parent->left;
 						// case 5
 						if (w->color == RED) {
-							std::cout<<"---case 5"<<std::endl;
+							//std::cout<<"---case 5"<<std::endl;
 							w->color = BLACK;
 							x->parent->color = RED;
 							right_rotate(x->parent);
 							w = x->parent->left;
 						}
 						// case 6
-						if ((w->right == 0 || w->right->color == BLACK) 
-								&& (w->left == 0 || w->left->color == BLACK)) {
-							std::cout<<"---case 6"<<std::endl;
+						if (w->right->color == BLACK 
+								&& w->left->color == BLACK) {
+							//std::cout<<"---case 6"<<std::endl;
 							w->color = RED;
 							x = x->parent;
 						}
 						else {
 							// case 7
 							if (w->left->color == BLACK) { 
-								std::cout<<"---case 7"<<std::endl;
+								//std::cout<<"---case 7"<<std::endl;
 								w->left->color = RED;
 								w->color = RED;
 								left_rotate(w);
 								w = x->parent->left;
 							}
 							// case 8
-							std::cout<<"---case 8"<<std::endl;
+							//std::cout<<"---case 8"<<std::endl;
 							w->color = x->parent->color;
 							x->parent->color = BLACK;
 							w->left->color = BLACK;
@@ -488,14 +487,13 @@ namespace ft {
 
 			void
 			transplant(base_ptr u, base_ptr v) {
-				if (u->parent == 0)
+				if (u->parent == rb_tree_node<Val>::_nil)
 					(base_ptr&)_root = v;
 				else if (u->parent->left == u)	// is node p left child
 					u->parent->left = v;		// set parent left to
 				else							// its child or 0
 					u->parent->right = v;
-				if (v != 0)
-					v->parent = u->parent;		// TO-DO unconditional in algo bible
+				v->parent = u->parent;		// TO-DO unconditional in algo bible
 			}
 
 			void
@@ -548,8 +546,9 @@ namespace ft {
 				}
 				
 				// has 2 children
-				else {		
-					y = minimum(n->right);			// n closest successor
+				else {	
+					//y = maximum(n->left);		// n closest successor
+					y = minimum(n->right);		// n closest successor
 					original_color = y->color;
 					x = y->right;
 					if (y->parent == n)
@@ -566,7 +565,7 @@ namespace ft {
 				}
 				_header.node_count--;
 				if (original_color == BLACK) {
-					std::cout<<"---NEEDS FIXUP MATE"<<std::endl;
+					//std::cout<<"---NEEDS FIXUP MATE"<<std::endl;
 					// n was last node with no child
 					if (x == rb_tree_node<Val>::_nil && y == n)
 						erase_leaf_and_rebalance(n, y);
@@ -574,10 +573,21 @@ namespace ft {
 						erase_rebalance(x);
 				}
 				// maintain root
-				maintain_root(parent(n));
-				// maintain rightmost
-				// TO-DO maintain leftmost?
-				_header.node.right	= maximum(_header.node.right);
+				if (n == _root) {
+					(base_ptr&)_root	= y;
+					_header.node.parent = _root;
+				}
+				else
+					maintain_root(parent(n));
+				// maintain max/min
+				if (size() == 1) {
+					_header.node.right	= y;
+					_header.node.left	= y;
+				}
+				else if (!empty()) {
+					_header.node.right	= maximum(_header.node.right);
+					_header.node.left	= minimum(_header.node.left);
+				}				
 				_destroy_node((node_ptr&)pos.node);
 			}
 
@@ -641,6 +651,8 @@ namespace ft {
 							<< "\t(" << leftmost() << ")" << std::endl
 							<< "   rmost: " << key_of_value(**rightmost()) 
 							<< "\t(" << rightmost() << ")" << std::endl
+							<< "   nil:   " << 0 << "\t(" 
+							<< rb_tree_node<Val>::_nil << ")" << std::endl
 							<< "   bh:    " << black_height() << std::endl;
 			}
 			
@@ -757,14 +769,14 @@ namespace ft {
 				size_type	count	= 0;
 				size_type	lcount	= 0;
 
-				while (x != 0) {
+				while (x != rb_tree_node<Val>::_nil) {
 					if (x->color == BLACK)
 						count += 1;
 					x = x->right;
 				}
 				// control tree balance
 				x = pos;
-				while (x != 0) {
+				while (x != rb_tree_node<Val>::_nil) {
 					if (x->color == BLACK)
 						lcount += 1;
 					x = x->left;
