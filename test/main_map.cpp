@@ -14,7 +14,7 @@ void	print_pair(It it) {
 		std::cout	<< "   [ "	<< (*it).first 
 					<< "\t| "	<< (*it).second 
 					<< "\t]"	<< std::endl;
-		it.print_node_ptr();
+		//it.print_node_ptr();
 }
 
 template<class Map, class It>
@@ -22,13 +22,13 @@ void	print_map(Map& m, const std::string name) {
 	std::cout	<< std::endl
 				<< "// MAP    "	<< name << std::endl
 				<< "   size:  "	<< m.size() << std::endl;
-	if (!m.empty())
-		m.print_header();
+	//if (!m.empty())
+		//m.print_header();
 	std::cout	<< std::endl;
 	if (m.empty())
 		std::cout << "   [ EMPTY MAP ]" << std::endl;
 	else {
-	for (It it = m.begin(); it != m.end(); ++it)
+		for (It it = m.begin(); it != m.end(); ++it)
 			print_pair<It>(it);
 	}
 	std::cout	<< std::endl;
@@ -236,6 +236,9 @@ int 	main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(d, "D");
 
+	while (!c.empty())
+		c.erase(c.begin());
+	
 	std::cout	<< "   emptying A tree from begin..." << std::endl;
 
 	std::cout	<< std::endl
@@ -244,16 +247,25 @@ int 	main() {
 
 	std::cout	<< std::endl;
 
-	//while (!a.empty()) {
-	while (a.size() > 2) {
-		print_pair(a.begin());
+	while (!a.empty())
 		a.erase(a.begin());
-	}
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 	
 	std::cout	<< "   emptying B tree from end..." << std::endl;
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
+	
+	while (!b.empty()) {
+		//b.print_header();
+		//print_pair(--b.end());
+		b.erase(--b.end());
+	}
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	
 	return 0;
 }

@@ -493,7 +493,7 @@ namespace ft {
 					u->parent->left = v;		// set parent left to
 				else							// its child or 0
 					u->parent->right = v;
-				v->parent = u->parent;		// TO-DO unconditional in algo bible
+				v->parent = u->parent;
 			}
 
 			void
@@ -501,6 +501,7 @@ namespace ft {
 				// create double black node to rebalance the tree
 				node_ptr x	= _alloc_node();
 				y			= n->parent;
+				
 				// parent is n old parent
 				x->parent	= y;
 				x->left		= rb_tree_node<Val>::_nil;
@@ -510,8 +511,10 @@ namespace ft {
 					y->left = x;
 				else
 					y->right = x;
+				
 				// rebalance with NIL node
 				erase_rebalance(x);
+				
 				// delete node
 				if (y->left == x)
 					y->left = rb_tree_node<Val>::_nil;
@@ -536,7 +539,7 @@ namespace ft {
 					_header.node.right = n->parent;
 				
 				// has 0 to 1 child
-				if (left(n) == rb_tree_node<Val>::_nil) {					
+				if (left(n) == rb_tree_node<Val>::_nil) {
 					x = n->right;				// save only child
 					transplant(n, n->right);	// replace parent child 
 				}								// by its own child
@@ -547,7 +550,6 @@ namespace ft {
 				
 				// has 2 children
 				else {	
-					//y = maximum(n->left);		// n closest successor
 					y = minimum(n->right);		// n closest successor
 					original_color = y->color;
 					x = y->right;
@@ -564,22 +566,27 @@ namespace ft {
 					y->color = n->color;
 				}
 				_header.node_count--;
-				if (original_color == BLACK) {
-					//std::cout<<"---NEEDS FIXUP MATE"<<std::endl;
-					// n was last node with no child
+				if (original_color == BLACK && size() > 1) {
+					// n was with no child
 					if (x == rb_tree_node<Val>::_nil && y == n)
 						erase_leaf_and_rebalance(n, y);
 					else
 						erase_rebalance(x);
 				}
+				if (size() == 1)
+					y = x;
 				// maintain root
 				if (n == _root) {
+					// only one elem left, becomes root
+					if (size() == 1)
+						y = x;
 					(base_ptr&)_root	= y;
 					_header.node.parent = _root;
 				}
 				else
 					maintain_root(parent(n));
-				// maintain max/min
+				
+				// maintain max/min >> DO A FT
 				if (size() == 1) {
 					_header.node.right	= y;
 					_header.node.left	= y;
