@@ -10,31 +10,50 @@
 #endif
 
 template<class It>
-void	print_pair(It it) {
+void
+print_pair(It it) {
 		std::cout	<< "   [ "	<< (*it).first 
 					<< "\t| "	<< (*it).second 
 					<< "\t]"	<< std::endl;
-		//it.print_node_ptr();
+		it.print_node_ptr();
 }
 
+
 template<class Map, class It>
-void	print_map(Map& m, const std::string name) {
+void
+print_map_pairs(Map& m, const std::string name) {
 	std::cout	<< std::endl
 				<< "// MAP    "	<< name << std::endl
 				<< "   size:  "	<< m.size() << std::endl;
-	//if (!m.empty())
-		//m.print_header();
-	std::cout	<< std::endl;
 	if (m.empty())
 		std::cout << "   [ EMPTY MAP ]" << std::endl;
 	else {
-		for (It it = m.begin(); it != m.end(); ++it)
+		m.print_header();
+		std::cout << std::endl;
+		for (It it = m.begin(); it != m.end(); ++it) {
 			print_pair<It>(it);
-	}
+		}	
+	}	
+}
+
+template<class Map, class It>
+void
+print_map(Map& m, const std::string name) {
+	std::cout	<< std::endl
+				<< "// MAP    "	<< name << std::endl
+				<< "   size:  "	<< m.size() << std::endl;
+	if (!m.empty())
+		m.print_header();
+	std::cout	<< std::endl;
+	if (m.empty())
+		std::cout << "   [ EMPTY MAP ]" << std::endl;
+	else
+		m.print_tree();
 	std::cout	<< std::endl;
 }
 
-int 	main() {
+int
+main() {
 	NAMESPACE::map<int, std::string>			a;
 	NAMESPACE::map<int, std::string>::iterator	it;
 
@@ -259,11 +278,11 @@ int 	main() {
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	
 	while (!b.empty()) {
-		//b.print_header();
-		//print_pair(--b.end());
+	//while (b.size() > 2) {		// BH IS INCORRECT, NODE $ SHOULD BE RED, D BLACK MATTER
+		print_pair(--b.end());
 		b.erase(--b.end());
 	}
-	
+
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	

@@ -3,6 +3,7 @@
 
 # include <memory>				// allocator
 # include <cstddef>				// ptrdiff_t
+# include <iomanip>				// debug setw
 # include "type_traits.hpp"
 # include "iterator.hpp"
 # include "algorithm.hpp"
@@ -112,6 +113,8 @@ namespace ft {
 			
 			// only non-null value (leafs must be black)
 			value.color = BLACK;
+			value.right = &value;
+			value.left	= &value;
 			return value;
 		}
 
@@ -524,6 +527,7 @@ namespace ft {
 			}
 
 			void
+			// erase and rebalance
 			erase(iterator pos) {
 				base_ptr n	= pos.node;		// node to be deleted
 				base_ptr y	= n;			// successor to n
@@ -566,7 +570,7 @@ namespace ft {
 					y->color = n->color;
 				}
 				_header.node_count--;
-				if (original_color == BLACK && size() > 1) {
+				if (original_color == BLACK) {
 					// n was with no child
 					if (x == rb_tree_node<Val>::_nil && y == n)
 						erase_leaf_and_rebalance(n, y);
@@ -574,7 +578,8 @@ namespace ft {
 						erase_rebalance(x);
 				}
 				if (size() == 1)
-					y = x;
+					y = _root;
+				
 				// maintain root
 				if (n == _root) {
 					// only one elem left, becomes root
@@ -662,6 +667,46 @@ namespace ft {
 							<< rb_tree_node<Val>::_nil << ")" << std::endl
 							<< "   bh:    " << black_height() << std::endl;
 			}
+
+			void
+			print_node(char role, node_ptr x, int depth) {
+				std::cout << " ";
+				while (depth > 0) {
+					if (depth == 1)
+						std::cout << "|----";
+					else
+						std::cout << "\t";
+					depth--;
+				}   
+				(void)role;
+				std::cout << role << "[";
+				if (x->color == RED)
+					 std::cout << "\033[31m";
+				std::cout << std::setw(10);
+				if (x == nil())
+					std::cout << "NIL";
+				else
+					std::cout << std::left <<  key_of_value(**x);
+				std::cout << "\033[0m";
+				//std::cout << "]\t";
+			}
+
+			void
+			graphic_visualizer(node_ptr x, int depth) {
+				if (x != nil()) {   
+					graphic_visualizer(right(x), depth + 1); 
+					if (x == _root)
+						print_node('R', x, depth);
+					else if (x == leftmost())
+						print_node('l', x, depth);
+					else if (x == rightmost())
+						print_node('r', x, depth);
+					else
+						print_node('-', x, depth);
+					std::cout << std::endl;
+					graphic_visualizer(left(x), depth + 1); 
+				}   
+			}
 			
 		protected:
      
@@ -687,6 +732,11 @@ namespace ft {
 			const key_type
 			key(node_ptr n) const {
 				return key_of_value(static_cast<node_ptr>(n->value));
+			}
+
+			node_ptr
+			nil() {
+				return rb_tree_node<Val>::_nil;	
 			}
 
 			// MIN/MAX ACCESS
@@ -752,12 +802,14 @@ namespace ft {
 			}
 
 			// HEADER DATA ACCESS
-		
+	
+			// for debug purposes
+		public:			
 			node_ptr
 			root() {
 				return static_cast<node_ptr>(_header.node.parent);
 			}
-			
+		protected:	
 			node_ptr
 			leftmost() {
 				return static_cast<node_ptr>(_header.node.left);

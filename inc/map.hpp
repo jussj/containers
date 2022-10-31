@@ -182,7 +182,14 @@ namespace ft {
 			}
 			
 			size_type
-			erase(const key_type& x);
+			erase(const key_type& x) {
+				iterator ret	= find(x);
+			   
+				if (ret	== end())
+					return 0;
+				_tree.erase(find(x));
+				return 1;
+			}
 			
 			void
 			erase(iterator first, iterator last);
@@ -241,6 +248,11 @@ namespace ft {
 			void
 			print_header() {
 				_tree.print_header();
+			}
+
+			void
+			print_tree() {
+				_tree.graphic_visualizer(_tree.root(), 0);
 			}
 	
 	};	/* class map */
