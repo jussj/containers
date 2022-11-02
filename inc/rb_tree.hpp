@@ -113,9 +113,6 @@ namespace ft {
 			std::cout<<"OUI"<<std::endl;	
 			// only non-null value (leafs must be black)
 			node.color	= BLACK;
-			//node.parent	= &node;
-			//node.right	= &node;
-			//node.left	= &node;
 			return node;
 		}
 
@@ -320,7 +317,7 @@ namespace ft {
 					if (n->parent == n->parent->parent->left) {
 						y = right(n->parent->parent);
 						// case 1: red uncle
-						if (y && y->color == RED) {
+						if (y->color == RED) {
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
@@ -343,7 +340,7 @@ namespace ft {
 					else {
 						y = left(n->parent->parent);
 						// case 4
-						if (y && y->color == RED) {
+						if (y->color == RED) {
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
@@ -427,33 +424,34 @@ namespace ft {
 						w = x->parent->right;
 						// case 1: sibling is red
 						if (w->color == RED) {
-							//std::cout<<"---case 1"<<std::endl;
 							w->color = BLACK;
-							x->parent->color = RED;
+							if (x->parent != nil())
+								x->parent->color = RED;
 							left_rotate(x->parent);
 							w = x->parent->right;
 						}
 						// case 2: sibling is black
-						// and nephews are blacks (OR NULL)
-						if (w->left->color == BLACK // 0
-								&& w->right->color == BLACK) { // 0
-							//std::cout<<"---case 2"<<std::endl;
-							w->color = RED;
+						// and nephews are blacks
+						if (w->left->color == BLACK
+								&& w->right->color == BLACK) {
+							if (w != nil())
+								w->color = RED;
 							x = x->parent;
 						}
 						else {
 							// case 3: sibling is black, 
 							// left nephew red, right is black
-							if (w->right->color == BLACK) { // 0
-								//std::cout<<"---case 3"<<std::endl;
-								w->left->color = RED;
-								w->color = RED;
+							if (w->right->color == BLACK) {
+								if (w->left != nil())
+									w->left->color = RED;
+								if (w != nil())
+									w->color = RED;
 								right_rotate(w);
 								w = x->parent->right;
 							}
 							// case 4: the other way
-							//std::cout<<"---case 4"<<std::endl;
-							w->color = x->parent->color;
+							if (w != nil())
+								w->color = x->parent->color;
 							x->parent->color = BLACK;
 							w->right->color = BLACK;
 							left_rotate(x->parent);
@@ -464,30 +462,30 @@ namespace ft {
 						w = x->parent->left;
 						// case 5
 						if (w->color == RED) {
-							//std::cout<<"---case 5"<<std::endl;
 							w->color = BLACK;
-							x->parent->color = RED;
+							if (x->parent != nil())
+								x->parent->color = RED;
 							right_rotate(x->parent);
 							w = x->parent->left;
 						}
 						// case 6
-						if ((w->right == nil() || w->right->color == BLACK) 
-								&& (w->left == nil() || w->left->color == BLACK)) {
-							//std::cout<<"---case 6"<<std::endl;
-							w->color = RED;
+						if (w->right->color == BLACK 
+								&& w->left->color == BLACK) {
+							if (w != nil())
+								w->color = RED;
 							x = x->parent;
 						}
 						else {
 							// case 7
 							if (w->left->color == BLACK) { 
-								//std::cout<<"---case 7"<<std::endl;
-								w->left->color = RED;
-								w->color = RED;
+								if (w->right != nil())
+									w->right->color = RED;
+								if (w != nil())
+									w->color = RED;
 								left_rotate(w);
 								w = x->parent->left;
 							}
 							// case 8
-							//std::cout<<"---case 8"<<std::endl;
 							w->color = x->parent->color;
 							x->parent->color = BLACK;
 							w->left->color = BLACK;
@@ -512,7 +510,7 @@ namespace ft {
 
 			void
 			erase_leaf_and_rebalance(base_ptr n, base_ptr y) {
-				// create "double black" node to rebalance the tree
+				// create "doubly black" node to rebalance the tree
 				node_ptr x	= _alloc_node();
 				y			= n->parent;
 				
@@ -526,7 +524,7 @@ namespace ft {
 				else
 					y->right = x;
 				
-				// rebalance with double black node
+				// rebalance with doubly black node
 				erase_rebalance(x);
 				
 				// delete node
@@ -609,7 +607,8 @@ namespace ft {
 				else if (!empty()) {
 					_header.node.right	= maximum(_header.node.right);
 					_header.node.left	= minimum(_header.node.left);
-				}				
+				}	
+
 				_destroy_node((node_ptr&)pos.node);
 			}
 
@@ -698,7 +697,6 @@ namespace ft {
 				else
 					std::cout << std::left <<  key_of_value(**x);
 				std::cout << "\033[0m";
-				//std::cout << "]\t";
 			}
 
 			void
@@ -819,7 +817,8 @@ namespace ft {
 			root() {
 				return static_cast<node_ptr>(_header.node.parent);
 			}
-			
+
+			// TO-DO db check for unjustified non priv members
 		protected:	
 			node_ptr
 			leftmost() {
