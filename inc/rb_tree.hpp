@@ -104,18 +104,19 @@ namespace ft {
 	private:
 
 		// declaring the node "content"
-		static rb_tree_node 	   _nil_value;
+		static rb_tree_node 	   _nil_node;
 
 		// init function for NIL sentinel
 		static rb_tree_node
 		black_node() {
-			rb_tree_node	value;
-			
+			rb_tree_node	node;
+			std::cout<<"OUI"<<std::endl;	
 			// only non-null value (leafs must be black)
-			value.color = BLACK;
-			value.right = &value;
-			value.left	= &value;
-			return value;
+			node.color	= BLACK;
+			//node.parent	= &node;
+			//node.right	= &node;
+			//node.left	= &node;
+			return node;
 		}
 
 	};	/* rb_tree_node struct */
@@ -125,6 +126,15 @@ namespace ft {
 	
 	template<class T>
 	struct rb_tree_const_iterator;
+
+	// static initialization
+	template<class Val>
+	rb_tree_node<Val> rb_tree_node<Val>::_nil_node =
+		rb_tree_node<Val>::black_node();
+
+	template<class Val>
+	typename  rb_tree_node<Val>::node_ptr  rb_tree_node<Val>::_nil =
+		&rb_tree_node<Val>::_nil_node;
 
 	template<class T, class Key, class Val, class Compare, class Alloc>
 	class rb_tree_impl {
@@ -183,7 +193,8 @@ namespace ft {
 				 	_nodalloc(),
 					_comp(comp),
 					_root(rb_tree_node<Val>::_nil),
-					_header()	{}
+					_header()	{
+			}
 
 			rb_tree_impl(const key_compare& comp,
 						 const pair_allocator_type& pair_alloc, 
@@ -242,10 +253,10 @@ namespace ft {
 				base_ptr	lmost = _header.node.left;
 				base_ptr	rmost = _header.node.right;
 
-				if (y->left != rb_tree_node<Val>::_nil)
+				if (y->left != nil())
 					y->left->parent = x;
 				y->parent = x->parent;
-				if (x->parent == rb_tree_node<Val>::_nil)
+				if (x->parent == nil())
 					(base_ptr&)_root = y;
 				else if (x == x->parent->left)
 					x->parent->left = y;
@@ -267,10 +278,10 @@ namespace ft {
 				base_ptr	lmost = _header.node.left;
 				base_ptr	rmost = _header.node.right;
 			
-				if (y->right != rb_tree_node<Val>::_nil)
+				if (y->right != nil())
 					y->right->parent = x;
 				y->parent = x->parent;
-				if (x->parent == rb_tree_node<Val>::_nil)
+				if (x->parent == nil())
 					(base_ptr&)_root = y;
 				else if (x == x->parent->right)
 					x->parent->right = y;
@@ -359,10 +370,10 @@ namespace ft {
 			iterator	
 			insert_unique(const value_type& v) {
 				node_ptr	n	= _create_node(v);
-				node_ptr	y	= rb_tree_node<Val>::_nil;
+				node_ptr	y	= nil();
 				node_ptr	x	= _root;
 
-				while (x != rb_tree_node<Val>::_nil) {
+				while (x != nil()) {
 					y = x;
 					if (key_of_value(**n) < key_of_value(**x))
 						x = left(x);
@@ -371,7 +382,7 @@ namespace ft {
 				}
 				// set new node's parent
 				n->parent = y;
-				if (y == rb_tree_node<Val>::_nil) {
+				if (y == nil()) {
 						_root				= n;
 						_root->parent		= &_header.node;
 						_root->color		= BLACK;
@@ -385,8 +396,8 @@ namespace ft {
 					y->left = n;
 				else
 					y->right = n;
-				n->left		= rb_tree_node<Val>::_nil;
-				n->right	= rb_tree_node<Val>::_nil;
+				n->left		= nil();
+				n->right	= nil();
 				
 				// maintain leftmost/rightmost
 				// TO-DO use key-compare for comparing values
@@ -460,8 +471,8 @@ namespace ft {
 							w = x->parent->left;
 						}
 						// case 6
-						if (w->right->color == BLACK 
-								&& w->left->color == BLACK) {
+						if ((w->right == nil() || w->right->color == BLACK) 
+								&& (w->left == nil() || w->left->color == BLACK)) {
 							//std::cout<<"---case 6"<<std::endl;
 							w->color = RED;
 							x = x->parent;
@@ -490,7 +501,7 @@ namespace ft {
 
 			void
 			transplant(base_ptr u, base_ptr v) {
-				if (u->parent == rb_tree_node<Val>::_nil)
+				if (u->parent == nil())
 					(base_ptr&)_root = v;
 				else if (u->parent->left == u)	// is node p left child
 					u->parent->left = v;		// set parent left to
@@ -501,33 +512,32 @@ namespace ft {
 
 			void
 			erase_leaf_and_rebalance(base_ptr n, base_ptr y) {
-				// create double black node to rebalance the tree
+				// create "double black" node to rebalance the tree
 				node_ptr x	= _alloc_node();
 				y			= n->parent;
 				
 				// parent is n old parent
 				x->parent	= y;
-				x->left		= rb_tree_node<Val>::_nil;
-				x->right	= rb_tree_node<Val>::_nil;
+				x->left		= nil();
+				x->right	= nil();
 				x->color	= BLACK;
-				if (y->left == rb_tree_node<Val>::_nil)
+				if (y->left == nil())
 					y->left = x;
 				else
 					y->right = x;
 				
-				// rebalance with NIL node
+				// rebalance with double black node
 				erase_rebalance(x);
 				
 				// delete node
 				if (y->left == x)
-					y->left = rb_tree_node<Val>::_nil;
+					y->left = nil();
 				else
-					y->right = rb_tree_node<Val>::_nil;
+					y->right = nil();
 				_dealloc_node(x);
 			}
 
 			void
-			// erase and rebalance
 			erase(iterator pos) {
 				base_ptr n	= pos.node;		// node to be deleted
 				base_ptr y	= n;			// successor to n
@@ -543,11 +553,11 @@ namespace ft {
 					_header.node.right = n->parent;
 				
 				// has 0 to 1 child
-				if (left(n) == rb_tree_node<Val>::_nil) {
+				if (left(n) == nil()) {
 					x = n->right;				// save only child
 					transplant(n, n->right);	// replace parent child 
 				}								// by its own child
-				else if (n->right == rb_tree_node<Val>::_nil) {
+				else if (n->right == nil()) {
 					x = n->left;	
 					transplant(n, n->left);
 				}
@@ -565,14 +575,14 @@ namespace ft {
 						y->right->parent = y;
 					}
 					transplant(n, y);
-					y->left = n->left;
+					y->left			= n->left;
 					y->left->parent = y;
-					y->color = n->color;
+					y->color		= n->color;
 				}
 				_header.node_count--;
 				if (original_color == BLACK) {
 					// n was with no child
-					if (x == rb_tree_node<Val>::_nil && y == n)
+					if (x == nil() && y == n)
 						erase_leaf_and_rebalance(n, y);
 					else
 						erase_rebalance(x);
@@ -591,7 +601,7 @@ namespace ft {
 				else
 					maintain_root(parent(n));
 				
-				// maintain max/min >> DO A FT
+				// maintain max/min
 				if (size() == 1) {
 					_header.node.right	= y;
 					_header.node.left	= y;
@@ -611,7 +621,7 @@ namespace ft {
 				node_ptr m = n;
 				// TO-DO init m to header node? last node not less than x
 				
-				while (n != rb_tree_node<Val>::_nil) {
+				while (n != nil()) {
 					if (!(_comp(key_of_value(**n), x)))
 						m = n, n = left(n);
 					else
@@ -626,7 +636,7 @@ namespace ft {
 				node_ptr m = n;
 				// TO-DO init m to header node? last node not less than x
 				
-				while (n != rb_tree_node<Val>::_nil) {
+				while (n != nil()) {
 					if (!(_comp(key_of_value(**n), x)))
 						m = n, n = left(n);
 					else
@@ -638,7 +648,7 @@ namespace ft {
 			const_iterator
 			find(const key_type& x) const {
 				const_iterator y = lower_bound(x);
-				if (y != rb_tree_node<Val>::_nil
+				if (y != nil()
 						&& key_of_value(*y) == x)
 					return y;
 				return end();
@@ -647,7 +657,7 @@ namespace ft {
 			iterator
 			find(const key_type& x) {
 				iterator y = lower_bound(x);
-				if (y != rb_tree_node<Val>::_nil
+				if (y != nil()
 						&& key_of_value(*y) == x)
 					return y;
 				return end();
@@ -664,7 +674,7 @@ namespace ft {
 							<< "   rmost: " << key_of_value(**rightmost()) 
 							<< "\t(" << rightmost() << ")" << std::endl
 							<< "   nil:   " << 0 << "\t(" 
-							<< rb_tree_node<Val>::_nil << ")" << std::endl
+							<< nil() << ")" << std::endl
 							<< "   bh:    " << black_height() << std::endl;
 			}
 
@@ -809,17 +819,18 @@ namespace ft {
 			root() {
 				return static_cast<node_ptr>(_header.node.parent);
 			}
+			
 		protected:	
 			node_ptr
 			leftmost() {
 				return static_cast<node_ptr>(_header.node.left);
 			}
-			
+
 			node_ptr
 			rightmost() {
 				return static_cast<node_ptr>(_header.node.right);
 			}
-
+			
 			//// BLACK HEIGHT ////
 
 			size_type
@@ -950,14 +961,6 @@ namespace ft {
 			}
 
 	};	/* rb_tree class */
-
-	template<class Val>
-	rb_tree_node<Val> rb_tree_node<Val>::_nil_value =
-		rb_tree_node<Val>::black_node();
-
-	template<class Val>
-	typename  rb_tree_node<Val>::node_ptr  rb_tree_node<Val>::_nil =
-		&rb_tree_node<Val>::_nil_value;
 
 	// TO-DO find a solution to keep the base iterator
 	// without loosing the const qualifier 

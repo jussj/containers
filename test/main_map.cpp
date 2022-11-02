@@ -274,17 +274,22 @@ main() {
 	
 	std::cout	<< "   emptying B tree from end..." << std::endl;
 	
-	print_map<NAMESPACE::map<int, std::string>, 
-		NAMESPACE::map<int, std::string>::iterator>(b, "B");
-	
 	while (!b.empty()) {
-	//while (b.size() > 2) {		// BH IS INCORRECT, NODE $ SHOULD BE RED, D BLACK MATTER
-		print_pair(--b.end());
+	//while (b.size() > 3) {
+		//print_pair(--b.end());
 		b.erase(--b.end());
 	}
+	
+	//print_map_pairs<NAMESPACE::map<int, std::string>, 
+		//NAMESPACE::map<int, std::string>::iterator>(b, "B");
+
+	//print_map<NAMESPACE::map<int, std::string>, 
+		//NAMESPACE::map<int, std::string>::iterator>(b, "B");
+	
+	//b.erase(--b.end());
 
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
-	
-	return 0;
+
+	return 0; 
 }
