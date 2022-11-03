@@ -383,13 +383,14 @@ namespace ft {
 						_root				= n;
 						_root->parent		= &_header.node;
 						_root->color		= BLACK;
+						
 						// set leftmost/rightmost and parent
-						_header.node.left	= n;
-						_header.node.right	= n;
+						_header.set_leftmost(n);
+						_header.set_rightmost(n);
 						_header.node.parent	= _root;
 					}
 				// TO-DO insert first node left?
-				else if (_compare(key_of_value(**n),key_of_value(**y)))
+				else if (_compare(key_of_value(**n), key_of_value(**y)))
 					y->left = n;
 				else
 					y->right = n;
@@ -606,8 +607,8 @@ namespace ft {
 					_header.node.left	= y;
 				}
 				else if (!empty()) {
-					_header.node.right	= maximum(_header.node.right);
-					_header.node.left	= minimum(_header.node.left);
+					_header.set_rightmost(maximum(_header.node.right));
+					_header.set_leftmost(minimum(_header.node.left));
 				}	
 
 				_destroy_node((node_ptr&)pos.node);
@@ -615,14 +616,27 @@ namespace ft {
 
 			//// MAP OPERATIONS ////
 
-			const_iterator
-			lower_bound(const key_type& x) const {
+			iterator
+			upper_bound(const key_type& x) {
 				node_ptr n = _root;
 				node_ptr m = n;
-				// TO-DO init m to header node? last node not less than x
 				
 				while (n != nil()) {
-					if (!(_compare(key_of_value(**n), x)))
+					if (_compare(x, key(n)))
+						m = n, n = left(n);
+					else
+						n = right(n);
+				}
+				return iterator(m);
+			}
+
+			const_iterator
+			upper_bound(const key_type& x) const {
+				node_ptr n = _root;
+				node_ptr m = n;
+				
+				while (n != nil()) {
+					if (_compare(x, key(n)))
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -644,14 +658,20 @@ namespace ft {
 				}
 				return iterator(m);
 			}
-
+			
 			const_iterator
-			find(const key_type& x) const {
-				const_iterator y = lower_bound(x);
-				if (y != nil()
-						&& key_of_value(*y) == x)
-					return y;
-				return end();
+			lower_bound(const key_type& x) const {
+				node_ptr n = _root;
+				node_ptr m = n;
+				// TO-DO init m to header node? last node not less than x
+				
+				while (n != nil()) {
+					if (!(_compare(key_of_value(**n), x)))
+						m = n, n = left(n);
+					else
+						n = right(n);
+				}
+				return const_iterator(m);
 			}
 
 			iterator
@@ -662,7 +682,16 @@ namespace ft {
 					return y;
 				return end();
 			}
-			
+
+			const_iterator
+			find(const key_type& x) const {
+				const_iterator y = lower_bound(x);
+				if (y != nil()
+						&& key_of_value(*y) == x)
+					return y;
+				return end();
+			}
+
 			// DEBUG
 			
 			void
@@ -746,6 +775,11 @@ namespace ft {
 			node_ptr
 			nil() {
 				return rb_tree_node<Val>::_nil;	
+			}
+
+			size_type
+			count() {
+				return _header.node_count;
 			}
 
 			// MIN/MAX ACCESS
