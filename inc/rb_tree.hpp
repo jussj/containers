@@ -172,7 +172,7 @@ namespace ft {
 
 			pair_allocator_type		_alloc;
 			node_allocator_type		_nodalloc;
-			key_compare				_comp;
+			key_compare				_compare;
 			node_ptr				_root;
 			header					_header;
 			//rb_tree_impl&			_t;			// implement second tree layer?
@@ -188,7 +188,7 @@ namespace ft {
 			rb_tree_impl(const key_compare& comp) 
 				:	_alloc(),
 				 	_nodalloc(),
-					_comp(comp),
+					_compare(comp),
 					_root(rb_tree_node<Val>::_nil),
 					_header()	{
 			}
@@ -198,7 +198,7 @@ namespace ft {
 						 const node_allocator_type& node_alloc) 
 				:	_alloc(pair_alloc),
 				 	_nodalloc(node_alloc),
-					_comp(comp),
+					_compare(comp),
 					_root(rb_tree_node<Val>::_nil),
 					_header() {}
 		
@@ -372,7 +372,7 @@ namespace ft {
 
 				while (x != nil()) {
 					y = x;
-					if (key_of_value(**n) < key_of_value(**x))
+					if (_compare(key_of_value(**n), key_of_value(**x)))
 						x = left(x);
 					else
 						x = right(x);
@@ -389,7 +389,7 @@ namespace ft {
 						_header.node.parent	= _root;
 					}
 				// TO-DO insert first node left?
-				else if (key_of_value(**n) < key_of_value(**y))
+				else if (_compare(key_of_value(**n),key_of_value(**y)))
 					y->left = n;
 				else
 					y->right = n;
@@ -397,10 +397,11 @@ namespace ft {
 				n->right	= nil();
 				
 				// maintain leftmost/rightmost
-				// TO-DO use key-compare for comparing values
-				if (key_of_value(**n) < key_of_value(**left(&_header.node)))
+				if (_compare(key_of_value(**n), 
+						key_of_value(**left(&_header.node))))
 					_header.node.left = (base_ptr&)n; 
-				else if (key_of_value(**n) > key_of_value(**right(&_header.node)))
+				else if (!_compare(key_of_value(**n),
+							key_of_value(**left(&_header.node))))
 					_header.node.right = (base_ptr&)n; 
 
 				// update count	
@@ -621,7 +622,7 @@ namespace ft {
 				// TO-DO init m to header node? last node not less than x
 				
 				while (n != nil()) {
-					if (!(_comp(key_of_value(**n), x)))
+					if (!(_compare(key_of_value(**n), x)))
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -636,7 +637,7 @@ namespace ft {
 				// TO-DO init m to header node? last node not less than x
 				
 				while (n != nil()) {
-					if (!(_comp(key_of_value(**n), x)))
+					if (!(_compare(key_of_value(**n), x)))
 						m = n, n = left(n);
 					else
 						n = right(n);
