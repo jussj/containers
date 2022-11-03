@@ -15,25 +15,27 @@ print_pair(It it) {
 		std::cout	<< "   [ "	<< (*it).first 
 					<< "\t| "	<< (*it).second 
 					<< "\t]"	<< std::endl;
-		it.print_node_ptr();
+		//it.print_node_ptr();
 }
 
 
 template<class Map, class It>
 void
-print_map_pairs(Map& m, const std::string name) {
+print_map_nodes(Map& m, const std::string name) {
 	std::cout	<< std::endl
 				<< "// MAP    "	<< name << std::endl
-				<< "   size:  "	<< m.size() << std::endl;
+				<< "   size:  "	<< m.size() << std::endl
+				<< std::endl;
 	if (m.empty())
 		std::cout << "   [ EMPTY MAP ]" << std::endl;
 	else {
-		m.print_header();
+		//m.print_header();
 		std::cout << std::endl;
 		for (It it = m.begin(); it != m.end(); ++it) {
 			print_pair<It>(it);
 		}	
-	}	
+	}
+	std::cout	<< std::endl;	
 }
 
 template<class Map, class It>
@@ -57,8 +59,8 @@ main() {
 	NAMESPACE::map<int, std::string>			a;
 	NAMESPACE::map<int, std::string>::iterator	it;
 
-	NAMESPACE::pair<NAMESPACE::map<int, std::string>::iterator,
-					bool>						ret;
+	NAMESPACE::pair<NAMESPACE::map<int, std::string>::iterator, bool>
+		ret;
 
 	std::cout	<< "// EMPTY MAP" << std::endl;
 
@@ -99,14 +101,42 @@ main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 
-	std::cout	<< "// DECREM" << std::endl;
+	std::cout	<< "// DECREM" << std::endl
+				<< std::endl;
 	
 	it = --a.end();
+
 	for (size_t i = 0; i != a.size(); ++i) {
 		print_pair(it);
 		--it;
 	}
+	
+	std::cout	<< std::endl
+				<< "// CONSTANT IT DECREM" << std::endl
+				<< std::endl;
+	
+	
+	NAMESPACE::map<int, std::string>::iterator	cit;
+	
+	cit = --a.end();
+	for (size_t i = 0; i != a.size(); ++i) {
+		print_pair(cit);
+		--cit;
+	}
+	
+/*	std::cout	<< std::endl
+				<< "// REVERSE IT OPERATIONS" << std::endl
+				<< std::endl;
 
+	NAMESPACE::map<int, std::string>::reverse_iterator	beg_rit;
+	NAMESPACE::map<int, std::string>::reverse_iterator	end_rit;
+	
+	end_rit = a.rend() - 1;
+	beg_rit = a.rbegin();
+	
+	std::cout << "   rev it end:   " << *end_rit << std::endl;
+	std::cout << "   rev it begin: " << *beg_rit << std::endl;
+*/	
 	std::cout	<< std::endl
 				<< "// BEGIN" << std::endl;
 	print_pair(a.begin());
@@ -133,7 +163,8 @@ main() {
 
 	std::cout	<< "// ERASE ONE ELEMENT" << std::endl;
 
-	// zero child
+	std::cout	<< "   NODE W ZERO CHILD:" << std::endl
+				<< std::endl;
 
 	std::cout	<< "   RIGHTMOST:" << std::endl;
 	std::cout	<< ">> A size: " << a.size() << std::endl
@@ -159,7 +190,8 @@ main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	
-	// one child
+	std::cout	<< "   NODE W ONE CHILD:" << std::endl
+				<< std::endl;
 	
 	std::cout	<< ">> B size: " << b.size() << std::endl
 				<< ">> B end:" << std::endl;
@@ -255,14 +287,7 @@ main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(d, "D");
 
-	while (!c.empty())
-		c.erase(c.begin());
-	
 	std::cout	<< "   emptying A tree from begin..." << std::endl;
-
-	std::cout	<< std::endl
-				<< "   A HEADER INFOS:" << std::endl;
-	a.print_header();
 
 	std::cout	<< std::endl;
 
@@ -277,11 +302,27 @@ main() {
 	while (!b.empty())
 		b.erase(--b.end());
 	
-	print_map_pairs<NAMESPACE::map<int, std::string>, 
-		NAMESPACE::map<int, std::string>::iterator>(b, "B");
-
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
+
+	std::cout	<< "// ERASE RANGE" << std::endl;
+
+	std::cout	<< "// COPY CTOR" << std::endl;
+
+	//NAMESPACE::map<int, std::string>			e(c);
+
+	std::cout	<< "// CLEAR" << std::endl;
+
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(c, "C");
+	
+	c.clear();
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(c, "C");
+
+	std::cout	<< "// ITERATORS" << std::endl;
+	std::cout	<< "// REVERSE ITERATORS" << std::endl;
 
 	return 0; 
 }

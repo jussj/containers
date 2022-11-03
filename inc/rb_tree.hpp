@@ -364,6 +364,9 @@ namespace ft {
 				return iterator(n);
 			}
 
+			iterator
+			insert_hint(iterator pos, const value_type& x);
+
 			iterator	
 			insert_unique(const value_type& v) {
 				node_ptr	n	= _create_node(v);
@@ -418,7 +421,7 @@ namespace ft {
 			// DELETIONS
 
 			void
-			erase_rebalance(base_ptr x) {
+			rebalance_after_erase(base_ptr x) {
 				base_ptr w;
 
 				while (x != _root && x->color == BLACK) {
@@ -527,7 +530,7 @@ namespace ft {
 					y->right = x;
 				
 				// rebalance with doubly black node
-				erase_rebalance(x);
+				rebalance_after_erase(x);
 				
 				// delete node
 				if (y->left == x)
@@ -537,8 +540,9 @@ namespace ft {
 				_dealloc_node(x);
 			}
 
+
 			void
-			erase(iterator pos) {
+			erase_and_rebalance(iterator pos) {
 				base_ptr n	= pos.node;		// node to be deleted
 				base_ptr y	= n;			// successor to n
 				base_ptr x;					// successor to y
@@ -585,7 +589,7 @@ namespace ft {
 					if (x == nil() && y == n)
 						erase_leaf_and_rebalance(n, y);
 					else
-						erase_rebalance(x);
+						rebalance_after_erase(x);
 				}
 				if (size() == 1)
 					y = _root;
@@ -603,8 +607,8 @@ namespace ft {
 				
 				// maintain max/min
 				if (size() == 1) {
-					_header.node.right	= y;
-					_header.node.left	= y;
+					_header.set_rightmost(y);
+					_header.set_leftmost(y);
 				}
 				else if (!empty()) {
 					_header.set_rightmost(maximum(_header.node.right));
@@ -612,6 +616,17 @@ namespace ft {
 				}	
 
 				_destroy_node((node_ptr&)pos.node);
+			}
+
+			void
+			clear() {
+				if (empty())
+					return ;
+				_clear_from(root());
+
+				_header.set_leftmost(&_header.node);
+				_header.set_rightmost(&_header.node);
+				_header.node_count = 0;
 			}
 
 			//// MAP OPERATIONS ////
@@ -904,6 +919,19 @@ namespace ft {
 
 		private:
 
+			//// MODIFIERS ////
+
+			void
+			_clear_from(node_ptr n) {
+				// erase without rebalancing
+				while (n != nil()) {	
+					_clear_from(right(n));
+					node_ptr m = left(n);
+					_destroy_node(n);
+					n = m;
+				}
+			}
+
 			//// NODES AND VALUES MEMORY ////
 
 			// NODES
@@ -1174,82 +1202,46 @@ namespace ft {
 
 		pointer
 		operator->() const {
-			//return static_cast<node_ptr>(node)->node_content();
 			return &(static_cast<node_ptr>(node)->node_content());
 		}
 
-		self
+		// DECREM/INCREMENTATION OPERATIONS
+
+		self&
 		operator++() {
-			increment();
+			if (node->right != rb_tree_node<T>::_nil) {
+				node = node->right;
+				while (node->left != rb_tree_node<T>::_nil)
+					node = node->left;
+			}
+			else {
+				base_ptr x = node->parent;
+				while (node == x->right) {
+					node = x;
+					x = x->parent;
+				}
+				if (node->right != x) // rightmost
+					node = x;
+			}
+			return *this;
 		}
 
 		self
 		operator++(int) {
 			self tmp = *this;
 
-			increment();
+			++node;
 			return tmp;
 		}
-		self
+		self&
 		operator--() {
-			decrement();
-		}
-
-		self
-		operator--(int) {
-			self tmp = *this;
-
-			decrement();
-			return tmp;
-		}
-	
-		bool
-		operator==(const self& src) {
-			return this->node == src->node;
-		}
-
-		bool
-		operator!=(const self& src) {
-			return this->node != src->node;
-		}
-		
-		friend bool
-		operator==(const self& x, const self& y) {
-			return x->node == y->node;
-		}
-
-		friend bool
-		operator!=(const self& x, const self& y) {
-			return x->node != y->node;
-		}
-		
-		void
-		increment() {
-			if (node->right != 0) {
-				node = node->right;
-				while (node->left != 0)
-					node = node->left;
+			if (node->parent->parent == node
+					&& node->color == RED) {	// look for header
+				node = node->right;				// return rightmost
 			}
-			else {
-				base_ptr x = node->parent;
-				while (node == x->parent) {
-					node = x;
-					x = x->parent;
-				}
-				if (node->right != x)
-					node = x;
-			}
-		}
-
-		void
-		decrement() {
-			if (node->color == RED
-					&& node->parent->parent == node) {
-				node = node->right;
-			}
-			else if (node->left != 0) {
+			else if (node->left != rb_tree_node<T>::_nil) {
 				base_ptr x = node->left;
-				while (x->right != 0)
+				while (x->right != rb_tree_node<T>::_nil)
 					x = x->right;
 				node = x;
 			}
@@ -1261,6 +1253,37 @@ namespace ft {
 				}
 				node = x;
 			}
+			return *this;
+		}
+
+		self
+		operator--(int) {
+			self tmp = *this;
+
+			--node;
+			return tmp;
+		}
+
+		// COMPARISON
+	
+		bool
+		operator==(const self& src) {
+			return this->node == src.node;
+		}
+
+		bool
+		operator!=(const self& src) {
+			return this->node != src.node;
+		}
+
+		friend bool
+		operator==(const self& x, const self& y) {
+			return x->node == y->node;
+		}
+
+		friend bool
+		operator!=(const self& x, const self& y) {
+			return x->node != y->node;
 		}
 
 	};	/* rb_tree_const_iterator */

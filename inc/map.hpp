@@ -53,13 +53,16 @@ namespace ft {
 
 			class value_compare
 				: public std::binary_function<value_type, value_type, bool> {
+				
 				friend class map;
 				
 				protected:
+
 					Compare comp;
 					value_compare(Compare c) : comp(c) {}
 
 				public:
+
 					bool
 					operator()(	const value_type& x,
 								const value_type& y	) const {
@@ -70,23 +73,28 @@ namespace ft {
 		//// CTOR, DTOR AND COPY ////
 
 			explicit
-			map(const key_compare& comp = Compare(), 
-				const allocator_type& alloc = Alloc()) 
-				: _alloc(alloc), _tree(comp) {}
+			map(	const key_compare& comp = Compare(), 
+					const allocator_type& alloc = Alloc()
+					) 
+				:	_alloc(alloc), _tree(comp) {}
 
 			template <class InputIterator>
-			map(InputIterator first,
-				InputIterator last,
-				const key_compare& comp = Compare(),
-				const allocator_type& = Alloc()	);
+			map(	InputIterator first,
+					InputIterator last,
+					const key_compare& comp = Compare(),
+					const allocator_type& alloc = Alloc()
+					)
+				:	_alloc(alloc), _tree(comp) {
+					insert(first, last);	
+				}
 
-			map(const map<key_type, T, key_compare, allocator_type>& x);
+			map(const map<key_type, T, key_compare, allocator_type>& src) 
+				: _tree(src) {}
+				
 			
-			~map() {}
-				// destroy pairs
-				// destroy nodes
-				// deallocate both
-				// deallocate node pool
+			~map() {
+				clear();
+			}
 
 			map<key_type, T, key_compare, allocator_type>&
 			operator=(const map<key_type, T, key_compare, allocator_type>& x);
@@ -153,7 +161,9 @@ namespace ft {
 		//// ACCESS ////
 
 			T&
-			operator[](const key_type& x);
+			operator[](const key_type& x) {
+				return *(find(x));
+			}
 
 		//// MODIFIERS ////
 
@@ -174,11 +184,14 @@ namespace ft {
 			
 			template <class InputIterator>
 			void
-			insert(InputIterator first, InputIterator last);
+			insert(InputIterator first, InputIterator last) {
+				for (iterator it = first; it != last; ++it)
+					insert(it);	
+			}
 			
 			void
 			erase(iterator position) {
-				_tree.erase(position);
+				_tree.erase_and_rebalance(position);
 			}
 			
 			size_type
@@ -187,26 +200,35 @@ namespace ft {
 			   
 				if (ret	== end())
 					return 0;
-				_tree.erase(find(x));
+				_tree.erase_and_rebalance(find(x));
 				return 1;
 			}
 			
 			void
-			erase(iterator first, iterator last);
+			erase(iterator first, iterator last) {
+				for (iterator it = first; first != last; ++it)
+					_tree.erase_and_rebalance(first);
+			}
 			
 			void
 			swap(map<Key, T, Compare, Alloc>&);
 			
 			void
-			clear();
+			clear() {
+				_tree.clear();	
+			}
 			
 		//// OBSERVERS ////
 
 			key_compare
-			key_comp() const;
+			key_comp() const {
+				return key_compare(_tree.key_compare);
+			}
 			
 			value_compare
-			value_comp() const;
+			value_comp() const {
+				return value_compare(_tree.key_compare);
+			}
 
 		//// MAP OPERATIONS ////
 
@@ -216,10 +238,17 @@ namespace ft {
 			}
 			
 			const_iterator
-			find(const key_type& x) const;
+			find(const key_type& x) const {
+				return _tree.find(x);
+			}
 			
 			size_type
-			count(const key_type& x) const;
+			count(const key_type& x) const {
+				iterator ret = find(x);
+				if (ret == end())
+					return 0;
+				return 1;
+			}
 			
 			iterator
 			lower_bound(const key_type& x) {
@@ -232,16 +261,28 @@ namespace ft {
 			}
 			
 			iterator
-			upper_bound(const key_type& x);
+			upper_bound(const key_type& x) {
+				return _tree.upper_bound(x);
+			}
 			
 			const_iterator
-			upper_bound(const key_type& x) const;
+			upper_bound(const key_type& x) const {
+				return _tree.upper_bound(x);
+			}
 			
 			ft::pair<iterator,iterator>
-			equal_range(const key_type& x);
+			equal_range(const key_type& x) {
+				return ft::pair<iterator, iterator>(
+						lower_bound(x), upper_nound(x)
+						);
+			}
 			
 			ft::pair<const_iterator,const_iterator>
-			equal_range(const key_type& x) const;
+			equal_range(const key_type& x) const {
+				return ft::pair<const_iterator, const_iterator>(
+						lower_bound(x), upper_nound(x)
+						);
+			}
 
 		// DEBUG
 
@@ -254,38 +295,64 @@ namespace ft {
 			print_tree() {
 				_tree.graphic_visualizer(_tree.root(), 0);
 			}
+
+		// NON-MEMBERS FRIENDSHIP DECLARATION
+
+		public:
+
+			template <class K, class V, class C, class A>
+			friend bool
+			operator==(	const map<K, V, C, A>& x,
+						const map<K, V, C, A>& y	);
+			
+			template <class K, class V, class C, class A>
+			friend bool
+			operator<(	const map<K, V, C, A>& x,
+						const map<K, V, C, A>& y	);
 	
 	};	/* class map */
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator==(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y	);
+				const map<Key,T,Compare,Allocator>& y	) {
+		return x._tree == y._tree;	
+	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator<(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y	);
+				const map<Key,T,Compare,Allocator>& y	) {
+		return x._tree < y._tree;
+	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator!=(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y	);
+				const map<Key,T,Compare,Allocator>& y	) {
+		return !(x._tree == y._tree);	
+	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator>(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y	);
+				const map<Key,T,Compare,Allocator>& y	) {
+		return !(x._tree < y._tree);
+	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator>=(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y);
+				const map<Key,T,Compare,Allocator>& y) {
+		return !(x._tree < y._tree);
+	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator<=(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y	);
+				const map<Key,T,Compare,Allocator>& y	) {
+		return !(y._tree < x._tree);
+	}
 
 	//// SPECIALIZED ALGOS ////
 
