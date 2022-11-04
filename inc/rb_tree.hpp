@@ -30,7 +30,7 @@ namespace ft {
 		ptr			right;
 
 	};	/* rb_tree_node_base struct	*/
-
+	
 	struct rb_tree_header {
 
 		// ATTRIBUTES
@@ -89,17 +89,17 @@ namespace ft {
 		value_ptr					value;
 
 		value_ptr
-		node_content() {
+		node_content() const {
 			return this->value;
 		}
 
 		value_type&
-		operator*() {
+		operator*() const {
 			return *(this->value);
 		}
 
 		// declaring a unique ptr to bottom NIL sentinel
-		static node_ptr			   _nil;
+		static node_ptr			   nil;
 
 	private:
 
@@ -110,7 +110,7 @@ namespace ft {
 		static rb_tree_node
 		black_node() {
 			rb_tree_node	node;
-			std::cout<<"OUI"<<std::endl;	
+			
 			// only non-null value (leafs must be black)
 			node.color	= BLACK;
 			return node;
@@ -124,13 +124,13 @@ namespace ft {
 	template<class T>
 	struct rb_tree_const_iterator;
 
-	// static initialization
+	// static nil node initialization
 	template<class Val>
 	rb_tree_node<Val> rb_tree_node<Val>::_nil_node =
 		rb_tree_node<Val>::black_node();
 
 	template<class Val>
-	typename  rb_tree_node<Val>::node_ptr  rb_tree_node<Val>::_nil =
+	typename rb_tree_node<Val>::node_ptr rb_tree_node<Val>::nil =
 		&rb_tree_node<Val>::_nil_node;
 
 	template<class T, class Key, class Val, class Compare, class Alloc>
@@ -189,7 +189,7 @@ namespace ft {
 				:	_alloc(),
 				 	_nodalloc(),
 					_compare(comp),
-					_root(rb_tree_node<Val>::_nil),
+					_root(rb_tree_node<Val>::nil),
 					_header()	{
 			}
 
@@ -199,7 +199,7 @@ namespace ft {
 				:	_alloc(pair_alloc),
 				 	_nodalloc(node_alloc),
 					_compare(comp),
-					_root(rb_tree_node<Val>::_nil),
+					_root(rb_tree_node<Val>::nil),
 					_header() {}
 		
 			~rb_tree_impl() {}
@@ -310,7 +310,7 @@ namespace ft {
 			// INSERTIONS
 
 			iterator
-			insert_rebalance(node_ptr n) {
+			rebalance_after_insert(node_ptr n) {
 				node_ptr	y;
 			
 				while (n->parent->color == RED) {
@@ -364,14 +364,16 @@ namespace ft {
 				return iterator(n);
 			}
 
-			iterator
-			insert_hint(iterator pos, const value_type& x);
-
 			iterator	
-			insert_unique(const value_type& v) {
+			insert_and_rebalance(const value_type& v, iterator hint = 0) {
 				node_ptr	n	= _create_node(v);
 				node_ptr	y	= nil();
-				node_ptr	x	= _root;
+				node_ptr	x;
+				
+				if (hint == 0)
+					x = _root;
+				else
+					(base_ptr&)x = hint.node;
 
 				while (x != nil()) {
 					y = x;
@@ -382,6 +384,7 @@ namespace ft {
 				}
 				// set new node's parent
 				n->parent = y;
+				// first node
 				if (y == nil()) {
 						_root				= n;
 						_root->parent		= &_header.node;
@@ -392,7 +395,6 @@ namespace ft {
 						_header.set_rightmost(n);
 						_header.node.parent	= _root;
 					}
-				// TO-DO insert first node left?
 				else if (_compare(key_of_value(**n), key_of_value(**y)))
 					y->left = n;
 				else
@@ -403,17 +405,17 @@ namespace ft {
 				// maintain leftmost/rightmost
 				if (_compare(key_of_value(**n), 
 						key_of_value(**left(&_header.node))))
-					_header.node.left = (base_ptr&)n; 
+					_header.set_leftmost(n); 
 				else if (!_compare(key_of_value(**n),
 							key_of_value(**left(&_header.node))))
-					_header.node.right = (base_ptr&)n; 
+					_header.set_rightmost(n); 
 
 				// update count	
 				_header.node_count++;
 
 				// return rebalanced tree iterator on node
 				if (_header.node_count > 2)
-					return iterator(insert_rebalance(n));
+					return iterator(rebalance_after_insert(n));
 				else
 					return iterator(n);
 			}
@@ -637,7 +639,7 @@ namespace ft {
 				node_ptr m = n;
 				
 				while (n != nil()) {
-					if (_compare(x, key(n)))
+					if (_compare(x, key_of_value(**n)))
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -651,7 +653,7 @@ namespace ft {
 				node_ptr m = n;
 				
 				while (n != nil()) {
-					if (_compare(x, key(n)))
+					if (_compare(x, key_of_value(**n)))
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -663,14 +665,16 @@ namespace ft {
 			lower_bound(const key_type& x) {
 				node_ptr n = _root;
 				node_ptr m = n;
+
 				// TO-DO init m to header node? last node not less than x
-				
+
 				while (n != nil()) {
 					if (!(_compare(key_of_value(**n), x)))
 						m = n, n = left(n);
 					else
 						n = right(n);
 				}
+				// should return end() 
 				return iterator(m);
 			}
 			
@@ -705,6 +709,11 @@ namespace ft {
 						&& key_of_value(*y) == x)
 					return y;
 				return end();
+			}
+
+			key_compare
+			compare() const {
+				return _compare;
 			}
 
 			// DEBUG
@@ -768,13 +777,13 @@ namespace ft {
 			// ATTRIBUTES
 
 			pair_allocator_type
-			pair_allocator() {
+			pair_allocator() const {
 				return _alloc;
 			}
 			
 			node_allocator_type
-			node_allocator() {
-				return _alloc;
+			node_allocator() const {
+				return _nodalloc;
 			}
 
 			const key_type
@@ -788,12 +797,12 @@ namespace ft {
 			}
 
 			node_ptr
-			nil() {
-				return rb_tree_node<Val>::_nil;	
+			nil() const {
+				return rb_tree_node<Val>::nil;	
 			}
 
 			size_type
-			count() {
+			count() const {
 				return _header.node_count;
 			}
 
@@ -801,28 +810,28 @@ namespace ft {
 			
 			static base_ptr
 			minimum(base_ptr x)	{ 
-				while (x->left != rb_tree_node<Val>::_nil)
+				while (x->left != rb_tree_node<Val>::nil)
 					x = x->left;
 				return x;	
 			}
 			
 			static const_base_ptr
 			minimum(const_base_ptr x)	{ 
-				while (x->left != rb_tree_node<Val>::_nil)
+				while (x->left != rb_tree_node<Val>::nil)
 					x = x->left;
 				return x;	
 			}
 			
 			static base_ptr
 			maximum(base_ptr x)	{ 
-				while (x->right != rb_tree_node<Val>::_nil)
+				while (x->right != rb_tree_node<Val>::nil)
 					x = x->right;
 				return x;	
 			}
 			
 			static const_base_ptr
 			maximum(const_base_ptr x)	{ 
-				while (x->right != rb_tree_node<Val>::_nil)
+				while (x->right != rb_tree_node<Val>::nil)
 					x = x->right;
 				return x;	
 			}
@@ -888,14 +897,14 @@ namespace ft {
 				size_type	count	= 0;
 				size_type	lcount	= 0;
 
-				while (x != rb_tree_node<Val>::_nil) {
+				while (x != rb_tree_node<Val>::nil) {
 					if (x->color == BLACK)
 						count += 1;
 					x = x->right;
 				}
 				// control tree balance
 				x = pos;
-				while (x != rb_tree_node<Val>::_nil) {
+				while (x != rb_tree_node<Val>::nil) {
 					if (x->color == BLACK)
 						lcount += 1;
 					x = x->left;
@@ -960,8 +969,8 @@ namespace ft {
 			node_ptr
 			_init_node_ptr(node_ptr n, node_ptr pos = 0) {
 				n->parent = pos;
-				n->left = rb_tree_node<Val>::_nil;
-				n->right = rb_tree_node<Val>::_nil;
+				n->left = rb_tree_node<Val>::nil;
+				n->right = rb_tree_node<Val>::nil;
 				n->color = RED;
 				return n;
 			}
@@ -1062,16 +1071,16 @@ namespace ft {
 
 		pointer
 		operator->() const {
-			return &(static_cast<node_ptr>(node)->node_content());
+			return static_cast<node_ptr>(node)->node_content();
 		}
 
 		// DECREM/INCREMENTATION OPERATIONS
 
 		self&
 		operator++() {
-			if (node->right != rb_tree_node<T>::_nil) {
+			if (node->right != rb_tree_node<T>::nil) {
 				node = node->right;
-				while (node->left != rb_tree_node<T>::_nil)
+				while (node->left != rb_tree_node<T>::nil)
 					node = node->left;
 			}
 			else {
@@ -1099,9 +1108,9 @@ namespace ft {
 					&& node->color == RED) {	// look for header
 				node = node->right;				// return rightmost
 			}
-			else if (node->left != rb_tree_node<T>::_nil) {
+			else if (node->left != rb_tree_node<T>::nil) {
 				base_ptr x = node->left;
-				while (x->right != rb_tree_node<T>::_nil)
+				while (x->right != rb_tree_node<T>::nil)
 					x = x->right;
 				node = x;
 			}
@@ -1177,21 +1186,24 @@ namespace ft {
 		typedef const T&	reference;
 		typedef const T*	pointer;
 
+		typedef rb_tree_iterator<T>			iterator;
 		typedef bidirectional_iterator_tag	iterator_category;
 		typedef ptrdiff_t					difference_type;
 		
-		typedef rb_tree_iterator<T>				self;
+		typedef rb_tree_const_iterator<T>		self;
 		typedef rb_tree_node_base::const_ptr	base_ptr;
 		typedef const rb_tree_node<T>*			node_ptr;
 		
 		// ATTRIBUTES
 
-		node_ptr	node;
+		base_ptr	node;
 
 		// CTORS
 		
 		rb_tree_const_iterator()			: node()	{}
 		rb_tree_const_iterator(base_ptr x)	: node(x)	{}
+		rb_tree_const_iterator(const iterator& it)
+			: node(it.node)	{}
 
 		// OVERLOADS
 
@@ -1202,16 +1214,16 @@ namespace ft {
 
 		pointer
 		operator->() const {
-			return &(static_cast<node_ptr>(node)->node_content());
+			return static_cast<node_ptr>(node)->node_content();
 		}
 
 		// DECREM/INCREMENTATION OPERATIONS
 
 		self&
 		operator++() {
-			if (node->right != rb_tree_node<T>::_nil) {
+			if (node->right != rb_tree_node<T>::nil) {
 				node = node->right;
-				while (node->left != rb_tree_node<T>::_nil)
+				while (node->left != rb_tree_node<T>::nil)
 					node = node->left;
 			}
 			else {
@@ -1239,9 +1251,9 @@ namespace ft {
 					&& node->color == RED) {	// look for header
 				node = node->right;				// return rightmost
 			}
-			else if (node->left != rb_tree_node<T>::_nil) {
+			else if (node->left != rb_tree_node<T>::nil) {
 				base_ptr x = node->left;
-				while (x->right != rb_tree_node<T>::_nil)
+				while (x->right != rb_tree_node<T>::nil)
 					x = x->right;
 				node = x;
 			}

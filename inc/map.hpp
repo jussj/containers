@@ -85,7 +85,7 @@ namespace ft {
 					const allocator_type& alloc = Alloc()
 					)
 				:	_alloc(alloc), _tree(comp) {
-					insert(first, last);	
+					insert_and_rebalance(first, last);	
 				}
 
 			map(const map<key_type, T, key_compare, allocator_type>& src) 
@@ -162,7 +162,7 @@ namespace ft {
 
 			T&
 			operator[](const key_type& x) {
-				return *(find(x));
+				return _tree.insert_and_rebalance(ft::make_pair(x, mapped_type()))->second;
 			}
 
 		//// MODIFIERS ////
@@ -173,14 +173,20 @@ namespace ft {
 				iterator	it		= find(x.first);
 
 				if (it == end()) {
-					it	= _tree.insert_unique(x);
+					it	= _tree.insert_and_rebalance(x);
 					key = true;
 				}
 				return pair<iterator, bool>(it, key);
 			}
 			
 			iterator
-			insert(iterator position, const value_type& x);
+			insert(iterator position, const value_type& x) {
+				iterator	it		= find(x.first);
+
+				if (it == end())
+					it	= _tree.insert_and_rebalance(x, position);
+				return it;
+			}
 			
 			template <class InputIterator>
 			void
@@ -200,12 +206,14 @@ namespace ft {
 			   
 				if (ret	== end())
 					return 0;
-				_tree.erase_and_rebalance(find(x));
+				_tree.erase_and_rebalance(ret);
+				// return number of occurences
 				return 1;
 			}
 			
 			void
 			erase(iterator first, iterator last) {
+				// erase range by priority order (red nodes that need no rebalance?)
 				for (iterator it = first; first != last; ++it)
 					_tree.erase_and_rebalance(first);
 			}
@@ -222,12 +230,12 @@ namespace ft {
 
 			key_compare
 			key_comp() const {
-				return key_compare(_tree.key_compare);
+				return key_compare(_tree.compare());
 			}
 			
 			value_compare
 			value_comp() const {
-				return value_compare(_tree.key_compare);
+				return value_compare(_tree.compare());
 			}
 
 		//// MAP OPERATIONS ////
@@ -273,7 +281,7 @@ namespace ft {
 			ft::pair<iterator,iterator>
 			equal_range(const key_type& x) {
 				return ft::pair<iterator, iterator>(
-						lower_bound(x), upper_nound(x)
+						lower_bound(x), upper_bound(x)
 						);
 			}
 			

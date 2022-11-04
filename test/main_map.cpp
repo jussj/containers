@@ -5,8 +5,10 @@
 #include <typeinfo>			// typeid
 #include "../inc/map.hpp"
 
-#ifndef NAMESPACE
+#ifndef STD
 # define NAMESPACE ft
+#else
+# define NAMESPACE std
 #endif
 
 template<class It>
@@ -15,13 +17,15 @@ print_pair(It it) {
 		std::cout	<< "   [ "	<< (*it).first 
 					<< "\t| "	<< (*it).second 
 					<< "\t]"	<< std::endl;
-		//it.print_node_ptr();
+#ifdef DEBUG
+		it.print_node_ptr();
+#endif
 }
 
 
 template<class Map, class It>
 void
-print_map_nodes(Map& m, const std::string name) {
+print_map(Map& m, const std::string name) {
 	std::cout	<< std::endl
 				<< "// MAP    "	<< name << std::endl
 				<< "   size:  "	<< m.size() << std::endl
@@ -29,15 +33,21 @@ print_map_nodes(Map& m, const std::string name) {
 	if (m.empty())
 		std::cout << "   [ EMPTY MAP ]" << std::endl;
 	else {
-		//m.print_header();
+
+#ifdef DEBUG 
+		m.print_header();
 		std::cout << std::endl;
+		m.print_tree();
+#else
 		for (It it = m.begin(); it != m.end(); ++it) {
 			print_pair<It>(it);
 		}	
+#endif
 	}
 	std::cout	<< std::endl;	
 }
 
+/*
 template<class Map, class It>
 void
 print_map(Map& m, const std::string name) {
@@ -53,6 +63,7 @@ print_map(Map& m, const std::string name) {
 		m.print_tree();
 	std::cout	<< std::endl;
 }
+*/
 
 int
 main() {
@@ -101,24 +112,44 @@ main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 
-	std::cout	<< "// DECREM" << std::endl
-				<< std::endl;
+	std::cout	<< std::endl
+				<< "// ITERATOR ACCESS" << std::endl;
 	
 	it = --a.end();
+	
+	std::cout	<< "last element pointer: " << std::endl
+				<< it->first << ", " << it->second
+				<< std::endl;
+	
+	std::cout	<< "last element reference: " << std::endl
+				<< (*it).first << ", " << (*it).second
+				<< std::endl;
+	
+	std::cout	<< "// IT DECREM" << std::endl;
 
 	for (size_t i = 0; i != a.size(); ++i) {
 		print_pair(it);
 		--it;
 	}
-	
+
 	std::cout	<< std::endl
-				<< "// CONSTANT IT DECREM" << std::endl
-				<< std::endl;
-	
+				<< "// CONSTANT ITERATOR ACCESS" << std::endl;
 	
 	NAMESPACE::map<int, std::string>::iterator	cit;
 	
 	cit = --a.end();
+
+	std::cout	<< "last element pointer: " << std::endl
+				<< cit->first << ", " << cit->second
+				<< std::endl;
+	
+	std::cout	<< "last element reference: " << std::endl
+				<< (*cit).first << ", " << (*cit).second
+				<< std::endl;
+
+	std::cout	<< std::endl
+				<< "// CONSTANT IT DECREM" << std::endl;
+	
 	for (size_t i = 0; i != a.size(); ++i) {
 		print_pair(cit);
 		--cit;
@@ -317,12 +348,26 @@ main() {
 		NAMESPACE::map<int, std::string>::iterator>(c, "C");
 	
 	c.clear();
+
+	//std::cout	<< "   lower_bound after clearance:" << std::endl;
+	//print_pair(c.lower_bound(1));
 	
+	//std::cout	<< std::endl
+				//<< "   find after clearance:" << std::endl;
+	//print_pair(c.find(1));
+
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(c, "C");
 
-	std::cout	<< "// ITERATORS" << std::endl;
 	std::cout	<< "// REVERSE ITERATORS" << std::endl;
+	
+	std::cout	<< "// OPERATOR[]" << std::endl;
+
+	//c.insert(NAMESPACE::pair<int, std::string>(1000, "one thousand"));
+	//c[100]="one hundred";
+	
+	//print_map<NAMESPACE::map<int, std::string>, 
+		//NAMESPACE::map<int, std::string>::iterator>(c, "C");
 
 	return 0; 
 }
