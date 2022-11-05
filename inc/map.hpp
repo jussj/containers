@@ -252,7 +252,7 @@ namespace ft {
 			
 			size_type
 			count(const key_type& x) const {
-				iterator ret = find(x);
+				const_iterator ret = find(x);
 				if (ret == end())
 					return 0;
 				return 1;

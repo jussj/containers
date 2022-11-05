@@ -113,6 +113,9 @@ namespace ft {
 			
 			// only non-null value (leafs must be black)
 			node.color	= BLACK;
+			node.parent	= &node;
+			node.right	= &node;
+			node.left	= &node;
 			return node;
 		}
 
@@ -199,7 +202,7 @@ namespace ft {
 				:	_alloc(pair_alloc),
 				 	_nodalloc(node_alloc),
 					_compare(comp),
-					_root(rb_tree_node<Val>::nil),
+					_root(nil()),
 					_header() {}
 		
 			~rb_tree_impl() {}
@@ -299,12 +302,8 @@ namespace ft {
 				
 				while (new_root->parent != &(_header.node)) // find root
 					new_root = parent(new_root);
-				
-				this->_root			= new_root;
-				this->_root->color	= BLACK;
-				
-				_header.node.parent	= _root;
 				// TO-DO make root be a ptr on a node
+				_set_new_root(new_root);	
 			}
 
 			// INSERTIONS
@@ -385,16 +384,8 @@ namespace ft {
 				// set new node's parent
 				n->parent = y;
 				// first node
-				if (y == nil()) {
-						_root				= n;
-						_root->parent		= &_header.node;
-						_root->color		= BLACK;
-						
-						// set leftmost/rightmost and parent
-						_header.set_leftmost(n);
-						_header.set_rightmost(n);
-						_header.node.parent	= _root;
-					}
+				if (y == nil())
+					_init_root_and_header(n);
 				else if (_compare(key_of_value(**n), key_of_value(**y)))
 					y->left = n;
 				else
@@ -603,6 +594,8 @@ namespace ft {
 						y = x;
 					(base_ptr&)_root	= y;
 					_header.node.parent = _root;
+					if (empty())
+						_reset_root_and_header();
 				}
 				else
 					maintain_root(parent(n));
@@ -626,8 +619,9 @@ namespace ft {
 					return ;
 				_clear_from(root());
 
-				_header.set_leftmost(&_header.node);
-				_header.set_rightmost(&_header.node);
+				_reset_root_and_header();
+				//_header.set_leftmost(&_header.node);
+				//_header.set_rightmost(&_header.node);
 				_header.node_count = 0;
 			}
 
@@ -706,7 +700,7 @@ namespace ft {
 			find(const key_type& x) const {
 				const_iterator y = lower_bound(x);
 				if (y != nil()
-						&& key_of_value(*y) == x)
+						&& (*y).first == x)
 					return y;
 				return end();
 			}
@@ -939,6 +933,28 @@ namespace ft {
 					_destroy_node(n);
 					n = m;
 				}
+			}
+
+			void
+			_init_root_and_header(node_ptr n) {
+				_set_new_root(n);
+				_root->parent = &_header.node;
+				
+				// set leftmost/rightmost and parent
+				_header.set_leftmost(n);
+				_header.set_rightmost(n);
+			}
+			
+			void
+			_reset_root_and_header() {
+				_root = nil();
+				_header.reset();
+			}
+			void
+			_set_new_root(node_ptr n) {
+				_root				= n;
+				_root->color		= BLACK;
+				_header.node.parent	= _root;
 			}
 
 			//// NODES AND VALUES MEMORY ////
