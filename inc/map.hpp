@@ -192,7 +192,7 @@ namespace ft {
 			void
 			insert(InputIterator first, InputIterator last) {
 				for (iterator it = first; it != last; ++it)
-					insert(it);	
+					insert(*it);	
 			}
 			
 			void

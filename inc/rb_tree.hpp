@@ -668,7 +668,7 @@ namespace ft {
 					else
 						n = right(n);
 				}
-				// should return end() 
+				// should return end() if not found 
 				return iterator(m);
 			}
 			
@@ -1113,11 +1113,12 @@ namespace ft {
 
 		self
 		operator++(int) {
-			self tmp = *this;
+			self tmp(*this);
 
-			++node;
+			++(*this);
 			return tmp;
 		}
+
 		self&
 		operator--() {
 			if (node->parent->parent == node
@@ -1143,9 +1144,9 @@ namespace ft {
 
 		self
 		operator--(int) {
-			self tmp = *this;
+			self tmp(*this);
 
-			--node;
+			--(*this);
 			return tmp;
 		}
 
@@ -1256,11 +1257,12 @@ namespace ft {
 
 		self
 		operator++(int) {
-			self tmp = *this;
+			self tmp(*this);
 
-			++node;
+			++(*this);
 			return tmp;
 		}
+
 		self&
 		operator--() {
 			if (node->parent->parent == node
@@ -1286,9 +1288,9 @@ namespace ft {
 
 		self
 		operator--(int) {
-			self tmp = *this;
+			self tmp(*this);
 
-			--node;
+			--(*this);
 			return tmp;
 		}
 

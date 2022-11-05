@@ -5,6 +5,9 @@
 #include <typeinfo>			// typeid
 #include "../inc/map.hpp"
 
+# define T1 int
+# define T2 int
+
 #ifndef STD
 # define NAMESPACE ft
 #else
@@ -77,7 +80,7 @@ main() {
 
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
-	
+
 	std::cout	<< "// INSERT ONE ELEMENT" << std::endl;
 
 	a.insert(NAMESPACE::pair<int, std::string>(4, "four"));
@@ -132,6 +135,15 @@ main() {
 		--it;
 	}
 
+	std::cout	<< "// IT POSTFIX INCREM" << std::endl;
+	
+	it = a.begin();
+
+	while (it != a.end()) {
+		std::cout << it->first << ", " << it->second << '\n';
+		it++;
+	}
+
 	std::cout	<< std::endl
 				<< "// CONSTANT ITERATOR ACCESS" << std::endl;
 	
@@ -154,6 +166,13 @@ main() {
 		print_pair(cit);
 		--cit;
 	}
+	
+	std::cout	<< std::endl
+				<< "// CONST AND NOT CONST ITERATORS" << std::endl;
+    
+	//NAMESPACE::map<T1, T2> const mp;
+	//NAMESPACE::map<T1, T2>::iterator i = mp.begin(); // NO COMP
+
 	
 /*	std::cout	<< std::endl
 				<< "// REVERSE IT OPERATIONS" << std::endl
@@ -349,25 +368,34 @@ main() {
 	
 	c.clear();
 
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(c, "C");
+	
+	// SHOULD RET NULL	
 	//std::cout	<< "   lower_bound after clearance:" << std::endl;
-	//print_pair(c.lower_bound(1));
+	//print_pair(c.lower_bound(100));
 	
 	//std::cout	<< std::endl
 				//<< "   find after clearance:" << std::endl;
-	//print_pair(c.find(1));
-
-	print_map<NAMESPACE::map<int, std::string>, 
-		NAMESPACE::map<int, std::string>::iterator>(c, "C");
+	//print_pair(c.find(100));
 
 	std::cout	<< "// REVERSE ITERATORS" << std::endl;
 	
 	std::cout	<< "// OPERATOR[]" << std::endl;
 
-	//c.insert(NAMESPACE::pair<int, std::string>(1000, "one thousand"));
-	//c[100]="one hundred";
+	std::cout	<< "   inserting after clearance..." << std::endl;
+
+	c[100]="one hundred";
+
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(c, "C");
+
+	std::cout	<< "   lower_bound after insert:" << std::endl;
+	print_pair(c.lower_bound(100));
 	
-	//print_map<NAMESPACE::map<int, std::string>, 
-		//NAMESPACE::map<int, std::string>::iterator>(c, "C");
+	std::cout	<< std::endl
+				<< "   find after insert:" << std::endl;
+	print_pair(c.find(100));
 
 	return 0; 
 }
