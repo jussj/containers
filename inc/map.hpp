@@ -213,9 +213,11 @@ namespace ft {
 			
 			void
 			erase(iterator first, iterator last) {
-				// erase range by priority order (red nodes that need no rebalance?)
-				for (iterator it = first; first != last; ++it)
-					_tree.erase_and_rebalance(first);
+				if (first == begin() && last == end())
+					clear();
+				while (first != last) {
+					_tree.erase_and_rebalance(first++);
+				}
 			}
 			
 			void
