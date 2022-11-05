@@ -35,10 +35,6 @@ namespace ft {
     struct  is_integral<bool>                    :   public true_type {}; 
     template<>
     struct  is_integral<char>                    :   public true_type {}; 
-	//template<>
-	//struct  is_integral<char16_t>                :   public true_type {};
-	//template<>
-	//struct  is_integral<char32_t>                :   public true_type {};
     template<>
     struct  is_integral<wchar_t>                 :   public true_type {}; 
     template<>
@@ -53,16 +49,26 @@ namespace ft {
     struct  is_integral<long long int>           :   public true_type {}; 
     template<>
     struct  is_integral<unsigned char>           :   public true_type {}; 
-	//template<>
-	//struct  is_integral<unsigned short char>     :   public true_type {};
-	//template<>
-	//struct  is_integral<unsigned short int>      :   public true_type {};
     template<>
     struct  is_integral<unsigned int>            :   public true_type {}; 
     template<>
     struct  is_integral<unsigned long int>       :   public true_type {}; 
     template<>
     struct  is_integral<unsigned long long int>  :   public true_type {}; 
+
+	// IS_SAME_TYPE
+	
+	template<typename, typename>
+    struct	is_same_type {
+		enum {	value = 0	};
+		typedef false_type type;
+	};
+
+	template<typename T>
+    struct	is_same_type<T, T> {
+		enum {	value = 1	};
+		typedef true_type type;
+	};
 
 }	/* namespace ft */
 

@@ -26,7 +26,8 @@ namespace ft {
 			vector_iterator()						: _ptr(NULL) {}
 			vector_iterator(pointer it)				: _ptr(it) {}
 			template<class U>
-			vector_iterator(vector_iterator<U> it)	: _ptr(it.current()) {}
+			vector_iterator(const vector_iterator<U> it)
+				: _ptr(it.current()) {}
 			~vector_iterator() {}
 
 		// OPERATORS
@@ -81,21 +82,21 @@ namespace ft {
 			template<class U>
 			difference_type
 			operator-(const vector_iterator<U>& x) {
-				return this->current() - x.current();
+				return current() - x.current();
 			}
 			vector_iterator&
 			operator+=(int n) {
-				this->_ptr += n;
+				_ptr += n;
 				return *this;
 			}
 			vector_iterator&
 			operator-=(int n) {
-				this->_ptr -= n;
+				_ptr -= n;
 				return *this;
 			}
 			reference
 			operator[](difference_type n) {
-				return this->_ptr[n];
+				return _ptr[n];
 			}
 
 		// NON-MEMBER OPERATORS FRIENDSHIP DECLARATIONS
@@ -136,7 +137,7 @@ namespace ft {
 		// ACCESS
 
 			pointer		current() const {
-				return this->_ptr;
+				return _ptr;
 			}
 			
 	};	/* class vector_iterator */
