@@ -115,20 +115,60 @@ main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 
+	std::cout	<< "   INSERT RANGE" << std::endl;
+	
+	NAMESPACE::map<int, std::string>			bb;
+
+	bb.insert(b.find(1), b.find(5));
+
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(bb, "BB");
+	
+	std::cout	<< "   INSERT W HINT" << std::endl;
+	
+	std::cout	<< "   hint 1, new 9 after last elem"
+				<< std::endl;
+	
+	bb.insert(b.find(1),
+		NAMESPACE::pair<int, std::string>(9, "nine"));
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(bb, "BB");
+
+	std::cout	<< "   hint 1, new 6 before last elem"
+				<< std::endl;
+	
+	bb.insert(b.find(1),
+		NAMESPACE::pair<int, std::string>(6, "six"));
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(bb, "BB");
+	
+	std::cout	<< "   hint 4, new 3 before last elem"
+				<< std::endl
+				<< "   (should not insert)"
+				<< std::endl;
+	
+	bb.insert(b.find(4),
+		NAMESPACE::pair<int, std::string>(3, "three"));
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(bb, "BB");
+	
 	{
-		std::cout << "   INSERT W HINT" << std::endl;
-		
 		NAMESPACE::map<char,int> mymap;
 
 		// first insert function version (single parameter):
 		mymap.insert ( NAMESPACE::pair<char,int>('a',100) );
 		mymap.insert ( NAMESPACE::pair<char,int>('z',200) );
 
-		NAMESPACE::pair<NAMESPACE::map<char,int>::iterator,bool> ret;
-		ret = mymap.insert ( NAMESPACE::pair<char,int>('z',500) );
+		NAMESPACE::pair<
+			NAMESPACE::map<char,int>::iterator,bool> ret;
+		ret = mymap.insert (
+			NAMESPACE::pair<char,int>('z',500) );
 		if (ret.second==false) {
-		  std::cout << "element 'z' already exists";
-		  std::cout << " with a value of " << ret.first->second << '\n';
+		  std::cout << "   element 'z' already exists";
+		  std::cout << "   with a value of " << ret.first->second << '\n';
 		}
 
 		// second insert function version (with hint position):
@@ -141,13 +181,15 @@ main() {
 		anothermap.insert(mymap.begin(), mymap.find('c'));
 
 		// showing contents:
-		std::cout << "mymap contains:\n";
+		std::cout << "   mymap contains:\n";
 		for (it=mymap.begin(); it!=mymap.end(); ++it)
-			std::cout << it->first << " => " << it->second << '\n';
+			std::cout	<< "   "
+						<< it->first << " " << it->second << '\n';
 
-		std::cout << "anothermap contains:\n";
+		std::cout << "   anothermap contains:\n";
 		for (it=anothermap.begin(); it!=anothermap.end(); ++it)
-			std::cout << it->first << " => " << it->second << '\n';
+			std::cout	<< "   "
+						<< it->first << " " << it->second << '\n';
 	
 	}
 
@@ -156,27 +198,30 @@ main() {
 	
 	it = --a.end();
 	
-	std::cout	<< "last element pointer: " << std::endl
-				<< it->first << ", " << it->second
+	std::cout	<< "   last element pointer: " << std::endl
+				<< "   " << it->first << ", " << it->second
 				<< std::endl;
 	
-	std::cout	<< "last element reference: " << std::endl
-				<< (*it).first << ", " << (*it).second
+	std::cout	<< "   last element reference: " << std::endl
+				<< "   " << (*it).first << ", " << (*it).second
 				<< std::endl;
 	
-	std::cout	<< "// IT DECREM" << std::endl;
+	std::cout	<< std::endl
+				<< "// IT DECREM" << std::endl;
 
 	for (size_t i = 0; i != a.size(); ++i) {
 		print_pair(it);
 		--it;
 	}
 
-	std::cout	<< "// IT POSTFIX INCREM" << std::endl;
+	std::cout	<< std::endl
+				<< "// IT POSTFIX INCREM" << std::endl;
 	
 	it = a.begin();
 
 	while (it != a.end()) {
-		std::cout << it->first << ", " << it->second << '\n';
+		std::cout	<< "   " << it->first
+					<< " " << it->second << '\n';
 		it++;
 	}
 
@@ -187,12 +232,12 @@ main() {
 	
 	cit = --a.end();
 
-	std::cout	<< "last element pointer: " << std::endl
-				<< cit->first << ", " << cit->second
+	std::cout	<< "   last element pointer: " << std::endl
+				<< "   " << cit->first << ", " << cit->second
 				<< std::endl;
 	
-	std::cout	<< "last element reference: " << std::endl
-				<< (*cit).first << ", " << (*cit).second
+	std::cout	<< "   last element reference: " << std::endl
+				<< "   " << (*cit).first << ", " << (*cit).second
 				<< std::endl;
 
 	std::cout	<< std::endl
@@ -209,20 +254,19 @@ main() {
 	//NAMESPACE::map<T1, T2> const mp;
 	//NAMESPACE::map<T1, T2>::iterator i = mp.begin(); // NO COMP
 
-	
-/*	std::cout	<< std::endl
-				<< "// REVERSE IT OPERATIONS" << std::endl
-				<< std::endl;
+	//std::cout	<< std::endl
+				//<< "// REVERSE IT OPERATIONS" << std::endl
+				//<< std::endl;
 
-	NAMESPACE::map<int, std::string>::reverse_iterator	beg_rit;
-	NAMESPACE::map<int, std::string>::reverse_iterator	end_rit;
+	//NAMESPACE::map<int, std::string>::reverse_iterator	beg_rit;
+	//NAMESPACE::map<int, std::string>::reverse_iterator	end_rit;
 	
-	end_rit = a.rend() - 1;
-	beg_rit = a.rbegin();
+	//end_rit = a.rend() - 1;
+	//beg_rit = a.rbegin();
 	
-	std::cout << "   rev it end:   " << *end_rit << std::endl;
-	std::cout << "   rev it begin: " << *beg_rit << std::endl;
-*/	
+	//std::cout << "   rev it end:   " << *end_rit << std::endl;
+	//std::cout << "   rev it begin: " << *beg_rit << std::endl;
+	
 	std::cout	<< std::endl
 				<< "// BEGIN" << std::endl;
 	print_pair(a.begin());
@@ -424,24 +468,30 @@ main() {
 		mymap['e']=50;
 		mymap['f']=60;
 
+		for (it=mymap.begin(); it!=mymap.end(); ++it)
+			std::cout	<< "   "
+						<< it->first << " " << it->second << '\n';
 		it=mymap.find('b');
-		std::cout << "found b\n";
+		std::cout << "   found b\n";
 		mymap.erase (it);                   // erasing by iterator
-		std::cout << "erase iterator to b\n";
+		std::cout << "   erase iterator to b\n";
 		mymap.erase ('c');                  // erasing by key
-		std::cout << "erase by key 'c'\n";
+		std::cout << "   erase by key 'c'\n";
 		it=mymap.find ('e');
-		std::cout << "erase by range 'e' to end\n";
+		std::cout << "   erase by range 'e' to end\n";
 		mymap.erase ( it, mymap.end() );    // erasing by range
 
-		std::cout << " display :\n";
+		std::cout << "   display :\n";
 		// show content:
 		for (it=mymap.begin(); it!=mymap.end(); ++it)
-			std::cout << it->first << " => " << it->second << '\n';
+			std::cout	<< "   "
+						<< it->first << " " << it->second << '\n';
+		// d should be 40
 	
 	}
 	
-	std::cout	<< "// COPY CTOR" << std::endl;
+	std::cout	<< std::endl
+				<< "// COPY CTOR" << std::endl;
 
 	//NAMESPACE::map<int, std::string>			e(c);
 
@@ -463,8 +513,6 @@ main() {
 				//<< "   find after clearance:" << std::endl;
 	//print_pair(c.find(100));
 
-	std::cout	<< "// REVERSE ITERATORS" << std::endl;
-	
 	std::cout	<< "// OPERATOR[]" << std::endl;
 
 	std::cout	<< "   inserting after clearance..." << std::endl;

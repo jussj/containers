@@ -96,8 +96,15 @@ namespace ft {
 				clear();
 			}
 
-			map<key_type, T, key_compare, allocator_type>&
-			operator=(const map<key_type, T, key_compare, allocator_type>& x);
+			map<Key, T, Compare, Alloc>&
+			operator=(const map<Key, T, Compare, Alloc>& src) {
+				clear();
+				for (	const_iterator it = src.begin();
+						it != src.end();
+						++it	)
+					_tree.insert_and_rebalance(*it);
+				return *this;
+			}
 
 		//// ITERATORS ////
 
@@ -162,7 +169,8 @@ namespace ft {
 
 			T&
 			operator[](const key_type& x) {
-				return _tree.insert_and_rebalance(ft::make_pair(x, mapped_type()))->second;
+				return _tree.insert_and_rebalance(
+						ft::make_pair(x, mapped_type()))->second;
 			}
 
 		//// MODIFIERS ////
@@ -221,7 +229,12 @@ namespace ft {
 			}
 			
 			void
-			swap(map<Key, T, Compare, Alloc>&);
+			swap(map<Key, T, Compare, Alloc>& src) {
+				rb_tree		tmp	= _tree;
+				
+				_tree		= src._tree;
+				src._tree	= tmp;
+			}
 			
 			void
 			clear() {
@@ -326,42 +339,42 @@ namespace ft {
 	bool
 	operator==(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		return x._tree == y._tree;	
+		return x == y;	
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator<(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		return x._tree < y._tree;
+		return x < y;
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator!=(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		return !(x._tree == y._tree);	
+		return !(x == y);	
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator>(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		return !(x._tree < y._tree);
+		return !(x < y);
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator>=(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y) {
-		return !(x._tree < y._tree);
+		return !(x < y);
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator<=(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		return !(y._tree < x._tree);
+		return !(y < x);
 	}
 
 	//// SPECIALIZED ALGOS ////
@@ -369,7 +382,9 @@ namespace ft {
 	template <class Key, class T, class Compare, class Allocator>
 	void
 	swap(	map<Key,T,Compare,Allocator>& x,
-			map<Key,T,Compare,Allocator>& y		);
+			map<Key,T,Compare,Allocator>& y		) {
+		x.swap(y);
+	}
 
 }	/* namespace ft */
 

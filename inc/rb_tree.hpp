@@ -166,9 +166,6 @@ namespace ft {
 			typedef ft::reverse_iterator<iterator>			reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
-			//friend iterator;
-			//friend const_iterator;
-
 		//// ATTRIBUTES /////
 
 		private:
@@ -192,7 +189,8 @@ namespace ft {
 				:	_alloc(),
 				 	_nodalloc(),
 					_compare(comp),
-					_root(rb_tree_node<Val>::nil),
+					_root(0),
+					//_root(rb_tree_node<Val>::nil),
 					_header()	{
 			}
 
@@ -363,16 +361,52 @@ namespace ft {
 				return iterator(n);
 			}
 
+			node_ptr
+			_find_pos_with_hint(node_ptr n, value_type v) {
+			//_find_pos_with_hint(node_ptr n, const value_type& v) {
+				node_ptr	y = nil();
+				node_ptr	x = _create_node(v);
+				
+				while (x != nil()) {
+					y = x;
+					if (_compare(key_of_value(**n), key_of_value(**x)))
+						x = left(x);
+					else
+						x = right(x);
+				}
+				return y;
+			}
+			
+			node_ptr
+			_find_pos(node_ptr n) {
+				node_ptr	y = nil();
+				node_ptr	x = _root;
+				
+				while (x != nil()) {
+					y = x;
+					if (_compare(key_of_value(**n), key_of_value(**x)))
+						x = left(x);
+					else
+						x = right(x);
+				}
+				return y;
+			}
+
 			iterator	
 			insert_and_rebalance(const value_type& v, iterator hint = 0) {
 				node_ptr	n	= _create_node(v);
 				node_ptr	y	= nil();
-				node_ptr	x;
-				
-				if (hint == 0)
-					x = _root;
-				else
-					(base_ptr&)x = hint.node;
+				node_ptr	x	= _root;
+
+				(void)hint;
+
+				//if (hint == 0)
+					//y = _find_pos(n);
+				//else {
+					//value_type x = (*hint);
+					////value_type x = (*hint);
+					//y = _find_pos_with_hint(n, x);
+				//}
 
 				while (x != nil()) {
 					y = x;
@@ -1075,6 +1109,7 @@ namespace ft {
 		
 		rb_tree_iterator()				: node()	{}
 		rb_tree_iterator(base_ptr x)	: node(x)	{}
+		// cpy ctor
 
 		//// OVERLOADS ////
 
