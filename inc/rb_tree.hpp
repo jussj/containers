@@ -544,7 +544,7 @@ namespace ft {
 				// create "doubly black" node to rebalance the tree
 				node_ptr x	= _alloc_node();
 				y			= n->parent;
-				
+			
 				// parent is n old parent
 				x->parent	= y;
 				x->left		= nil();
@@ -577,10 +577,10 @@ namespace ft {
 				t_color original_color	= y->color;
 
 				// maintain leftmost/rightmost
-				if (_header.node.left == n)
-					_header.node.left = n->parent;
-				if (_header.node.right == n)
-					_header.node.right = n->parent;
+				if (leftmost() == n)
+					_header.set_leftmost(n->parent);
+				if (rightmost() == n)
+					_header.set_rightmost(n->parent);
 				
 				// has 0 to 1 child
 				if (left(n) == nil()) {
@@ -596,7 +596,11 @@ namespace ft {
 				else {	
 					y = minimum(n->right);		// n closest successor
 					original_color = y->color;
-					x = y->right;
+					if (y->right == nil()		// set successor to y
+							&& size() == 3)
+						x = n->left;
+					else 
+						x = y->right;
 					if (y->parent == n)
 						x->parent = y;
 					else {
@@ -642,7 +646,6 @@ namespace ft {
 					_header.set_rightmost(maximum(_header.node.right));
 					_header.set_leftmost(minimum(_header.node.left));
 				}	
-
 				_destroy_node((node_ptr&)pos.node);
 			}
 
@@ -1080,6 +1083,25 @@ namespace ft {
 			}
 
 	};	/* rb_tree class */
+	
+	// COMPARISON OVERLOADS
+	
+	template<class T, class Key, class Val, class Compare, class Alloc>
+	bool
+	operator==(const rb_tree_impl<T, Key, Val, Compare, Alloc>& x,
+			const rb_tree_impl<T, Key, Val, Compare, Alloc>& y) {
+		return x.size() == y.size() 
+			&& std::equal(x.begin(), x.end(), y.begin());
+	}
+
+	template<class T, class Key, class Val,
+		class Compare, class Alloc>
+	bool
+	operator<(const rb_tree_impl<T, Key, Val, Compare, Alloc>& x,
+			const rb_tree_impl<T, Key, Val, Compare, Alloc>& y) {
+		return ft::lexicographical_compare(x.begin(), x.end(), 
+				y.begin(), y.end());
+	}
 
 	// TO-DO find a solution to keep the base iterator
 	// without loosing the const qualifier 

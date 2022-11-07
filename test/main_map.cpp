@@ -141,13 +141,13 @@ main() {
 		NAMESPACE::map<char,int> mymap;
 
 		// first insert function version (single parameter):
-		mymap.insert ( NAMESPACE::pair<char,int>('a',100) );
-		mymap.insert ( NAMESPACE::pair<char,int>('z',200) );
+		mymap.insert (NAMESPACE::pair<char,int>('a',100));
+		mymap.insert (NAMESPACE::pair<char,int>('z',200));
 
 		NAMESPACE::pair<
 			NAMESPACE::map<char,int>::iterator,bool> ret;
 		ret = mymap.insert (
-			NAMESPACE::pair<char,int>('z',500) );
+			NAMESPACE::pair<char,int>('z',500));
 		if (ret.second==false) {
 		  std::cout << "   element 'z' already exists";
 		  std::cout << "   with a value of " << ret.first->second << '\n';
@@ -162,16 +162,11 @@ main() {
 		NAMESPACE::map<char,int> anothermap;
 		anothermap.insert(mymap.begin(), mymap.find('c'));
 
-		// showing contents:
-		std::cout << "   mymap contains:\n";
-		for (it=mymap.begin(); it!=mymap.end(); ++it)
-			std::cout	<< "   "
-						<< it->first << " " << it->second << '\n';
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
 
-		std::cout << "   anothermap contains:\n";
-		for (it=anothermap.begin(); it!=anothermap.end(); ++it)
-			std::cout	<< "   "
-						<< it->first << " " << it->second << '\n';
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(anothermap, "ANOTHERMAP");
 	
 	}
 
@@ -451,7 +446,7 @@ main() {
 		mymap['f']=60;
 
 		print_map<NAMESPACE::map<char, int>, 
-		NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
+			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
 
 		it=mymap.find('b');
 		std::cout << "   found b\n";
@@ -474,7 +469,7 @@ main() {
 				<< "// LOWER_BOUND/UPPER_BOUND" << std::endl;
 	{
 		NAMESPACE::map<char,int> mymap;
-		NAMESPACE::map<char,int>::iterator itlow,itup;
+		NAMESPACE::map<char,int>::iterator itlo,itup;
 
 		mymap['a']=20;
 		mymap['b']=40;
@@ -482,20 +477,23 @@ main() {
 		mymap['d']=80;
 		mymap['e']=100;
 
-		itlow	= mymap.lower_bound ('b');  // itlow points to b
-		itup	= mymap.upper_bound ('d');   // itup points to e (not d!)
+		itlo	= mymap.lower_bound ('b');
+		itup	= mymap.upper_bound ('d');
 
-		std::cout << "   low : " << itlow->first << '\n';
-		std::cout << "   up  : " << itup->first << '\n';
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
+		
+		std::cout	<< "   lower : " << itlo->first << '\n';
+		std::cout	<< "   upper : " << itup->first << '\n';
 
-		//mymap.erase(itlow,itup);        // erases [itlow,itup)
+		std::cout	<< std::endl
+					<< "   DELETING FROM b TO RIGHTMOST, e"
+					<< std::endl;
 
-		 //print content:
-		//for (	NAMESPACE::map<char,int>::iterator it=mymap.begin();
-				//it!=mymap.end(); ++it	)
-			//std::cout	<< "   " << it->first << " "
-						//<< it->second << '\n';
+		mymap.erase(itlo, itup);
 
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
 	}
 	std::cout	<< std::endl
 				<< "// COPY CTOR" << std::endl;
@@ -537,6 +535,30 @@ main() {
 	std::cout	<< std::endl
 				<< "   find after insert:" << std::endl;
 	print_pair(c.find(100));
+
+	std::cout	<< std::endl
+				<< "// COMPARISON OPERATORS" << std::endl;
+	{
+		NAMESPACE::map<char,int> foo,bar;
+		
+		foo['a']=100;
+		foo['b']=200;
+		bar['a']=10;
+		bar['z']=1000;
+
+		if (foo==bar) 
+			std::cout << "foo and bar are equal\n";
+		//if (foo!=bar) 
+			//std::cout << "foo and bar are not equal\n";
+		//if (foo< bar) 
+			//std::cout << "foo is less than bar\n";
+		//if (foo> bar) 
+			//std::cout << "foo is greater than bar\n";
+		//if (foo<=bar) 
+			//std::cout << "foo is less than or equal to bar\n";
+		//if (foo>=bar) 
+			//std::cout << "foo is greater than or equal to bar\n";
+	}
 
 	return 0; 
 }

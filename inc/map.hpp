@@ -85,7 +85,7 @@ namespace ft {
 					const allocator_type& alloc = Alloc()
 					)
 				:	_alloc(alloc), _tree(comp) {
-					insert_and_rebalance(first, last);	
+					insert(first, last);	
 				}
 
 			map(const map<key_type, T, key_compare, allocator_type>& src) 
@@ -170,8 +170,7 @@ namespace ft {
 			mapped_type&
 			operator[](const key_type& x) {
 
-				return (insert(
-						ft::make_pair(x, mapped_type())).first)->second;
+				return (insert(ft::make_pair(x, mapped_type())).first)->second;
 			}
 
 		//// MODIFIERS ////
@@ -224,9 +223,8 @@ namespace ft {
 			erase(iterator first, iterator last) {
 				if (first == begin() && last == end())
 					clear();
-				while (first != last) {
+				while (first != last)
 					_tree.erase_and_rebalance(first++);
-				}
 			}
 			
 			void
@@ -304,7 +302,7 @@ namespace ft {
 			ft::pair<const_iterator,const_iterator>
 			equal_range(const key_type& x) const {
 				return ft::pair<const_iterator, const_iterator>(
-						lower_bound(x), upper_nound(x)
+						lower_bound(x), upper_bound(x)
 						);
 			}
 
@@ -341,6 +339,7 @@ namespace ft {
 	operator==(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
 		return x == y;	
+		//return x._tree == y._tree;	
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
@@ -348,6 +347,7 @@ namespace ft {
 	operator<(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
 		return x < y;
+		//return x._tree < y._tree;	
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
