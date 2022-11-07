@@ -189,7 +189,7 @@ namespace ft {
 				:	_alloc(),
 				 	_nodalloc(),
 					_compare(comp),
-					_root(0),
+					_root(nil()),
 					//_root(rb_tree_node<Val>::nil),
 					_header()	{
 			}
@@ -297,7 +297,7 @@ namespace ft {
 			void
 			maintain_root(node_ptr n) {
 				node_ptr new_root	= n;
-				
+			
 				while (new_root->parent != &(_header.node)) // find root
 					new_root = parent(new_root);
 				// TO-DO make root be a ptr on a node
@@ -440,9 +440,8 @@ namespace ft {
 
 				// return rebalanced tree iterator on node
 				if (_header.node_count > 2)
-					return iterator(rebalance_after_insert(n));
-				else
-					return iterator(n);
+					rebalance_after_insert(n);
+				return iterator(n);
 			}
 
 			// DELETIONS
@@ -664,7 +663,7 @@ namespace ft {
 			iterator
 			upper_bound(const key_type& x) {
 				node_ptr n = _root;
-				node_ptr m = n;
+				base_ptr m = &_header.node;
 				
 				while (n != nil()) {
 					if (_compare(x, key_of_value(**n)))
@@ -692,16 +691,16 @@ namespace ft {
 			iterator
 			lower_bound(const key_type& x) {
 				node_ptr n = _root;
-				node_ptr m = n;
-
-				// TO-DO init m to header node? last node not less than x
-
+				base_ptr m = &_header.node;
+				
 				while (n != nil()) {
 					if (!(_compare(key_of_value(**n), x)))
 						m = n, n = left(n);
 					else
 						n = right(n);
 				}
+				//if (m == nil())
+					//return end();
 				// should return end() if not found 
 				return iterator(m);
 			}
@@ -709,9 +708,8 @@ namespace ft {
 			const_iterator
 			lower_bound(const key_type& x) const {
 				node_ptr n = _root;
-				node_ptr m = n;
-				// TO-DO init m to header node? last node not less than x
-				
+				base_ptr m = n;
+			   
 				while (n != nil()) {
 					if (!(_compare(key_of_value(**n), x)))
 						m = n, n = left(n);
@@ -724,7 +722,7 @@ namespace ft {
 			iterator
 			find(const key_type& x) {
 				iterator y = lower_bound(x);
-				if (y != nil()
+				if (y != nil() && y != end()
 						&& key_of_value(*y) == x)
 					return y;
 				return end();
@@ -733,7 +731,7 @@ namespace ft {
 			const_iterator
 			find(const key_type& x) const {
 				const_iterator y = lower_bound(x);
-				if (y != nil()
+				if (y != nil() && y != end()
 						&& (*y).first == x)
 					return y;
 				return end();

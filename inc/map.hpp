@@ -167,10 +167,11 @@ namespace ft {
 
 		//// ACCESS ////
 
-			T&
+			mapped_type&
 			operator[](const key_type& x) {
-				return _tree.insert_and_rebalance(
-						ft::make_pair(x, mapped_type()))->second;
+
+				return (insert(
+						ft::make_pair(x, mapped_type())).first)->second;
 			}
 
 		//// MODIFIERS ////

@@ -50,24 +50,6 @@ print_map(Map& m, const std::string name) {
 	std::cout	<< std::endl;	
 }
 
-/*
-template<class Map, class It>
-void
-print_map(Map& m, const std::string name) {
-	std::cout	<< std::endl
-				<< "// MAP    "	<< name << std::endl
-				<< "   size:  "	<< m.size() << std::endl;
-	if (!m.empty())
-		m.print_header();
-	std::cout	<< std::endl;
-	if (m.empty())
-		std::cout << "   [ EMPTY MAP ]" << std::endl;
-	else
-		m.print_tree();
-	std::cout	<< std::endl;
-}
-*/
-
 int
 main() {
 	NAMESPACE::map<int, std::string>			a;
@@ -468,9 +450,9 @@ main() {
 		mymap['e']=50;
 		mymap['f']=60;
 
-		for (it=mymap.begin(); it!=mymap.end(); ++it)
-			std::cout	<< "   "
-						<< it->first << " " << it->second << '\n';
+		print_map<NAMESPACE::map<char, int>, 
+		NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
+
 		it=mymap.find('b');
 		std::cout << "   found b\n";
 		mymap.erase (it);                   // erasing by iterator
@@ -487,9 +469,34 @@ main() {
 			std::cout	<< "   "
 						<< it->first << " " << it->second << '\n';
 		// d should be 40
-	
 	}
-	
+	std::cout	<< std::endl
+				<< "// LOWER_BOUND/UPPER_BOUND" << std::endl;
+	{
+		NAMESPACE::map<char,int> mymap;
+		NAMESPACE::map<char,int>::iterator itlow,itup;
+
+		mymap['a']=20;
+		mymap['b']=40;
+		mymap['c']=60;
+		mymap['d']=80;
+		mymap['e']=100;
+
+		itlow	= mymap.lower_bound ('b');  // itlow points to b
+		itup	= mymap.upper_bound ('d');   // itup points to e (not d!)
+
+		std::cout << "   low : " << itlow->first << '\n';
+		std::cout << "   up  : " << itup->first << '\n';
+
+		//mymap.erase(itlow,itup);        // erases [itlow,itup)
+
+		 //print content:
+		//for (	NAMESPACE::map<char,int>::iterator it=mymap.begin();
+				//it!=mymap.end(); ++it	)
+			//std::cout	<< "   " << it->first << " "
+						//<< it->second << '\n';
+
+	}
 	std::cout	<< std::endl
 				<< "// COPY CTOR" << std::endl;
 
@@ -505,15 +512,17 @@ main() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(c, "C");
 	
-	// SHOULD RET NULL	
-	//std::cout	<< "   lower_bound after clearance:" << std::endl;
+	//std::cout	<< "   lower_bound after clearance (UNDEFINED):"
+				//<< std::endl;
 	//print_pair(c.lower_bound(100));
 	
 	//std::cout	<< std::endl
-				//<< "   find after clearance:" << std::endl;
+				//<< "   find after clearance (UNDEFINED):"
+				//<< std::endl;
 	//print_pair(c.find(100));
 
-	std::cout	<< "// OPERATOR[]" << std::endl;
+	std::cout	<< std::endl
+				<< "// OPERATOR[]" << std::endl;
 
 	std::cout	<< "   inserting after clearance..." << std::endl;
 
