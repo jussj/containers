@@ -49,40 +49,40 @@ namespace ft {
 	// NON-MEMBER OPERATORS
 	
 	template<class T1, class T2>
-	bool operator==(const std::pair<T1,T2>& x,
-					const std::pair<T1,T2>& y) {
+	bool operator==(const pair<T1,T2>& x,
+					const pair<T1,T2>& y) {
 		return x.first == y.first
 				&& x.second == y.second;
 	}
 
 	template<class T1, class T2>
-	bool operator!=(const std::pair<T1,T2>& x,
-					const std::pair<T1,T2>& y) {
+	bool operator!=(const pair<T1,T2>& x,
+					const pair<T1,T2>& y) {
 		return !(x == y);
 	}
 
 	template<class T1, class T2>
-	bool operator<(	const std::pair<T1,T2>& x,
-					const std::pair<T1,T2>& y) {
+	bool operator<(	const pair<T1,T2>& x,
+					const pair<T1,T2>& y) {
 		return x.first < y.first || (!(y.first < x.first)
 				&& x.second < y.second);	
 	}
 
 	template<class T1, class T2>
-	bool operator>(	const std::pair<T1,T2>& x,
-					const std::pair<T1,T2>& y) {
+	bool operator>(	const pair<T1,T2>& x,
+					const pair<T1,T2>& y) {
 		return y.first < x.first;
 	}	
 	
 	template<class T1, class T2>
-	bool operator<=(const std::pair<T1,T2>& x,
-					const std::pair<T1,T2>& y) {
+	bool operator<=(const pair<T1,T2>& x,
+					const pair<T1,T2>& y) {
 		return !(y < x);
 	}
 
 	template<class T1, class T2>
-	bool operator>=(const std::pair<T1,T2>& x,
-					const std::pair<T1,T2>& y) {
+	bool operator>=(const pair<T1,T2>& x,
+					const pair<T1,T2>& y) {
 		return !(y < x);
 	}
 

@@ -1091,7 +1091,8 @@ namespace ft {
 	operator==(const rb_tree_impl<T, Key, Val, Compare, Alloc>& x,
 			const rb_tree_impl<T, Key, Val, Compare, Alloc>& y) {
 		return x.size() == y.size() 
-			&& std::equal(x.begin(), x.end(), y.begin());
+			&& ft::lexicographical_compare(x.begin(), x.end(),
+					y.begin(), y.end());
 	}
 
 	template<class T, class Key, class Val,
@@ -1216,7 +1217,7 @@ namespace ft {
 		operator!=(const self& src) {
 			return this->node != src.node;
 		}
-
+		
 		friend bool
 		operator==(const self& x, const self& y) {
 			return x->node == y->node;
@@ -1360,7 +1361,7 @@ namespace ft {
 		operator!=(const self& src) {
 			return this->node != src.node;
 		}
-
+		
 		friend bool
 		operator==(const self& x, const self& y) {
 			return x->node == y->node;

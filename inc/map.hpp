@@ -338,16 +338,16 @@ namespace ft {
 	bool
 	operator==(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		return x == y;	
-		//return x._tree == y._tree;	
+		//return x == y;	
+		return x._tree == y._tree;	
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator<(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		return x < y;
-		//return x._tree < y._tree;	
+		//return x < y;
+		return x._tree < y._tree;	
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
