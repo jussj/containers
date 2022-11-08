@@ -229,9 +229,9 @@ namespace ft {
 			
 			void
 			swap(map<Key, T, Compare, Alloc>& src) {
-				rb_tree		tmp	= _tree;
-				
-				_tree		= src._tree;
+				rb_tree	tmp	= this->_tree;
+
+				this->_tree	= src._tree;
 				src._tree	= tmp;
 			}
 			
@@ -338,7 +338,6 @@ namespace ft {
 	bool
 	operator==(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		//return x == y;	
 		return x._tree == y._tree;	
 	}
 
@@ -346,7 +345,6 @@ namespace ft {
 	bool
 	operator<(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		//return x < y;
 		return x._tree < y._tree;	
 	}
 

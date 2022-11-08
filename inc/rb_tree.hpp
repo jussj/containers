@@ -67,7 +67,7 @@ namespace ft {
 			node.right	= src.node.right;
 			node.parent->parent = &node;
 			
-			src.reset();	
+			//src.reset();	
 		}
 		void
 		reset() {
@@ -113,7 +113,7 @@ namespace ft {
 			
 			// only non-null value (leafs must be black)
 			node.color	= BLACK;
-			node.parent	= &node;
+			node.parent	= 0;
 			node.right	= &node;
 			node.left	= &node;
 			return node;
@@ -183,16 +183,19 @@ namespace ft {
 
 			// CTOR / DTOR 
 
-			rb_tree_impl() {}
+			rb_tree_impl()
+				:	_alloc(),
+				 	_nodalloc(),
+					_compare(),
+					_root(),
+					_header()	{}
 
 			rb_tree_impl(const key_compare& comp) 
 				:	_alloc(),
 				 	_nodalloc(),
 					_compare(comp),
 					_root(nil()),
-					//_root(rb_tree_node<Val>::nil),
-					_header()	{
-			}
+					_header()	{}
 
 			rb_tree_impl(const key_compare& comp,
 						 const pair_allocator_type& pair_alloc, 
@@ -236,6 +239,18 @@ namespace ft {
 			bool
 			empty() const {
 				return _header.node_count == 0;
+			}
+
+			//// OVERLOADS ////
+
+			rb_tree_impl&
+			operator=(rb_tree_impl& src) {
+				_compare	= src._compare;
+				_nodalloc	= src._nodalloc;
+				_alloc		= src._alloc;
+				_root		= src._root;
+				_header.move_data(src._header);
+				return *this;
 			}
 
 			//// MODIFIERS ////
@@ -757,7 +772,9 @@ namespace ft {
 							<< "\t(" << rightmost() << ")" << std::endl
 							<< "   nil:   " << 0 << "\t(" 
 							<< nil() << ")" << std::endl
-							<< "   bh:    " << black_height() << std::endl;
+							<< "   bh:    " << black_height() << std::endl
+							<< "   head:  " << &(_header.node) <<std::endl
+							<< "   head:  " << _root->parent <<std::endl;
 			}
 
 			void
@@ -970,6 +987,32 @@ namespace ft {
 				}
 			}
 
+			node_ptr
+			_copy_from(node_ptr x, node_ptr p = 0) {
+				// save for ret value
+				node_ptr start = x;
+
+				if (p == 0)
+					(base_ptr&)p = &_header.node;
+				// copy tree structure, no rebalance needed
+				while (x != nil()) {
+					node_ptr y = _alloc_node();
+					if (start == x)
+						start = y;
+
+					y->value	= _construct_pair(value(x));
+					p->left		= y;	
+					y->parent	= p;	
+					y->color	= x->color;	
+					y->right	= _copy_from(right(x), y);
+					
+					p = y;
+					(base_ptr&)x = x->left;
+				}
+				p->left = nil();
+				return start;
+			}
+			
 			void
 			_init_root_and_header(node_ptr n) {
 				_set_new_root(n);
@@ -1025,9 +1068,6 @@ namespace ft {
 				n->color = RED;
 				return n;
 			}
-
-			node_ptr
-			_clone_node(node_ptr src); // TO-DO copy ctor?
 
 			// RECYCLING NODES POOL
 
@@ -1370,6 +1410,26 @@ namespace ft {
 		friend bool
 		operator!=(const self& x, const self& y) {
 			return x->node != y->node;
+		}
+		
+		// DEBUG
+
+		void
+		print_node_ptr() {
+			std::cout	<< "   color  ";
+			if (node->color == BLACK)
+				std::cout << "BLACK";
+			else
+				std::cout << "RED";	
+			std::cout	<< std::endl
+						<< "   addr   " << &(*node)
+						<< std::endl
+						<< "   left   " << node->left
+						<< std::endl
+						<< "   right  " << node->right
+						<< std::endl
+						<< "   parent " << &(*(node->parent))
+						<< std::endl << std::endl;
 		}
 
 	};	/* rb_tree_const_iterator */

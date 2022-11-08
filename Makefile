@@ -1,6 +1,10 @@
 NAME				=	containers
 
-CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98
+STD					=	std_containers
+
+CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98 -DDEBUG
+
+STDFLAGS			=	-DSTD
 
 DEBUGFLAGS			=	-g3	-fsanitize=address
 
@@ -30,8 +34,13 @@ vpath %.d			$(DEPS_DIR)
 
 all:				$(NAME)
 
+std:				$(STD)
+
 $(NAME):			$(DEPS) $(OBJS)
 	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(NAME)
+
+$(STD):				$(DEPS) $(OBJS)
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(STDFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(STD)
 
 %.d:				%.cpp
 	$(CXX) $(INC) -MM $< -MF $(DEPS_DIR)/$@ 
@@ -55,7 +64,7 @@ clean:
 	$(RM) $(OBJS_DIR) $(DEPS_DIR)
 
 fclean:				clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(STD)
 
 re:				fclean all
 

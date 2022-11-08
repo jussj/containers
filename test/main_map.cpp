@@ -30,7 +30,7 @@ template<class Map, class It>
 void
 print_map(Map& m, const std::string name) {
 	std::cout	<< std::endl
-				<< "// MAP    "	<< name << std::endl
+				<< "// MAP "	<< name << std::endl
 				<< "   size:  "	<< m.size() << std::endl
 				<< std::endl;
 	if (m.empty())
@@ -155,8 +155,10 @@ main() {
 
 		// second insert function version (with hint position):
 		NAMESPACE::map<char,int>::iterator it = mymap.begin();
-		mymap.insert (it, NAMESPACE::pair<char,int>('b',300));  // max efficiency inserting
-		mymap.insert (it, NAMESPACE::pair<char,int>('c',400));  // no max efficiency inserting
+		// max efficiency inserting
+		mymap.insert (it, NAMESPACE::pair<char,int>('b',300));
+		// no max efficiency inserting
+		mymap.insert (it, NAMESPACE::pair<char,int>('c',400));
 
 		// third insert function version (range insertion):
 		NAMESPACE::map<char,int> anothermap;
@@ -450,20 +452,22 @@ main() {
 
 		it=mymap.find('b');
 		std::cout << "   found b\n";
-		mymap.erase (it);                   // erasing by iterator
+		// erasing by iterator
+		mymap.erase (it);
 		std::cout << "   erase iterator to b\n";
-		mymap.erase ('c');                  // erasing by key
+		// erasing by key
+		mymap.erase ('c');
 		std::cout << "   erase by key 'c'\n";
 		it=mymap.find ('e');
 		std::cout << "   erase by range 'e' to end\n";
-		mymap.erase ( it, mymap.end() );    // erasing by range
+		// erasing by range
+		mymap.erase ( it, mymap.end() );    
 
 		std::cout << "   display :\n";
-		// show content:
+		// show content: d should be 40
 		for (it=mymap.begin(); it!=mymap.end(); ++it)
 			std::cout	<< "   "
 						<< it->first << " " << it->second << '\n';
-		// d should be 40
 	}
 	std::cout	<< std::endl
 				<< "// LOWER_BOUND/UPPER_BOUND" << std::endl;
@@ -546,19 +550,187 @@ main() {
 		bar['a']=10;
 		bar['z']=1000;
 
-		if (foo==bar) 
-			std::cout << "foo and bar are equal\n";
-		//if (foo!=bar) 
-			//std::cout << "foo and bar are not equal\n";
-		//if (foo< bar) 
-			//std::cout << "foo is less than bar\n";
-		//if (foo> bar) 
-			//std::cout << "foo is greater than bar\n";
-		//if (foo<=bar) 
-			//std::cout << "foo is less than or equal to bar\n";
-		//if (foo>=bar) 
-			//std::cout << "foo is greater than or equal to bar\n";
+		if (foo == bar) 
+			std::cout << "   foo and bar are equal :(\n";
+		if (foo != bar) 
+			std::cout << "   foo and bar are not equal :)\n";
+		if (foo < bar) 
+			std::cout << "   foo is less than bar :(\n";
+		if (foo > bar) 
+			std::cout << "   foo is greater than bar :)\n";
+		if (foo <= bar) 
+			std::cout << "   foo is less than or equal to bar :(\n";
+		if (foo >= bar) 
+			std::cout << "   foo is greater than or equal to bar :)\n";
 	}
+	std::cout	<< std::endl
+				<< "// SWUAP" << std::endl;
 
+	{
+		NAMESPACE::map<int, char> hehe, haha;
+		NAMESPACE::map<char, int> hihi;
+
+		hehe[1]='a';
+		hehe[2]='b';
+		hehe[3]='c';
+		hehe[4]='d';
+		
+		haha[5]='e';
+		haha[6]='f';
+		haha[7]='g';
+		haha[8]='h';
+		haha[9]='i';
+		
+		print_map<NAMESPACE::map<int, char>, 
+			NAMESPACE::map<int, char>::iterator>(hehe, "HEHE");
+		
+		print_map<NAMESPACE::map<int, char>, 
+			NAMESPACE::map<int, char>::iterator>(haha, "HAHA");
+
+		std::cout << "   performing swap:" << std::endl;	
+		hehe.swap(haha);		
+
+		print_map<NAMESPACE::map<int, char>, 
+			NAMESPACE::map<int, char>::iterator>(hehe, "HEHE");
+		
+		print_map<NAMESPACE::map<int, char>, 
+			NAMESPACE::map<int, char>::iterator>(haha, "HAHA");
+
+		//std::cout << "   is deep swap? clearing haha:" << std::endl;	
+		//haha.clear();
+		
+		//print_map<NAMESPACE::map<int, char>, 
+			//NAMESPACE::map<int, char>::iterator>(hehe, "HEHE");
+
+		std::cout	<< "   MAZOIZ SWUAP TESTS:" << std::endl;	
+
+		NAMESPACE::map<char,int> foo,bar;
+
+		foo['x']=100;
+		foo['y']=200;
+
+		bar['a']=11;
+		bar['b']=22;
+		bar['c']=33;
+
+		NAMESPACE::map<char, int>::const_iterator tmp = foo.begin();
+		//tmp iterates through foo
+		NAMESPACE::map<char, int>::const_iterator tmp2 = bar.begin(); 
+		//tmp2 iterates through bar
+		
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(foo, "FOO");
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(bar, "BAR");
+		
+		foo.swap(bar);
+
+		NAMESPACE::map<char, int>	other;
+
+		other['1'] = 73;
+		other['2'] = 173;
+		other['3'] = 763;
+		other['4'] = 73854;
+		other['5'] = 74683;
+		other['6'] = 753;
+
+		NAMESPACE::map<char, int>::const_iterator tmp3 = other.begin();	
+		// tmp3 iterates through other
+
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(foo, "FOO");
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(bar, "BAR");
+
+		std::cout << "   " <<"foo contains:\n";
+		for (NAMESPACE::map<char,int>::iterator it=foo.begin();
+				it!=foo.end(); ++it)
+			std::cout << "   " <<it->first << ": "
+					<< it->second << '\n';
+
+		std::cout << "   " <<"bar contains:\n";
+		for (NAMESPACE::map<char,int>::iterator it=bar.begin();
+				it!=bar.end(); ++it)
+			std::cout << "   " <<it->first << ": "
+				<< it->second << '\n';
+
+		while(tmp != bar.end()) {
+			std::cout << "   " <<tmp->first << ": "
+				<< tmp->second << '\n';
+			tmp++;
+		}
+		tmp--;
+
+		while(tmp2 != foo.end()) {
+			std::cout << "   " <<tmp2->first << ": "
+				<< tmp2->second << '\n';
+			tmp2++;
+		}
+		tmp2--;
+
+		other.swap(foo); //tmp2 iterates through other
+						//tmp3 iterates throught foo
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(other, "OTHER");
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(foo, "FOO");
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(bar, "BAR");
+		
+		while(tmp != bar.begin()) {
+			std::cout << "   " <<tmp->first << ": "
+				<< tmp->second << '\n';
+			tmp--;
+		}
+		std::cout << "   " <<tmp->first << ": "
+			<< tmp->second << '\n';
+
+		while(tmp2 != other.begin()) {
+			std::cout << "   " <<tmp2->first << ": "
+			   	<< tmp2->second << '\n';
+			tmp2--;
+		}
+		std::cout << "   " <<tmp2->first << ": "
+			<< tmp2->second << '\n';
+
+		while(tmp3 != foo.end()) {
+			std::cout << "   " <<tmp3->first << ": "
+				<< tmp3->second << '\n';
+			tmp3++;
+		}
+		tmp3--;
+
+		bar.swap(foo); //tmp3 iterates through bar
+					//tmp iterates through foo
+
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(other, "OTHER");
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(foo, "FOO");
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(bar, "BAR");
+
+		while(tmp != foo.end()) {
+			std::cout << "   " <<tmp->first << ": "
+				<< tmp->second << '\n';
+			tmp++;
+		}
+
+		while(tmp2 != other.end()) {
+			std::cout << "   " <<tmp2->first << ": "
+				<< tmp2->second << '\n';
+			tmp2++;
+		}
+
+		while(tmp3 != bar.begin()) {
+			std::cout << "   " <<tmp3->first << ": "
+				<< tmp3->second << '\n';
+			tmp3--;
+		}
+		std::cout << "   " <<tmp3->first << ": "
+			<< tmp3->second << '\n';
+
+
+	}
 	return 0; 
 }
