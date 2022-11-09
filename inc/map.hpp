@@ -223,8 +223,8 @@ namespace ft {
 			
 			void
 			erase(iterator first, iterator last) {
-				if (first == begin() && last == end())
-					clear();
+				//if (first == begin() && last == end())
+					//clear();
 				while (first != last)
 					_tree.erase_and_rebalance(first++);
 			}

@@ -467,17 +467,22 @@ main() {
 		it=mymap.find ('e');
 		std::cout << "   erase by range 'e' to end\n";
 		// erasing by range
-		mymap.erase ( it, mymap.end() );    
+		mymap.erase (it, mymap.end());    
 
 		std::cout << "   display :\n";
 		// show content: d should be 40
 		for (it=mymap.begin(); it!=mymap.end(); ++it)
 			std::cout	<< "   "
 						<< it->first << " " << it->second << '\n';
+		
+		mymap.erase (mymap.begin(), mymap.end());    
+		
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
 	}
 
-/*	std::cout	<< "// MORE ERASE" << std::endl
-				<< std::endl;
+	std::cout	<< std::endl
+				<< "// MORE ERASE" << std::endl;
 	{
 		std::list<NAMESPACE::pair<int, std::string> > lst;
 		unsigned int lst_size = 10;
@@ -514,12 +519,12 @@ main() {
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
 		print_pair(mp.begin());
-		print_pair(--mp.end());
+		print_pair(--mp.end()); // NOT OK
 		mp.erase(mp.begin(), mp.end());
 		
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
-	}*/
+	}/*
 
 	std::cout	<< std::endl
 				<< "// LOWER_BOUND/UPPER_BOUND" << std::endl;
@@ -781,6 +786,6 @@ main() {
 		}
 		std::cout << "   " <<tmp3->first << ": "
 			<< tmp3->second << '\n';
-	}
+	}*/
 	return 0; 
 }
