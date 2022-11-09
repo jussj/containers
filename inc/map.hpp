@@ -88,8 +88,9 @@ namespace ft {
 					insert(first, last);	
 				}
 
-			map(const map<key_type, T, key_compare, allocator_type>& src) 
-				: _tree(src) {}
+			map(const map<key_type, T, key_compare, allocator_type>& src) {
+				*this = src;
+			}
 				
 			
 			~map() {
@@ -199,8 +200,9 @@ namespace ft {
 			template <class InputIterator>
 			void
 			insert(InputIterator first, InputIterator last) {
-				for (iterator it = first; it != last; ++it)
-					insert(*it);	
+				//for (iterator it = first; it != last; ++it)
+				while (first != last)
+					insert(*first++);	
 			}
 			
 			void

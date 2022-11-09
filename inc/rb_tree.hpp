@@ -60,14 +60,24 @@ namespace ft {
 		// MEMBER FUNCTIONS
 
 		void
-		move_data(rb_tree_header& src) {
+		copy_data(const rb_tree_header& src) {
 			node.color	= src.node.color;
 			node.parent = src.node.parent;
 			node.left	= src.node.left;
 			node.right	= src.node.right;
 			node.parent->parent = &node;
 			
-			//src.reset();	
+			node_count = src.node_count;	
+		}
+		void
+		move_node_data(rb_tree_header& src) {
+			node.color	= src.node.color;
+			node.parent = src.node.parent;
+			node.left	= src.node.left;
+			node.right	= src.node.right;
+			node.parent->parent = &node;
+			
+			src.reset();	
 		}
 		void
 		reset() {
@@ -206,6 +216,15 @@ namespace ft {
 					_root(nil()),
 					_header() {}
 		
+			rb_tree_impl(const rb_tree_impl& src) 
+				:	_alloc(),
+					 _nodalloc(),
+					_compare(),
+					_root(),
+					_header()	{
+				*this = src;		
+			}
+
 			~rb_tree_impl() {}
 
 			//// ACCESS ////
@@ -244,12 +263,12 @@ namespace ft {
 			//// OVERLOADS ////
 
 			rb_tree_impl&
-			operator=(rb_tree_impl& src) {
+			operator=(const rb_tree_impl& src) {
 				_compare	= src._compare;
 				_nodalloc	= src._nodalloc;
 				_alloc		= src._alloc;
 				_root		= src._root;
-				_header.move_data(src._header);
+				_header.copy_data(src._header);
 				return *this;
 			}
 
@@ -1170,11 +1189,21 @@ namespace ft {
 		
 		rb_tree_iterator()				: node()	{}
 		rb_tree_iterator(base_ptr x)	: node(x)	{}
+		rb_tree_iterator(const self& src)
+			: node() {
+			*this = src;
+		}
 		// cpy ctor
 
 		//// OVERLOADS ////
 
 		// ACCESS
+
+		self&
+		operator=(const self& src) {
+			node = src.node;
+			return *this;
+		}
 
 		reference
 		operator*() const {

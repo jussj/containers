@@ -596,11 +596,11 @@ main() {
 		print_map<NAMESPACE::map<int, char>, 
 			NAMESPACE::map<int, char>::iterator>(haha, "HAHA");
 
-		//std::cout << "   is deep swap? clearing haha:" << std::endl;	
-		//haha.clear();
+		std::cout << "   is deep swap? clearing haha:" << std::endl;	
+		haha.clear();
 		
-		//print_map<NAMESPACE::map<int, char>, 
-			//NAMESPACE::map<int, char>::iterator>(hehe, "HEHE");
+		print_map<NAMESPACE::map<int, char>, 
+			NAMESPACE::map<int, char>::iterator>(hehe, "HEHE");
 
 		std::cout	<< "   MAZOIZ SWUAP TESTS:" << std::endl;	
 

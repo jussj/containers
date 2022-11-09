@@ -2,7 +2,7 @@ NAME				=	containers
 
 STD					=	std_containers
 
-CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98 -DDEBUG
+CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98
 
 STDFLAGS			=	-DSTD
 
