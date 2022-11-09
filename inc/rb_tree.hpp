@@ -465,9 +465,14 @@ namespace ft {
 				if (_compare(key_of_value(**n), 
 						key_of_value(**left(&_header.node))))
 					_header.set_leftmost(n); 
-				else if (!_compare(key_of_value(**n),
-							key_of_value(**left(&_header.node))))
+				else if (_compare(key_of_value(**right(&_header.node)),
+								key_of_value(**n))) {
+				//else if (key_of_value(**n) >
+							//key_of_value(**right(&_header.node))) {
+					//std::cout<<"---HOLY MOLLY "<<key_of_value(**n)<<" is > "
+						//<<key_of_value(**right(&_header.node))<<std::endl;
 					_header.set_rightmost(n); 
+				}
 
 				// update count	
 				_header.node_count++;
@@ -791,9 +796,9 @@ namespace ft {
 							<< "\t(" << rightmost() << ")" << std::endl
 							<< "   nil:   " << 0 << "\t(" 
 							<< nil() << ")" << std::endl
-							<< "   bh:    " << black_height() << std::endl
-							<< "   head:  " << &(_header.node) <<std::endl
-							<< "   head:  " << _root->parent <<std::endl;
+							<< "   head:  " << "\t(" << &(_header.node) << ")"
+							<< std::endl
+							<< "   bh:    " << black_height() << std::endl;
 			}
 
 			void

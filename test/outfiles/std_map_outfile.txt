@@ -36,6 +36,42 @@
 
 
 // MAP B
+   size:  6
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+
+
+// MAP B
+   size:  7
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 11	| elev	]
+
+
+// MAP B
+   size:  8
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 10	| ten	]
+   [ 11	| elev	]
+
+
+// MAP B
    size:  8
 
    [ 1	| one	]
@@ -79,13 +115,13 @@
    [ 9	| nine	]
 
    hint 4, new 3 before last elem
-   (should not insert)
 
 // MAP BB
    size:  6
 
    [ 1	| one	]
    [ 2	| two	]
+   [ 3	| three	]
    [ 4	| four	]
    [ 6	| six	]
    [ 9	| nine	]
@@ -198,7 +234,6 @@
 
    [ 1	| one	]
    [ 2	| two	]
-   [ 3	| three	]
    [ 4	| four	]
    [ 5	| five	]
    [ 7	| seven	]
@@ -220,7 +255,6 @@
 
    [ 1	| one	]
    [ 2	| two	]
-   [ 3	| three	]
    [ 4	| four	]
    [ 5	| five	]
    [ 7	| seven	]
@@ -245,7 +279,6 @@
    size:  6
 
    [ 2	| two	]
-   [ 3	| three	]
    [ 4	| four	]
    [ 5	| five	]
    [ 7	| seven	]
@@ -258,7 +291,6 @@
    size:  6
 
    [ 2	| two	]
-   [ 3	| three	]
    [ 4	| four	]
    [ 5	| five	]
    [ 7	| seven	]
@@ -270,7 +302,6 @@
    size:  5
 
    [ 2	| two	]
-   [ 3	| three	]
    [ 4	| four	]
    [ 7	| seven	]
    [ 9	| nine	]
@@ -281,7 +312,6 @@
    size:  5
 
    [ 2	| two	]
-   [ 3	| three	]
    [ 4	| four	]
    [ 7	| seven	]
    [ 9	| nine	]
@@ -292,7 +322,6 @@
    size:  4
 
    [ 2	| two	]
-   [ 3	| three	]
    [ 4	| four	]
    [ 7	| seven	]
    [ 10	| ten	]

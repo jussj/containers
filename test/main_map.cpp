@@ -1,5 +1,6 @@
 #include <iostream>			// std::cout
-#include <map>				// std::stack
+#include <map>				// std::map
+#include <list>				// std::list
 #include <stdexcept>
 #include <cstddef>			// ptrdiff_t
 #include <typeinfo>			// typeid
@@ -91,8 +92,14 @@ main() {
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	
 	b.insert(NAMESPACE::pair<int, std::string>(9, "nine"));
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	b.insert(NAMESPACE::pair<int, std::string>(11, "elev"));
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	b.insert(NAMESPACE::pair<int, std::string>(10, "ten"));
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
@@ -111,7 +118,7 @@ main() {
 	std::cout	<< "   hint 1, new 9 after last elem"
 				<< std::endl;
 	
-	bb.insert(b.find(1),
+	bb.insert(bb.find(1),
 		NAMESPACE::pair<int, std::string>(9, "nine"));
 	
 	print_map<NAMESPACE::map<int, std::string>, 
@@ -120,18 +127,16 @@ main() {
 	std::cout	<< "   hint 1, new 6 before last elem"
 				<< std::endl;
 	
-	bb.insert(b.find(1),
+	bb.insert(bb.find(1),
 		NAMESPACE::pair<int, std::string>(6, "six"));
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(bb, "BB");
 	
 	std::cout	<< "   hint 4, new 3 before last elem"
-				<< std::endl
-				<< "   (should not insert)"
 				<< std::endl;
 	
-	bb.insert(b.find(4),
+	bb.insert(bb.find(4),
 		NAMESPACE::pair<int, std::string>(3, "three"));
 	
 	print_map<NAMESPACE::map<int, std::string>, 
@@ -305,7 +310,8 @@ main() {
 	std::cout	<< ">> B size: " << b.size() << std::endl
 				<< ">> B end:" << std::endl;
 	print_pair(--b.end());
-	b.erase(--b.end());	
+	//b.erase(--b.end());	
+	b.erase(b.find(11));	
 	
 	std::cout	<< ">> B size: " << b.size() << std::endl
 				<< ">> B new end:" << std::endl;
@@ -469,6 +475,52 @@ main() {
 			std::cout	<< "   "
 						<< it->first << " " << it->second << '\n';
 	}
+
+/*	std::cout	<< "// MORE ERASE" << std::endl
+				<< std::endl;
+	{
+		std::list<NAMESPACE::pair<int, std::string> > lst;
+		unsigned int lst_size = 10;
+		
+		for (unsigned int i = 0; i < lst_size; ++i)
+			lst.push_back(
+					NAMESPACE::pair<int, std::string>(
+						i, std::string((lst_size - i), i + 65))
+					);
+		
+		NAMESPACE::map<int, std::string> mp(lst.begin(), lst.end());
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
+		
+		mp.erase(++mp.begin());
+		
+		mp.erase(mp.begin(), ++(++(++mp.begin())));
+		mp.erase(--(--(--mp.end())), --mp.end());
+
+		mp.erase(mp.begin());
+		mp.erase(--mp.end());
+		// two elements left
+
+		mp[10] = "Hello";
+		mp[11] = "Hi";
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
+		mp.erase(--(--(--mp.end())), mp.end());
+
+		mp[12] = "ONE";
+		mp[13] = "TWO";
+		mp[14] = "THREE";
+		mp[15] = "FOUR";
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
+		print_pair(mp.begin());
+		print_pair(--mp.end());
+		mp.erase(mp.begin(), mp.end());
+		
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
+	}*/
+
 	std::cout	<< std::endl
 				<< "// LOWER_BOUND/UPPER_BOUND" << std::endl;
 	{
@@ -729,8 +781,6 @@ main() {
 		}
 		std::cout << "   " <<tmp3->first << ": "
 			<< tmp3->second << '\n';
-
-
 	}
 	return 0; 
 }

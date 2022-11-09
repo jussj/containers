@@ -36,6 +36,42 @@
 
 
 // MAP B
+   size:  6
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+
+
+// MAP B
+   size:  7
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 11	| elev	]
+
+
+// MAP B
+   size:  8
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 10	| ten	]
+   [ 11	| elev	]
+
+
+// MAP B
    size:  8
 
    [ 1	| one	]
@@ -79,7 +115,6 @@
    [ 9	| nine	]
 
    hint 4, new 3 before last elem
-   (should not insert)
 
 // MAP BB
    size:  6
@@ -210,10 +245,10 @@
 
 >> B size: 8
 >> B end:
-   [ 10	| ten	]
+   [ 11	| elev	]
 >> B size: 7
 >> B new end:
-   [ 11	| elev	]
+   [ 10	| ten	]
 
 // MAP B
    size:  7
@@ -224,7 +259,7 @@
    [ 5	| five	]
    [ 7	| seven	]
    [ 9	| nine	]
-   [ 11	| elev	]
+   [ 10	| ten	]
 
    LEFTMOST:
 >> A size: 5
@@ -248,7 +283,7 @@
    [ 5	| five	]
    [ 7	| seven	]
    [ 9	| nine	]
-   [ 11	| elev	]
+   [ 10	| ten	]
 
    NODE W 2 CHILDREN:
 
@@ -260,7 +295,7 @@
    [ 5	| five	]
    [ 7	| seven	]
    [ 9	| nine	]
-   [ 11	| elev	]
+   [ 10	| ten	]
 
 
 // MAP B
@@ -270,7 +305,7 @@
    [ 4	| four	]
    [ 7	| seven	]
    [ 9	| nine	]
-   [ 11	| elev	]
+   [ 10	| ten	]
 
 
 // MAP B
@@ -280,7 +315,7 @@
    [ 4	| four	]
    [ 7	| seven	]
    [ 9	| nine	]
-   [ 11	| elev	]
+   [ 10	| ten	]
 
 
 // MAP B
@@ -289,7 +324,7 @@
    [ 2	| two	]
    [ 4	| four	]
    [ 7	| seven	]
-   [ 11	| elev	]
+   [ 10	| ten	]
 
 
 // MAP C
