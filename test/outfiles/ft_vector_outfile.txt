@@ -23,6 +23,7 @@
 A is empty
 C is NOT empty
 D is NOT empty
+TESTING INSERT/ASSIGN/CTOR FOURTH PARAM (SHOULD NOT COMPILE)
 
 //// COPY CTOR ////
 
@@ -146,6 +147,7 @@ size of orvoir: 0
 
 a.reserve(0)...
 a.reserve(max_size + 1)...
+error thrown: vector::reserve
 a.reserve(7)...
 size of A is 0, actual capacity is 5
 a.push_back() * 6 (past capacity)...
@@ -249,7 +251,8 @@ TESTING RESIZE ON EMPTY VECTOR
 
 in range: element at(0) is he
 past size(): element at(3) is ha
-past capacity(): element at(12) is 
+past capacity(): element at(12) is error thrown: vector::_range_check: n (which is 12) >= this->size() (which is 12)
+
 //// ASSIGN(NB, T) ////
 
 c.assign(6, hi)...

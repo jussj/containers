@@ -1,28 +1,36 @@
-NAME				=	containers
+MAP					=	ft_map
+
+VECTOR				=	ft_vector
+
+STACK				=	ft_stack
 
 STD					=	std_containers
 
-CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98 #-DSTD
+CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98
 
-STDFLAGS			=	-DSTD
+DEBUGFLAGS			=	-g3	#-fsanitize=address #-DDEBUG
 
-DEBUGFLAGS			=	-g3	-fsanitize=address #-DDEBUG
+CXX					=	c++
 
-CXX				=	c++
+RM					=	rm -rf
 
-RM				=	rm -rf
-
-SRCS				=	main_map.cpp
+SRCS_MAP			=	main_map.cpp
+SRCS_VEC			=	main_vector.cpp
+SRCS_STA			=	main_stack.cpp
 
 SRCS_DIR			=	test
 
-INC				=	-I inc/iterator -I inc/type_traits -I inc/utility
+INC					=	-I inc/iterator -I inc/type_traits -I inc/utility
 
-OBJS				=	$(SRCS:.cpp=.o)
+OBJS_MAP			=	$(SRCS_MAP:.cpp=.o)
+OBJS_VEC			=	$(SRCS_VEC:.cpp=.o)
+OBJS_STA			=	$(SRCS_STA:.cpp=.o)
 
 OBJS_DIR			= 	.obj
 
-DEPS				=	$(SRCS:.cpp=.d)
+DEPS_MAP			=	$(SRCS_MAP:.cpp=.d)
+DEPS_VEC			=	$(SRCS_VEC:.cpp=.d)
+DEPS_STA			=	$(SRCS_STA:.cpp=.d)
 
 DEPS_DIR			=	.dep
 
@@ -32,30 +40,39 @@ vpath %.o			$(OBJS_DIR)
 
 vpath %.d			$(DEPS_DIR)
 
-all:				$(NAME)
+all:				$(MAP) $(VECTOR) $(STACK)
 
-std:				$(STD)
+map:				$(MAP)
+vector:				$(VECTOR)
+stack:				$(STACK)
 
-$(NAME):			$(DEPS) $(OBJS)
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(NAME)
+$(MAP):				$(DEPS_MAP) $(OBJS_MAP)
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS_MAP)) -o $(MAP)
 
-$(STD):				$(DEPS) $(OBJS)
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(STDFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS)) -o $(STD)
+$(VECTOR):			$(DEPS_VEC) $(OBJS_VEC)
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS_VEC)) -o $(VECTOR)
+
+$(STACK):			$(DEPS_STA) $(OBJS_STA)
+	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS_STA)) -o $(STACK)
 
 %.d:				%.cpp
 	$(CXX) $(INC) -MM $< -MF $(DEPS_DIR)/$@ 
 
--include $(addprefix $(DEPS_DIR)/, $(DEPS))
+-include $(addprefix $(DEPS_DIR)/, $(DEPS_MAP), $(DEPS_VEC), $(DEPS_STA))
 
 %.o:				%.cpp
 	$(CXX) $(INC) $(CXXFLAGS) $(DEBUGFLAGS) -c $< -o $(OBJS_DIR)/$@
 
-$(DEPS):			| $(DEPS_DIR)
+$(DEPS_MAP):		| $(DEPS_DIR)
+$(DEPS_VEC):		| $(DEPS_DIR)
+$(DEPS_STA):		| $(DEPS_DIR)
 
 $(DEPS_DIR):
 	mkdir -p $(DEPS_DIR)
 
-$(OBJS):			| $(OBJS_DIR)
+$(OBJS_MAP):		| $(OBJS_DIR)
+$(OBJS_VEC):		| $(OBJS_DIR)
+$(OBJS_STA):		| $(OBJS_DIR)
 
 $(OBJS_DIR):
 	mkdir -p $(OBJS_DIR)
@@ -64,7 +81,7 @@ clean:
 	$(RM) $(OBJS_DIR) $(DEPS_DIR)
 
 fclean:				clean
-	$(RM) $(NAME) $(STD)
+	$(RM) $(MAP) $(VECTOR) $(STACK)
 
 re:				fclean all
 

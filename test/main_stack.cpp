@@ -24,7 +24,7 @@ void	print_stack(Stack s, std::string name) {
 	std::cout << "]" << std::endl;
 }
 
-int 	main_stack() {
+int 	main() {
 		// CTOR IS WORKING ON ANY UNDERLYING CONTAINER WITH ANY CONTAINER IN INPUT
 		// BUILDING STACKS AND SIZE
 		// TEST COPY CTOR AND COPY
