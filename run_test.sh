@@ -2,14 +2,16 @@
 
 RED='\033[31m'
 GREEN='\033[32m'
+YELLOW='\033[33m'
+BLUE='\033[34m'
 ENDCOLOR='\033[0m'
 
-echo "\n// WELCOME TO CONTAINERS //"
+echo "\n//// WELCOME TO CONTAINERS ////"
 
 echo "\nthis script will test each containers:\n"
 echo "   .differences of output with the STL over some tests"
 echo "   .leaks and errors with our valgrind friend"
-echo "   .performances with time SOON ENOUGH"
+echo "   .performances with time"
 
 echo "\nhave fun lol\n"
 
@@ -18,7 +20,6 @@ echo "// TESTING STACK //\n"
 echo "compiling std::stack..."
 clang++ -Wall -Wextra -Werror -std=c++98 test/main_stack.cpp -o std_stack > /dev/null
 ./std_stack > test/outfiles/std_stack_outfile.txt
-rm std_stack
 
 echo "compiling ft::stack...\n"
 make stack > /dev/null
@@ -31,7 +32,7 @@ else
 	echo "// DIFF:   ${RED}not ok${ENDCOLOR}"
 	echo "   now look what failed you:"
 	echo "   logs are situated in \"test/outfiles/\"\n"
-	cat diff_result.txt
+	cat test/outfiles/stack_diff.txt
 fi
 rm test/outfiles/stack_diff.txt
 
@@ -53,12 +54,22 @@ else
 fi
 rm test/outfiles/stack_leaks.txt
 
+{ time ./ft_stack > /dev/null; } 2>stack_time.txt
+{ time ./std_stack > /dev/null; } 2>>stack_time.txt
+
+echo "// TIME RESULTS:"
+echo -n "   FT      "
+grep -oP './ft_stack > /dev/null  \K.+' stack_time.txt
+echo -n "   STD     "
+grep -oP './std_stack > /dev/null  \K.+' stack_time.txt
+rm stack_time.txt
+rm std_stack
+
 echo "\n// TESTING VECTOR //\n"
 
 echo "compiling std::vector..."
 clang++ -Wall -Wextra -Werror -std=c++98 test/main_vector.cpp -o std_vector > /dev/null
 ./std_vector &> test/outfiles/std_vector_outfile.txt
-rm std_vector
 
 echo "compiling ft::vector...\n"
 make vector > /dev/null
@@ -71,7 +82,7 @@ else
 	echo "// DIFF:   ${RED}not ok${ENDCOLOR}"
 	echo "   now look what failed you:"
 	echo "   logs are situated in \"test/outfiles/\"\n"
-	cat diff_result.txt
+	cat test/outfiles/vector_diff.txt
 fi
 rm test/outfiles/vector_diff.txt
 
@@ -93,12 +104,22 @@ else
 fi
 rm test/outfiles/vector_leaks.txt
 
+{ time ./ft_vector > /dev/null; } 2>vector_time.txt
+{ time ./std_vector > /dev/null; } 2>>vector_time.txt
+
+	echo "// TIME RESULTS:"
+echo -n "   FT      "
+grep -oP './ft_vector > /dev/null  \K.+' vector_time.txt
+echo -n "   STD     "
+grep -oP './std_vector > /dev/null  \K.+' vector_time.txt
+rm vector_time.txt
+rm std_vector
+
 echo "\n// TESTING MAP //\n"
 
 echo "compiling std::map..."
 clang++ -Wall -Wextra -Werror -std=c++98 test/main_map.cpp -o std_map > /dev/null
 ./std_map > test/outfiles/std_map_outfile.txt
-rm std_map
 
 echo "compiling ft::map...\n"
 make map > /dev/null
@@ -111,7 +132,7 @@ else
 	echo "// DIFF:   ${RED}not ok${ENDCOLOR}"
 	echo "   now look what failed you:"
 	echo "   logs are situated in \"test/outfiles/\"\n"
-	cat diff_result.txt
+	cat test/outfiles/map_diff.txt
 fi
 rm test/outfiles/map_diff.txt
 
@@ -132,5 +153,16 @@ else
 	echo "   logs are situated in \"test/outfiles/map_leaks.txt\""
 fi
 rm test/outfiles/map_leaks.txt
+
+{ time ./ft_map > /dev/null; } 2>map_time.txt
+{ time ./std_map > /dev/null; } 2>>map_time.txt
+
+echo "// TIME RESULTS:"
+echo -n "   FT      "
+grep -oP './ft_map > /dev/null  \K.+' map_time.txt
+echo -n "   STD     "
+grep -oP './std_map > /dev/null  \K.+' map_time.txt
+rm map_time.txt
+rm std_map
 
 make fclean > /dev/null
