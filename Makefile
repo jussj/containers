@@ -6,9 +6,9 @@ STACK				=	ft_stack
 
 STD					=	std_containers
 
-CXXFLAGS			=	-Wall -Wextra -Werror -std=c++98
+CXXFLAGS			=	-Wall -Wextra -Werror -W -std=c++98
 
-DEBUGFLAGS			=	-g3	#-fsanitize=address #-DDEBUG
+DEBUGFLAGS			=	-g3	#-DDEBUG #-fsanitize=address 
 
 CXX					=	c++
 

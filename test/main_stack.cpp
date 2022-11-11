@@ -4,8 +4,10 @@
 #include <stdexcept>
 #include "../inc/stack.hpp"
 
-#ifndef NAMESPACE
+#ifndef STD
 # define NAMESPACE ft
+#else
+# define NAMESPACE std
 #endif
 
 template<class Stack>

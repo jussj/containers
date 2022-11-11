@@ -267,13 +267,91 @@ main() {
 	
 	std::cout	<< std::endl
 				<< "// LOWER_BOUND" << std::endl;
+
+	//NAMESPACE::map<int, std::string>::iterator end = a.end();
+
+	std::cout	<< std::endl
+				<< "   iterators:" << std::endl;
+
 	it = a.lower_bound(3);
 	print_pair(it);
 	it = a.lower_bound(1);
 	print_pair(it);
+	it = a.lower_bound(13);
+	if (it == a.end())
+		std::cout << "   RETURN END" << std::endl;
+	
+	std::cout	<< std::endl
+				<< "   const iterators:" << std::endl;
+
+	cit = a.lower_bound(3);
+	print_pair(cit);
+	cit = a.lower_bound(1);
+	print_pair(cit);
+	cit = a.lower_bound(13);
+	if (cit == a.end())
+		std::cout << "   RETURN END" << std::endl;
+
+	std::cout	<< std::endl
+				<< "// UPPER_BOUND" << std::endl;
+
+	//NAMESPACE::map<int, std::string>::iterator end = a.end();
+
+	std::cout	<< std::endl
+				<< "   iterators:" << std::endl;
+
+	it = a.upper_bound(3);
+	print_pair(it);
+	it = a.upper_bound(1);
+	print_pair(it);
+	it = a.upper_bound(13);
+	if (it == a.end())
+		std::cout << "   RETURN END" << std::endl;
+	
+	std::cout	<< std::endl
+				<< "   const iterators:" << std::endl;
+
+	cit = a.upper_bound(3);
+	print_pair(cit);
+	cit = a.upper_bound(1);
+	print_pair(cit);
+	cit = a.upper_bound(13);
+	if (cit == a.end())
+		std::cout << "   RETURN END" << std::endl;
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
+
+	std::cout	<< std::endl
+				<< "// LOWER_BOUND/UPPER_BOUND" << std::endl;
+	{
+		NAMESPACE::map<char,int> mymap;
+		NAMESPACE::map<char,int>::iterator itlo,itup;
+
+		mymap['a']=20;
+		mymap['b']=40;
+		mymap['c']=60;
+		mymap['d']=80;
+		mymap['e']=100;
+
+		itlo	= mymap.lower_bound ('b');
+		itup	= mymap.upper_bound ('d');
+
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
+		
+		std::cout	<< "   lower : " << itlo->first << '\n';
+		std::cout	<< "   upper : " << itup->first << '\n';
+
+		std::cout	<< std::endl
+					<< "   DELETING FROM b TO RIGHTMOST, e"
+					<< std::endl;
+
+		mymap.erase(itlo, itup);
+
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
+	}
 
 	std::cout	<< "// ERASE ONE ELEMENT" << std::endl;
 
@@ -494,69 +572,63 @@ main() {
 					);
 		
 		NAMESPACE::map<int, std::string> mp(lst.begin(), lst.end());
+		
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
 		
 		mp.erase(++mp.begin());
 		
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(mp, "MP +beg");
+		
 		mp.erase(mp.begin(), ++(++(++mp.begin())));
+		
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(
+					mp, "MP range beg, +++beg");
+
 		mp.erase(--(--(--mp.end())), --mp.end());
+		
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(
+					mp, "MP range beg, -end");
 
 		mp.erase(mp.begin());
+		
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(mp, "MP beg");
+		
 		mp.erase(--mp.end());
+		
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(mp, "MP -end");
 		// two elements left
 
 		mp[10] = "Hello";
 		mp[11] = "Hi";
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
+		
 		mp.erase(--(--(--mp.end())), mp.end());
+		
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(
+					mp, "MP range ---end, end");
 
 		mp[12] = "ONE";
 		mp[13] = "TWO";
 		mp[14] = "THREE";
 		mp[15] = "FOUR";
+		
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
+		
 		print_pair(mp.begin());
 		print_pair(--mp.end()); // NOT OK
 		mp.erase(mp.begin(), mp.end());
 		
 		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
-	}/*
-
-	std::cout	<< std::endl
-				<< "// LOWER_BOUND/UPPER_BOUND" << std::endl;
-	{
-		NAMESPACE::map<char,int> mymap;
-		NAMESPACE::map<char,int>::iterator itlo,itup;
-
-		mymap['a']=20;
-		mymap['b']=40;
-		mymap['c']=60;
-		mymap['d']=80;
-		mymap['e']=100;
-
-		itlo	= mymap.lower_bound ('b');
-		itup	= mymap.upper_bound ('d');
-
-		print_map<NAMESPACE::map<char, int>, 
-			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
-		
-		std::cout	<< "   lower : " << itlo->first << '\n';
-		std::cout	<< "   upper : " << itup->first << '\n';
-
-		std::cout	<< std::endl
-					<< "   DELETING FROM b TO RIGHTMOST, e"
-					<< std::endl;
-
-		mymap.erase(itlo, itup);
-
-		print_map<NAMESPACE::map<char, int>, 
-			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
+			NAMESPACE::map<int, std::string>::iterator>(mp, "MP all");
 	}
-	std::cout	<< std::endl
+/*	std::cout	<< std::endl
 				<< "// COPY CTOR" << std::endl;
 
 	//NAMESPACE::map<int, std::string>			e(c);

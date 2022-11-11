@@ -1,7 +1,3 @@
-#ifndef NAMESPACE
-# define NAMESPACE ft
-#endif
-
 #include <vector>
 #include "../inc/vector.hpp"
 #include <iostream>
@@ -9,6 +5,12 @@
 #include "../test/vector/ComplexClass.hpp"
 #include <cstddef>		// ptrdiff_t
 #include <typeinfo>		// typeid
+
+#ifndef STD
+# define NAMESPACE ft
+#else
+# define NAMESPACE std
+#endif
 
 int 	main() {
 	std::cout	<< "//// CONSTRUCTOR ////"	<< std::endl
@@ -281,13 +283,13 @@ int 	main() {
 	catch (std::exception& e) {
 		std::cerr << "error thrown: " << e.what() << std::endl;
 	}
-	std::cout	<< "past capacity(): element at(12) is ";
-	try {
-	std::cout	<< c.at(12) << std::endl;
-	}
-	catch (std::exception& e) {
-		std::cerr << "error thrown: " << e.what() << std::endl;
-	}
+	//std::cout	<< "past capacity(): element at(12) is ";
+	//try {
+	//std::cout	<< c.at(12) << std::endl;
+	//}
+	//catch (std::exception& e) {
+		//std::cerr << "error thrown: " << e.what() << std::endl;
+	//}
 
 	std::cout	<< std::endl
 				<< "//// ASSIGN(NB, T) ////" << std::endl << std::endl;

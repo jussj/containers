@@ -714,7 +714,7 @@ namespace ft {
 			const_iterator
 			upper_bound(const key_type& x) const {
 				node_ptr n = _root;
-				node_ptr m = n;
+				base_ptr m = nil();
 				
 				while (n != nil()) {
 					if (_compare(x, key_of_value(**n)))
@@ -722,6 +722,8 @@ namespace ft {
 					else
 						n = right(n);
 				}
+				if (m == nil())
+					return end();
 				return const_iterator(m);
 			}
 
@@ -736,16 +738,13 @@ namespace ft {
 					else
 						n = right(n);
 				}
-				//if (m == nil())
-					//return end();
-				// should return end() if not found 
 				return iterator(m);
 			}
 			
 			const_iterator
 			lower_bound(const key_type& x) const {
 				node_ptr n = _root;
-				base_ptr m = n;
+				base_ptr m = nil();
 			   
 				while (n != nil()) {
 					if (!(_compare(key_of_value(**n), x))) // same than above 
@@ -753,6 +752,8 @@ namespace ft {
 					else
 						n = right(n);
 				}
+				if (m == nil())
+					return end();
 				return const_iterator(m);
 			}
 
@@ -777,6 +778,11 @@ namespace ft {
 			key_compare
 			compare() const {
 				return _compare;
+			}
+
+			size_type
+			max_size() const {
+				return _nodalloc.max_size();
 			}
 
 			// DEBUG

@@ -193,8 +193,28 @@
    [ 10	| ten	]
 
 // LOWER_BOUND
+
+   iterators:
    [ 3	| three	]
    [ 1	| one	]
+   RETURN END
+
+   const iterators:
+   [ 3	| three	]
+   [ 1	| one	]
+   RETURN END
+
+// UPPER_BOUND
+
+   iterators:
+   [ 4	| four	]
+   [ 3	| three	]
+   RETURN END
+
+   const iterators:
+   [ 4	| four	]
+   [ 3	| three	]
+   RETURN END
 
 // MAP A
    size:  6
@@ -205,6 +225,29 @@
    [ 4	| four	]
    [ 5	| five	]
    [ 10	| ten	]
+
+
+// LOWER_BOUND/UPPER_BOUND
+
+// MAP MYMAP
+   size:  5
+
+   [ a	| 20	]
+   [ b	| 40	]
+   [ c	| 60	]
+   [ d	| 80	]
+   [ e	| 100	]
+
+   lower : b
+   upper : e
+
+   DELETING FROM b TO RIGHTMOST, e
+
+// MAP MYMAP
+   size:  2
+
+   [ a	| 20	]
+   [ e	| 100	]
 
 // ERASE ONE ELEMENT
    NODE W ZERO CHILD:
@@ -519,13 +562,59 @@
    [ 9	| J	]
 
 
-// MAP MP
+// MAP MP +beg
+   size:  9
+
+   [ 0	| AAAAAAAAAA	]
+   [ 2	| CCCCCCCC	]
+   [ 3	| DDDDDDD	]
+   [ 4	| EEEEEE	]
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 7	| HHH	]
+   [ 8	| II	]
+   [ 9	| J	]
+
+
+// MAP MP range beg, +++beg
+   size:  6
+
+   [ 4	| EEEEEE	]
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 7	| HHH	]
+   [ 8	| II	]
+   [ 9	| J	]
+
+
+// MAP MP range beg, -end
    size:  4
+
+   [ 4	| EEEEEE	]
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 9	| J	]
+
+
+// MAP MP beg
+   size:  3
 
    [ 5	| FFFFF	]
    [ 6	| GGGG	]
-   [ 10	| Hello	]
-   [ 11	| Hi	]
+   [ 9	| J	]
+
+
+// MAP MP -end
+   size:  2
+
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+
+
+// MAP MP range ---end, end
+   size:  1
+
+   [ 5	| FFFFF	]
 
 
 // MAP MP
@@ -540,7 +629,7 @@
    [ 5	| FFFFF	]
    [ 5	| FFFFF	]
 
-// MAP MP
+// MAP MP all
    size:  0
 
    [ EMPTY MAP ]
