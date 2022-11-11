@@ -340,14 +340,19 @@ namespace ft {
 	bool
 	operator==(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		return x._tree == y._tree;	
+		return x.size() == y.size() 
+			&& !(ft::lexicographical_compare(x.begin(), x.end(),
+					y.begin(), y.end()));
+		//return x._tree == y._tree;	
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
 	operator<(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		return x._tree < y._tree;	
+		return ft::lexicographical_compare(x.begin(), x.end(), 
+				y.begin(), y.end());
+		//return x._tree < y._tree;	
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
@@ -361,7 +366,7 @@ namespace ft {
 	bool
 	operator>(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
-		return !(x < y);
+		return y < x;
 	}
 
 	template <class Key, class T, class Compare, class Allocator>

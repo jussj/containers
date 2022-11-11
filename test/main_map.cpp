@@ -586,7 +586,7 @@ main() {
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(
 					mp, "MP range beg, +++beg");
-
+		
 		mp.erase(--(--(--mp.end())), --mp.end());
 		
 		print_map<NAMESPACE::map<int, std::string>, 
@@ -607,6 +607,9 @@ main() {
 		mp[10] = "Hello";
 		mp[11] = "Hi";
 		
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(mp, "MP -end");
+		
 		mp.erase(--(--(--mp.end())), mp.end());
 		
 		print_map<NAMESPACE::map<int, std::string>, 
@@ -617,7 +620,14 @@ main() {
 		mp[13] = "TWO";
 		mp[14] = "THREE";
 		mp[15] = "FOUR";
-		
+	
+		//std::cout << "cute printing" << std::endl;	
+		//NAMESPACE::map<int, std::string>::iterator cute = mp.begin();
+		////for (size_t i = 0; i != mp.size(); ++i) {
+		//while (cute != mp.end()) {
+			//print_pair(cute++);
+			////--cute;
+		//}
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
 		
@@ -628,7 +638,7 @@ main() {
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP all");
 	}
-/*	std::cout	<< std::endl
+	std::cout	<< std::endl
 				<< "// COPY CTOR" << std::endl;
 
 	//NAMESPACE::map<int, std::string>			e(c);
@@ -672,7 +682,7 @@ main() {
 	std::cout	<< std::endl
 				<< "// COMPARISON OPERATORS" << std::endl;
 	{
-		NAMESPACE::map<char,int> foo,bar;
+		NAMESPACE::map<char,int> foo, bar;
 		
 		foo['a']=100;
 		foo['b']=200;
@@ -687,12 +697,83 @@ main() {
 			std::cout << "   foo is less than bar :(\n";
 		if (foo > bar) 
 			std::cout << "   foo is greater than bar :)\n";
+		if (bar < foo) 
+			std::cout << "   bar is less than foo :)\n";
+		if (bar > foo) 
+			std::cout << "   bar is greater than foo :(\n";
 		if (foo <= bar) 
-			std::cout << "   foo is less than or equal to bar :(\n";
+			std::cout << "   foo is less than or equal to bar :)\n";
 		if (foo >= bar) 
 			std::cout << "   foo is greater than or equal to bar :)\n";
+
+		std::cout	<< std::endl
+					<< "   B IS SAME KEY BUT DIFFERENT VALUE" << std::endl;
+		bar.erase(--bar.end());
+		bar.insert(NAMESPACE::pair<char, int>('z', 500));
+
+		if (foo == bar) 
+			std::cout << "   foo and bar are equal :(\n";
+		if (foo != bar) 
+			std::cout << "   foo and bar are not equal :)\n";
+		if (foo < bar) 
+			std::cout << "   foo is less than bar :(\n";
+		if (foo > bar) 
+			std::cout << "   foo is greater than bar :)\n";
+		if (foo <= bar) 
+			std::cout << "   foo is less than or equal to bar :)\n";
+		if (foo >= bar) 
+			std::cout << "   foo is greater than or equal to bar :)\n";
+		
+		std::cout	<< std::endl
+					<< "   SAME MAP" << std::endl;
+		NAMESPACE::map<char, int> palo, map;
+
+		palo['a'] = 2;
+		palo['b'] = 3;
+		palo['c'] = 4;
+		palo['d'] = 5;
+
+		map['a'] = 2;
+		map['b'] = 3;
+		map['c'] = 4;
+		map['d'] = 5;
+
+		if (palo == palo)
+			std::cout << "   palo is the same :)" << std::endl;
+		if (palo != palo)
+			std::cout << "   palo is different :(" << std::endl;	
+		if (palo == map)
+			std::cout << "   palomap :)" << std::endl;
+		if (palo != map)
+			std::cout << "   palo and map are different :(" << std::endl;	
+		if (palo < map) 
+			std::cout << "   palo is less than map :(\n";
+		if (palo > map) 
+			std::cout << "   palo is greater than map :)\n";
+		if (palo <= map) 
+			std::cout << "   palo is less than or equal to map :)\n";
+		if (palo >= map) 
+			std::cout << "   palo is greater than or equal to map :)\n";
+
+		map.erase(--(--map.end()), map.end());
+		map['e'] = 6;
+		map['f'] = 7;
+		
+		if (palo == map)
+			std::cout << "   palomap :(" << std::endl;
+		if (palo != map)
+			std::cout << "   palo and map are different :)" << std::endl;	
+		if (palo < map) 
+			std::cout << "   palo is less than map :)\n";
+		if (palo > map) 
+			std::cout << "   palo is greater than map :(\n";
+		if (palo <= map) 
+			std::cout << "   palo is less than or equal to map :)\n";
+		if (palo >= map) 
+			std::cout << "   palo is greater than or equal to map :)\n";
+
 	}
-	std::cout	<< std::endl
+/*	std::cout	<< std::endl
 				<< "// SWUAP" << std::endl;
 
 	{

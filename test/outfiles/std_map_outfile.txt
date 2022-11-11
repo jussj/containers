@@ -611,6 +611,15 @@
    [ 6	| GGGG	]
 
 
+// MAP MP -end
+   size:  4
+
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 10	| Hello	]
+   [ 11	| Hi	]
+
+
 // MAP MP range ---end, end
    size:  1
 
@@ -634,3 +643,59 @@
 
    [ EMPTY MAP ]
 
+
+// COPY CTOR
+// CLEAR
+
+// MAP C
+   size:  8
+
+   [ 7	| hehe	]
+   [ 8	| hehe	]
+   [ 9	| hehe	]
+   [ 10	| hehe	]
+   [ 11	| hehe	]
+   [ 12	| hehe	]
+   [ 13	| hehe	]
+   [ 14	| hehe	]
+
+
+// MAP C
+   size:  0
+
+   [ EMPTY MAP ]
+
+
+// OPERATOR[]
+   inserting after clearance...
+
+// MAP C
+   size:  1
+
+   [ 100	| one hundred	]
+
+   lower_bound after insert:
+   [ 100	| one hundred	]
+
+   find after insert:
+   [ 100	| one hundred	]
+
+// COMPARISON OPERATORS
+   foo and bar are not equal :)
+   foo is greater than bar :)
+   bar is less than foo :)
+   foo is greater than or equal to bar :)
+
+   B IS SAME KEY BUT DIFFERENT VALUE
+   foo and bar are not equal :)
+   foo is greater than bar :)
+   foo is greater than or equal to bar :)
+
+   SAME MAP
+   palo is the same :)
+   palomap :)
+   palo is less than or equal to map :)
+   palo is greater than or equal to map :)
+   palo and map are different :)
+   palo is less than map :)
+   palo is less than or equal to map :)

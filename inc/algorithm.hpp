@@ -18,7 +18,7 @@ namespace ft {
 			++first1;
 			++first2;
 		}
-	return (first2 != last2);
+		return first2 != last2;
 	}
 }	/* namespace ft */
 
