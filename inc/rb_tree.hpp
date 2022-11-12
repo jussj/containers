@@ -197,7 +197,7 @@ namespace ft {
 				:	_alloc(),
 				 	_nodalloc(),
 					_compare(),
-					_root(),
+					_root(nil()),
 					_header()	{}
 
 			rb_tree_impl(const key_compare& comp) 

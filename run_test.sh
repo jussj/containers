@@ -34,7 +34,7 @@ if [ $? -eq 0 ]; then
 else
 	echo "// DIFF:   ${RED}not ok${ENDCOLOR}"
 	echo "   now look what failed you:"
-	echo "   logs are situated in \"test/outfiles/\"\n"
+	echo "   logs are situated in \"test/outfiles\"\n"
 	#cat test/outfiles/stack_diff.txt
 fi
 
@@ -53,7 +53,7 @@ if [ $? -eq 0 ]; then
 	rm test/outfiles/stack_leaks.txt
 else
 	echo "// LEAKS:  ${RED}not ok${ENDCOLOR}"
-	echo "   logs are situated in \"test/outfiles/stack_leaks.txt\""
+	echo "   logs are situated in \"test/outfiles\"\n"
 fi
 
 { time ./ft_stack > /dev/null; } 2>stack_time.txt
@@ -84,7 +84,7 @@ if [ $? -eq 0 ]; then
 else
 	echo "// DIFF:   ${RED}not ok${ENDCOLOR}"
 	echo "   now look what failed you:"
-	echo "   logs are situated in \"test/outfiles/\"\n"
+	echo "   logs are situated in \"test/outfiles\"\n"
 	#cat test/outfiles/vector_diff.txt
 fi
 
@@ -103,7 +103,7 @@ if [ $? -eq 0 ]; then
 	rm test/outfiles/vector_leaks.txt
 else
 	echo "// LEAKS:  ${RED}not ok${ENDCOLOR}"
-	echo "   logs are situated in \"test/outfiles/vector_leaks.txt\""
+	echo "   logs are situated in \"test/outfiles\"\n"
 fi
 
 { time ./ft_vector > /dev/null; } 2>vector_time.txt
@@ -134,7 +134,7 @@ if [ $? -eq 0 ]; then
 else
 	echo "// DIFF:   ${RED}not ok${ENDCOLOR}"
 	echo "   now look what failed you:"
-	echo "   logs are situated in \"test/outfiles/\"\n"
+	echo "   logs are situated in \"test/outfiles\"\n"
 	#cat test/outfiles/map_diff.txt
 fi
 
@@ -153,7 +153,7 @@ if [ $? -eq 0 ]; then
 	rm test/outfiles/map_leaks.txt
 else
 	echo "// LEAKS:  ${RED}not ok${ENDCOLOR}"
-	echo "   logs are situated in \"test/outfiles/map_leaks.txt\""
+	echo "   logs are situated in \"test/outfiles\"\n"
 fi
 
 { time ./ft_map > /dev/null; } 2>map_time.txt

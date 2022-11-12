@@ -638,11 +638,7 @@ main() {
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP all");
 	}
-	std::cout	<< std::endl
-				<< "// COPY CTOR" << std::endl;
-
-	//NAMESPACE::map<int, std::string>			e(c);
-
+	
 	std::cout	<< "// CLEAR" << std::endl;
 
 	print_map<NAMESPACE::map<int, std::string>, 
@@ -773,7 +769,7 @@ main() {
 			std::cout << "   palo is greater than or equal to map :)\n";
 
 	}
-/*	std::cout	<< std::endl
+	std::cout	<< std::endl
 				<< "// SWUAP" << std::endl;
 
 	{
@@ -939,6 +935,22 @@ main() {
 		}
 		std::cout << "   " <<tmp3->first << ": "
 			<< tmp3->second << '\n';
-	}*/
+	}
+	std::cout	<< std::endl
+				<< "// COPY CTOR" << std::endl;
+
+	d[3]="make";
+	d[5]="stop";
+	d[4]="dis";
+	d[1]="pls";
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(d, "D");
+
+	NAMESPACE::map<int, std::string>			e(d);
+	
+	print_map<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::iterator>(e, "E");
+
 	return 0; 
 }

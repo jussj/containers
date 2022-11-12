@@ -102,8 +102,9 @@ namespace ft {
 				clear();
 				for (	const_iterator it = src.begin();
 						it != src.end();
-						++it	)
+						++it	) {
 					_tree.insert_and_rebalance(*it);
+				}
 				return *this;
 			}
 
