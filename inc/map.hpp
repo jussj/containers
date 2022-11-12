@@ -89,7 +89,7 @@ namespace ft {
 				}
 
 			map(const map<key_type, T, key_compare, allocator_type>& src) {
-				*this = src;
+				*this = src;	
 			}
 				
 			
@@ -320,20 +320,6 @@ namespace ft {
 				_tree.graphic_visualizer(_tree.root(), 0);
 			}
 
-		// NON-MEMBERS FRIENDSHIP DECLARATION
-
-		public:
-
-			template <class K, class V, class C, class A>
-			friend bool
-			operator==(	const map<K, V, C, A>& x,
-						const map<K, V, C, A>& y	);
-			
-			template <class K, class V, class C, class A>
-			friend bool
-			operator<(	const map<K, V, C, A>& x,
-						const map<K, V, C, A>& y	);
-	
 	};	/* class map */
 
 	template <class Key, class T, class Compare, class Allocator>
@@ -341,9 +327,7 @@ namespace ft {
 	operator==(	const map<Key,T,Compare,Allocator>& x,
 				const map<Key,T,Compare,Allocator>& y	) {
 		return x.size() == y.size() 
-			&& !(ft::lexicographical_compare(x.begin(), x.end(),
-					y.begin(), y.end()));
-		//return x._tree == y._tree;	
+			&& ft::equal(x.begin(), x.end(), y.begin());
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
@@ -352,7 +336,6 @@ namespace ft {
 				const map<Key,T,Compare,Allocator>& y	) {
 		return ft::lexicographical_compare(x.begin(), x.end(), 
 				y.begin(), y.end());
-		//return x._tree < y._tree;	
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
