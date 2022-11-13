@@ -669,7 +669,7 @@ main() {
 			NAMESPACE::map<int, std::string>::iterator>(
 					fck, "FCK erase ---end to end");
 	}
-/*	
+	
 	std::cout	<< "// CLEAR //" << std::endl;
 
 	print_map<NAMESPACE::map<int, std::string>, 
@@ -833,7 +833,7 @@ main() {
 		print_map<NAMESPACE::map<int, char>, 
 			NAMESPACE::map<int, char>::iterator>(haha, "HAHA");
 
-		std::cout << "   is deep swap? clearing haha:" << std::endl;	
+		std::cout << "   is swap DEEP? clearing haha:" << std::endl;	
 		haha.clear();
 		
 		print_map<NAMESPACE::map<int, char>, 
@@ -841,7 +841,7 @@ main() {
 
 		std::cout	<< "   MAZOIZ SWUAP TESTS:" << std::endl;	
 
-		NAMESPACE::map<char,int> foo,bar;
+		NAMESPACE::map<char,int> foo,bar, barefoot;
 
 		foo['x']=100;
 		foo['y']=200;
@@ -966,6 +966,16 @@ main() {
 		}
 		std::cout << "   " <<tmp3->first << ": "
 			<< tmp3->second << '\n';
+
+		std::cout	<< std::endl
+					<< "   SWAP WITH EMPTY CONTAINER" << std::endl;
+
+		swap(foo, barefoot);
+		
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(barefoot, "BAREFOOT");
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(foo, "FOO");
 	}
 	std::cout	<< std::endl
 				<< "// COPY CTOR //" << std::endl;
@@ -982,6 +992,6 @@ main() {
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(e, "E");
-*/
+
 	return 0; 
 }

@@ -65,7 +65,8 @@ namespace ft {
 			node.parent = src.node.parent;
 			node.left	= src.node.left;
 			node.right	= src.node.right;
-			node.parent->parent = &node;
+			if (node.parent != 0)
+				node.parent->parent = &node;
 			
 			node_count = src.node_count;	
 		}
@@ -1451,6 +1452,7 @@ namespace ft {
 			return x->node == y->node;
 		}
 
+		
 		friend bool
 		operator!=(const self& x, const self& y) {
 			return x->node != y->node;
