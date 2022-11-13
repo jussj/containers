@@ -14,7 +14,7 @@ CXX					=	c++
 
 RM					=	rm -rf
 
-SRCS_MAP			=	main_map.cpp
+SRCS_MAP			=	main_map.cpp #erase.cpp
 SRCS_VEC			=	main_vector.cpp
 SRCS_STA			=	main_stack.cpp
 

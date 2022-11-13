@@ -349,6 +349,7 @@ namespace ft {
 						y = right(n->parent->parent);
 						// case 1: red uncle
 						if (y->color == RED) {
+							//if (n->parent != header)
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
@@ -475,6 +476,7 @@ namespace ft {
 				// return rebalanced tree iterator on node
 				if (_header.node_count > 2)
 					rebalance_after_insert(n);
+				_header.node.color = RED;
 				return iterator(n);
 			}
 
@@ -597,6 +599,7 @@ namespace ft {
 					y->left = nil();
 				else
 					y->right = nil();
+				_header.node.color = RED;
 				_dealloc_node(x);
 			}
 
@@ -680,6 +683,7 @@ namespace ft {
 					_header.set_rightmost(maximum(_header.node.right));
 					_header.set_leftmost(minimum(_header.node.left));
 				}	
+				_header.node.color = RED;
 				_destroy_node((node_ptr&)pos.node);
 			}
 
@@ -799,7 +803,12 @@ namespace ft {
 							<< nil() << ")" << std::endl
 							<< "   head:  " << "\t(" << &(_header.node) << ")"
 							<< std::endl
-							<< "   bh:    " << black_height() << std::endl;
+							<< "  (color)\t";
+							if (_header.node.color == RED)
+								std::cout << "RED" << std::endl;
+							else if (_header.node.color == BLACK)
+								std::cout << "BLACK" << std::endl;
+				std::cout	<< "   bh:    " << black_height() << std::endl;
 			}
 
 			void
@@ -871,7 +880,7 @@ namespace ft {
 			nil() const {
 				return rb_tree_node<Val>::nil;	
 			}
-
+			
 			size_type
 			count() const {
 				return _header.node_count;

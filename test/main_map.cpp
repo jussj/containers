@@ -59,11 +59,14 @@ main() {
 	NAMESPACE::pair<NAMESPACE::map<int, std::string>::iterator, bool>
 		ret;
 
-	std::cout	<< "// EMPTY MAP" << std::endl;
+	std::cout	<< "// MY FIRST MAP <3 AND IT IS EMPTY AF //" << std::endl;
 
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 
+	std::cout	<< "// INSERT //" << std::endl
+				<< std::endl;
+	
 	std::cout	<< "// INSERT ONE ELEMENT" << std::endl;
 
 	a.insert(NAMESPACE::pair<int, std::string>(4, "four"));
@@ -178,7 +181,7 @@ main() {
 	}
 
 	std::cout	<< std::endl
-				<< "// ITERATOR ACCESS" << std::endl;
+				<< "// ITERATOR ACCESS //" << std::endl;
 	
 	it = --a.end();
 	
@@ -191,7 +194,7 @@ main() {
 				<< std::endl;
 	
 	std::cout	<< std::endl
-				<< "// IT DECREM" << std::endl;
+				<< "// IT PREFIX DECREM //" << std::endl;
 
 	for (size_t i = 0; i != a.size(); ++i) {
 		print_pair(it);
@@ -199,7 +202,7 @@ main() {
 	}
 
 	std::cout	<< std::endl
-				<< "// IT POSTFIX INCREM" << std::endl;
+				<< "// IT POSTFIX INCREM //" << std::endl;
 	
 	it = a.begin();
 
@@ -210,7 +213,7 @@ main() {
 	}
 
 	std::cout	<< std::endl
-				<< "// CONSTANT ITERATOR ACCESS" << std::endl;
+				<< "// CONSTANT ITERATOR ACCESS //" << std::endl;
 	
 	NAMESPACE::map<int, std::string>::iterator	cit;
 	
@@ -233,7 +236,7 @@ main() {
 	}
 	
 	std::cout	<< std::endl
-				<< "// CONST AND NOT CONST ITERATORS" << std::endl;
+				<< "// CONST AND NOT CONST ITERATORS //" << std::endl;
     
 	//NAMESPACE::map<T1, T2> const mp;
 	//NAMESPACE::map<T1, T2>::iterator i = mp.begin(); // NO COMP
@@ -252,21 +255,21 @@ main() {
 	//std::cout << "   rev it begin: " << *beg_rit << std::endl;
 	
 	std::cout	<< std::endl
-				<< "// BEGIN" << std::endl;
+				<< "// BEGIN //" << std::endl;
 	print_pair(a.begin());
 	print_pair(++a.begin());
 	//print_pair(a.begin() + 2);	// DOESN'T COMPILE (BIDIR)
 
 	std::cout	<< std::endl
-				<< "// END" << std::endl;
+				<< "// END //" << std::endl;
 	print_pair(--a.end());
 	
 	std::cout	<< std::endl
-				<< "// FIND" << std::endl;
+				<< "// FIND //" << std::endl;
 	print_pair(a.find(10));
 	
 	std::cout	<< std::endl
-				<< "// LOWER_BOUND" << std::endl;
+				<< "// LOWER_BOUND //" << std::endl;
 
 	//NAMESPACE::map<int, std::string>::iterator end = a.end();
 
@@ -279,7 +282,7 @@ main() {
 	print_pair(it);
 	it = a.lower_bound(13);
 	if (it == a.end())
-		std::cout << "   RETURN END" << std::endl;
+		std::cout << std::endl << "   IT RETURN END" << std::endl;
 	
 	std::cout	<< std::endl
 				<< "   const iterators:" << std::endl;
@@ -290,10 +293,10 @@ main() {
 	print_pair(cit);
 	cit = a.lower_bound(13);
 	if (cit == a.end())
-		std::cout << "   RETURN END" << std::endl;
+		std::cout << std::endl << "   CIT RETURN END" << std::endl;
 
 	std::cout	<< std::endl
-				<< "// UPPER_BOUND" << std::endl;
+				<< "// UPPER_BOUND //" << std::endl;
 
 	//NAMESPACE::map<int, std::string>::iterator end = a.end();
 
@@ -306,7 +309,7 @@ main() {
 	print_pair(it);
 	it = a.upper_bound(13);
 	if (it == a.end())
-		std::cout << "   RETURN END" << std::endl;
+		std::cout << std::endl << "   IT RETURN END" << std::endl;
 	
 	std::cout	<< std::endl
 				<< "   const iterators:" << std::endl;
@@ -317,13 +320,13 @@ main() {
 	print_pair(cit);
 	cit = a.upper_bound(13);
 	if (cit == a.end())
-		std::cout << "   RETURN END" << std::endl;
+		std::cout << std::endl << "   CIT RETURN END" << std::endl;
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 
 	std::cout	<< std::endl
-				<< "// LOWER_BOUND/UPPER_BOUND" << std::endl;
+				<< "// LOWER_BOUND/UPPER_BOUND //" << std::endl;
 	{
 		NAMESPACE::map<char,int> mymap;
 		NAMESPACE::map<char,int>::iterator itlo,itup;
@@ -352,6 +355,9 @@ main() {
 		print_map<NAMESPACE::map<char, int>, 
 			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
 	}
+
+	std::cout	<< "// ERASE //" << std::endl
+				<< std::endl;
 
 	std::cout	<< "// ERASE ONE ELEMENT" << std::endl;
 
@@ -610,6 +616,9 @@ main() {
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP -end");
 		
+		print_pair(mp.begin());
+		print_pair(--mp.end()); // NOT OK
+		
 		mp.erase(--(--(--mp.end())), mp.end());
 		
 		print_map<NAMESPACE::map<int, std::string>, 
@@ -637,9 +646,31 @@ main() {
 		
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP all");
+
+		NAMESPACE::map<int, std::string> fck(lst.begin(), lst.end());
+		
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(fck, "FCK");
+		
+		fck.erase(++fck.begin(), --fck.end());
+
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(
+					fck, "FCK erase +beg to -end");
+
+		print_pair(fck.begin());
+
+		std::cout << "END:" << std::endl;
+		print_pair(--fck.end()); // NOT OK
+		
+		fck.erase(--(--fck.end()), fck.end());
+		
+		print_map<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::iterator>(
+					fck, "FCK erase ---end to end");
 	}
-	
-	std::cout	<< "// CLEAR" << std::endl;
+/*	
+	std::cout	<< "// CLEAR //" << std::endl;
 
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(c, "C");
@@ -659,7 +690,7 @@ main() {
 	//print_pair(c.find(100));
 
 	std::cout	<< std::endl
-				<< "// OPERATOR[]" << std::endl;
+				<< "// OPERATOR[] //" << std::endl;
 
 	std::cout	<< "   inserting after clearance..." << std::endl;
 
@@ -676,7 +707,7 @@ main() {
 	print_pair(c.find(100));
 
 	std::cout	<< std::endl
-				<< "// COMPARISON OPERATORS" << std::endl;
+				<< "// COMPARISON OPERATORS //" << std::endl;
 	{
 		NAMESPACE::map<char,int> foo, bar;
 		
@@ -874,8 +905,8 @@ main() {
 		}
 		tmp2--;
 
-		other.swap(foo); //tmp2 iterates through other
-						//tmp3 iterates throught foo
+		other.swap(foo);	//tmp2 iterates through other
+							//tmp3 iterates throught foo
 		print_map<NAMESPACE::map<char, int>, 
 			NAMESPACE::map<char, int>::iterator>(other, "OTHER");
 		print_map<NAMESPACE::map<char, int>, 
@@ -906,8 +937,8 @@ main() {
 		}
 		tmp3--;
 
-		bar.swap(foo); //tmp3 iterates through bar
-					//tmp iterates through foo
+		bar.swap(foo);	//tmp3 iterates through bar
+						//tmp iterates through foo
 
 		print_map<NAMESPACE::map<char, int>, 
 			NAMESPACE::map<char, int>::iterator>(other, "OTHER");
@@ -937,7 +968,7 @@ main() {
 			<< tmp3->second << '\n';
 	}
 	std::cout	<< std::endl
-				<< "// COPY CTOR" << std::endl;
+				<< "// COPY CTOR //" << std::endl;
 
 	d[3]="make";
 	d[5]="stop";
@@ -951,6 +982,6 @@ main() {
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(e, "E");
-
+*/
 	return 0; 
 }

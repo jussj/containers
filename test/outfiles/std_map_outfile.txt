@@ -1,9 +1,11 @@
-// EMPTY MAP
+// MY FIRST MAP <3 AND IT IS EMPTY AF //
 
 // MAP A
    size:  0
 
    [ EMPTY MAP ]
+
+// INSERT //
 
 // INSERT ONE ELEMENT
 
@@ -144,13 +146,13 @@
    [ b	| 300	]
 
 
-// ITERATOR ACCESS
+// ITERATOR ACCESS //
    last element pointer: 
    10, ten
    last element reference: 
    10, ten
 
-// IT DECREM
+// IT PREFIX DECREM //
    [ 10	| ten	]
    [ 5	| five	]
    [ 4	| four	]
@@ -158,7 +160,7 @@
    [ 1	| one	]
    [ 0	| zero	]
 
-// IT POSTFIX INCREM
+// IT POSTFIX INCREM //
    0 zero
    1 one
    3 three
@@ -166,7 +168,7 @@
    5 five
    10 ten
 
-// CONSTANT ITERATOR ACCESS
+// CONSTANT ITERATOR ACCESS //
    last element pointer: 
    10, ten
    last element reference: 
@@ -180,41 +182,45 @@
    [ 1	| one	]
    [ 0	| zero	]
 
-// CONST AND NOT CONST ITERATORS
+// CONST AND NOT CONST ITERATORS //
 
-// BEGIN
+// BEGIN //
    [ 0	| zero	]
    [ 1	| one	]
 
-// END
+// END //
    [ 10	| ten	]
 
-// FIND
+// FIND //
    [ 10	| ten	]
 
-// LOWER_BOUND
+// LOWER_BOUND //
 
    iterators:
    [ 3	| three	]
    [ 1	| one	]
-   RETURN END
+
+   IT RETURN END
 
    const iterators:
    [ 3	| three	]
    [ 1	| one	]
-   RETURN END
 
-// UPPER_BOUND
+   CIT RETURN END
+
+// UPPER_BOUND //
 
    iterators:
    [ 4	| four	]
    [ 3	| three	]
-   RETURN END
+
+   IT RETURN END
 
    const iterators:
    [ 4	| four	]
    [ 3	| three	]
-   RETURN END
+
+   CIT RETURN END
 
 // MAP A
    size:  6
@@ -227,7 +233,7 @@
    [ 10	| ten	]
 
 
-// LOWER_BOUND/UPPER_BOUND
+// LOWER_BOUND/UPPER_BOUND //
 
 // MAP MYMAP
    size:  5
@@ -248,6 +254,8 @@
 
    [ a	| 20	]
    [ e	| 100	]
+
+// ERASE //
 
 // ERASE ONE ELEMENT
    NODE W ZERO CHILD:
@@ -619,6 +627,8 @@
    [ 10	| Hello	]
    [ 11	| Hi	]
 
+   [ 5	| FFFFF	]
+   [ 11	| Hi	]
 
 // MAP MP range ---end, end
    size:  1
@@ -644,58 +654,33 @@
    [ EMPTY MAP ]
 
 
-// COPY CTOR
-// CLEAR
+// MAP FCK
+   size:  10
 
-// MAP C
-   size:  8
+   [ 0	| AAAAAAAAAA	]
+   [ 1	| BBBBBBBBB	]
+   [ 2	| CCCCCCCC	]
+   [ 3	| DDDDDDD	]
+   [ 4	| EEEEEE	]
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 7	| HHH	]
+   [ 8	| II	]
+   [ 9	| J	]
 
-   [ 7	| hehe	]
-   [ 8	| hehe	]
-   [ 9	| hehe	]
-   [ 10	| hehe	]
-   [ 11	| hehe	]
-   [ 12	| hehe	]
-   [ 13	| hehe	]
-   [ 14	| hehe	]
 
+// MAP FCK erase +beg to -end
+   size:  2
 
-// MAP C
+   [ 0	| AAAAAAAAAA	]
+   [ 9	| J	]
+
+   [ 0	| AAAAAAAAAA	]
+END:
+   [ 9	| J	]
+
+// MAP FCK erase ---end to end
    size:  0
 
    [ EMPTY MAP ]
 
-
-// OPERATOR[]
-   inserting after clearance...
-
-// MAP C
-   size:  1
-
-   [ 100	| one hundred	]
-
-   lower_bound after insert:
-   [ 100	| one hundred	]
-
-   find after insert:
-   [ 100	| one hundred	]
-
-// COMPARISON OPERATORS
-   foo and bar are not equal :)
-   foo is greater than bar :)
-   bar is less than foo :)
-   foo is greater than or equal to bar :)
-
-   B IS SAME KEY BUT DIFFERENT VALUE
-   foo and bar are not equal :)
-   foo is greater than bar :)
-   foo is greater than or equal to bar :)
-
-   SAME MAP
-   palo is the same :)
-   palomap :)
-   palo is less than or equal to map :)
-   palo is greater than or equal to map :)
-   palo and map are different :)
-   palo is less than map :)
-   palo is less than or equal to map :)
