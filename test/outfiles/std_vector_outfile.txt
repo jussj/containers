@@ -752,7 +752,7 @@ TESTING REVERSE OPERATORS
 
 CONST REVERSE ITERATORS TESTS
 (const_reverse_iterator - reverse_iterator): 0
-(const_reverse_iterator - reverse_iterator): -23537851113877
+(const_reverse_iterator - reverse_iterator): -23727616812437
 // VECTOR VCT INFO
    size:       5
    capacity:   5

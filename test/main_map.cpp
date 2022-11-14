@@ -971,7 +971,7 @@ main() {
 					<< "   SWAP WITH EMPTY CONTAINER" << std::endl;
 
 		swap(foo, barefoot);
-		
+
 		print_map<NAMESPACE::map<char, int>, 
 			NAMESPACE::map<char, int>::iterator>(barefoot, "BAREFOOT");
 		print_map<NAMESPACE::map<char, int>, 

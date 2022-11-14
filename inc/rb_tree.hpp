@@ -61,14 +61,17 @@ namespace ft {
 
 		void
 		copy_data(const rb_tree_header& src) {
+			if (src.node.parent == 0) {
+				reset();
+				return ;
+			}
 			node.color	= src.node.color;
 			node.parent = src.node.parent;
 			node.left	= src.node.left;
 			node.right	= src.node.right;
-			if (node.parent != 0)
-				node.parent->parent = &node;
+			node.parent->parent = &node;
 			
-			node_count = src.node_count;	
+			node_count	= src.node_count;	
 		}
 		void
 		move_node_data(rb_tree_header& src) {
