@@ -201,7 +201,6 @@ namespace ft {
 			template <class InputIterator>
 			void
 			insert(InputIterator first, InputIterator last) {
-				//for (iterator it = first; it != last; ++it)
 				while (first != last)
 					insert(*first++);	
 			}
