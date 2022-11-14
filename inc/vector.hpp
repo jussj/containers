@@ -61,18 +61,16 @@ namespace ft {
 			}
 
 			template<class InputIt>
-			vector(	InputIt first,
-					InputIt last,
-					const Alloc& Allocator = Alloc(),
-					typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
-					// FIND ANOTHER SOLUTION THAN A FOURTH PARAM GODAMMIT
-					) : _alloc(Allocator) {
+			vector(InputIt first, InputIt last, const Alloc& Allocator = Alloc())
+					: _alloc(Allocator) {
+				
 				_begin		= _alloc.allocate(0);
 				_end		= _begin;
 				_capacity	= _begin;
 				_alloc	= Alloc();
 				
-				assign(first, last);
+				_dispatch_assign(first, last, typename ft::is_integral<InputIt>::type());	
+				//assign(first, last);
 			}
 			
 			vector(const vector<T,Alloc>& src) {
@@ -92,34 +90,16 @@ namespace ft {
 					_alloc.destroy(_begin + s);
 				_alloc.deallocate(_begin, capacity());
 			}
-			
+
 			template <class InputIt>
 			void
-			assign(	InputIt first,
-					InputIt last,
-					typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
-					// FIND ANOTHER SOLUTION THAN A FOURTH PARAM GODAMMIT
-							) {
-				size_type dis	= ft::distance(first, last);
-			
-				// assign from empty vec?
-				// stl distance ft throws length error exception
-				if (dis > capacity())
-					reserve(dis);	
-				clear();
-				_fill(&(*begin()), first, last);
-				_end = _begin + dis;
+			assign(InputIt first, InputIt last) {
+				_dispatch_assign(first, last, typename ft::is_integral<InputIt>::type());	
 			}
-
+			
 			void
 			assign(size_type n, const value_type& value) {
-				if (n > capacity())
-					reserve(n);
-				for (size_type s = 0; s < n; s++)
-					_alloc.construct(_begin + s, value);	
-				_end	= _begin + n;
-				if (capacity() < n)
-					_capacity = _end;
+				_dispatch_assign(n, value, typename ft::is_integral<size_type>::type());	
 			}
 			
 			allocator_type
@@ -296,76 +276,17 @@ namespace ft {
 				return begin() + offset;
 			}
 
-
 			void
 			insert(iterator position, size_type n, const T& x) {
-				size_type	new_size		= size() + n;
-				size_type	new_capacity	= capacity();
-				
-				if (n < 1)
-					return ;
-				else if (new_size <= capacity()) {
-					size_type elems_after = end() - position;
-					if (elems_after > n) {
-						_copy_backwards(position, new_size);
-						_fill(&(*position), n, x);
-					}
-					else {
-						_copy_forward(position, elems_after, n, new_size);
-						_fill(&(*position), n, x);
-					}
-				}
-				else {
-					if (new_size > capacity()) {
-						if (new_size > size() * 2)
-							new_capacity = new_size;
-						else
-							new_capacity = size() * 2;
-					}
-					_reallocate(new_capacity, new_size, n, position, x);
-				}
-				_end 		= _begin + new_size;
-				_capacity	= _begin + new_capacity;
+				_insert_dispatch(position, n, x, typename ft::is_integral<size_type>::type());
 			}
-
+				
 			template <class InputIt>
 			void
-			insert(	iterator position, 
-					InputIt first, 
-					InputIt last,	
-					typename ft::enable_if<!ft::is_integral<InputIt>::value >::type* = NULL
-					// FIND ANOTHER SOLUTION THAN A FOURTH PARAM GODAMMIT
-							) {
-				size_type 	length			= ft::distance(first, last);
-				size_type	new_size		= size() + length;
-				size_type	new_capacity	= capacity();
-				
-				if (length < 1)
-					return ;
-				else if (new_size <= capacity()) {
-					size_type elems_after = end() - position;
-					if (elems_after > length) {
-						_copy_backwards(position, new_size);
-						_fill(&(*position), first, last);
-					}
-					else {
-						_copy_forward(position, elems_after, length, new_size);
-						_fill(&(*position), first, last);
-					}
-				}
-				else {
-					if (new_size > capacity()) {
-						if (new_size > size() * 2)
-							new_capacity = new_size;
-						else
-							new_capacity = size() * 2;
-					}
-					_reallocate(new_capacity, new_size, position, first, last);
-				}
-				_end 		= _begin + new_size;
-				_capacity	= _begin + new_capacity;
+			insert(iterator position, InputIt first, InputIt last) {
+				_insert_dispatch(position, first, last, typename ft::is_integral<InputIt>::type());
 			}
-
+			
 			iterator
 			erase(iterator first, iterator last) {
 				//iterator	ret;
@@ -428,14 +349,126 @@ namespace ft {
 
 		private:
 
-		// ATTRIBUTES
+		// ATTRIBUTES //
 
 			allocator_type	_alloc;
 			pointer			_begin;
 			pointer			_end;
 			pointer			_capacity;
 
-		// AUX MEMBER FUNCTIONS
+		// AUX MEMBER FUNCTIONS //
+		
+			// DISPATCH
+
+			template <class InputIt>
+			void
+			_dispatch_assign(InputIt first, InputIt last, ft::false_type) {
+				
+				size_type dis	= ft::distance(first, last);
+			
+				// assign from empty vec?
+				// stl distance ft throws length error exception
+				if (dis > capacity())
+					reserve(dis);	
+				clear();
+				_fill(&(*begin()), first, last);
+				_end = _begin + dis;
+			}
+
+			void
+			_dispatch_assign(size_type n, const value_type& value, ft::true_type) {
+				
+				if (n > capacity())
+					reserve(n);
+				for (size_type s = 0; s < n; s++)
+					_alloc.construct(_begin + s, value);	
+				_end	= _begin + n;
+				if (capacity() < n)
+					_capacity = _end;
+			}
+
+			void
+			_insert_dispatch(iterator position, size_type n, const T& x, ft::true_type) {
+				
+				size_type	new_size		= size() + n;
+				size_type	new_capacity	= capacity();
+				
+				if (n < 1)
+					return ;
+				else if (new_size <= capacity()) {
+					size_type elems_after = end() - position;
+					if (elems_after > n) {
+						_copy_backwards(position, new_size);
+						_fill(&(*position), n, x);
+					}
+					else {
+						_copy_forward(position, elems_after, n, new_size);
+						_fill(&(*position), n, x);
+					}
+				}
+				else {
+					if (new_size > capacity()) {
+						if (new_size > size() * 2)
+							new_capacity = new_size;
+						else
+							new_capacity = size() * 2;
+					}
+					_reallocate(new_capacity, new_size, n, position, x);
+				}
+				_end 		= _begin + new_size;
+				_capacity	= _begin + new_capacity;
+			}
+
+			template <class InputIt>
+			void
+			_insert_dispatch(iterator position, InputIt first, InputIt last, ft::false_type) {	
+				
+				size_type 	length			= ft::distance(first, last);
+				size_type	new_size		= size() + length;
+				size_type	new_capacity	= capacity();
+				
+				if (length < 1)
+					return ;
+				else if (new_size <= capacity()) {
+					size_type elems_after = end() - position;
+					if (elems_after > length) {
+						_copy_backwards(position, new_size);
+						_fill(&(*position), first, last);
+					}
+					else {
+						_copy_forward(position, elems_after, length, new_size);
+						_fill(&(*position), first, last);
+					}
+				}
+				else {
+					if (new_size > capacity()) {
+						if (new_size > size() * 2)
+							new_capacity = new_size;
+						else
+							new_capacity = size() * 2;
+					}
+					_reallocate(new_capacity, new_size, position, first, last);
+				}
+				_end 		= _begin + new_size;
+				_capacity	= _begin + new_capacity;
+			}
+
+			// EXCEPTION
+			
+			void
+			_range_check(size_type n) const {
+				std::string	fmt;
+				fmt = "vector::_range_check: n (which is ";
+
+				fmt.append(ft::long_to_str(n));
+				fmt.append(") >= this->size() (which is ");
+				fmt.append(ft::long_to_str(size()));
+				fmt.append(")");
+				if (n >= size())
+					throw std::out_of_range(fmt);
+			}
+			
+			//	FILL
 
 			void
 			_fill(pointer start, size_type size, const T& value) {
@@ -451,19 +484,8 @@ namespace ft {
 					_alloc.construct(start++, *it);
 				}
 			}
-			
-			void
-			_range_check(size_type n) const {
-				std::string	fmt;
-				fmt = "vector::_range_check: n (which is ";
 
-				fmt.append(ft::long_to_str(n));
-				fmt.append(") >= this->size() (which is ");
-				fmt.append(ft::long_to_str(size()));
-				fmt.append(")");
-				if (n >= size())
-					throw std::out_of_range(fmt);
-			}
+			// COPY
 
 			void
 			_copy_backwards(iterator position, size_type new_size) {
@@ -485,10 +507,11 @@ namespace ft {
 			}
 			
 			void
-			_copy_forward(	iterator position,
-							size_type elems_after,
-							size_type n,
-							size_type new_size) {
+			_copy_forward(
+					iterator position,
+					size_type elems_after,
+					size_type n,
+					size_type new_size) {
 				iterator	new_end = begin() + new_size - 1;
 				iterator	it		= position;
 					
@@ -499,12 +522,15 @@ namespace ft {
 				}
 			}
 
+			// REALLOCATION
+
 			void
-			_reallocate(size_type new_capacity,
-								size_type new_size,
-								size_type n,
-								iterator position,
-								const T& x) {
+			_reallocate(
+					size_type new_capacity,
+					size_type new_size,
+					size_type n,
+					iterator position,
+					const T& x) {
 				iterator	it			= begin();
 				pointer		new_array	= _alloc.allocate(new_capacity + 1);
 				
