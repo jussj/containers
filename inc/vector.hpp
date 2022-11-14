@@ -289,16 +289,12 @@ namespace ft {
 			
 			iterator
 			erase(iterator first, iterator last) {
-				//iterator	ret;
+				iterator	it;
 				size_t		dis		= ft::distance(first, last);
-				iterator	it		= first;
 					
-				for (size_t i = 0; i < dis; ++i) {
-					erase(first);
-					//ret = erase(it);
-				}
-				//return ret;	// ???? 
-				return it;		// ???? 
+				for (size_t i = 0; i < dis; ++i)
+					it = erase(first);
+				return it;
 			}
 
 			iterator

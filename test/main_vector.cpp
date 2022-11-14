@@ -662,7 +662,11 @@ int 	main() {
 		//print_content(f, "F");
 		
 		ret = f.erase (f.end()-3,f.end());
-		std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
+		std::cout	<< "   ERASE RETURNS ";
+		if (ret == f.end())
+			std::cout << "END" << std::endl;
+		else
+			std::cout << *ret << std::endl;
 		print_info(f, "F");
 		print_content(f, "F");
 	}
