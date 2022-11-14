@@ -20,11 +20,9 @@ int 	main() {
 	NAMESPACE::vector<int>						b(50, 5);	
 	NAMESPACE::vector<std::string>				c(4, "he");
 	NAMESPACE::vector<IncrediblyComplex<int> >	d(5);
-	//NAMESPACE::vector<IncrediblyComplex>	d(5); // WoooooOOOOwwwww compliqueyy
 
 	print_info(a, "A");
 	print_info(c, "C");
-	//print_info(d, "D");
 
 	print_info(b, "B");
 	print_content(b, "B");
@@ -45,6 +43,9 @@ int 	main() {
 	
 		// SHOULD NOT COMPILE	
 		//hector.insert(hector.begin(), array, array + 5, 0);
+		
+		// SHOULD NOT COMPILE
+		//NAMESPACE::vector<int>	trevor(hector.begin(), hector.end(), 0);
 	}
 	{
 		std::cout	<< std::endl
@@ -283,6 +284,8 @@ int 	main() {
 	catch (std::exception& e) {
 		std::cerr << "error thrown: " << e.what() << std::endl;
 	}
+
+	// EXCEPTIONS
 	//std::cout	<< "past capacity(): element at(12) is ";
 	//try {
 	//std::cout	<< c.at(12) << std::endl;
@@ -324,8 +327,6 @@ int 	main() {
 	
 	NAMESPACE::vector<std::string>		e(20, "HE");
 	NAMESPACE::vector<std::string>		ee;
-	//NAMESPACE::vector<IncrediblyComplex<IncrediblyComplex<float> > >	f(42);
-	//NAMESPACE::vector<IncrediblyComplex<std::string> >					g(6);
 
 	print_content(c, "C");
 	print_info(c, "C");
@@ -387,14 +388,6 @@ int 	main() {
 	print_content(ee, "EE");
 	print_info(ee, "EE");
 	
-	std::cout 	<< std::endl
-				<< "//// ITERATOR TRAITS //// " << std::endl; 
-	
-	typedef std::iterator_traits<int*> traits;
-	  
-	if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
-			std::cout << "int* is a random-access iterator";
-
 	NAMESPACE::vector<std::string>::iterator vbegin	= c.begin();
 	NAMESPACE::vector<std::string>::iterator vend	= c.end();
 	std::cout 	<< std::endl
@@ -479,7 +472,7 @@ int 	main() {
 	print_content(e, "E");
 	print_info(e, "E");
 	
-	//std::cout	<< "//// CLEAR ////" << std::endl;
+	std::cout	<< "//// CLEAR ////" << std::endl;
 
 	//print_info(a, "A");
 	//a.clear();
@@ -550,10 +543,8 @@ int 	main() {
 	//std::cout	<< "clearing c" << std::endl;
 	//c.clear();
 
-	// CAUSES SEGF
-	//pos = c.erase(c.begin());
-
-	//std::cout	<< "new element is " << *pos << std::endl;
+	pos = c.erase(c.begin());
+	std::cout	<< "new element is " << *pos << std::endl;
 
 	{
 		std::cout << std::endl << "MORE MAZOISE INSPIRED INSERT TESTS" << std::endl;
@@ -654,15 +645,12 @@ int 	main() {
 		
 		for (int i = 11; i <= 20; i++)
 			f.push_back(i);
-
-		// CAUSES SEGFAULT		
-		//ret = f.erase (f.end());
-		//std::cout	<< "   ERASE RETURNS " << *ret << std::endl;
-		//print_info(f, "F");
-		//print_content(f, "F");
+		
+		print_info(f, "F");
+		print_content(f, "F");
 		
 		ret = f.erase (f.end()-3,f.end());
-		std::cout	<< "   ERASE RETURNS ";
+		std::cout	<< "   after erase range to end(), ERASE RETURNS ";
 		if (ret == f.end())
 			std::cout << "END" << std::endl;
 		else
@@ -670,8 +658,6 @@ int 	main() {
 		print_info(f, "F");
 		print_content(f, "F");
 	}
-
-	// test with non broken complex classes
 
 	//std::cout	<< "//// CAPACITY ////" << std::endl;
 	
@@ -757,19 +743,22 @@ int 	main() {
 			std::cout	<< "(const_reverse_iterator - reverse_iterator): "
 						<< (crit - rit) << std::endl;
 
-			vct.assign(20, 15);
-			it = vct.end() - 1;
-			NAMESPACE::vector<int>::const_reverse_iterator	crit2(it);
-			for (int i = 0; i < 10; ++i) {
-				++crit2;
-			}
-			std::cout	<< "(const_reverse_iterator - reverse_iterator): "
-						<< (crit2 - rit) << std::endl;
+			// WTF WTF WTF
+			//NAMESPACE::vector<int>	wtf;
+			
+			//wtf.assign(20, 15);
+			//it = wtf.end() - 1;
+			//NAMESPACE::vector<int>::const_reverse_iterator	crit2(it);
+			//for (int i = 0; i < 10; ++i) {
+				//++crit2;
+			//}
+			//std::cout	<< "(const_reverse_iterator - reverse_iterator): "
+						//<< (crit2 - rit) << std::endl
 						//<< "(const_reverse_iterator - const_reverse_iterator): "
 						//<< (crit - crit2) << std::endl
 						//<< "(const_reverse_iterator - const_reverse_iterator): "
 						//<< (crit2 - crit) << std::endl;
-						// INVESTIGATE THOSE CASES!!!!!!!!!
+						// WTF WTF WTF
 
 		}
 		{
@@ -805,7 +794,15 @@ int 	main() {
 			std::cout << *it--		<< std::endl;
 			std::cout << *--it		<< std::endl;
 		}
-		// test reverse operator-
+		
+		//std::cout 	<< std::endl
+				//<< "//// ITERATOR TRAITS //// " << std::endl; 
+	
+		//typedef std::iterator_traits<int*> traits;
+		  
+		//if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
+				//std::cout << "int* is a random-access iterator";
+
 	}
 	return 0;
 }

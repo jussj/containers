@@ -1,8 +1,0 @@
-385c385
-< 
----
-> int* is a random-access iterator
-755c755
-< (const_reverse_iterator - reverse_iterator): -2189
----
-> (const_reverse_iterator - reverse_iterator): -23526551371157

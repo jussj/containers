@@ -70,7 +70,6 @@ namespace ft {
 				_alloc	= Alloc();
 				
 				_dispatch_assign(first, last, typename ft::is_integral<InputIt>::type());	
-				//assign(first, last);
 			}
 			
 			vector(const vector<T,Alloc>& src) {
@@ -289,7 +288,7 @@ namespace ft {
 			
 			iterator
 			erase(iterator first, iterator last) {
-				iterator	it;
+				iterator	it		= first;
 				size_t		dis		= ft::distance(first, last);
 					
 				for (size_t i = 0; i < dis; ++i)
@@ -299,7 +298,6 @@ namespace ft {
 
 			iterator
 			erase(iterator position) {
-				// check pos? must be valid and dereferenceable (not end())
 				size_type	new_size 		= size() - 1;
 				size_type	new_position	= ft::distance(begin(), position);
 				size_type 	s 				= new_position;

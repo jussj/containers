@@ -381,8 +381,6 @@ assign to empty vec
    front/back: [ ho ... he ]
 
 
-//// ITERATOR TRAITS //// 
-
 //// ITERATORS //// 
 c.begin is ho
 iterating through vector... 
@@ -446,6 +444,7 @@ swap overload!
    capacity:   20
    max_size:   288230376151711743
 
+//// CLEAR ////
 
 //// INSERT ////
 
@@ -543,6 +542,7 @@ new element is HO
    max_size:   288230376151711743
    front/back: [ HE ... HE ]
 
+new element is ho
 
 MORE MAZOISE INSPIRED INSERT TESTS
 // VECTOR TEST INFO
@@ -640,16 +640,6 @@ MORE MAZOISE INSPIRED INSERT TESTS
 
 new element is HA
 // VECTOR C ARRAY
-   [ ho ho ho ho HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HO HO HO HO HO HO ho ho HO ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi hi ]
-
-// VECTOR C INFO
-   size:       47
-   capacity:   52
-   max_size:   288230376151711743
-   front/back: [ ho ... hi ]
-
-new element is ho
-// VECTOR C ARRAY
    [ ho ho ho HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HO HO HO HO HO HO ho ho HO ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi hi ]
 
 // VECTOR C INFO
@@ -658,12 +648,22 @@ new element is ho
    max_size:   288230376151711743
    front/back: [ ho ... hi ]
 
-new element is hi
+new element is ho
 // VECTOR C ARRAY
-   [ ho ho ho HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HO HO HO HO HO HO ho ho HO ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi ]
+   [ ho ho HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HO HO HO HO HO HO ho ho HO ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi hi ]
 
 // VECTOR C INFO
    size:       45
+   capacity:   52
+   max_size:   288230376151711743
+   front/back: [ ho ... hi ]
+
+new element is hi
+// VECTOR C ARRAY
+   [ ho ho HA HA HA HA HA HA HA HA HA HA HA HA HA HA HA HO HO HO HO HO HO ho ho HO ho ho ho ho ho ho ho he ha hi hi hi hi hi hi hi hi hi ]
+
+// VECTOR C INFO
+   size:       44
    capacity:   52
    max_size:   288230376151711743
    front/back: [ ho ... hi ]
@@ -700,7 +700,16 @@ new element is hi
 // VECTOR F ARRAY
    [ 4 5 7 8 9 10 ]
 
-   ERASE RETURNS 20
+// VECTOR F INFO
+   size:       16
+   capacity:   16
+   max_size:   2305843009213693951
+   front/back: [ 4 ... 20 ]
+
+// VECTOR F ARRAY
+   [ 4 5 7 8 9 10 11 12 13 14 15 16 17 18 19 20 ]
+
+   after erase range to end(), ERASE RETURNS END
 // VECTOR F INFO
    size:       13
    capacity:   16
@@ -752,7 +761,6 @@ TESTING REVERSE OPERATORS
 
 CONST REVERSE ITERATORS TESTS
 (const_reverse_iterator - reverse_iterator): 0
-(const_reverse_iterator - reverse_iterator): -2417
 // VECTOR VCT INFO
    size:       5
    capacity:   5

@@ -19,7 +19,9 @@ namespace ft {
 			typedef ptrdiff_t				difference_type;
 			typedef T*						pointer;
 			typedef T&						reference;
-			typedef typename ft::random_access_iterator_tag	iterator_category;
+
+			typedef typename ft::random_access_iterator_tag
+											iterator_category;
 
 		// CTOR, CPY, DTOR
 
@@ -27,7 +29,8 @@ namespace ft {
 			vector_iterator(pointer it)				: _ptr(it) {}
 			template<class U>
 			vector_iterator(const vector_iterator<U> it)
-				: _ptr(it.current()) {}
+				: _ptr(&(*it)) {}
+				//: _ptr(it.current()) {}
 			~vector_iterator() {}
 
 		// OPERATORS
@@ -82,7 +85,8 @@ namespace ft {
 			template<class U>
 			difference_type
 			operator-(const vector_iterator<U>& x) {
-				return current() - x.current();
+				return current() - &(*x);
+				//return current() - x.current();
 			}
 			vector_iterator&
 			operator+=(int n) {
@@ -132,8 +136,6 @@ namespace ft {
 
 			pointer		_ptr;
 	
-		public:
-		// private must be	
 		// ACCESS
 
 			pointer		current() const {
@@ -157,7 +159,8 @@ namespace ft {
 	template<class T>
 	typename vector_iterator<T>::difference_type
 	operator-(const vector_iterator<T>& x, const vector_iterator<T>& y) {
-		return x.current() - y.current();
+		return &(*x) - &(*y);
+		//return x.current() - y.current();
 	}
 
 	template<class L, class R>
