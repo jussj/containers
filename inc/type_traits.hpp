@@ -45,16 +45,16 @@ namespace ft {
     struct  is_integral<int>                     :   public true_type {}; 
     template<>
     struct  is_integral<long int>                :   public true_type {}; 
-    template<>
-    struct  is_integral<long long int>           :   public true_type {}; 
+	template<>
+	struct  is_integral<long long int>           :   public true_type {}; 
     template<>
     struct  is_integral<unsigned char>           :   public true_type {}; 
     template<>
     struct  is_integral<unsigned int>            :   public true_type {}; 
     template<>
     struct  is_integral<unsigned long int>       :   public true_type {}; 
-    template<>
-    struct  is_integral<unsigned long long int>  :   public true_type {}; 
+	template<>
+	struct  is_integral<unsigned long long int>  :   public true_type {}; 
 
 	// IS_SAME_TYPE
 	

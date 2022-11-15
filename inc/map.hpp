@@ -39,7 +39,8 @@ namespace ft {
 
 		private:
 
-			typedef rb_tree_impl <T, Key, pair<const Key, T>, Compare, Alloc>	
+			typedef rb_tree_impl <T, Key, pair<const Key, T>,
+					Compare, Alloc, ft::first_of<value_type, Key> >	
 			rb_tree;
 
 		//// ATTRIBUTES ////
@@ -194,7 +195,7 @@ namespace ft {
 				iterator	it		= find(x.first);
 
 				if (it == end())
-					it	= _tree.insert_and_rebalance(x, position);
+					it	= _tree.insert_with_hint(x, position);
 				return it;
 			}
 			
@@ -207,7 +208,7 @@ namespace ft {
 			
 			void
 			erase(iterator position) {
-				_tree.erase_and_rebalance(position);
+				_tree.erase(position);
 			}
 			
 			size_type
@@ -216,7 +217,7 @@ namespace ft {
 			   
 				if (ret	== end())
 					return 0;
-				_tree.erase_and_rebalance(ret);
+				_tree.erase(ret);
 				// return number of occurences
 				return 1;
 			}
@@ -226,7 +227,7 @@ namespace ft {
 				//if (first == begin() && last == end())
 					//clear();
 				while (first != last)
-					_tree.erase_and_rebalance(first++);
+					_tree.erase(first++);
 			}
 			
 			void

@@ -8,7 +8,7 @@
 # include "iterator.hpp"
 # include "algorithm.hpp"
 # include "utility.hpp"
-# include "tools.hpp"
+# include "utils.hpp"
 
 namespace ft {
 
@@ -150,7 +150,7 @@ namespace ft {
 	typename rb_tree_node<Val>::node_ptr rb_tree_node<Val>::nil =
 		&rb_tree_node<Val>::_nil_node;
 
-	template<class T, class Key, class Val, class Compare, class Alloc, class KeyOfValue>
+	template<class T, class Key, class Val, class Compare, class Alloc>
 	class rb_tree_impl {
 
 		//// TYPES ////
@@ -160,7 +160,6 @@ namespace ft {
 			typedef Val					value_type;
 			typedef Key 				key_type;
 			typedef T					mapped_value;
-			typedef KeyOfValue			key_of_value;
 
 			typedef size_t 				size_type;
 			typedef ptrdiff_t 			difference_type;
@@ -190,7 +189,6 @@ namespace ft {
 			key_compare				_compare;
 			node_ptr				_root;
 			header					_header;
-			key_of_value			_key_of_value;
 			//rb_tree_impl&			_t;			// implement second tree layer?
 
 		//// MEMBER FUNCTIONS ////
@@ -204,16 +202,14 @@ namespace ft {
 				 	_nodalloc(),
 					_compare(),
 					_root(nil()),
-					_header(),
-					_key_of_value()	{}
+					_header()	{}
 
 			rb_tree_impl(const key_compare& comp) 
 				:	_alloc(),
 				 	_nodalloc(),
 					_compare(comp),
 					_root(nil()),
-					_header(),
-					_key_of_value()	{}
+					_header()	{}
 
 			rb_tree_impl(const key_compare& comp,
 						 const pair_allocator_type& pair_alloc, 
@@ -222,16 +218,14 @@ namespace ft {
 				 	_nodalloc(node_alloc),
 					_compare(comp),
 					_root(nil()),
-					_header(),
-					_key_of_value()	{}
+					_header() {}
 		
 			rb_tree_impl(const rb_tree_impl& src) 
 				:	_alloc(),
-					_nodalloc(),
+					 _nodalloc(),
 					_compare(),
 					_root(),
-					_header(),
-					_key_of_value()	{
+					_header()	{
 				*this = src;		
 			}
 
@@ -414,7 +408,7 @@ namespace ft {
 				
 				while (x != nil()) {
 					y = x;
-					if (_compare(_key_of_value(**n), _key_of_value(**x)))
+					if (_compare(key_of_value(**n), key_of_value(**x)))
 						x = left(x);
 					else
 						x = right(x);
@@ -429,7 +423,7 @@ namespace ft {
 				
 				while (x != nil()) {
 					y = x;
-					if (_compare(_key_of_value(**n), _key_of_value(**x)))
+					if (_compare(key_of_value(**n), key_of_value(**x)))
 						x = left(x);
 					else
 						x = right(x);
@@ -437,20 +431,13 @@ namespace ft {
 				return y;
 			}
 
-			iterator
-			insert_with_hint(const value_type&v, const_iterator hint) {
-				(void)hint;
-				return insert_and_rebalance(v);
-			}
-
 			iterator	
-			//insert_and_rebalance(const value_type& v, iterator hint) {
-			insert_and_rebalance(const value_type& v) {
+			insert_and_rebalance(const value_type& v, iterator hint = 0) {
 				node_ptr	n	= _create_node(v);
 				node_ptr	y	= nil();
 				node_ptr	x	= _root;
 
-				//(void)hint;
+				(void)hint;
 
 				//if (hint == 0)
 					//y = _find_pos(n);
@@ -462,7 +449,7 @@ namespace ft {
 
 				while (x != nil()) {
 					y = x;
-					if (_compare(_key_of_value(**n), _key_of_value(**x)))
+					if (_compare(key_of_value(**n), key_of_value(**x)))
 						x = left(x);
 					else
 						x = right(x);
@@ -472,7 +459,7 @@ namespace ft {
 				// first node
 				if (y == nil())
 					_init_root_and_header(n);
-				else if (_compare(_key_of_value(**n), _key_of_value(**y)))
+				else if (_compare(key_of_value(**n), key_of_value(**y)))
 					y->left = n;
 				else
 					y->right = n;
@@ -480,11 +467,11 @@ namespace ft {
 				n->right	= nil();
 				
 				// maintain leftmost/rightmost
-				if (_compare(_key_of_value(**n), 
-						_key_of_value(**left(&_header.node))))
+				if (_compare(key_of_value(**n), 
+						key_of_value(**left(&_header.node))))
 					_header.set_leftmost(n); 
-				else if (_compare(_key_of_value(**right(&_header.node)),
-								_key_of_value(**n)))
+				else if (_compare(key_of_value(**right(&_header.node)),
+								key_of_value(**n)))
 					_header.set_rightmost(n); 
 
 				// update count	
@@ -619,19 +606,11 @@ namespace ft {
 				_header.node.color = RED;
 				_dealloc_node(x);
 			}
-			
-			void
-			erase(const_iterator pos) {
-				node_ptr n = static_cast<node_ptr>(
-						erase_and_rebalance(
-						const_cast<base_ptr>(pos.node)));
-				_destroy_node((node_ptr&)n);
-			}
 
-			base_ptr
-			//erase_and_rebalance(iterator pos) {
-			erase_and_rebalance(const base_ptr n) {
-				//base_ptr n	= pos.node;		// node to be deleted
+
+			void
+			erase_and_rebalance(iterator pos) {
+				base_ptr n	= pos.node;		// node to be deleted
 				base_ptr y	= n;			// successor to n
 				base_ptr x;					// successor to y
 
@@ -709,8 +688,7 @@ namespace ft {
 					_header.set_leftmost(minimum(_header.node.left));
 				}	
 				_header.node.color = RED;
-				return n;
-				//_destroy_node((node_ptr&)pos.node);
+				_destroy_node((node_ptr&)pos.node);
 			}
 
 			void
@@ -733,7 +711,7 @@ namespace ft {
 				base_ptr m = &_header.node;
 				
 				while (n != nil()) {
-					if (_compare(x, _key_of_value(**n)))
+					if (_compare(x, key_of_value(**n)))
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -747,7 +725,7 @@ namespace ft {
 				base_ptr m = nil();
 				
 				while (n != nil()) {
-					if (_compare(x, _key_of_value(**n)))
+					if (_compare(x, key_of_value(**n)))
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -763,7 +741,7 @@ namespace ft {
 				base_ptr m = &_header.node;
 				
 				while (n != nil()) {
-					if (!(_compare(_key_of_value(**n), x))) // same than above
+					if (!(_compare(key_of_value(**n), x))) // same than above
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -777,7 +755,7 @@ namespace ft {
 				base_ptr m = nil();
 			   
 				while (n != nil()) {
-					if (!(_compare(_key_of_value(**n), x))) // same than above 
+					if (!(_compare(key_of_value(**n), x))) // same than above 
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -791,7 +769,7 @@ namespace ft {
 			find(const key_type& x) {
 				iterator y = lower_bound(x);
 				if (y != nil() && y != end()
-						&& _key_of_value(*y) == x)
+						&& key_of_value(*y) == x)
 					return y;
 				return end();
 			}
@@ -800,7 +778,7 @@ namespace ft {
 			find(const key_type& x) const {
 				const_iterator y = lower_bound(x);
 				if (y != nil() && y != end()
-						&& _key_of_value(*y) == x)
+						&& (*y).first == x)
 					return y;
 				return end();
 			}
@@ -819,11 +797,11 @@ namespace ft {
 			
 			void
 			print_header() {
-				std::cout	<< "   root:  " << _key_of_value(**root())
+				std::cout	<< "   root:  " << key_of_value(**root())
 							<< "\t(" << root() << ")" << std::endl
-							<< "   lmost: " << _key_of_value(**leftmost()) 
+							<< "   lmost: " << key_of_value(**leftmost()) 
 							<< "\t(" << leftmost() << ")" << std::endl
-							<< "   rmost: " << _key_of_value(**rightmost()) 
+							<< "   rmost: " << key_of_value(**rightmost()) 
 							<< "\t(" << rightmost() << ")" << std::endl
 							<< "   nil:   " << 0 << "\t(" 
 							<< nil() << ")" << std::endl
@@ -855,7 +833,7 @@ namespace ft {
 				if (x == nil())
 					std::cout << "NIL";
 				else
-					std::cout << std::left <<  _key_of_value(**x);
+					std::cout << std::left <<  key_of_value(**x);
 				std::cout << "\033[0m";
 			}
 
@@ -891,10 +869,15 @@ namespace ft {
 			node_allocator() const {
 				return _nodalloc;
 			}
+
+			const key_type
+			key_of_value(value_type& v) const {
+				return v.first;
+			}
 			
 			const key_type
 			key(node_ptr n) const {
-				return _key_of_value(static_cast<node_ptr>(n->value));
+				return key_of_value(static_cast<node_ptr>(n->value));
 			}
 
 			node_ptr
@@ -1181,20 +1164,20 @@ namespace ft {
 	
 	// COMPARISON OVERLOADS
 	
-	template<class T, class Key, class Val, class Compare, class Alloc, class KeyOfValue>
+	template<class T, class Key, class Val, class Compare, class Alloc>
 	bool
-	operator==(const rb_tree_impl<T, Key, Val, Compare, Alloc, KeyOfValue>& x,
-			const rb_tree_impl<T, Key, Val, Compare, Alloc, KeyOfValue>& y) {
+	operator==(const rb_tree_impl<T, Key, Val, Compare, Alloc>& x,
+			const rb_tree_impl<T, Key, Val, Compare, Alloc>& y) {
 		return x.size() == y.size() 
 			&& ft::lexicographical_compare(x.begin(), x.end(),
 					y.begin(), y.end());
 	}
 
 	template<class T, class Key, class Val,
-		class Compare, class Alloc, class KeyOfValue>
+		class Compare, class Alloc>
 	bool
-	operator<(const rb_tree_impl<T, Key, Val, Compare, Alloc, KeyOfValue>& x,
-			const rb_tree_impl<T, Key, Val, Compare, Alloc, KeyOfValue>& y) {
+	operator<(const rb_tree_impl<T, Key, Val, Compare, Alloc>& x,
+			const rb_tree_impl<T, Key, Val, Compare, Alloc>& y) {
 		return ft::lexicographical_compare(x.begin(), x.end(), 
 				y.begin(), y.end());
 	}

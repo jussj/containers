@@ -170,4 +170,57 @@ echo
 rm map_time.txt
 rm std_map
 
+echo "\n// TESTING SET //\n"
+
+echo "compiling std::set..."
+c++ -Wall -Wextra -Werror -std=c++98 -DSTD test/main_set.cpp -o std_set
+./std_set > test/outfiles/std_set_outfile.txt
+
+echo "compiling ft::set...\n"
+make set > /dev/null
+./ft_set > test/outfiles/ft_set_outfile.txt
+
+diff test/outfiles/ft_set_outfile.txt test/outfiles/std_set_outfile.txt > test/outfiles/set_diff.txt
+if [ $? -eq 0 ]; then
+	echo "// DIFF:   ${GREEN}ok${ENDCOLOR}"
+	rm test/outfiles/set_diff.txt
+else
+	echo "// DIFF:   ${RED}not ok${ENDCOLOR}"
+	echo "   now look what failed you:"
+	echo "   logs are situated in \"test/outfiles\"\n"
+	#cat test/outfiles/set_diff.txt
+fi
+
+valgrind --log-file="test/outfiles/set_leaks.txt" ./ft_set > /dev/null
+
+grep "ERROR SUMMARY: 0" test/outfiles/set_leaks.txt > /dev/null
+if [ $? -eq 0 ]; then
+	echo "// ERRORS: ${GREEN}ok${ENDCOLOR}"
+else
+	echo "// ERRORS: ${RED}not ok${ENDCOLOR}"
+fi
+
+grep "All heap blocks were freed" test/outfiles/set_leaks.txt > /dev/null
+if [ $? -eq 0 ]; then
+	echo "// LEAKS:  ${GREEN}ok${ENDCOLOR}"
+	rm test/outfiles/set_leaks.txt
+else
+	echo "// LEAKS:  ${RED}not ok${ENDCOLOR}"
+	echo "   logs are situated in \"test/outfiles\"\n"
+fi
+
+{ time ./ft_set > /dev/null; } 2>set_time.txt
+{ time ./std_set > /dev/null; } 2>>set_time.txt
+
+echo "// TIME RESULTS:"
+echo -n "   FT      "
+grep -oP './ft_set > /dev/null  \K.+' set_time.txt
+echo -n "   STD     "
+grep -oP './std_set > /dev/null  \K.+' set_time.txt
+
+echo
+
+rm set_time.txt
+rm std_set
+
 make fclean > /dev/null

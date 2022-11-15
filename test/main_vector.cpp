@@ -745,6 +745,9 @@ int 	main() {
 
 			// WTF WTF WTF
 			//NAMESPACE::vector<int>	wtf;
+			//NAMESPACE::vector<int>::iterator				it = wtf.begin();
+			//NAMESPACE::vector<int>::reverse_iterator		rit(it);
+			//NAMESPACE::vector<int>::const_reverse_iterator	crit(rit);
 			
 			//wtf.assign(20, 15);
 			//it = wtf.end() - 1;

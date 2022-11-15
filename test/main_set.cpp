@@ -1,5 +1,5 @@
 #include <iostream>			// std::cout
-#include <map>				// std::map
+#include <set>				// std::set
 #include <list>				// std::list
 #include <stdexcept>
 #include <cstddef>			// ptrdiff_t
@@ -16,11 +16,18 @@
 #endif
 int
 main() {
-	NAMESPACE::set<std::string>		seth;
+	NAMESPACE::set<std::string>				seth;
+	NAMESPACE::set<std::string>::iterator	it;
 
 	seth.insert("hello my name is seth");
 
-	std::cout<<*(seth.begin())<<std::endl;
+	it = seth.begin();
+	std::cout<<*(it)<<std::endl;
+
+	seth.erase(it);
+
+	if (seth.empty())
+		std::cout<<"seth is empty inside :)"<<std::endl;
 
 	return 0;	
 }

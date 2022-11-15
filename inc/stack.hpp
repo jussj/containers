@@ -30,28 +30,34 @@ namespace ft {
 		
 		// MEMBER FUNCTIONS
 
-			bool 			empty() const {
+			bool
+			empty() const {
 				if (c.size() == 0)
 					return true;
 				return false;
 			}
-			size_type		size() const {
+			size_type
+			size() const {
 				return c.size();
 			}
-			value_type &	top() {
+			value_type &
+			top() {
 				if (this->empty()) 
 					throw EmptyStack();
 				return c.back();
 			}
-			const value_type &	top() const {
+			const value_type &
+			top() const {
 				if (this->empty()) 
 					throw EmptyStack();
 				return c.back();
 			}
-			void			push(const value_type& val) {
+			void
+			push(const value_type& val) {
 				c.push_back(val);
 			}
-			void			pop() {
+			void
+			pop() {
 				if (this->empty()) 
 					throw EmptyStack();
 				c.pop_back();
@@ -74,22 +80,28 @@ namespace ft {
 		
 		// NON-MEMBER FRIENDS OPERATOR OVERLOADS
 
-			friend bool	operator==(const stack<T, Container>& x, const stack<T, Container>& y) {
+			friend bool
+			operator==(const stack<T, Container>& x, const stack<T, Container>& y) {
 				return x.c == y.c;
 			}
-			friend bool operator!=(const stack<T, Container>& x, const stack<T, Container>& y) {
+			friend bool
+			operator!=(const stack<T, Container>& x, const stack<T, Container>& y) {
 				return !(x == y);
 			}
-			friend bool operator>(const stack<T, Container>& x, const stack<T, Container>& y) {
+			friend bool
+			operator>(const stack<T, Container>& x, const stack<T, Container>& y) {
 				return y < x;
 			}
-			friend bool operator<(const stack<T, Container>& x, const stack<T, Container>& y) {
+			friend bool
+			operator<(const stack<T, Container>& x, const stack<T, Container>& y) {
 				return x.c < y.c;	
 			}
-			friend bool operator>=(const stack<T, Container>& x, const stack<T, Container>& y) {
+			friend bool
+			operator>=(const stack<T, Container>& x, const stack<T, Container>& y) {
 				return !(x < y);
 			}
-			friend bool operator<=(const stack<T, Container>& x, const stack<T, Container>& y) {
+			friend bool
+			operator<=(const stack<T, Container>& x, const stack<T, Container>& y) {
 				return !(y < x);
 			}
 	};	/* class stack */

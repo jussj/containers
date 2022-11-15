@@ -1,4 +1,4 @@
-#include "rb_tree_s.hpp"
+#include "rb_tree.hpp"
 #include "iterator.hpp"
 #include "utility.hpp"
 
@@ -21,7 +21,7 @@ namespace ft {
 			typedef typename Allocator::reference		reference;
 			typedef typename Allocator::const_reference const_reference;
 			
-			typedef ft::rb_tree_iterator<value_type>		iterator;
+			typedef ft::rb_tree_const_iterator<value_type>	iterator;
 			typedef ft::rb_tree_const_iterator<value_type>	const_iterator;
 
 			typedef size_t				size_type;
@@ -60,14 +60,24 @@ namespace ft {
 					insert(first, last);	
 				}
 			
-			set(const set<Key,Compare,Allocator>& x);
+			set(const set<Key,Compare,Allocator>& x) {
+				*this = x;
+			}
 			
 			~set() {
 				clear();
 			}
 			
 			set<Key,Compare,Allocator>&
-			operator=(const set<Key,Compare,Allocator>& x);
+			operator=(const set<Key,Compare,Allocator>& x) {
+				clear();
+				for (	const_iterator it = x.begin();
+						it != x.end();
+						++it	) {
+					_tree.insert_and_rebalance(*it);
+				}
+				return *this;
+			}
 			
 			allocator_type
 			get_allocator() const;
@@ -147,10 +157,10 @@ namespace ft {
 			
 			iterator
 			insert(iterator position, const value_type& x) {
-				iterator	it		= find(x.first);
+				iterator	it		= find(x);
 
 				if (it == end())
-					it	= _tree.insert_and_rebalance(x, position);
+					it	= _tree.insert_with_hint(x, position);
 				return it;
 			}
 			
@@ -163,23 +173,26 @@ namespace ft {
 			
 			void
 			erase(iterator position) {
-				_tree.erase_and_rebalance(position);
+				_tree.erase(position);
+				//_tree.erase_and_rebalance(position);
 			}
 			
 			size_type
 			erase(const key_type& x) {
-				iterator ret	= find(x);
+				const_iterator ret	= find(x);
 			   
 				if (ret	== end())
 					return 0;
-				_tree.erase_and_rebalance(ret);
+				_tree.erase(ret);
+				//_tree.erase_and_rebalance(ret);
 				return 1;
 			}
 			
 			void
 			erase(iterator first, iterator last) {
 				while (first != last)
-					_tree.erase_and_rebalance(first++);
+					_tree.erase(first++);
+					//_tree.erase_and_rebalance(first++);
 			}
 
 			void
@@ -265,27 +278,49 @@ namespace ft {
 
 	template <class Key, class Compare, class Allocator>
 	bool operator==(const set<Key,Compare,Allocator>& x,
-	const set<Key,Compare,Allocator>& y);
+	const set<Key,Compare,Allocator>& y) {
+		return x.size() == y.size() 
+			&& ft::equal(x.begin(), x.end(), y.begin());
+	}
+
 	template <class Key, class Compare, class Allocator>
 	bool operator< (const set<Key,Compare,Allocator>& x,
-	const set<Key,Compare,Allocator>& y);
+	const set<Key,Compare,Allocator>& y) {
+		return ft::lexicographical_compare(x.begin(), x.end(), 
+				y.begin(), y.end());
+	}
+
 	template <class Key, class Compare, class Allocator>
 	bool operator!=(const set<Key,Compare,Allocator>& x,
-	const set<Key,Compare,Allocator>& y);
+	const set<Key,Compare,Allocator>& y) {
+		return !(x == y);	
+	}
+
 	template <class Key, class Compare, class Allocator>
 	bool operator> (const set<Key,Compare,Allocator>& x,
-	const set<Key,Compare,Allocator>& y);
+	const set<Key,Compare,Allocator>& y) {
+		return y < x;
+	}
+
 	template <class Key, class Compare, class Allocator>
 	bool operator>=(const set<Key,Compare,Allocator>& x,
-	const set<Key,Compare,Allocator>& y);
+	const set<Key,Compare,Allocator>& y) {
+		return !(x < y);
+	}
+
 	template <class Key, class Compare, class Allocator>
 	bool operator<=(const set<Key,Compare,Allocator>& x,
-	const set<Key,Compare,Allocator>& y);
+	const set<Key,Compare,Allocator>& y) {
+		return !(y < x);
+	}
+
 	
 	// SPECIALIZED ALGORITHMS 
 	
 	template <class Key, class Compare, class Allocator>
 	void swap(set<Key,Compare,Allocator>& x,
-	set<Key,Compare,Allocator>& y);
+	set<Key,Compare,Allocator>& y) {
+		x.swap(y);
+	}
 
 }	/* namespace ft */
