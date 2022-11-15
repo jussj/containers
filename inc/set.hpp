@@ -1,4 +1,4 @@
-#include "rb_tree.hpp"
+#include "rb_tree_s.hpp"
 #include "iterator.hpp"
 #include "utility.hpp"
 
@@ -34,8 +34,8 @@ namespace ft {
 		
 		private:
 
-			typedef rb_tree_impl <Key, Key, Key, Compare, Allocator>	
-			rb_tree;
+			typedef rb_tree_impl <Key, Key, Key, Compare, 
+					Allocator, ft::return_value<Key> >		rb_tree;
 			
 			// ATTRIBUTES
 			

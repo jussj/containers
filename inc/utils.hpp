@@ -31,6 +31,22 @@ namespace ft {
 		return dis;
 	}
 
+	template<class Pair, class T>
+	struct first_of {
+		T&
+		operator()(const Pair& p) const {
+			return p.first; 
+		}
+	};
+
+	template<class T>
+	struct return_value {
+		T&
+		operator()(T& v) const {
+			return v;
+		}	
+	};
+
 }	/* namespace ft */
 
 #endif	/* UTILS_HPP */

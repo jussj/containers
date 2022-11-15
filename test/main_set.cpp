@@ -20,5 +20,7 @@ main() {
 
 	seth.insert("hello my name is seth");
 
+	std::cout<<*(seth.begin())<<std::endl;
+
 	return 0;	
 }
