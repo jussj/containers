@@ -14,6 +14,42 @@
 #else
 # define NAMESPACE std
 #endif
+
+template<class It>
+void
+print_key(It it) {
+		std::cout	<< "   [ "	<< (*it) << "\t]"
+					<< std::endl;
+#ifdef DEBUG
+		it.print_node_ptr();
+#endif
+}
+
+
+template<class Set, class It>
+void
+print_set(Set& s, const std::string name) {
+	std::cout	<< std::endl
+				<< "// SET "	<< name << std::endl
+				<< "   size:  "	<< s.size() << std::endl
+				<< std::endl;
+	if (s.empty())
+		std::cout << "   [ EMPTY MAP ]" << std::endl;
+	else {
+
+#ifdef DEBUG 
+		s.print_header();
+		std::cout << std::endl;
+		s.print_tree();
+#else
+		for (It it = s.begin(); it != s.end(); ++it) {
+			print_key<It>(it);
+		}	
+#endif
+	}
+	std::cout	<< std::endl;	
+}
+
 int
 main() {
 	NAMESPACE::set<std::string>				seth;

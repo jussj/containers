@@ -23,7 +23,6 @@
 A is empty
 C is NOT empty
 D is NOT empty
-TESTING INSERT/ASSIGN/CTOR FOURTH PARAM (SHOULD NOT COMPILE)
 
 //// COPY CTOR ////
 
@@ -145,9 +144,6 @@ size of orvoir: 0
 
 //// RESERVE W PUSH & POP ////
 
-a.reserve(0)...
-a.reserve(max_size + 1)...
-error thrown: vector::reserve
 a.reserve(7)...
 size of A is 0, actual capacity is 5
 a.push_back() * 6 (past capacity)...

@@ -1,8 +1,8 @@
 #include <vector>
 #include "../inc/vector.hpp"
 #include <iostream>
-#include "../test/vector/TestVector.hpp"
-#include "../test/vector/ComplexClass.hpp"
+#include "inc/TestVector.hpp"
+#include "inc/ComplexClass.hpp"
 #include <cstddef>		// ptrdiff_t
 #include <typeinfo>		// typeid
 
@@ -12,7 +12,9 @@
 # define NAMESPACE std
 #endif
 
-int 	main() {
+void
+main_test_vector() {
+
 	std::cout	<< "//// CONSTRUCTOR ////"	<< std::endl
 											<< std::endl;
 	
@@ -35,8 +37,8 @@ int 	main() {
 		std::cout << "D is NOT empty" << std::endl;
 
 	{
-		std::cout	<< "TESTING INSERT/ASSIGN/CTOR FOURTH PARAM (SHOULD NOT COMPILE)"
-					<< std::endl;
+		//std::cout	<< "TESTING INSERT/ASSIGN/CTOR FOURTH PARAM (SHOULD NOT COMPILE)"
+					//<< std::endl;
 		
 		//NAMESPACE::vector<int>	hector;
 		//int	array[] = {-5, 4, 6, 3, 2};
@@ -172,16 +174,16 @@ int 	main() {
 	std::cout	<< std::endl
 				<< "//// RESERVE W PUSH & POP ////" << std::endl << std::endl;
 	
-	std::cout 	<< "a.reserve(0)..." << std::endl;
-	a.reserve(0);
+	//std::cout 	<< "a.reserve(0)..." << std::endl;
+	//a.reserve(0);
 	
-	std::cout << "a.reserve(max_size + 1)..." << std::endl;
-	try {
-		a.reserve(a.max_size()+1);
-	}
-	catch (std::length_error& le) {
-		std::cerr << "error thrown: " << le.what() << std::endl;
-	}
+	//std::cout << "a.reserve(max_size + 1)..." << std::endl;
+	//try {
+		//a.reserve(a.max_size()+1);
+	//}
+	//catch (std::length_error& le) {
+		//std::cerr << "error thrown: " << le.what() << std::endl;
+	//}
 	
 	std::cout 	<< "a.reserve(7)..." << std::endl;
 	a.reserve(5);
@@ -807,5 +809,10 @@ int 	main() {
 				//std::cout << "int* is a random-access iterator";
 
 	}
+}
+
+int
+main() {
+	main_test_vector();
 	return 0;
 }

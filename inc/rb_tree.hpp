@@ -191,7 +191,6 @@ namespace ft {
 			node_ptr				_root;
 			header					_header;
 			key_of_value			_key_of_value;
-			//rb_tree_impl&			_t;			// implement second tree layer?
 
 		//// MEMBER FUNCTIONS ////
 

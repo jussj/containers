@@ -40,6 +40,8 @@ fi
 
 valgrind --log-file="test/outfiles/stack_leaks.txt" ./ft_stack > /dev/null
 
+grep "total heap usage" test/outfiles/stack_leaks.txt > stack_time.txt
+
 grep "ERROR SUMMARY: 0" test/outfiles/stack_leaks.txt > /dev/null
 if [ $? -eq 0 ]; then
 	echo "// ERRORS: ${GREEN}ok${ENDCOLOR}"
@@ -56,15 +58,24 @@ else
 	echo "   logs are situated in \"test/outfiles\"\n"
 fi
 
-{ time ./ft_stack > /dev/null; } 2>stack_time.txt
+{ time ./ft_stack > /dev/null; } 2>>stack_time.txt
 { time ./std_stack > /dev/null; } 2>>stack_time.txt
 
-echo "// TIME RESULTS:"
-echo -n "   FT      "
+echo "// PERFORMANCES:"
+echo "   ${BLUE}FT_STACK:${ENDCOLOR}"
+echo -n "   timing...."
 grep -oP './ft_stack > /dev/null  \K.+' stack_time.txt
-echo -n "   STD     "
+echo -n "   heap use.."
+grep 'total heap usage' stack_time.txt | cut -c 31-
+echo "   ${BLUE}STD_STACK:${ENDCOLOR}"
+echo -n "   timing...."
 grep -oP './std_stack > /dev/null  \K.+' stack_time.txt
+echo -n "   heap use.."
+valgrind --log-file="grind.txt" ./std_stack > /dev/null
+grep 'total heap usage' grind.txt | cut -c 31-
 rm stack_time.txt
+rm grind.txt
+
 rm std_stack
 
 echo "\n// TESTING VECTOR //\n"
@@ -90,6 +101,8 @@ fi
 
 valgrind --log-file="test/outfiles/vector_leaks.txt" ./ft_vector &> /dev/null
 
+grep "total heap usage" test/outfiles/vector_leaks.txt > vector_time.txt
+
 grep "ERROR SUMMARY: 0" test/outfiles/vector_leaks.txt > /dev/null
 if [ $? -eq 0 ]; then
 	echo "// ERRORS: ${GREEN}ok${ENDCOLOR}"
@@ -106,15 +119,24 @@ else
 	echo "   logs are situated in \"test/outfiles\"\n"
 fi
 
-{ time ./ft_vector > /dev/null; } 2>vector_time.txt
+{ time ./ft_vector > /dev/null; } 2>>vector_time.txt
 { time ./std_vector > /dev/null; } 2>>vector_time.txt
 
-	echo "// TIME RESULTS:"
-echo -n "   FT      "
+echo "// PERFORMANCES:"
+echo "   ${BLUE}FT_VECTOR:${ENDCOLOR}"
+echo -n "   timing...."
 grep -oP './ft_vector > /dev/null  \K.+' vector_time.txt
-echo -n "   STD     "
+echo -n "   heap use.."
+grep 'total heap usage' vector_time.txt | cut -c 31-
+echo "   ${BLUE}STD_VECTOR:${ENDCOLOR}"
+echo -n "   timing...."
 grep -oP './std_vector > /dev/null  \K.+' vector_time.txt
+echo -n "   heap use.."
+valgrind --log-file="grind.txt" ./std_vector > /dev/null
+grep 'total heap usage' grind.txt | cut -c 31-
 rm vector_time.txt
+rm grind.txt
+
 rm std_vector
 
 echo "\n// TESTING MAP //\n"
@@ -140,6 +162,8 @@ fi
 
 valgrind --log-file="test/outfiles/map_leaks.txt" ./ft_map > /dev/null
 
+grep "total heap usage" test/outfiles/map_leaks.txt > map_time.txt
+
 grep "ERROR SUMMARY: 0" test/outfiles/map_leaks.txt > /dev/null
 if [ $? -eq 0 ]; then
 	echo "// ERRORS: ${GREEN}ok${ENDCOLOR}"
@@ -156,18 +180,24 @@ else
 	echo "   logs are situated in \"test/outfiles\"\n"
 fi
 
-{ time ./ft_map > /dev/null; } 2>map_time.txt
+{ time ./ft_map > /dev/null; } 2>>map_time.txt
 { time ./std_map > /dev/null; } 2>>map_time.txt
 
-echo "// TIME RESULTS:"
-echo -n "   FT      "
+echo "// PERFORMANCES:"
+echo "   ${BLUE}FT_MAP:${ENDCOLOR}"
+echo -n "   timing...."
 grep -oP './ft_map > /dev/null  \K.+' map_time.txt
-echo -n "   STD     "
+echo -n "   heap use.."
+grep 'total heap usage' map_time.txt | cut -c 31-
+echo "   ${BLUE}STD_MAP:${ENDCOLOR}"
+echo -n "   timing...."
 grep -oP './std_map > /dev/null  \K.+' map_time.txt
-
-echo
-
+echo -n "   heap use.."
+valgrind --log-file="grind.txt" ./std_map > /dev/null
+grep 'total heap usage' grind.txt | cut -c 31-
 rm map_time.txt
+rm grind.txt
+
 rm std_map
 
 echo "\n// TESTING SET //\n"
@@ -193,6 +223,8 @@ fi
 
 valgrind --log-file="test/outfiles/set_leaks.txt" ./ft_set > /dev/null
 
+grep "total heap usage" test/outfiles/set_leaks.txt > set_time.txt
+
 grep "ERROR SUMMARY: 0" test/outfiles/set_leaks.txt > /dev/null
 if [ $? -eq 0 ]; then
 	echo "// ERRORS: ${GREEN}ok${ENDCOLOR}"
@@ -209,18 +241,26 @@ else
 	echo "   logs are situated in \"test/outfiles\"\n"
 fi
 
-{ time ./ft_set > /dev/null; } 2>set_time.txt
+{ time ./ft_set > /dev/null; } 2>>set_time.txt
 { time ./std_set > /dev/null; } 2>>set_time.txt
 
-echo "// TIME RESULTS:"
-echo -n "   FT      "
+echo "// PERFORMANCES:"
+echo "   ${BLUE}FT_SET:${ENDCOLOR}"
+echo -n "   timing...."
 grep -oP './ft_set > /dev/null  \K.+' set_time.txt
-echo -n "   STD     "
+echo -n "   heap use.."
+grep 'total heap usage' set_time.txt | cut -c 31-
+echo "   ${BLUE}STD_SET:${ENDCOLOR}"
+echo -n "   timing...."
 grep -oP './std_set > /dev/null  \K.+' set_time.txt
+echo -n "   heap use.."
+valgrind --log-file="grind.txt" ./std_set > /dev/null
+grep 'total heap usage' grind.txt | cut -c 31-
+rm set_time.txt
+rm grind.txt
+
+rm std_set
 
 echo
-
-rm set_time.txt
-rm std_set
 
 make fclean > /dev/null

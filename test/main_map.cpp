@@ -5,6 +5,7 @@
 #include <cstddef>			// ptrdiff_t
 #include <typeinfo>			// typeid
 #include "../inc/map.hpp"
+#include "inc/benchmark.hpp"
 
 # define T1 int
 # define T2 int
@@ -51,8 +52,8 @@ print_map(Map& m, const std::string name) {
 	std::cout	<< std::endl;	
 }
 
-int
-main() {
+void
+main_test_map() {
 	NAMESPACE::map<int, std::string>			a;
 	NAMESPACE::map<int, std::string>::iterator	it;
 
@@ -992,6 +993,11 @@ main() {
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(e, "E");
+}
 
-	return 0; 
+int
+main() {
+	//measure_performance(main_test_map, "MAIN");
+	main_test_map();
+	return 0;
 }
