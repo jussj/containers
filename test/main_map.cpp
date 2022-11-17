@@ -159,15 +159,21 @@ main_test_map() {
 			NAMESPACE::pair<char,int>('z',500));
 		if (ret.second==false) {
 		  std::cout << "   element 'z' already exists";
-		  std::cout << "   with a value of " << ret.first->second << '\n';
+		  std::cout << " with a value of " << ret.first->second << '\n';
 		}
 
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
 		// second insert function version (with hint position):
 		NAMESPACE::map<char,int>::iterator it = mymap.begin();
 		// max efficiency inserting
 		mymap.insert (it, NAMESPACE::pair<char,int>('b',300));
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
 		// no max efficiency inserting
 		mymap.insert (it, NAMESPACE::pair<char,int>('c',400));
+		print_map<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
 
 		// third insert function version (range insertion):
 		NAMESPACE::map<char,int> anothermap;

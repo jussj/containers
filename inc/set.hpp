@@ -174,7 +174,6 @@ namespace ft {
 			void
 			erase(iterator position) {
 				_tree.erase(position);
-				//_tree.erase_and_rebalance(position);
 			}
 			
 			size_type
@@ -184,7 +183,6 @@ namespace ft {
 				if (ret	== end())
 					return 0;
 				_tree.erase(ret);
-				//_tree.erase_and_rebalance(ret);
 				return 1;
 			}
 			
@@ -192,7 +190,6 @@ namespace ft {
 			erase(iterator first, iterator last) {
 				while (first != last)
 					_tree.erase(first++);
-					//_tree.erase_and_rebalance(first++);
 			}
 
 			void
@@ -277,39 +274,45 @@ namespace ft {
 	};	/* set class */
 
 	template <class Key, class Compare, class Allocator>
-	bool operator==(const set<Key,Compare,Allocator>& x,
+	bool
+	operator==(const set<Key,Compare,Allocator>& x,
 	const set<Key,Compare,Allocator>& y) {
 		return x.size() == y.size() 
 			&& ft::equal(x.begin(), x.end(), y.begin());
 	}
 
 	template <class Key, class Compare, class Allocator>
-	bool operator< (const set<Key,Compare,Allocator>& x,
+	bool
+	operator< (const set<Key,Compare,Allocator>& x,
 	const set<Key,Compare,Allocator>& y) {
 		return ft::lexicographical_compare(x.begin(), x.end(), 
 				y.begin(), y.end());
 	}
 
 	template <class Key, class Compare, class Allocator>
-	bool operator!=(const set<Key,Compare,Allocator>& x,
+	bool
+	operator!=(const set<Key,Compare,Allocator>& x,
 	const set<Key,Compare,Allocator>& y) {
 		return !(x == y);	
 	}
 
 	template <class Key, class Compare, class Allocator>
-	bool operator> (const set<Key,Compare,Allocator>& x,
+	bool
+	operator> (const set<Key,Compare,Allocator>& x,
 	const set<Key,Compare,Allocator>& y) {
 		return y < x;
 	}
 
 	template <class Key, class Compare, class Allocator>
-	bool operator>=(const set<Key,Compare,Allocator>& x,
+	bool
+	operator>=(const set<Key,Compare,Allocator>& x,
 	const set<Key,Compare,Allocator>& y) {
 		return !(x < y);
 	}
 
 	template <class Key, class Compare, class Allocator>
-	bool operator<=(const set<Key,Compare,Allocator>& x,
+	bool
+	operator<=(const set<Key,Compare,Allocator>& x,
 	const set<Key,Compare,Allocator>& y) {
 		return !(y < x);
 	}
@@ -318,7 +321,8 @@ namespace ft {
 	// SPECIALIZED ALGORITHMS 
 	
 	template <class Key, class Compare, class Allocator>
-	void swap(set<Key,Compare,Allocator>& x,
+	void
+	swap(set<Key,Compare,Allocator>& x,
 	set<Key,Compare,Allocator>& y) {
 		x.swap(y);
 	}

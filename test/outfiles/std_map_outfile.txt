@@ -128,7 +128,31 @@
    [ 6	| six	]
    [ 9	| nine	]
 
-   element 'z' already exists   with a value of 200
+   element 'z' already exists with a value of 200
+
+// MAP MYMAP
+   size:  2
+
+   [ a	| 100	]
+   [ z	| 200	]
+
+
+// MAP MYMAP
+   size:  3
+
+   [ a	| 100	]
+   [ b	| 300	]
+   [ z	| 200	]
+
+
+// MAP MYMAP
+   size:  4
+
+   [ a	| 100	]
+   [ b	| 300	]
+   [ c	| 400	]
+   [ z	| 200	]
+
 
 // MAP MYMAP
    size:  4

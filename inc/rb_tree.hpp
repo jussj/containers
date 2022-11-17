@@ -125,7 +125,7 @@ namespace ft {
 		black_node() {
 			rb_tree_node	node;
 			
-			// only non-null value (leafs must be black)
+			// leafs must be black
 			node.color	= BLACK;
 			node.parent	= 0;
 			node.right	= &node;
@@ -343,7 +343,6 @@ namespace ft {
 			
 				while (new_root->parent != &(_header.node)) // find root
 					new_root = parent(new_root);
-				// TO-DO make root be a ptr on a node
 				_set_new_root(new_root);	
 			}
 
@@ -405,60 +404,13 @@ namespace ft {
 				return iterator(n);
 			}
 
-			node_ptr
-			_find_pos_with_hint(node_ptr n, value_type v) {
-			//_find_pos_with_hint(node_ptr n, const value_type& v) {
-				node_ptr	y = nil();
-				node_ptr	x = _create_node(v);
-				
-				while (x != nil()) {
-					y = x;
-					if (_compare(_key_of_value(**n), _key_of_value(**x)))
-						x = left(x);
-					else
-						x = right(x);
-				}
-				return y;
-			}
-			
-			node_ptr
-			_find_pos(node_ptr n) {
-				node_ptr	y = nil();
-				node_ptr	x = _root;
-				
-				while (x != nil()) {
-					y = x;
-					if (_compare(_key_of_value(**n), _key_of_value(**x)))
-						x = left(x);
-					else
-						x = right(x);
-				}
-				return y;
-			}
-
-			iterator
-			insert_with_hint(const value_type&v, const_iterator hint) {
-				(void)hint;
-				return insert_and_rebalance(v);
-			}
-
 			iterator	
-			//insert_and_rebalance(const value_type& v, iterator hint) {
-			insert_and_rebalance(const value_type& v) {
+			insert_and_rebalance(const value_type &v) {
 				node_ptr	n	= _create_node(v);
 				node_ptr	y	= nil();
 				node_ptr	x	= _root;
-
-				//(void)hint;
-
-				//if (hint == 0)
-					//y = _find_pos(n);
-				//else {
-					//value_type x = (*hint);
-					////value_type x = (*hint);
-					//y = _find_pos_with_hint(n, x);
-				//}
-
+			
+				// find insertion position	
 				while (x != nil()) {
 					y = x;
 					if (_compare(_key_of_value(**n), _key_of_value(**x)))
@@ -468,6 +420,7 @@ namespace ft {
 				}
 				// set new node's parent
 				n->parent = y;
+				
 				// first node
 				if (y == nil())
 					_init_root_and_header(n);
@@ -483,7 +436,7 @@ namespace ft {
 						_key_of_value(**left(&_header.node))))
 					_header.set_leftmost(n); 
 				else if (_compare(_key_of_value(**right(&_header.node)),
-								_key_of_value(**n)))
+						_key_of_value(**n)))
 					_header.set_rightmost(n); 
 
 				// update count	
@@ -495,7 +448,71 @@ namespace ft {
 				_header.node.color = RED;
 				return iterator(n);
 			}
+			
+			//iterator
+			//insert_with_hint(const value_type&v, const_iterator hint) {
+				//(void)hint;
+				//return insert_and_rebalance(v);
+			//}
+		
+			iterator	
+			emplace_at_position(base_ptr x, base_ptr y, const value_type& v) {
+				node_ptr n = _create_node(v);
+				
+				if (y == &_header.node || x != nil()
+						|| _compare(_key_of_value(v),
+							_key_of_value(*iterator(y)))) {
+					y->left = n;
+					if (y == &_header.node) {
+						_init_root_and_header(n);
+						_header.set_rightmost(n);
+					}
+					else if (y == _header.node.left)
+						_header.set_leftmost(n);
+				}
+				else {
+					y->right = n;
+					if (y == _header.node.right)
+						_header.set_rightmost(n);
+				}
+				n->parent	= y;
+				n->left		= nil();
+				n->right	= nil();
+				
+				_header.node_count++;
+				rebalance_after_insert(n);		
+				return iterator(n);
+			}
+		
+			iterator	
+			insert_with_hint(const value_type& v, iterator hint) {
 
+				if (hint == begin()) {
+					if (size() > 0 && _compare(_key_of_value(v), 
+								_key_of_value(*hint)))
+						return emplace_at_position(hint.node, hint.node, v);
+					else
+						return insert_and_rebalance(v);
+				}
+				else if (hint == iterator(end())) {
+					if (_compare(_key_of_value(**rightmost()), _key_of_value(v)))
+						return emplace_at_position(nil(), rightmost(), v);
+					else
+						return insert_and_rebalance(v);
+				}
+				else {
+					iterator before = hint--;
+					if (_compare(_key_of_value(*before), _key_of_value(v))
+							&& _compare(_key_of_value(v), _key_of_value(*hint)))
+						if (before.node->right == nil())
+							return emplace_at_position(nil(), before.node, v); 
+						else
+							return emplace_at_position(hint.node, hint.node, v);
+					else
+						return insert_and_rebalance(v);
+				}
+			}
+			
 			// DELETIONS
 
 			void
@@ -593,7 +610,7 @@ namespace ft {
 
 			void
 			erase_leaf_and_rebalance(base_ptr n, base_ptr y) {
-				// create "doubly black" node to rebalance the tree
+				// create leaf node to rebalance the tree
 				node_ptr x	= _alloc_node();
 				y			= n->parent;
 			
@@ -607,10 +624,10 @@ namespace ft {
 				else
 					y->right = x;
 				
-				// rebalance with doubly black node
+				// rebalance with leaf node
 				rebalance_after_erase(x);
 				
-				// delete node
+				// delete leaf node
 				if (y->left == x)
 					y->left = nil();
 				else
@@ -618,19 +635,9 @@ namespace ft {
 				_header.node.color = RED;
 				_dealloc_node(x);
 			}
-			
-			void
-			erase(const_iterator pos) {
-				node_ptr n = static_cast<node_ptr>(
-						erase_and_rebalance(
-						const_cast<base_ptr>(pos.node)));
-				_destroy_node((node_ptr&)n);
-			}
 
 			base_ptr
-			//erase_and_rebalance(iterator pos) {
 			erase_and_rebalance(const base_ptr n) {
-				//base_ptr n	= pos.node;		// node to be deleted
 				base_ptr y	= n;			// successor to n
 				base_ptr x;					// successor to y
 
@@ -709,8 +716,17 @@ namespace ft {
 				}	
 				_header.node.color = RED;
 				return n;
-				//_destroy_node((node_ptr&)pos.node);
 			}
+			
+			void
+			erase(const_iterator pos) {
+				node_ptr n = static_cast<node_ptr>(
+						erase_and_rebalance(
+						const_cast<base_ptr>(pos.node)));
+				_destroy_node((node_ptr&)n);
+			}
+
+			// CLEAR
 
 			void
 			clear() {
@@ -719,8 +735,6 @@ namespace ft {
 				_clear_from(root());
 
 				_reset_root_and_header();
-				//_header.set_leftmost(&_header.node);
-				//_header.set_rightmost(&_header.node);
 				_header.node_count = 0;
 			}
 
@@ -762,7 +776,7 @@ namespace ft {
 				base_ptr m = &_header.node;
 				
 				while (n != nil()) {
-					if (!(_compare(_key_of_value(**n), x))) // same than above
+					if (!(_compare(_key_of_value(**n), x)))
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -776,7 +790,7 @@ namespace ft {
 				base_ptr m = nil();
 			   
 				while (n != nil()) {
-					if (!(_compare(_key_of_value(**n), x))) // same than above 
+					if (!(_compare(_key_of_value(**n), x)))
 						m = n, n = left(n);
 					else
 						n = right(n);
@@ -827,12 +841,7 @@ namespace ft {
 							<< "   nil:   " << 0 << "\t(" 
 							<< nil() << ")" << std::endl
 							<< "   head:  " << "\t(" << &(_header.node) << ")"
-							<< std::endl
-							<< "  (color)\t";
-							if (_header.node.color == RED)
-								std::cout << "RED" << std::endl;
-							else if (_header.node.color == BLACK)
-								std::cout << "BLACK" << std::endl;
+							<< std::endl;
 				std::cout	<< "   bh:    " << black_height() << std::endl;
 			}
 
@@ -970,14 +979,13 @@ namespace ft {
 
 			// HEADER DATA ACCESS
 	
-			// for debug purposes
+			// set to public for tree visualizer in map
 		public:			
 			node_ptr
 			root() {
 				return static_cast<node_ptr>(_header.node.parent);
 			}
 
-			// TO-DO db check for unjustified non priv members
 		protected:	
 			node_ptr
 			leftmost() {
@@ -1030,6 +1038,11 @@ namespace ft {
 
 			//// MODIFIERS ////
 
+			base_ptr
+			_find_pos(const base_ptr hint) {
+				return hint;	
+			}
+
 			void
 			_clear_from(node_ptr n) {
 				// erase without rebalancing
@@ -1053,13 +1066,11 @@ namespace ft {
 					node_ptr y = _alloc_node();
 					if (start == x)
 						start = y;
-
 					y->value	= _construct_pair(value(x));
 					p->left		= y;	
 					y->parent	= p;	
 					y->color	= x->color;	
 					y->right	= _copy_from(right(x), y);
-					
 					p = y;
 					(base_ptr&)x = x->left;
 				}
@@ -1102,17 +1113,6 @@ namespace ft {
 			_dealloc_node(node_ptr& n) {
 				_nodalloc.deallocate(n, 1);
 			}
-
-			//void
-			//_construct_node(node_ptr& n, value_type v) {
-				//try {
-					//_alloc.construct(n, v);
-				//}
-				//catch (...) {
-					//_dealloc_node(n);
-					//// throw exception in case construction didn't work
-				//}
-			//}
 			
 			node_ptr
 			_init_node_ptr(node_ptr n, node_ptr pos = 0) {
@@ -1122,19 +1122,6 @@ namespace ft {
 				n->color = RED;
 				return n;
 			}
-
-			// RECYCLING NODES POOL
-
-			// struct reuse or realloc
-			// reuse or alloc >> recycle a pool of nodes,
-			// using alloc only once pool empty
-				 // operator() to destroy/construct a node
-				 // extract() from the pool, return a node
-				 // attributes: root, nodes and tree
-			
-			// struct alloc without reusing
-			      // operator()
-			      // attribute tree	
 		
 			node_ptr
 			_allocate();
@@ -1143,7 +1130,6 @@ namespace ft {
 
 			// PAIRS
 
-			// TO-DO try catch STL like to implement, see construct_node
 			value_type*
 			_construct_pair(value_type v) {
 				value_type*	pair = _alloc.allocate(1);
@@ -1157,7 +1143,6 @@ namespace ft {
 				_alloc.deallocate(n->value, 1);
 			}
 		
-			//template<class V>			// if const?
 			node_ptr
 			_create_node(value_type val, node_ptr pos = 0) {
 				node_ptr	n;
@@ -1198,8 +1183,6 @@ namespace ft {
 				y.begin(), y.end());
 	}
 
-	// TO-DO find a solution to keep the base iterator
-	// without loosing the const qualifier 
 	template<class T>
 	struct rb_tree_iterator {
 

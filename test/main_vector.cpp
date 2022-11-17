@@ -5,6 +5,7 @@
 #include "inc/ComplexClass.hpp"
 #include <cstddef>		// ptrdiff_t
 #include <typeinfo>		// typeid
+#include <list>
 
 #ifndef STD
 # define NAMESPACE ft
@@ -800,13 +801,26 @@ main_test_vector() {
 			std::cout << *--it		<< std::endl;
 		}
 		
-		//std::cout 	<< std::endl
-				//<< "//// ITERATOR TRAITS //// " << std::endl; 
+	//std::cout 	<< std::endl
+				//<< "//// ITERATOR TRAITS AND CTOR//// " << std::endl; 
+
+	//std::list<int>					lst;
+	//std::list<int>::iterator		lstit = lst.begin();
+
+	//NAMESPACE::vector<int>					vec;
 	
-		//typedef std::iterator_traits<int*> traits;
-		  
-		//if (typeid(traits::iterator_category)==typeid(NAMESPACE::random_access_iterator_tag))
-				//std::cout << "int* is a random-access iterator";
+	// SHOULD NOT COMPILE
+	//NAMESPACE::vector<int>::iterator		vecit(lstit);
+
+	// SHOULD NOT COMPILE
+	//NAMESPACE::vector<int>::iterator		vecit = vec.begin();	
+	//NAMESPACE::vector<char>::iterator		wrongit(vecit);
+	
+	//typedef std::iterator_traits<int*> traits;
+	  
+	//if (typeid(traits::iterator_category) 
+				//== typeid(NAMESPACE::random_access_iterator_tag))
+		//std::cout << "int* is a random-access iterator";
 
 	}
 }

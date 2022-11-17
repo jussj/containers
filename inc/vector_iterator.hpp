@@ -30,7 +30,6 @@ namespace ft {
 			template<class U>
 			vector_iterator(const vector_iterator<U> it)
 				: _ptr(&(*it)) {}
-				//: _ptr(it.current()) {}
 			~vector_iterator() {}
 
 		// OPERATORS
@@ -86,7 +85,6 @@ namespace ft {
 			difference_type
 			operator-(const vector_iterator<U>& x) {
 				return current() - &(*x);
-				//return current() - x.current();
 			}
 			vector_iterator&
 			operator+=(int n) {
@@ -160,7 +158,6 @@ namespace ft {
 	typename vector_iterator<T>::difference_type
 	operator-(const vector_iterator<T>& x, const vector_iterator<T>& y) {
 		return &(*x) - &(*y);
-		//return x.current() - y.current();
 	}
 
 	template<class L, class R>
