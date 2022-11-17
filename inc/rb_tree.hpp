@@ -448,17 +448,12 @@ namespace ft {
 				_header.node.color = RED;
 				return iterator(n);
 			}
-			
-			//iterator
-			//insert_with_hint(const value_type&v, const_iterator hint) {
-				//(void)hint;
-				//return insert_and_rebalance(v);
-			//}
 		
 			iterator	
-			emplace_at_position(base_ptr x, base_ptr y, const value_type& v) {
+			insert_at_position(base_ptr x, base_ptr y, const value_type& v) {
 				node_ptr n = _create_node(v);
-				
+			
+				// set y child to n and maintain rightmost and leftmost	
 				if (y == &_header.node || x != nil()
 						|| _compare(_key_of_value(v),
 							_key_of_value(*iterator(y)))) {
@@ -483,20 +478,19 @@ namespace ft {
 				rebalance_after_insert(n);		
 				return iterator(n);
 			}
-		
+			
 			iterator	
 			insert_with_hint(const value_type& v, iterator hint) {
-
 				if (hint == begin()) {
 					if (size() > 0 && _compare(_key_of_value(v), 
 								_key_of_value(*hint)))
-						return emplace_at_position(hint.node, hint.node, v);
+						return insert_at_position(hint.node, hint.node, v);
 					else
 						return insert_and_rebalance(v);
 				}
 				else if (hint == iterator(end())) {
 					if (_compare(_key_of_value(**rightmost()), _key_of_value(v)))
-						return emplace_at_position(nil(), rightmost(), v);
+						return insert_at_position(nil(), rightmost(), v);
 					else
 						return insert_and_rebalance(v);
 				}
@@ -505,9 +499,9 @@ namespace ft {
 					if (_compare(_key_of_value(*before), _key_of_value(v))
 							&& _compare(_key_of_value(v), _key_of_value(*hint)))
 						if (before.node->right == nil())
-							return emplace_at_position(nil(), before.node, v); 
+							return insert_at_position(nil(), before.node, v); 
 						else
-							return emplace_at_position(hint.node, hint.node, v);
+							return insert_at_position(hint.node, hint.node, v);
 					else
 						return insert_and_rebalance(v);
 				}

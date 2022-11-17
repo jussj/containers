@@ -160,7 +160,7 @@ namespace ft {
 				iterator	it		= find(x);
 
 				if (it == end())
-					it	= _tree.insert_with_hint(x, position);
+					it	= _tree.insert_with_hint(x, (rb_tree::iterator&)position);
 				return it;
 			}
 			
