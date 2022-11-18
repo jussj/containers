@@ -1,0 +1,966 @@
+// MY FIRST MAP <3 AND IT IS EMPTY AF //
+
+// MAP A
+   size:  0
+
+   [ EMPTY MAP ]
+
+// INSERT //
+
+// INSERT ONE ELEMENT
+
+// MAP A
+   size:  6
+
+   [ 0	| zero	]
+   [ 1	| one	]
+   [ 3	| three	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 10	| ten	]
+
+
+// MAP B
+   size:  2
+
+   [ 1	| one	]
+   [ 2	| two	]
+
+
+// MAP B
+   size:  5
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+
+
+// MAP B
+   size:  6
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+
+
+// MAP B
+   size:  7
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 11	| elev	]
+
+
+// MAP B
+   size:  8
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 10	| ten	]
+   [ 11	| elev	]
+
+
+// MAP B
+   size:  8
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 10	| ten	]
+   [ 11	| elev	]
+
+   INSERT RANGE
+
+// MAP BB
+   size:  3
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+
+   INSERT W HINT
+   hint 1, new 9 after last elem
+
+// MAP BB
+   size:  4
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 9	| nine	]
+
+   hint 1, new 6 before last elem
+
+// MAP BB
+   size:  5
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 6	| six	]
+   [ 9	| nine	]
+
+   hint 4, new 3 before last elem
+
+// MAP BB
+   size:  6
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 3	| three	]
+   [ 4	| four	]
+   [ 6	| six	]
+   [ 9	| nine	]
+
+   element 'z' already exists with a value of 200
+
+// MAP MYMAP
+   size:  2
+
+   [ a	| 100	]
+   [ z	| 200	]
+
+
+// MAP MYMAP
+   size:  3
+
+   [ a	| 100	]
+   [ b	| 300	]
+   [ z	| 200	]
+
+
+// MAP MYMAP
+   size:  4
+
+   [ a	| 100	]
+   [ b	| 300	]
+   [ c	| 400	]
+   [ z	| 200	]
+
+
+// MAP MYMAP
+   size:  4
+
+   [ a	| 100	]
+   [ b	| 300	]
+   [ c	| 400	]
+   [ z	| 200	]
+
+
+// MAP ANOTHERMAP
+   size:  2
+
+   [ a	| 100	]
+   [ b	| 300	]
+
+
+// ITERATOR ACCESS //
+   last element pointer: 
+   10, ten
+   last element reference: 
+   10, ten
+
+// IT PREFIX DECREM //
+   [ 10	| ten	]
+   [ 5	| five	]
+   [ 4	| four	]
+   [ 3	| three	]
+   [ 1	| one	]
+   [ 0	| zero	]
+
+// IT POSTFIX INCREM //
+   0 zero
+   1 one
+   3 three
+   4 four
+   5 five
+   10 ten
+
+// CONSTANT ITERATOR ACCESS //
+   last element pointer: 
+   10, ten
+   last element reference: 
+   10, ten
+
+// CONSTANT IT DECREM
+   [ 10	| ten	]
+   [ 5	| five	]
+   [ 4	| four	]
+   [ 3	| three	]
+   [ 1	| one	]
+   [ 0	| zero	]
+
+// BEGIN //
+   [ 0	| zero	]
+   [ 1	| one	]
+
+// END //
+   [ 10	| ten	]
+
+// FIND //
+   [ 10	| ten	]
+
+// LOWER_BOUND //
+
+   iterators:
+   [ 3	| three	]
+   [ 1	| one	]
+
+   IT RETURN END
+
+   const iterators:
+   [ 3	| three	]
+   [ 1	| one	]
+
+   CIT RETURN END
+
+// UPPER_BOUND //
+
+   iterators:
+   [ 4	| four	]
+   [ 3	| three	]
+
+   IT RETURN END
+
+   const iterators:
+   [ 4	| four	]
+   [ 3	| three	]
+
+   CIT RETURN END
+
+// MAP A
+   size:  6
+
+   [ 0	| zero	]
+   [ 1	| one	]
+   [ 3	| three	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 10	| ten	]
+
+
+// LOWER_BOUND/UPPER_BOUND //
+
+// MAP MYMAP
+   size:  5
+
+   [ a	| 20	]
+   [ b	| 40	]
+   [ c	| 60	]
+   [ d	| 80	]
+   [ e	| 100	]
+
+   lower : b
+   upper : e
+
+   DELETING FROM b TO RIGHTMOST, e
+
+// MAP MYMAP
+   size:  2
+
+   [ a	| 20	]
+   [ e	| 100	]
+
+// ERASE //
+
+// ERASE ONE ELEMENT
+   NODE W ZERO CHILD:
+
+   RIGHTMOST:
+>> A size: 6
+>> A end:
+   [ 10	| ten	]
+>> A size: 5
+>> A new end:
+   [ 5	| five	]
+>> A size: 4
+>> A new new end:
+   [ 4	| four	]
+
+// MAP A
+   size:  4
+
+   [ 0	| zero	]
+   [ 1	| one	]
+   [ 3	| three	]
+   [ 4	| four	]
+
+
+// MAP B
+   size:  8
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 10	| ten	]
+   [ 11	| elev	]
+
+   NODE W ONE CHILD:
+
+>> B size: 8
+>> B end:
+   [ 11	| elev	]
+>> B size: 7
+>> B new end:
+   [ 10	| ten	]
+
+// MAP B
+   size:  7
+
+   [ 1	| one	]
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 10	| ten	]
+
+   LEFTMOST:
+>> A size: 5
+>> A begin:
+   [ 0	| zero	]
+>> A size: 4
+>> A new begin:
+   [ 1	| one	]
+>> B size: 7
+>> B begin:
+   [ 1	| one	]
+>> B size: 6
+>> B new begin:
+   [ 2	| two	]
+
+// MAP B
+   size:  6
+
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 10	| ten	]
+
+   NODE W 2 CHILDREN:
+
+// MAP B
+   size:  6
+
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 10	| ten	]
+
+
+// MAP B
+   size:  5
+
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 10	| ten	]
+
+
+// MAP B
+   size:  5
+
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 7	| seven	]
+   [ 9	| nine	]
+   [ 10	| ten	]
+
+
+// MAP B
+   size:  4
+
+   [ 2	| two	]
+   [ 4	| four	]
+   [ 7	| seven	]
+   [ 10	| ten	]
+
+
+// MAP C
+   size:  20
+
+   [ 0	| hehe	]
+   [ 1	| hehe	]
+   [ 2	| hehe	]
+   [ 3	| hehe	]
+   [ 4	| hehe	]
+   [ 5	| hehe	]
+   [ 6	| hehe	]
+   [ 7	| hehe	]
+   [ 8	| hehe	]
+   [ 9	| hehe	]
+   [ 10	| hehe	]
+   [ 11	| hehe	]
+   [ 12	| hehe	]
+   [ 13	| hehe	]
+   [ 14	| hehe	]
+   [ 15	| hehe	]
+   [ 16	| hehe	]
+   [ 17	| hehe	]
+   [ 18	| hehe	]
+   [ 19	| hehe	]
+
+
+// MAP C
+   size:  19
+
+   [ 0	| hehe	]
+   [ 1	| hehe	]
+   [ 2	| hehe	]
+   [ 4	| hehe	]
+   [ 5	| hehe	]
+   [ 6	| hehe	]
+   [ 7	| hehe	]
+   [ 8	| hehe	]
+   [ 9	| hehe	]
+   [ 10	| hehe	]
+   [ 11	| hehe	]
+   [ 12	| hehe	]
+   [ 13	| hehe	]
+   [ 14	| hehe	]
+   [ 15	| hehe	]
+   [ 16	| hehe	]
+   [ 17	| hehe	]
+   [ 18	| hehe	]
+   [ 19	| hehe	]
+
+   reinserting deleted elements...
+
+// MAP A
+   size:  6
+
+   [ 0	| zero	]
+   [ 1	| one	]
+   [ 3	| three	]
+   [ 4	| four	]
+   [ 5	| five	]
+   [ 10	| ten	]
+
+   erasing last element...
+
+// MAP D
+   size:  1
+
+   [ 0	| zero	]
+
+
+// MAP D
+   size:  0
+
+   [ EMPTY MAP ]
+
+   emptying A tree from begin...
+
+
+// MAP A
+   size:  0
+
+   [ EMPTY MAP ]
+
+   emptying B tree from end...
+
+// MAP B
+   size:  0
+
+   [ EMPTY MAP ]
+
+// ERASE RANGE
+
+// MAP C
+   size:  19
+
+   [ 0	| hehe	]
+   [ 1	| hehe	]
+   [ 2	| hehe	]
+   [ 4	| hehe	]
+   [ 5	| hehe	]
+   [ 6	| hehe	]
+   [ 7	| hehe	]
+   [ 8	| hehe	]
+   [ 9	| hehe	]
+   [ 10	| hehe	]
+   [ 11	| hehe	]
+   [ 12	| hehe	]
+   [ 13	| hehe	]
+   [ 14	| hehe	]
+   [ 15	| hehe	]
+   [ 16	| hehe	]
+   [ 17	| hehe	]
+   [ 18	| hehe	]
+   [ 19	| hehe	]
+
+   from begin()
+
+// MAP C
+   size:  13
+
+   [ 7	| hehe	]
+   [ 8	| hehe	]
+   [ 9	| hehe	]
+   [ 10	| hehe	]
+   [ 11	| hehe	]
+   [ 12	| hehe	]
+   [ 13	| hehe	]
+   [ 14	| hehe	]
+   [ 15	| hehe	]
+   [ 16	| hehe	]
+   [ 17	| hehe	]
+   [ 18	| hehe	]
+   [ 19	| hehe	]
+
+   to --end()
+
+// MAP C
+   size:  11
+
+   [ 7	| hehe	]
+   [ 8	| hehe	]
+   [ 9	| hehe	]
+   [ 10	| hehe	]
+   [ 11	| hehe	]
+   [ 12	| hehe	]
+   [ 13	| hehe	]
+   [ 14	| hehe	]
+   [ 15	| hehe	]
+   [ 16	| hehe	]
+   [ 19	| hehe	]
+
+   to end()
+
+// MAP MYMAP
+   size:  6
+
+   [ a	| 10	]
+   [ b	| 20	]
+   [ c	| 30	]
+   [ d	| 40	]
+   [ e	| 50	]
+   [ f	| 60	]
+
+   found b
+   erase iterator to b
+   erase by key 'c'
+   erase by range 'e' to end
+   display :
+   a 10
+   d 40
+
+// MAP MYMAP
+   size:  0
+
+   [ EMPTY MAP ]
+
+
+// MORE ERASE
+
+// MAP MP
+   size:  10
+
+   [ 0	| AAAAAAAAAA	]
+   [ 1	| BBBBBBBBB	]
+   [ 2	| CCCCCCCC	]
+   [ 3	| DDDDDDD	]
+   [ 4	| EEEEEE	]
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 7	| HHH	]
+   [ 8	| II	]
+   [ 9	| J	]
+
+
+// MAP MP +beg
+   size:  9
+
+   [ 0	| AAAAAAAAAA	]
+   [ 2	| CCCCCCCC	]
+   [ 3	| DDDDDDD	]
+   [ 4	| EEEEEE	]
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 7	| HHH	]
+   [ 8	| II	]
+   [ 9	| J	]
+
+
+// MAP MP range beg, +++beg
+   size:  6
+
+   [ 4	| EEEEEE	]
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 7	| HHH	]
+   [ 8	| II	]
+   [ 9	| J	]
+
+
+// MAP MP range beg, -end
+   size:  4
+
+   [ 4	| EEEEEE	]
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 9	| J	]
+
+
+// MAP MP beg
+   size:  3
+
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 9	| J	]
+
+
+// MAP MP -end
+   size:  2
+
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+
+
+// MAP MP -end
+   size:  4
+
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 10	| Hello	]
+   [ 11	| Hi	]
+
+   [ 5	| FFFFF	]
+   [ 11	| Hi	]
+
+// MAP MP range ---end, end
+   size:  1
+
+   [ 5	| FFFFF	]
+
+
+// MAP MP
+   size:  5
+
+   [ 5	| FFFFF	]
+   [ 12	| ONE	]
+   [ 13	| TWO	]
+   [ 14	| THREE	]
+   [ 15	| FOUR	]
+
+   [ 5	| FFFFF	]
+   [ 15	| FOUR	]
+
+// MAP MP all
+   size:  0
+
+   [ EMPTY MAP ]
+
+
+// MAP FCK
+   size:  10
+
+   [ 0	| AAAAAAAAAA	]
+   [ 1	| BBBBBBBBB	]
+   [ 2	| CCCCCCCC	]
+   [ 3	| DDDDDDD	]
+   [ 4	| EEEEEE	]
+   [ 5	| FFFFF	]
+   [ 6	| GGGG	]
+   [ 7	| HHH	]
+   [ 8	| II	]
+   [ 9	| J	]
+
+
+// MAP FCK erase +beg to -end
+   size:  2
+
+   [ 0	| AAAAAAAAAA	]
+   [ 9	| J	]
+
+   [ 0	| AAAAAAAAAA	]
+END:
+   [ 9	| J	]
+
+// MAP FCK erase ---end to end
+   size:  0
+
+   [ EMPTY MAP ]
+
+// CLEAR //
+
+// MAP C
+   size:  8
+
+   [ 7	| hehe	]
+   [ 8	| hehe	]
+   [ 9	| hehe	]
+   [ 10	| hehe	]
+   [ 11	| hehe	]
+   [ 12	| hehe	]
+   [ 13	| hehe	]
+   [ 14	| hehe	]
+
+
+// MAP C
+   size:  0
+
+   [ EMPTY MAP ]
+
+
+// OPERATOR[] //
+   inserting after clearance...
+
+// MAP C
+   size:  1
+
+   [ 100	| one hundred	]
+
+   lower_bound after insert:
+   [ 100	| one hundred	]
+
+   find after insert:
+   [ 100	| one hundred	]
+
+// COMPARISON OPERATORS //
+   foo and bar are not equal :)
+   foo is greater than bar :)
+   bar is less than foo :)
+   foo is greater than or equal to bar :)
+
+   B IS SAME KEY BUT DIFFERENT VALUE
+   foo and bar are not equal :)
+   foo is greater than bar :)
+   foo is greater than or equal to bar :)
+
+   SAME MAP
+   palo is the same :)
+   palomap :)
+   palo is less than or equal to map :)
+   palo is greater than or equal to map :)
+   palo and map are different :)
+   palo is less than map :)
+   palo is less than or equal to map :)
+
+// SWUAP
+
+// MAP HEHE
+   size:  4
+
+   [ 1	| a	]
+   [ 2	| b	]
+   [ 3	| c	]
+   [ 4	| d	]
+
+
+// MAP HAHA
+   size:  5
+
+   [ 5	| e	]
+   [ 6	| f	]
+   [ 7	| g	]
+   [ 8	| h	]
+   [ 9	| i	]
+
+   performing swap:
+
+// MAP HEHE
+   size:  5
+
+   [ 5	| e	]
+   [ 6	| f	]
+   [ 7	| g	]
+   [ 8	| h	]
+   [ 9	| i	]
+
+
+// MAP HAHA
+   size:  4
+
+   [ 1	| a	]
+   [ 2	| b	]
+   [ 3	| c	]
+   [ 4	| d	]
+
+   is swap DEEP? clearing haha:
+
+// MAP HEHE
+   size:  5
+
+   [ 5	| e	]
+   [ 6	| f	]
+   [ 7	| g	]
+   [ 8	| h	]
+   [ 9	| i	]
+
+   MAZOIZ SWUAP TESTS:
+
+// MAP FOO
+   size:  2
+
+   [ x	| 100	]
+   [ y	| 200	]
+
+
+// MAP BAR
+   size:  3
+
+   [ a	| 11	]
+   [ b	| 22	]
+   [ c	| 33	]
+
+
+// MAP FOO
+   size:  3
+
+   [ a	| 11	]
+   [ b	| 22	]
+   [ c	| 33	]
+
+
+// MAP BAR
+   size:  2
+
+   [ x	| 100	]
+   [ y	| 200	]
+
+   foo contains:
+   a: 11
+   b: 22
+   c: 33
+   bar contains:
+   x: 100
+   y: 200
+   x: 100
+   y: 200
+   a: 11
+   b: 22
+   c: 33
+
+// MAP OTHER
+   size:  3
+
+   [ a	| 11	]
+   [ b	| 22	]
+   [ c	| 33	]
+
+
+// MAP FOO
+   size:  6
+
+   [ 1	| 73	]
+   [ 2	| 173	]
+   [ 3	| 763	]
+   [ 4	| 73854	]
+   [ 5	| 74683	]
+   [ 6	| 753	]
+
+
+// MAP BAR
+   size:  2
+
+   [ x	| 100	]
+   [ y	| 200	]
+
+   y: 200
+   x: 100
+   c: 33
+   b: 22
+   a: 11
+   1: 73
+   2: 173
+   3: 763
+   4: 73854
+   5: 74683
+   6: 753
+
+// MAP OTHER
+   size:  3
+
+   [ a	| 11	]
+   [ b	| 22	]
+   [ c	| 33	]
+
+
+// MAP FOO
+   size:  2
+
+   [ x	| 100	]
+   [ y	| 200	]
+
+
+// MAP BAR
+   size:  6
+
+   [ 1	| 73	]
+   [ 2	| 173	]
+   [ 3	| 763	]
+   [ 4	| 73854	]
+   [ 5	| 74683	]
+   [ 6	| 753	]
+
+   x: 100
+   y: 200
+   a: 11
+   b: 22
+   c: 33
+   6: 753
+   5: 74683
+   4: 73854
+   3: 763
+   2: 173
+   1: 73
+
+   SWAP WITH EMPTY CONTAINER
+
+// MAP BAREFOOT
+   size:  2
+
+   [ x	| 100	]
+   [ y	| 200	]
+
+
+// MAP FOO
+   size:  0
+
+   [ EMPTY MAP ]
+
+
+// COPY CTOR //
+
+// MAP D
+   size:  4
+
+   [ 1	| pls	]
+   [ 3	| make	]
+   [ 4	| dis	]
+   [ 5	| stop	]
+
+
+// MAP E
+   size:  4
+
+   [ 1	| pls	]
+   [ 3	| make	]
+   [ 4	| dis	]
+   [ 5	| stop	]
+

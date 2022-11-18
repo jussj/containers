@@ -1,0 +1,131 @@
+///////////////
+//// STACK ////
+///////////////
+creating three stacks...
+stack<int, std::deque>a
+stack<int, ft::vector>b
+stack<std::string>d
+
+pushing three elements to stack B...
+
+// STACK B ARRAY:
+   size: 3
+   top:	"34"
+   [ 34 -65 7 ]
+
+copy ctor stack c(b)...
+
+pushing three elements to stack D...
+copy ctor stack e(d)...
+
+// STACK E ARRAY:
+   size: 6
+   top:	"LOOK"
+   [ LOOK MY STACK CONTAINS SIX WORDS ]
+
+>> stack A is empty
+>> stack B is NOT empty
+
+// STACK B ARRAY:
+   size: 3
+   top:	"34"
+   [ 34 -65 7 ]
+
+// STACK D ARRAY:
+   size: 6
+   top:	"LOOK"
+   [ LOOK MY STACK CONTAINS SIX WORDS ]
+
+popping three elements out of stack E...
+
+// STACK E ARRAY:
+   size: 3
+   top:	"CONTAINS"
+   [ CONTAINS SIX WORDS ]
+
+total sum of elements: 5050
+
+//// RELATIONAL OPERATORS ////
+
+a and b are equal
+b and c are not equal
+b is less than c
+c is greater than b
+a is less than or equal to b
+a is greater than or equal to b
+stack<int> f
+
+//// EMPTY ////
+
+f.empty(): 1
+f.size(): 0
+
+//// PUSH ////
+
+// STACK F ARRAY:
+   size: 1
+   top:	"42"
+   [ 42 ]
+
+f.push(42)
+
+// STACK F ARRAY:
+   size: 2
+   top:	"2"
+   [ 2 42 ]
+
+f.push(2)
+
+//// POP ////
+
+f.pop()
+
+// STACK F ARRAY:
+   size: 1
+   top:	"42"
+   [ 42 ]
+
+stack<int, ft::vector> g
+
+//// EMPTY ////
+
+g.empty(): 1
+g.size(): 0
+
+//// PUSH ////
+
+g.push(42)
+
+// STACK G ARRAY:
+   size: 1
+   top:	"42"
+   [ 42 ]
+
+g.push(2)
+
+// STACK G ARRAY:
+   size: 2
+   top:	"2"
+   [ 2 42 ]
+
+//// POP ////
+
+g.pop()
+
+// STACK G ARRAY:
+   size: 1
+   top:	"42"
+   [ 42 ]
+
+//// COPY AND OPERATOR== ////
+
+stack<int> h = f
+
+// STACK H ARRAY:
+   size: 1
+   top:	"42"
+   [ 42 ]
+
+h == f:1
+h.push(7)
+h == f:0

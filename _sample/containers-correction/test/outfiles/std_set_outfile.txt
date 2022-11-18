@@ -1,0 +1,105 @@
+hello my name is seth
+
+// SET SETH
+   size:  1
+
+   [ hello my name is seth	]
+
+seth is empty inside :)
+
+// SET SETH
+   size:  6
+
+   [ haha	]
+   [ hehe	]
+   [ hhhh	]
+   [ hihi	]
+   [ hoho	]
+   [ huhu	]
+
+
+// SET SEPT
+   size:  6
+
+   [ haha	]
+   [ hehe	]
+   [ hhhh	]
+   [ hihi	]
+   [ hoho	]
+   [ huhu	]
+
+
+// SET CERTES
+   size:  5
+
+   [ haha	]
+   [ hehe	]
+   [ hhhh	]
+   [ hihi	]
+   [ hoho	]
+
+
+// SET SEPT
+   size:  5
+
+   [ HAHA	]
+   [ HEHE	]
+   [ HIHI	]
+   [ haha	]
+   [ hehe	]
+
+
+// SET SEPT
+   size:  5
+
+   [ haha	]
+   [ hehe	]
+   [ hhhh	]
+   [ hihi	]
+   [ hoho	]
+
+
+// SET CERTES
+   size:  5
+
+   [ HAHA	]
+   [ HEHE	]
+   [ HIHI	]
+   [ haha	]
+   [ hehe	]
+
+
+// SET TESS
+   size:  0
+
+   [ EMPTY MAP ]
+
+
+// SET TESS
+   size:  5
+
+   [ HAHA	]
+   [ HEHE	]
+   [ HIHI	]
+   [ haha	]
+   [ hehe	]
+
+
+// SET CERTES
+   size:  0
+
+   [ EMPTY MAP ]
+
+// ITERATORS
+
+hehe
+hehe
+haha
+haha
+haha
+
+// COMPARISON
+
+seth and certes are not equal :)
+seth is superior to certes :)
+seth is superior or equal to certes :)
