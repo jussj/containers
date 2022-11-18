@@ -396,7 +396,7 @@ namespace ft {
 						_fill(&(*position), n, x);
 					}
 					else {
-						_copy_forward(position, elems_after, n, new_size);
+						_copy_forward(position, elems_after, n);
 						_fill(&(*position), n, x);
 					}
 				}
@@ -430,7 +430,7 @@ namespace ft {
 						_fill(&(*position), first, last);
 					}
 					else {
-						_copy_forward(position, elems_after, length, new_size);
+						_copy_forward(position, elems_after, length);
 						_fill(&(*position), first, last);
 					}
 				}
@@ -504,9 +504,7 @@ namespace ft {
 			_copy_forward(
 					iterator position,
 					size_type elems_after,
-					size_type n,
-					size_type new_size) {
-				iterator	new_end = begin() + new_size - 1;
+					size_type n) {
 				iterator	it		= position;
 					
 				for (size_type i = 0; i < elems_after; ++i) {

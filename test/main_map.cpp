@@ -999,6 +999,19 @@ main_test_map() {
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(e, "E");
+	
+	//std::cout	<< std::endl
+				//<< "// 1 MILLION INSERT AND DELETE :))) //" << std::endl;
+
+	//NAMESPACE::map<int, std::string>			f;
+
+	//for (int i = 0; i < 1000000; ++i) {
+		//f.insert(NAMESPACE::pair<int, std::string>(i, "POUET"));	
+	//}
+
+	//while (!f.empty()) {
+		//f.erase(f.begin());	
+	//}
 }
 
 int

@@ -40,7 +40,7 @@ vpath %.o			$(OBJS_DIR)
 
 vpath %.d			$(DEPS_DIR)
 
-all:				$(MAP) $(VECTOR) $(STACK)
+all:				$(MAP) $(VECTOR) $(STACK) $(SET)
 
 map:				$(MAP)
 vector:				$(VECTOR)
@@ -92,7 +92,6 @@ fclean:				clean
 re:				fclean all
 
 dl:			
-	curl -O "https://projects.intra.42.fr/uploads/document/document/8394/main.cpp"
 	curl -O "https://cdn.intra.42.fr/pdf/pdf/47623/en.subject.pdf"
 
 .PHONY:				all clean fclean re dl

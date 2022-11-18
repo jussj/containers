@@ -801,6 +801,7 @@ main_test_vector() {
 			std::cout << *--it		<< std::endl;
 		}
 		
+	}
 	//std::cout 	<< std::endl
 				//<< "//// ITERATOR TRAITS AND CTOR//// " << std::endl; 
 
@@ -822,7 +823,18 @@ main_test_vector() {
 				//== typeid(NAMESPACE::random_access_iterator_tag))
 		//std::cout << "int* is a random-access iterator";
 
-	}
+	//std::cout	<< std::endl
+				//<< "// 100000 INSERT AND DELETE :))) //" << std::endl;
+
+	//NAMESPACE::map<int, std::string>			f;
+
+	//for (int i = 0; i < 100000; ++i) {
+		//f.insert(NAMESPACE::pair<int, std::string>(i, "POUET"));	
+	//}
+
+	//while (!f.empty()) {
+		//f.erase(f.begin());	
+	//}
 }
 
 int

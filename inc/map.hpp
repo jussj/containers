@@ -172,7 +172,6 @@ namespace ft {
 
 			mapped_type&
 			operator[](const key_type& x) {
-
 				return (insert(ft::make_pair(x, mapped_type())).first)->second;
 			}
 
@@ -218,14 +217,11 @@ namespace ft {
 				if (ret	== end())
 					return 0;
 				_tree.erase(ret);
-				// return number of occurences
 				return 1;
 			}
 			
 			void
 			erase(iterator first, iterator last) {
-				//if (first == begin() && last == end())
-					//clear();
 				while (first != last)
 					_tree.erase(first++);
 			}
@@ -309,7 +305,7 @@ namespace ft {
 						);
 			}
 
-		// DEBUG
+		# ifdef DEBUG
 
 			void
 			print_header() {
@@ -320,6 +316,8 @@ namespace ft {
 			print_tree() {
 				_tree.graphic_visualizer(_tree.root(), 0);
 			}
+
+		# endif
 
 	};	/* class map */
 

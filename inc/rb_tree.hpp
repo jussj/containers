@@ -73,6 +73,7 @@ namespace ft {
 			
 			node_count	= src.node_count;	
 		}
+
 		void
 		move_node_data(rb_tree_header& src) {
 			node.color	= src.node.color;
@@ -83,6 +84,7 @@ namespace ft {
 			
 			src.reset();	
 		}
+
 		void
 		reset() {
 			node.parent	= 0;		// will be set to root
@@ -115,23 +117,23 @@ namespace ft {
 		// declaring a unique ptr to bottom NIL sentinel
 		static node_ptr			   nil;
 
-	private:
+		private:
 
-		// declaring the node "content"
-		static rb_tree_node 	   _nil_node;
+			// declaring the node "content"
+			static rb_tree_node 	   _nil_node;
 
-		// init function for NIL sentinel
-		static rb_tree_node
-		black_node() {
-			rb_tree_node	node;
-			
-			// leafs must be black
-			node.color	= BLACK;
-			node.parent	= 0;
-			node.right	= &node;
-			node.left	= &node;
-			return node;
-		}
+			// init function for NIL sentinel
+			static rb_tree_node
+			black_node() {
+				rb_tree_node	node;
+				
+				// leafs must be black
+				node.color	= BLACK;
+				node.parent	= 0;
+				node.right	= &node;
+				node.left	= &node;
+				return node;
+			}
 
 	};	/* rb_tree_node struct */
 
@@ -340,8 +342,9 @@ namespace ft {
 			void
 			maintain_root(node_ptr n) {
 				node_ptr new_root	= n;
-			
-				while (new_root->parent != &(_header.node)) // find root
+				
+				// find root
+				while (new_root->parent != &(_header.node))
 					new_root = parent(new_root);
 				_set_new_root(new_root);	
 			}
@@ -495,9 +498,12 @@ namespace ft {
 						return insert_and_rebalance(v);
 				}
 				else {
+					// hint predecessor
 					iterator before = hint--;
+					// predecessor < v and v < hint
 					if (_compare(_key_of_value(*before), _key_of_value(v))
 							&& _compare(_key_of_value(v), _key_of_value(*hint)))
+						// if predecessor right child is nil, v will be hint right child
 						if (before.node->right == nil())
 							return insert_at_position(nil(), before.node, v); 
 						else
@@ -821,9 +827,9 @@ namespace ft {
 			max_size() const {
 				return _nodalloc.max_size();
 			}
+		
+			#ifdef DEBUG
 
-			// DEBUG
-			
 			void
 			print_header() {
 				std::cout	<< "   root:  " << _key_of_value(**root())
@@ -877,6 +883,8 @@ namespace ft {
 					graphic_visualizer(left(x), depth + 1); 
 				}   
 			}
+
+			#endif
 			
 		protected:
      
@@ -973,8 +981,12 @@ namespace ft {
 
 			// HEADER DATA ACCESS
 	
-			// set to public for tree visualizer in map
-		public:			
+		#ifdef DEBUG
+	
+		public:		
+		
+		#endif	
+		
 			node_ptr
 			root() {
 				return static_cast<node_ptr>(_header.node.parent);
@@ -1077,7 +1089,6 @@ namespace ft {
 				_set_new_root(n);
 				_root->parent = &_header.node;
 				
-				// set leftmost/rightmost and parent
 				_header.set_leftmost(n);
 				_header.set_rightmost(n);
 			}
@@ -1309,7 +1320,7 @@ namespace ft {
 			return x->node != y->node;
 		}
 
-		// DEBUG
+		#ifdef DEBUG
 
 		void
 		print_node_ptr() {
@@ -1328,6 +1339,8 @@ namespace ft {
 						<< "   parent " << &(*(node->parent))
 						<< std::endl << std::endl;
 		}
+
+		#endif
 
 	};	/* rb_tree_iterator */
 
@@ -1453,8 +1466,8 @@ namespace ft {
 		operator!=(const self& x, const self& y) {
 			return x->node != y->node;
 		}
-		
-		// DEBUG
+
+		#ifdef DEBUG
 
 		void
 		print_node_ptr() {
@@ -1473,6 +1486,8 @@ namespace ft {
 						<< "   parent " << &(*(node->parent))
 						<< std::endl << std::endl;
 		}
+
+		#endif
 
 	};	/* rb_tree_const_iterator */
 		
