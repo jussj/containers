@@ -8,27 +8,35 @@ namespace ft {
 
 	template<class Iter>
 	class iterator_traits {
+		
 		public:
+		
 			typedef typename Iter::difference_type		difference_type;
 			typedef typename Iter::value_type			value_type;
 			typedef typename Iter::pointer				pointer;
 			typedef typename Iter::reference			reference;
 			typedef typename Iter::iterator_category	iterator_category;
+	
 	};
 
 	template<class T>
 	class iterator_traits<T *> {
+	
 		public:
+	
 			typedef ptrdiff_t						difference_type;
 			typedef T								value_type;
 			typedef T *								pointer;
 			typedef T &								reference;
 			typedef std::random_access_iterator_tag	iterator_category;
+	
 	};
 
 	template<class T>
 	class iterator_traits<const T *> {
+	
 		public:
+	
 			typedef ptrdiff_t						difference_type;
 			typedef T								value_type;
 			typedef const T *						pointer;
@@ -52,11 +60,12 @@ namespace ft {
 			// CTOR/DTOR
 
 				reverse_iterator() {}
+				
 				explicit reverse_iterator(It it) : _current(it) {}
+				
 				template<class I>
-				reverse_iterator(const reverse_iterator<I>& rit) {
-					this->_current = rit.base();
-				}
+				reverse_iterator(const reverse_iterator<I>& rit)
+					: _current(rit.base())	{}
 		
 			// ACCESS
 
@@ -124,12 +133,13 @@ namespace ft {
 				operator[](difference_type n) const {
 					return *(_current - n - 1);
 				}
-				template< class U >
-				reverse_iterator&
-				operator=(const reverse_iterator<U>& src) {
-					_current = src.base();
-					return *this;
-				}
+				
+				//template<class U>
+				//reverse_iterator&
+				//operator=(const reverse_iterator<U>& src) {
+					//_current = src.base();
+					//return *this;
+				//}
 		
 			// NON-MEMBER OPERATORS FRIEND DECLARATION
 		

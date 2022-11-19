@@ -1,5 +1,5 @@
-#ifndef UTILS_HPP
-# define UTILS_HPP
+#ifndef TOOLS_HPP
+# define TOOLS_HPP
 
 # include <iostream>
 # include <sstream>
@@ -9,8 +9,9 @@
 
 namespace ft {
 
+	template<class T>
 	std::string
-	long_to_str(size_t n) {
+	to_str(T n) {
 		std::stringstream	stream;
 
 		stream << n;
@@ -52,4 +53,4 @@ namespace ft {
 
 }	/* namespace ft */
 
-#endif	/* UTILS_HPP */
+#endif	/* TOOLS_HPP */

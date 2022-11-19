@@ -359,6 +359,15 @@ namespace ft {
 			void
 			_dispatch_assign(InputIt first, InputIt last, ft::false_type) {
 				
+				if (!(is_same_type<typename iterator_traits<InputIt>::iterator_category, 
+						std::random_access_iterator_tag>::value)) {
+					clear();
+					while (first != last) {
+						push_back(*first);
+						first++;
+					}
+					return ;
+				}
 				size_type dis	= ft::distance(first, last);
 			
 				// assign from empty vec?
@@ -417,7 +426,18 @@ namespace ft {
 			template <class InputIt>
 			void
 			_insert_dispatch(iterator position, InputIt first, InputIt last, ft::false_type) {	
-				
+
+				// not a random access iterator		
+				if (!(is_same_type<typename iterator_traits<InputIt>::iterator_category, 
+						std::random_access_iterator_tag>::value)) {
+					while (first != last) {
+						position = insert(position, *first);
+						first++;
+						position++;
+					}
+					return ;
+				}
+				// TO-DO last - first ft	
 				size_type 	length			= ft::distance(first, last);
 				size_type	new_size		= size() + length;
 				size_type	new_capacity	= capacity();
@@ -455,9 +475,9 @@ namespace ft {
 				std::string	fmt;
 				fmt = "vector::_range_check: n (which is ";
 
-				fmt.append(ft::long_to_str(n));
+				fmt.append(ft::to_str(n));
 				fmt.append(") >= this->size() (which is ");
-				fmt.append(ft::long_to_str(size()));
+				fmt.append(ft::to_str(size()));
 				fmt.append(")");
 				if (n >= size())
 					throw std::out_of_range(fmt);

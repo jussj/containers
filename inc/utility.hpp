@@ -71,7 +71,7 @@ namespace ft {
 	bool
 	operator>(	const pair<T1,T2>& x,
 				const pair<T1,T2>& y) {
-		return y.first < x.first;
+		return y < x;
 	}	
 	
 	template<class T1, class T2>
@@ -85,7 +85,7 @@ namespace ft {
 	bool
 	operator>=(const pair<T1,T2>& x,
 				const pair<T1,T2>& y) {
-		return !(y < x);
+		return !(x < y);
 	}
 
 	// MAKE PAIR

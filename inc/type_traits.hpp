@@ -58,16 +58,10 @@ namespace ft {
 	// IS_SAME_TYPE
 	
 	template<typename, typename>
-    struct	is_same_type {
-		enum {	value = 0	};
-		typedef false_type type;
-	};
+    struct	is_same_type		: public false_type		{};
 
 	template<typename T>
-    struct	is_same_type<T, T> {
-		enum {	value = 1	};
-		typedef true_type type;
-	};
+    struct	is_same_type<T, T>	: public true_type		{};
 
 }	/* namespace ft */
 
