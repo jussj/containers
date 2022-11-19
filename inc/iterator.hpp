@@ -2,15 +2,9 @@
 # define ITERATOR_HPP
 
 # include <cstddef>		// ptrdiff_t
+# include <iterator>	// iterator tags
 
 namespace ft {
-
-	// inherite from std tags for greater portability? does it work with every algo???
-	struct output_iterator_tag 	{};
-	struct input_iterator_tag 	{};
-	struct forward_iterator_tag 		: public input_iterator_tag				{};
-	struct bidirectional_iterator_tag 	: public forward_iterator_tag			{};
-	struct random_access_iterator_tag 	: public bidirectional_iterator_tag 	{};
 
 	template<class Iter>
 	class iterator_traits {
@@ -25,21 +19,21 @@ namespace ft {
 	template<class T>
 	class iterator_traits<T *> {
 		public:
-			typedef ptrdiff_t					difference_type;
-			typedef T							value_type;
-			typedef T *							pointer;
-			typedef T &							reference;
-			typedef random_access_iterator_tag	iterator_category;
+			typedef ptrdiff_t						difference_type;
+			typedef T								value_type;
+			typedef T *								pointer;
+			typedef T &								reference;
+			typedef std::random_access_iterator_tag	iterator_category;
 	};
 
 	template<class T>
 	class iterator_traits<const T *> {
 		public:
-			typedef ptrdiff_t					difference_type;
-			typedef T							value_type;
-			typedef const T *					pointer;
-			typedef const T &					reference;
-			typedef random_access_iterator_tag	iterator_category;
+			typedef ptrdiff_t						difference_type;
+			typedef T								value_type;
+			typedef const T *						pointer;
+			typedef const T &						reference;
+			typedef std::random_access_iterator_tag	iterator_category;
 	
 	};	/* iterator_traits class */
 
@@ -68,14 +62,14 @@ namespace ft {
 
 				It
 				base() const {
-					return this->_current;
+					return _current;
 				}
 
 			// OPERATORS
 
 				reference 		
 				operator*() const {
-					It	tmp = this->_current;
+					It	tmp = _current;
 					--tmp;
 
 					return *tmp;
@@ -86,14 +80,14 @@ namespace ft {
 				}
 				reverse_iterator&
 				operator++() {
-					--this->_current;
+					--_current;
 					return *this;
 				}
 				reverse_iterator
 				operator++(int) {
 					reverse_iterator	tmp = *this;
 					
-					--this->_current;
+					--_current;
 					return tmp;
 				}
 				reverse_iterator&
@@ -105,7 +99,7 @@ namespace ft {
 				operator--(int) {
 					reverse_iterator	tmp = *this;
 					
-					++this->_current;
+					++_current;
 					return tmp;
 				}
 				reverse_iterator
@@ -114,7 +108,7 @@ namespace ft {
 				}
 				reverse_iterator&
 				operator+=(difference_type n) {
-					this->_current -= n;
+					_current -= n;
 					return *this;
 				}
 				reverse_iterator
@@ -123,17 +117,17 @@ namespace ft {
 				}
 				reverse_iterator&
 				operator-=(difference_type n) {
-					this->_current += n;
+					_current += n;
 					return *this;
 				}
 				reference 		
 				operator[](difference_type n) const {
-					return *(this->_current - n - 1);
+					return *(_current - n - 1);
 				}
 				template< class U >
 				reverse_iterator&
 				operator=(const reverse_iterator<U>& src) {
-					this->_current = src.base();
+					_current = src.base();
 					return *this;
 				}
 		
@@ -147,25 +141,9 @@ namespace ft {
 				friend bool
 				operator<(const reverse_iterator<I>& x, const reverse_iterator<J>& y);
 
-				template <class I, class J>
-				friend bool
-				operator!=(const reverse_iterator<I>& x, const reverse_iterator<J>& y);
-
-				template <class I, class J>
-				friend bool
-				operator>(const reverse_iterator<I>& x, const reverse_iterator<J>& y);
-
-				template <class I, class J>
-				friend bool
-				operator>=(const reverse_iterator<I>& x, const reverse_iterator<J>& y);
-
-				template <class I, class J>
-				friend bool
-				operator<=(const reverse_iterator<I>& x, const reverse_iterator<J>& y);
-
 			protected:
 
-				It	_current;							// why is implemented as protected?
+				It	_current;
 	
 	};	/* reverse_iterator class */
 

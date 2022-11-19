@@ -146,7 +146,7 @@ namespace ft {
 			}
 			const_reverse_iterator
 			rend() const {
-				return const_iterator(_begin);
+				return const_reverse_iterator(_begin);
 			}
 
 		// CAPACITY
@@ -296,6 +296,7 @@ namespace ft {
 				return it;
 			}
 
+			// TO-DO redo erase
 			iterator
 			erase(iterator position) {
 				size_type	new_size 		= size() - 1;

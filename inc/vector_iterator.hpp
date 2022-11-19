@@ -20,7 +20,7 @@ namespace ft {
 			typedef T*						pointer;
 			typedef T&						reference;
 
-			typedef typename ft::random_access_iterator_tag
+			typedef typename std::random_access_iterator_tag
 											iterator_category;
 
 		// CTOR, CPY, DTOR
@@ -33,8 +33,6 @@ namespace ft {
 			~vector_iterator() {}
 
 		// OPERATORS
-
-			//operator=
 
 			// FORWARD
 			reference
@@ -160,6 +158,7 @@ namespace ft {
 		return &(*x) - &(*y);
 	}
 
+	// TO-DO take off useless friends
 	template<class L, class R>
 	bool	operator==(	const vector_iterator<L> & lhs, 
 						const vector_iterator<R> & rhs) {

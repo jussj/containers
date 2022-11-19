@@ -18,7 +18,6 @@ namespace ft {
 		return str;
 	}
 
-	// protect against not random access it?
 	template<class It>
 	size_t
 	distance(It first, It last) {

@@ -4,6 +4,7 @@
 # include <memory>				// allocator
 # include <cstddef>				// ptrdiff_t
 # include <iomanip>				// debug setw
+# include <iterator>			// iterator tags
 # include "type_traits.hpp"
 # include "iterator.hpp"
 # include "algorithm.hpp"
@@ -127,7 +128,6 @@ namespace ft {
 			black_node() {
 				rb_tree_node	node;
 				
-				// leafs must be black
 				node.color	= BLACK;
 				node.parent	= 0;
 				node.right	= &node;
@@ -360,7 +360,6 @@ namespace ft {
 						y = right(n->parent->parent);
 						// case 1: red uncle
 						if (y->color == RED) {
-							//if (n->parent != header)
 							n->parent->color = BLACK;
 							y->color = BLACK;
 							n->parent->parent->color = RED;
@@ -481,7 +480,9 @@ namespace ft {
 				rebalance_after_insert(n);		
 				return iterator(n);
 			}
-			
+		
+			// TO-DO insert w hint takes const iterator, ft to find pos
+			// test first insert	
 			iterator	
 			insert_with_hint(const value_type& v, iterator hint) {
 				if (hint == begin()) {
@@ -1197,8 +1198,8 @@ namespace ft {
 		typedef T&			reference;
 		typedef T*			pointer;
 
-		typedef bidirectional_iterator_tag	iterator_category;
-		typedef ptrdiff_t					difference_type;
+		typedef std::bidirectional_iterator_tag	iterator_category;
+		typedef ptrdiff_t						difference_type;
 
 		typedef rb_tree_iterator<T>			self;
 		typedef rb_tree_node_base::ptr		base_ptr;
@@ -1301,23 +1302,13 @@ namespace ft {
 		// COMPARISON
 	
 		bool
-		operator==(const self& src) {
+		operator==(const self& src) const {
 			return this->node == src.node;
 		}
 
 		bool
-		operator!=(const self& src) {
+		operator!=(const self& src) const {
 			return this->node != src.node;
-		}
-		
-		friend bool
-		operator==(const self& x, const self& y) {
-			return x->node == y->node;
-		}
-
-		friend bool
-		operator!=(const self& x, const self& y) {
-			return x->node != y->node;
 		}
 
 		#ifdef DEBUG
@@ -1353,9 +1344,9 @@ namespace ft {
 		typedef const T&	reference;
 		typedef const T*	pointer;
 
-		typedef rb_tree_iterator<T>			iterator;
-		typedef bidirectional_iterator_tag	iterator_category;
-		typedef ptrdiff_t					difference_type;
+		typedef rb_tree_iterator<T>				iterator;
+		typedef std::bidirectional_iterator_tag	iterator_category;
+		typedef ptrdiff_t						difference_type;
 		
 		typedef rb_tree_const_iterator<T>		self;
 		typedef rb_tree_node_base::const_ptr	base_ptr;
@@ -1447,24 +1438,13 @@ namespace ft {
 		// COMPARISON
 	
 		bool
-		operator==(const self& src) {
+		operator==(const self& src) const {
 			return this->node == src.node;
 		}
 
 		bool
-		operator!=(const self& src) {
+		operator!=(const self& src) const {
 			return this->node != src.node;
-		}
-		
-		friend bool
-		operator==(const self& x, const self& y) {
-			return x->node == y->node;
-		}
-
-		
-		friend bool
-		operator!=(const self& x, const self& y) {
-			return x->node != y->node;
 		}
 
 		#ifdef DEBUG
