@@ -191,7 +191,8 @@ namespace ft {
 
 	template <class It>
 	reverse_iterator<It>
-	operator+(typename reverse_iterator<It>::difference_type n, const reverse_iterator<It>& x) {
+	operator+(	typename reverse_iterator<It>::difference_type n, 
+				const reverse_iterator<It>& x) {
 		return reverse_iterator<It>(x.base() - n);
 	}
 }	/* namespace ft */
