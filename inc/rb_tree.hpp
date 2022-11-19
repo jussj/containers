@@ -1168,26 +1168,6 @@ namespace ft {
 			}
 
 	};	/* rb_tree class */
-	
-	// COMPARISON OVERLOADS
-	
-	template<class T, class Key, class Val, class Compare, class Alloc, class KeyOfValue>
-	bool
-	operator==(const rb_tree_impl<T, Key, Val, Compare, Alloc, KeyOfValue>& x,
-			const rb_tree_impl<T, Key, Val, Compare, Alloc, KeyOfValue>& y) {
-		return x.size() == y.size() 
-			&& ft::lexicographical_compare(x.begin(), x.end(),
-					y.begin(), y.end());
-	}
-
-	template<class T, class Key, class Val,
-		class Compare, class Alloc, class KeyOfValue>
-	bool
-	operator<(const rb_tree_impl<T, Key, Val, Compare, Alloc, KeyOfValue>& x,
-			const rb_tree_impl<T, Key, Val, Compare, Alloc, KeyOfValue>& y) {
-		return ft::lexicographical_compare(x.begin(), x.end(), 
-				y.begin(), y.end());
-	}
 
 	template<class T>
 	struct rb_tree_iterator {

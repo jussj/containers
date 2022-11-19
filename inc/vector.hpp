@@ -573,9 +573,8 @@ namespace ft {
 	template <class T, class Alloc>
 	bool
 	operator==(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
-		return (x.size() == y.size()
-	      && !(ft::lexicographical_compare(	x.begin(), x.end(),
-											y.begin(), y.end())));
+		return x.size() == y.size() 
+			&& ft::equal(x.begin(), x.end(), y.begin());
 	}
 	template <class T, class Alloc>
 	bool
