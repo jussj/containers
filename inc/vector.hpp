@@ -69,7 +69,7 @@ namespace ft {
 				_capacity	= _begin;
 				_alloc	= Alloc();
 				
-				_dispatch_assign(first, last, typename ft::is_integral<InputIt>::type());	
+				_assign_dispatch(first, last, typename ft::is_integral<InputIt>::type());	
 			}
 			
 			vector(const vector<T,Alloc>& src) {
@@ -93,12 +93,12 @@ namespace ft {
 			template <class InputIt>
 			void
 			assign(InputIt first, InputIt last) {
-				_dispatch_assign(first, last, typename ft::is_integral<InputIt>::type());	
+				_assign_dispatch(first, last, typename ft::is_integral<InputIt>::type());	
 			}
 			
 			void
 			assign(size_type n, const value_type& value) {
-				_dispatch_assign(n, value, typename ft::is_integral<size_type>::type());	
+				_assign_dispatch(n, value, typename ft::is_integral<size_type>::type());	
 			}
 			
 			allocator_type
@@ -269,7 +269,7 @@ namespace ft {
 			
 			iterator
 			insert(iterator position, const T& x) {
-				size_type offset = ft::distance(begin(), position);
+				size_type offset = std::distance(begin(), position);
 			
 				insert(position, 1, x);
 				return begin() + offset;
@@ -289,7 +289,7 @@ namespace ft {
 			iterator
 			erase(iterator first, iterator last) {
 				iterator	it		= first;
-				size_t		dis		= ft::distance(first, last);
+				size_t		dis		= std::distance(first, last);
 					
 				for (size_t i = 0; i < dis; ++i)
 					it = erase(first);
@@ -300,7 +300,7 @@ namespace ft {
 			iterator
 			erase(iterator position) {
 				size_type	new_size 		= size() - 1;
-				size_type	new_position	= ft::distance(begin(), position);
+				size_type	new_position	= std::distance(begin(), position);
 				size_type 	s 				= new_position;
 
 				for (iterator it = position; it < end(); it++) {
@@ -357,8 +357,9 @@ namespace ft {
 
 			template <class InputIt>
 			void
-			_dispatch_assign(InputIt first, InputIt last, ft::false_type) {
-				
+			_assign_dispatch(InputIt first, InputIt last, ft::false_type) {
+			
+				// not a random access iterator, assign without range size
 				if (!(is_same_type<typename iterator_traits<InputIt>::iterator_category, 
 						std::random_access_iterator_tag>::value)) {
 					clear();
@@ -368,10 +369,8 @@ namespace ft {
 					}
 					return ;
 				}
-				size_type dis	= ft::distance(first, last);
+				size_type dis	= std::distance(first, last);
 			
-				// assign from empty vec?
-				// stl distance ft throws length error exception
 				if (dis > capacity())
 					reserve(dis);	
 				clear();
@@ -380,7 +379,7 @@ namespace ft {
 			}
 
 			void
-			_dispatch_assign(size_type n, const value_type& value, ft::true_type) {
+			_assign_dispatch(size_type n, const value_type& value, ft::true_type) {
 				
 				if (n > capacity())
 					reserve(n);
@@ -427,7 +426,7 @@ namespace ft {
 			void
 			_insert_dispatch(iterator position, InputIt first, InputIt last, ft::false_type) {	
 
-				// not a random access iterator		
+				// if not a random access iterator, insert without range size	
 				if (!(is_same_type<typename iterator_traits<InputIt>::iterator_category, 
 						std::random_access_iterator_tag>::value)) {
 					while (first != last) {
@@ -438,7 +437,7 @@ namespace ft {
 					return ;
 				}
 				// TO-DO last - first ft	
-				size_type 	length			= ft::distance(first, last);
+				size_type 	length			= std::distance(first, last);
 				size_type	new_size		= size() + length;
 				size_type	new_capacity	= capacity();
 				
@@ -564,14 +563,15 @@ namespace ft {
 			
 			template<class InputIt>	
 			void
-			_reallocate(	size_type new_capacity,
-							size_type new_size,
-							iterator position,
-							InputIt first,
-							InputIt last) {
+			_reallocate(
+					size_type new_capacity,
+					size_type new_size,
+					iterator position,
+					InputIt first,
+					InputIt last) {
 				pointer new_array	= _alloc.allocate(new_capacity);
 				iterator	it		= begin();
-				size_type 	length	= ft::distance(first, last);
+				size_type 	length	= std::distance(first, last);
 
 				for (size_type s = 0; s < new_size; s++) {
 					if (it == position) {

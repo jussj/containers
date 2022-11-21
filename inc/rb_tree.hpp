@@ -350,6 +350,8 @@ namespace ft {
 			}
 
 			// INSERTIONS
+			
+			// INSERT ONE
 
 			iterator
 			rebalance_after_insert(node_ptr n) {
@@ -451,6 +453,8 @@ namespace ft {
 				return iterator(n);
 			}
 		
+			// INSERT ONE WITH HINT
+			
 			iterator	
 			insert_at_position(base_ptr x, base_ptr y, const value_type& v) {
 				node_ptr n = _create_node(v);
@@ -481,10 +485,10 @@ namespace ft {
 				return iterator(n);
 			}
 		
-			// TO-DO insert w hint takes const iterator, ft to find pos
 			// test first insert	
 			iterator	
-			insert_with_hint(const value_type& v, iterator hint) {
+			find_insert_pos_w_hint(const value_type& v, const base_ptr pos) {
+			iterator hint(pos);
 				if (hint == begin()) {
 					if (size() > 0 && _compare(_key_of_value(v), 
 								_key_of_value(*hint)))
@@ -513,6 +517,13 @@ namespace ft {
 						return insert_and_rebalance(v);
 				}
 			}
+			
+			iterator	
+			insert_with_hint(const value_type& v, const_iterator hint) {
+				iterator it = find_insert_pos_w_hint(v,
+									const_cast<base_ptr>(hint.node));
+				return it;
+			}	
 			
 			// DELETIONS
 
@@ -724,7 +735,7 @@ namespace ft {
 				node_ptr n = static_cast<node_ptr>(
 						erase_and_rebalance(
 						const_cast<base_ptr>(pos.node)));
-				_destroy_node((node_ptr&)n);
+				_destroy_node(n);
 			}
 
 			// CLEAR

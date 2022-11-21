@@ -160,9 +160,8 @@ namespace ft {
 			insert(iterator position, const value_type& x) {
 				iterator	it		= find(x);
 
-				(void)position;
 				if (it == end())
-					it	= _tree.insert_and_rebalance(x);
+					it	= _tree.insert_with_hint(x, position);
 				return it;
 			}
 			
