@@ -201,8 +201,10 @@ namespace ft {
 			template <class InputIterator>
 			void
 			insert(InputIterator first, InputIterator last) {
-				while (first != last)
-					insert(*first++);	
+				while (first != last) {
+					insert(*first);
+					++first;
+				}	
 			}
 			
 			void
@@ -227,7 +229,7 @@ namespace ft {
 			}
 			
 			void
-			swap(map<Key, T, Compare, Alloc>& src) {
+			swap(map& src) {
 				rb_tree	tmp	= this->_tree;
 
 				this->_tree	= src._tree;
