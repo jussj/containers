@@ -40,14 +40,10 @@ namespace ft {
 			}
 			value_type &
 			top() {
-				if (this->empty()) 
-					throw EmptyStack();
 				return c.back();
 			}
 			const value_type &
 			top() const {
-				if (this->empty()) 
-					throw EmptyStack();
 				return c.back();
 			}
 			void
@@ -56,8 +52,6 @@ namespace ft {
 			}
 			void
 			pop() {
-				if (this->empty()) 
-					throw EmptyStack();
 				c.pop_back();
 			}
 
