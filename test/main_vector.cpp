@@ -835,6 +835,21 @@ main_test_vector() {
 	//while (!f.empty()) {
 		//f.erase(f.begin());	
 	//}
+	{
+		std::cout	<< "// INSERT RETURN VALUE" << std::endl
+					<< std::endl;
+
+		NAMESPACE::vector<std::string>				vec;
+		NAMESPACE::vector<std::string>::iterator	vecit;
+
+		vecit = vec.insert(vec.begin(), "he");
+		std::cout << *vecit  << std::endl;
+		vecit = vec.insert(vec.begin(), "ha");
+		std::cout << *vecit  << std::endl;
+		vecit = vec.insert(vec.end(), "ha");
+		std::cout << *vecit  << std::endl;
+	}
+
 }
 
 int

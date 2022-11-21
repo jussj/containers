@@ -279,6 +279,7 @@ namespace ft {
 				_nodalloc	= src._nodalloc;
 				_alloc		= src._alloc;
 				_root		= src._root;
+				_key_of_value	= src._key_of_value;
 				_header.copy_data(src._header);
 				return *this;
 			}

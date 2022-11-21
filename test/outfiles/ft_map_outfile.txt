@@ -932,20 +932,13 @@ END:
    2: 173
    1: 73
 
-   SWAP WITH EMPTY CONTAINER
-
-// MAP BAREFOOT
-   size:  2
-
-   [ x	| 100	]
-   [ y	| 200	]
-
-
-// MAP FOO
-   size:  0
-
-   [ EMPTY MAP ]
-
+   SWAP WITH EMPTY CONTAINERS (BAREFOOT)
+   foo size after swap:      0
+   barefoot size after swap: 2
+   barefoot it begin == barefoot end()
+   foo begin() == foo end()
+   x: 100
+   y: 200
 
 // COPY CTOR //
 

@@ -2,8 +2,10 @@
 #include <map>				// std::map
 #include <list>				// std::list
 #include <stdexcept>
+#include <algorithm>
 #include <cstddef>			// ptrdiff_t
 #include <typeinfo>			// typeid
+#include <unistd.h>							// 
 #include "../inc/map.hpp"
 #include "inc/benchmark.hpp"
 
@@ -848,7 +850,7 @@ main_test_map() {
 
 		std::cout	<< "   MAZOIZ SWUAP TESTS:" << std::endl;	
 
-		NAMESPACE::map<char,int> foo,bar, barefoot;
+		NAMESPACE::map<char,int> foo, bar;
 
 		foo['x']=100;
 		foo['y']=200;
@@ -857,10 +859,8 @@ main_test_map() {
 		bar['b']=22;
 		bar['c']=33;
 
-		NAMESPACE::map<char, int>::const_iterator tmp = foo.begin();
-		//tmp iterates through foo
-		NAMESPACE::map<char, int>::const_iterator tmp2 = bar.begin(); 
-		//tmp2 iterates through bar
+		NAMESPACE::map<char, int>::const_iterator foo_it = foo.begin();
+		NAMESPACE::map<char, int>::const_iterator bar_it = bar.begin(); 
 		
 		print_map<NAMESPACE::map<char, int>, 
 			NAMESPACE::map<char, int>::iterator>(foo, "FOO");
@@ -878,8 +878,7 @@ main_test_map() {
 		other['5'] = 74683;
 		other['6'] = 753;
 
-		NAMESPACE::map<char, int>::const_iterator tmp3 = other.begin();	
-		// tmp3 iterates through other
+		NAMESPACE::map<char, int>::const_iterator other_it = other.begin();	
 
 		print_map<NAMESPACE::map<char, int>, 
 			NAMESPACE::map<char, int>::iterator>(foo, "FOO");
@@ -898,22 +897,22 @@ main_test_map() {
 			std::cout << "   " <<it->first << ": "
 				<< it->second << '\n';
 
-		while(tmp != bar.end()) {
-			std::cout << "   " <<tmp->first << ": "
-				<< tmp->second << '\n';
-			tmp++;
+		while(foo_it != bar.end()) {
+			std::cout << "   " <<foo_it->first << ": "
+				<< foo_it->second << '\n';
+			foo_it++;
 		}
-		tmp--;
+		foo_it--;
 
-		while(tmp2 != foo.end()) {
-			std::cout << "   " <<tmp2->first << ": "
-				<< tmp2->second << '\n';
-			tmp2++;
+		while(bar_it != foo.end()) {
+			std::cout << "   " <<bar_it->first << ": "
+				<< bar_it->second << '\n';
+			bar_it++;
 		}
-		tmp2--;
+		bar_it--;
 
-		other.swap(foo);	//tmp2 iterates through other
-							//tmp3 iterates throught foo
+		other.swap(foo);
+		
 		print_map<NAMESPACE::map<char, int>, 
 			NAMESPACE::map<char, int>::iterator>(other, "OTHER");
 		print_map<NAMESPACE::map<char, int>, 
@@ -921,31 +920,30 @@ main_test_map() {
 		print_map<NAMESPACE::map<char, int>, 
 			NAMESPACE::map<char, int>::iterator>(bar, "BAR");
 		
-		while(tmp != bar.begin()) {
-			std::cout << "   " <<tmp->first << ": "
-				<< tmp->second << '\n';
-			tmp--;
+		while(foo_it != bar.begin()) {
+			std::cout << "   " <<foo_it->first << ": "
+				<< foo_it->second << '\n';
+			foo_it--;
 		}
-		std::cout << "   " <<tmp->first << ": "
-			<< tmp->second << '\n';
+		std::cout << "   " <<foo_it->first << ": "
+			<< foo_it->second << '\n';
 
-		while(tmp2 != other.begin()) {
-			std::cout << "   " <<tmp2->first << ": "
-			   	<< tmp2->second << '\n';
-			tmp2--;
+		while(bar_it != other.begin()) {
+			std::cout << "   " <<bar_it->first << ": "
+			   	<< bar_it->second << '\n';
+			bar_it--;
 		}
-		std::cout << "   " <<tmp2->first << ": "
-			<< tmp2->second << '\n';
+		std::cout << "   " <<bar_it->first << ": "
+			<< bar_it->second << '\n';
 
-		while(tmp3 != foo.end()) {
-			std::cout << "   " <<tmp3->first << ": "
-				<< tmp3->second << '\n';
-			tmp3++;
+		while(other_it != foo.end()) {
+			std::cout << "   " <<other_it->first << ": "
+				<< other_it->second << '\n';
+			other_it++;
 		}
-		tmp3--;
+		other_it--;
 
-		bar.swap(foo);	//tmp3 iterates through bar
-						//tmp iterates through foo
+		bar.swap(foo);
 
 		print_map<NAMESPACE::map<char, int>, 
 			NAMESPACE::map<char, int>::iterator>(other, "OTHER");
@@ -954,36 +952,66 @@ main_test_map() {
 		print_map<NAMESPACE::map<char, int>, 
 			NAMESPACE::map<char, int>::iterator>(bar, "BAR");
 
-		while(tmp != foo.end()) {
-			std::cout << "   " <<tmp->first << ": "
-				<< tmp->second << '\n';
-			tmp++;
+		while(foo_it != foo.end()) {
+			std::cout << "   " <<foo_it->first << ": "
+				<< foo_it->second << '\n';
+			foo_it++;
 		}
 
-		while(tmp2 != other.end()) {
-			std::cout << "   " <<tmp2->first << ": "
-				<< tmp2->second << '\n';
-			tmp2++;
+		while(bar_it != other.end()) {
+			std::cout << "   " <<bar_it->first << ": "
+				<< bar_it->second << '\n';
+			bar_it++;
 		}
 
-		while(tmp3 != bar.begin()) {
-			std::cout << "   " <<tmp3->first << ": "
-				<< tmp3->second << '\n';
-			tmp3--;
+		while(other_it != bar.begin()) {
+			std::cout << "   " <<other_it->first << ": "
+				<< other_it->second << '\n';
+			other_it--;
 		}
-		std::cout << "   " <<tmp3->first << ": "
-			<< tmp3->second << '\n';
+		std::cout << "   " <<other_it->first << ": "
+			<< other_it->second << '\n';
 
 		std::cout	<< std::endl
-					<< "   SWAP WITH EMPTY CONTAINER" << std::endl;
+					<< "   SWAP WITH EMPTY CONTAINERS (BAREFOOT)" << std::endl;
 
-		swap(foo, barefoot);
+		NAMESPACE::map<char, int>					barefoot;
+		NAMESPACE::map<char, int>					barecopy(barefoot);
+		NAMESPACE::map<char, int>					empty;
 
-		print_map<NAMESPACE::map<char, int>, 
-			NAMESPACE::map<char, int>::iterator>(barefoot, "BAREFOOT");
-		print_map<NAMESPACE::map<char, int>, 
-			NAMESPACE::map<char, int>::iterator>(foo, "FOO");
+		NAMESPACE::map<char, int>::const_iterator	cit_foo = foo.begin();
+		NAMESPACE::map<char, int>::const_iterator	cit_bare = barefoot.begin();
+
+		NAMESPACE::swap(foo, barefoot);
+
+		std::cout << "   foo size after swap:      " << foo.size() << std::endl;
+		std::cout << "   barefoot size after swap: " << barefoot.size() << std::endl;
+
+		if (cit_bare == foo.end())
+			std::cout << "   barefoot it begin == foo end()" << std::endl;
+		
+		if (cit_bare == barefoot.end())
+			std::cout << "   barefoot it begin == barefoot end()" << std::endl;
+		
+		if (cit_foo == foo.end())
+			std::cout << "   foo it begin == foo end()" << std::endl;
+		
+		if (cit_foo == barefoot.end())
+			std::cout << "   foo it begin == barefoot end()" << std::endl;
+		
+		if (foo.begin() == foo.end())
+			std::cout << "   foo begin() == foo end()" << std::endl;
+
+		while (cit_foo != barefoot.end()) {
+			std::cout << "   " <<cit_foo->first << ": "
+				<< cit_foo->second << '\n';
+			cit_foo++;
+		}
+		
+		NAMESPACE::swap(foo, empty);
+		
 	}
+
 	std::cout	<< std::endl
 				<< "// COPY CTOR //" << std::endl;
 

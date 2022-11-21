@@ -30,7 +30,7 @@ namespace ft {
 		}
 		return dis;
 	}
-
+	
 	template<class Pair, class T>
 	struct first_of {
 		const T&

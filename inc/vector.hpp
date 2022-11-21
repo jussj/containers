@@ -51,6 +51,8 @@ namespace ft {
 			vector(size_type n, const T& value = T(),
 					const Alloc& Allocator = Alloc()) 
 				: _alloc(Allocator) {
+				if (n  + 1 > max_size())
+					throw std::length_error("vector::");
 				this->_begin	= _alloc.allocate(n + 1);
 				pointer p		= _begin;
 				
@@ -75,6 +77,8 @@ namespace ft {
 			vector(const vector<T,Alloc>& src) {
 				if (this == &src)
 					return ;
+				if (src.size() > max_size())
+					throw std::length_error("vector::");
 				this->_begin	= _alloc.allocate(src.size());
 				pointer p		= _begin;
 				for (size_type s = 0; s < src.size(); s++) {
@@ -543,6 +547,8 @@ namespace ft {
 					size_type n,
 					iterator position,
 					const T& x) {
+				if (new_capacity + 1 > max_size())
+					throw std::length_error("vector::reallocate");
 				iterator	it			= begin();
 				pointer		new_array	= _alloc.allocate(new_capacity + 1);
 				
@@ -550,7 +556,8 @@ namespace ft {
 					if (it == position) {
 						_fill(new_array + s, n, x);
 						s += n;
-						_alloc.construct(new_array + s, *it);
+						if (s < new_size)
+							_alloc.construct(new_array + s, *it);
 					}
 					else
 						_alloc.construct(new_array + s, *it);
@@ -569,6 +576,8 @@ namespace ft {
 					iterator position,
 					InputIt first,
 					InputIt last) {
+				if (new_capacity > max_size())
+					throw std::length_error("vector::reallocate");
 				pointer new_array	= _alloc.allocate(new_capacity);
 				iterator	it		= begin();
 				size_type 	length	= std::distance(first, last);
