@@ -586,7 +586,8 @@ namespace ft {
 					if (it == position) {
 						_fill(new_array + s, first, last);
 						s += length;
-						_alloc.construct(new_array + s, *it);
+						if (s < new_size)
+							_alloc.construct(new_array + s, *it);
 					}
 					else
 						_alloc.construct(new_array + s, *it);

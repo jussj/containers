@@ -54,6 +54,25 @@ print_map(Map& m, const std::string name) {
 	std::cout	<< std::endl;	
 }
 
+template<class Map, class It>
+void
+print_reverse(Map& m, const std::string name) {
+	std::cout	<< std::endl
+				<< "// REVERSE MAP " << name << std::endl
+				<< "   size:  "	<< m.size() << std::endl
+				<< std::endl;
+	if (m.empty())
+		std::cout << "   [ EMPTY MAP ]" << std::endl;
+	else {
+		for (It it = m.rbegin();
+				it != m.rend(); it++	) {
+			std::cout	<< "   [ "	<< (*it).first 
+						<< "\t| "	<< (*it).second 
+						<< "\t]"	<< std::endl;
+		}
+	}
+}
+
 void
 main_test_map() {
 	NAMESPACE::map<int, std::string>			a;
@@ -82,6 +101,9 @@ main_test_map() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 
+	print_reverse<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::reverse_iterator>(a, "A");
+	
 	NAMESPACE::map<int, std::string>			b;
 	
 	b.insert(NAMESPACE::pair<int, std::string>(1, "one"));
@@ -392,6 +414,9 @@ main_test_map() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(a, "A");
 
+	print_reverse<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::reverse_iterator>(a, "A");
+	
 	a.insert(NAMESPACE::pair<int, std::string>(5, "five"));
 	
 	print_map<NAMESPACE::map<int, std::string>, 
@@ -412,6 +437,9 @@ main_test_map() {
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
+	
+	print_reverse<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::reverse_iterator>(b, "B");
 	
 	std::cout	<< "   LEFTMOST:" << std::endl;
 	std::cout	<< ">> A size: " << a.size() << std::endl
@@ -435,6 +463,9 @@ main_test_map() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 
+	print_reverse<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::reverse_iterator>(b, "B");
+	
 	std::cout	<< "   NODE W 2 CHILDREN:" << std::endl;
 
 	// but is root
@@ -447,6 +478,9 @@ main_test_map() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
 	
+	print_reverse<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::reverse_iterator>(b, "B");
+	
 	// but closest have NIL children
 	
 	print_map<NAMESPACE::map<int, std::string>, 
@@ -456,6 +490,9 @@ main_test_map() {
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(b, "B");
+	
+	print_reverse<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::reverse_iterator>(b, "B");
 	
 	// huge tree
 
@@ -472,6 +509,9 @@ main_test_map() {
 
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(c, "C");
+	
+	print_reverse<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::reverse_iterator>(c, "C");
 	
 	std::cout	<< "   reinserting deleted elements..." << std::endl;
 	
@@ -525,11 +565,17 @@ main_test_map() {
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(c, "C");
 	
+	print_reverse<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::reverse_iterator>(c, "C");
+	
 	std::cout	<< "   to --end()" << std::endl;
 	c.erase(c.find(17), --c.end());
 	
 	print_map<NAMESPACE::map<int, std::string>, 
 		NAMESPACE::map<int, std::string>::iterator>(c, "C");
+	
+	print_reverse<NAMESPACE::map<int, std::string>, 
+		NAMESPACE::map<int, std::string>::reverse_iterator>(c, "C");
 	
 	std::cout	<< "   to end()" << std::endl;
 	c.erase(c.find(15), c.end());
@@ -572,6 +618,9 @@ main_test_map() {
 		
 		print_map<NAMESPACE::map<char, int>, 
 			NAMESPACE::map<char, int>::iterator>(mymap, "MYMAP");
+	
+		print_reverse<NAMESPACE::map<char, int>, 
+			NAMESPACE::map<char, int>::reverse_iterator>(mymap, "MYMAP");
 	}
 
 	std::cout	<< std::endl
@@ -596,10 +645,17 @@ main_test_map() {
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP +beg");
 		
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(mp, "MP +beg");
+		
 		mp.erase(mp.begin(), ++(++(++mp.begin())));
 		
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(
+					mp, "MP range beg, +++beg");
+		
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(
 					mp, "MP range beg, +++beg");
 		
 		mp.erase(--(--(--mp.end())), --mp.end());
@@ -608,10 +664,18 @@ main_test_map() {
 			NAMESPACE::map<int, std::string>::iterator>(
 					mp, "MP range beg, -end");
 
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(
+					mp, "MP range beg, -end");
+		
 		mp.erase(mp.begin());
 		
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP beg");
+		
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(
+					mp, "MP beg");
 		
 		mp.erase(--mp.end());
 		
@@ -619,11 +683,19 @@ main_test_map() {
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP -end");
 		// two elements left
 
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(
+					mp, "MP -end");
+		
 		mp[10] = "Hello";
 		mp[11] = "Hi";
 		
 		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(mp, "MP -end");
+			NAMESPACE::map<int, std::string>::iterator>(mp, "MP insert 2");
+		
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(
+					mp, "MP insert 2");
 		
 		print_pair(mp.begin());
 		print_pair(--mp.end()); // NOT OK
@@ -634,20 +706,20 @@ main_test_map() {
 			NAMESPACE::map<int, std::string>::iterator>(
 					mp, "MP range ---end, end");
 
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(
+					mp, "MP range ---end, end");
+		
 		mp[12] = "ONE";
 		mp[13] = "TWO";
 		mp[14] = "THREE";
 		mp[15] = "FOUR";
 	
-		//std::cout << "cute printing" << std::endl;	
-		//NAMESPACE::map<int, std::string>::iterator cute = mp.begin();
-		////for (size_t i = 0; i != mp.size(); ++i) {
-		//while (cute != mp.end()) {
-			//print_pair(cute++);
-			////--cute;
-		//}
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP");
+		
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(mp, "MP");
 		
 		print_pair(mp.begin());
 		print_pair(--mp.end()); // NOT OK
@@ -656,16 +728,28 @@ main_test_map() {
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(mp, "MP all");
 
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(mp, "MP");
+		
 		NAMESPACE::map<int, std::string> fck(lst.begin(), lst.end());
 		
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(fck, "FCK");
+		
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(fck, "FCK");
 		
 		fck.erase(++fck.begin(), --fck.end());
 
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(
 					fck, "FCK erase +beg to -end");
+
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(
+					fck, "FCK erase +beg to -end");
+		
+		fck.erase(++fck.begin(), --fck.end());
 
 		print_pair(fck.begin());
 
@@ -677,6 +761,11 @@ main_test_map() {
 		print_map<NAMESPACE::map<int, std::string>, 
 			NAMESPACE::map<int, std::string>::iterator>(
 					fck, "FCK erase ---end to end");
+		
+		print_reverse<NAMESPACE::map<int, std::string>, 
+			NAMESPACE::map<int, std::string>::reverse_iterator>(
+					fck, "FCK erase ---end to end");
+		
 	}
 	
 	std::cout	<< "// CLEAR //" << std::endl;
@@ -1040,6 +1129,29 @@ main_test_map() {
 	//while (!f.empty()) {
 		//f.erase(f.begin());	
 	//}
+	{
+		std::cout	<< "// BEGINNING TO END" << std::endl
+					<< std::endl;
+		
+		NAMESPACE::map<int, std::string> mymap;
+
+		mymap.insert(mymap.begin(), NAMESPACE::pair<int, std::string>(1, "one"));
+		mymap.insert(NAMESPACE::pair<int, std::string>(9, "nine"));
+
+  // show content:
+		std::cout	<< "   after insert:" << std::endl;
+		for (NAMESPACE::map<int, std::string>::iterator it = mymap.begin(); 
+			it != mymap.end(); ++it)
+		std::cout << "   " << it->first << " => " << it->second << '\n';
+		
+		mymap.erase(mymap.begin());
+		mymap.erase(--mymap.end());
+		
+		std::cout	<< "   after erase:" << std::endl;
+		for (NAMESPACE::map<int, std::string>::iterator it = mymap.begin(); 
+				it != mymap.end(); ++it)
+			std::cout << "   " << it->first << " => " << it->second << '\n';
+	}
 }
 
 int

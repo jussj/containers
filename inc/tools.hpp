@@ -24,10 +24,8 @@ namespace ft {
 	distance(It first, It last) {
 		size_t	dis = 0;
 
-		while (first != last) {
-			++first;
+		for (;first != last; ++first)
 			++dis;
-		}
 		return dis;
 	}
 	
