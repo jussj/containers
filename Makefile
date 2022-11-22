@@ -3,9 +3,11 @@ VECTOR				=	ft_vector
 STACK				=	ft_stack
 SET					=	ft_set
 
-CXXFLAGS			=	-Wall -Wextra -Werror -W -std=c++98
+CXXFLAGS			=	-Wall -Wextra -Werror -W -std=c++98 -pedantic
 
-DEBUGFLAGS			=	-g3	#-DDEBUG #-fsanitize=address 
+ifeq ($(DEBUG), 1)
+	CXXFLAGS			+=	-g3	-DDEBUG -fsanitize=address 
+endif
 
 CXX					=	c++
 
@@ -48,16 +50,16 @@ stack:				$(STACK)
 set:				$(SET)
 
 $(MAP):				$(DEPS_MAP) $(OBJS_MAP)
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS_MAP)) -o $(MAP)
+	$(CXX) $(CXXFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS_MAP)) -o $(MAP)
 
 $(VECTOR):			$(DEPS_VEC) $(OBJS_VEC)
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS_VEC)) -o $(VECTOR)
+	$(CXX) $(CXXFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS_VEC)) -o $(VECTOR)
 
 $(STACK):			$(DEPS_STA) $(OBJS_STA)
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS_STA)) -o $(STACK)
+	$(CXX) $(CXXFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS_STA)) -o $(STACK)
 
 $(SET):				$(DEPS_SET) $(OBJS_SET)
-	$(CXX) $(CXXFLAGS) $(DEBUGFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS_SET)) -o $(SET)
+	$(CXX) $(CXXFLAGS) $(addprefix $(OBJS_DIR)/,$(OBJS_SET)) -o $(SET)
 
 %.d:				%.cpp
 	$(CXX) $(INC) -MM $< -MF $(DEPS_DIR)/$@ 
@@ -94,4 +96,4 @@ re:				fclean all
 dl:			
 	curl -O "https://cdn.intra.42.fr/pdf/pdf/47623/en.subject.pdf"
 
-.PHONY:				all clean fclean re dl
+.PHONY:				all clean fclean re dl vector map stack set
