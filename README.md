@@ -1,16 +1,16 @@
-# containers
+## containers
 
-ft_containers is a school project in which we have to reimplement three containers, c++ data structures used to store elements and providing an unified set of tools to operate on them. Since the standard offer strict guarantees regarding complexity, performance and, let's say, handiness, we are required to follow the same norm called [ISO](https://www.lirmm.fr/~ducour/Doc-objets/ISO+IEC+14882-1998.pdf) to implement them:
+ft_containers is a school project which goal is to reimplement three containers, c++ data structures used to store elements and providing an unified set of tools to operate on them. Since the standard offers strict guarantees regarding complexity, performance and, let's say, handiness, we are required to follow the same norm called [ISO](https://www.lirmm.fr/~ducour/Doc-objets/ISO+IEC+14882-1998.pdf) to implement them:
 
 * ```vector```, a sequence container implemented as an array.
 
-* ```stack```, which is a container adapter so to speak, because it relies on an underlying container and offer a limited set of tools. ```vector``` is its default in this implementation.
+* ```stack```, a container adapter so to speak, because it relies on an underlying container and offer a limited set of tools. ```vector``` is its default in this implementation.
 
-* ```map```, an associative container storing key-value pairs where you access the value through the key which are sorted. It is implemented as a binary tree and can be ordered according to a sorting criterion.
+* ```map```, an associative container storing sorted key-value pairs where you access the value through the key. It is implemented as a binary tree and can be ordered according to a sorting criterion.
 
-* ```set``` comes as a bonus, in my implementation it relies on the same red black tree I implemented for ```map```. 
+* ```set``` comes as a bonus, in my implementation it relies on the same red black tree I implemented for ```map```. it is also an associative container, but it doesn't store pairs, only keys.
 
-# usage
+## usage
 
 my implementations come with a set of tests and a script to compare with the standard output and measure performances.
 
