@@ -350,6 +350,15 @@ namespace ft {
 				_set_new_root(new_root);	
 			}
 
+			void
+			maintain_sentinels() {
+				_header.node.color	= RED;
+
+				nil()->parent	= 0;
+				nil()->right	= nil();
+				nil()->left		= nil();
+			}
+
 			// INSERTIONS
 			
 			// INSERT ONE
@@ -450,7 +459,7 @@ namespace ft {
 				// return rebalanced tree iterator on node
 				if (_header.node_count > 2)
 					rebalance_after_insert(n);
-				_header.node.color = RED;
+				maintain_sentinels();
 				return iterator(n);
 			}
 		
@@ -612,8 +621,11 @@ namespace ft {
 
 			void
 			transplant(base_ptr u, base_ptr v) {
-				if (u->parent == nil())
-					(base_ptr&)_root = v;
+				//if (u->parent == nil())
+					//(base_ptr&)_root = v;
+				if (u->parent == &_header.node) {
+					_set_new_root(v);
+				}
 				else if (u->parent->left == u)	// is node p left child
 					u->parent->left = v;		// set parent left to
 				else							// its child or 0
@@ -645,7 +657,6 @@ namespace ft {
 					y->left = nil();
 				else
 					y->right = nil();
-				_header.node.color = RED;
 				_dealloc_node(x);
 			}
 
@@ -657,11 +668,19 @@ namespace ft {
 				// save erased node original color
 				t_color original_color	= y->color;
 
+				// update count
+				_header.node_count--;
+				if (empty()) {
+					_reset_root_and_header();
+					return n;
+				}
 				// maintain leftmost/rightmost
-				if (leftmost() == n)
-					_header.set_leftmost(n->parent);
-				if (rightmost() == n)
-					_header.set_rightmost(n->parent);
+				else { 
+					if (leftmost() == n)
+						_header.set_leftmost(n->parent);
+					if (rightmost() == n)
+						_header.set_rightmost(n->parent);
+				}
 				
 				// has 0 to 1 child
 				if (left(n) == nil()) {
@@ -678,7 +697,7 @@ namespace ft {
 					y = minimum(n->right);		// n closest successor
 					original_color = y->color;
 					if (y->right == nil()		// set successor to y
-							&& size() == 3)
+							&& size() == 2)
 						x = n->left;
 					else 
 						x = y->right;
@@ -694,7 +713,6 @@ namespace ft {
 					y->left->parent = y;
 					y->color		= n->color;
 				}
-				_header.node_count--;
 				if (original_color == BLACK) {
 					// n was with no child
 					if (x == nil() && y == n)
@@ -702,32 +720,18 @@ namespace ft {
 					else
 						rebalance_after_erase(x);
 				}
-				if (size() == 1)
-					y = _root;
-				
-				// maintain root
-				if (n == _root) {
-					// only one elem left, becomes root
-					if (size() == 1)
-						y = x;
-					(base_ptr&)_root	= y;
-					_header.node.parent = _root;
-					if (empty())
-						_reset_root_and_header();
-				}
-				else
-					maintain_root(parent(n));
+				maintain_root(parent(n));
 				
 				// maintain max/min
 				if (size() == 1) {
-					_header.set_rightmost(y);
-					_header.set_leftmost(y);
+					_header.set_rightmost(_root);
+					_header.set_leftmost(_root);
 				}
 				else if (!empty()) {
 					_header.set_rightmost(maximum(_header.node.right));
 					_header.set_leftmost(minimum(_header.node.left));
 				}	
-				_header.node.color = RED;
+				maintain_sentinels();
 				return n;
 			}
 			
@@ -1111,11 +1115,19 @@ namespace ft {
 				_root = nil();
 				_header.reset();
 			}
+		
 			void
 			_set_new_root(node_ptr n) {
 				_root				= n;
 				_root->color		= BLACK;
 				_header.node.parent	= _root;
+			}
+			
+			void
+			_set_new_root(base_ptr n) {
+				(base_ptr&)_root	= n;
+				_root->color		= BLACK;
+				_header.node.parent	= n;
 			}
 
 			//// NODES AND VALUES MEMORY ////

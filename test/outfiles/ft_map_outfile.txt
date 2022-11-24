@@ -20,6 +20,16 @@
    [ 10	| ten	]
 
 
+// REVERSE MAP A
+   size:  6
+
+   [ 10	| ten	]
+   [ 5	| five	]
+   [ 4	| four	]
+   [ 3	| three	]
+   [ 1	| one	]
+   [ 0	| zero	]
+
 // MAP B
    size:  2
 
@@ -304,6 +314,14 @@
    [ 4	| four	]
 
 
+// REVERSE MAP A
+   size:  4
+
+   [ 4	| four	]
+   [ 3	| three	]
+   [ 1	| one	]
+   [ 0	| zero	]
+
 // MAP B
    size:  8
 
@@ -336,6 +354,17 @@
    [ 9	| nine	]
    [ 10	| ten	]
 
+
+// REVERSE MAP B
+   size:  7
+
+   [ 10	| ten	]
+   [ 9	| nine	]
+   [ 7	| seven	]
+   [ 5	| five	]
+   [ 4	| four	]
+   [ 2	| two	]
+   [ 1	| one	]
    LEFTMOST:
 >> A size: 5
 >> A begin:
@@ -360,6 +389,16 @@
    [ 9	| nine	]
    [ 10	| ten	]
 
+
+// REVERSE MAP B
+   size:  6
+
+   [ 10	| ten	]
+   [ 9	| nine	]
+   [ 7	| seven	]
+   [ 5	| five	]
+   [ 4	| four	]
+   [ 2	| two	]
    NODE W 2 CHILDREN:
 
 // MAP B
@@ -383,6 +422,15 @@
    [ 10	| ten	]
 
 
+// REVERSE MAP B
+   size:  5
+
+   [ 10	| ten	]
+   [ 9	| nine	]
+   [ 7	| seven	]
+   [ 4	| four	]
+   [ 2	| two	]
+
 // MAP B
    size:  5
 
@@ -401,6 +449,14 @@
    [ 7	| seven	]
    [ 10	| ten	]
 
+
+// REVERSE MAP B
+   size:  4
+
+   [ 10	| ten	]
+   [ 7	| seven	]
+   [ 4	| four	]
+   [ 2	| two	]
 
 // MAP C
    size:  20
@@ -450,6 +506,29 @@
    [ 18	| hehe	]
    [ 19	| hehe	]
 
+
+// REVERSE MAP C
+   size:  19
+
+   [ 19	| hehe	]
+   [ 18	| hehe	]
+   [ 17	| hehe	]
+   [ 16	| hehe	]
+   [ 15	| hehe	]
+   [ 14	| hehe	]
+   [ 13	| hehe	]
+   [ 12	| hehe	]
+   [ 11	| hehe	]
+   [ 10	| hehe	]
+   [ 9	| hehe	]
+   [ 8	| hehe	]
+   [ 7	| hehe	]
+   [ 6	| hehe	]
+   [ 5	| hehe	]
+   [ 4	| hehe	]
+   [ 2	| hehe	]
+   [ 1	| hehe	]
+   [ 0	| hehe	]
    reinserting deleted elements...
 
 // MAP A
@@ -534,6 +613,23 @@
    [ 18	| hehe	]
    [ 19	| hehe	]
 
+
+// REVERSE MAP C
+   size:  13
+
+   [ 19	| hehe	]
+   [ 18	| hehe	]
+   [ 17	| hehe	]
+   [ 16	| hehe	]
+   [ 15	| hehe	]
+   [ 14	| hehe	]
+   [ 13	| hehe	]
+   [ 12	| hehe	]
+   [ 11	| hehe	]
+   [ 10	| hehe	]
+   [ 9	| hehe	]
+   [ 8	| hehe	]
+   [ 7	| hehe	]
    to --end()
 
 // MAP C
@@ -551,6 +647,21 @@
    [ 16	| hehe	]
    [ 19	| hehe	]
 
+
+// REVERSE MAP C
+   size:  11
+
+   [ 19	| hehe	]
+   [ 16	| hehe	]
+   [ 15	| hehe	]
+   [ 14	| hehe	]
+   [ 13	| hehe	]
+   [ 12	| hehe	]
+   [ 11	| hehe	]
+   [ 10	| hehe	]
+   [ 9	| hehe	]
+   [ 8	| hehe	]
+   [ 7	| hehe	]
    to end()
 
 // MAP MYMAP
@@ -576,6 +687,11 @@
 
    [ EMPTY MAP ]
 
+
+// REVERSE MAP MYMAP
+   size:  0
+
+   [ EMPTY MAP ]
 
 // MORE ERASE
 
@@ -608,6 +724,19 @@
    [ 9	| J	]
 
 
+// REVERSE MAP MP +beg
+   size:  9
+
+   [ 9	| J	]
+   [ 8	| II	]
+   [ 7	| HHH	]
+   [ 6	| GGGG	]
+   [ 5	| FFFFF	]
+   [ 4	| EEEEEE	]
+   [ 3	| DDDDDDD	]
+   [ 2	| CCCCCCCC	]
+   [ 0	| AAAAAAAAAA	]
+
 // MAP MP range beg, +++beg
    size:  6
 
@@ -619,6 +748,16 @@
    [ 9	| J	]
 
 
+// REVERSE MAP MP range beg, +++beg
+   size:  6
+
+   [ 9	| J	]
+   [ 8	| II	]
+   [ 7	| HHH	]
+   [ 6	| GGGG	]
+   [ 5	| FFFFF	]
+   [ 4	| EEEEEE	]
+
 // MAP MP range beg, -end
    size:  4
 
@@ -628,6 +767,14 @@
    [ 9	| J	]
 
 
+// REVERSE MAP MP range beg, -end
+   size:  4
+
+   [ 9	| J	]
+   [ 6	| GGGG	]
+   [ 5	| FFFFF	]
+   [ 4	| EEEEEE	]
+
 // MAP MP beg
    size:  3
 
@@ -636,6 +783,13 @@
    [ 9	| J	]
 
 
+// REVERSE MAP MP beg
+   size:  3
+
+   [ 9	| J	]
+   [ 6	| GGGG	]
+   [ 5	| FFFFF	]
+
 // MAP MP -end
    size:  2
 
@@ -643,7 +797,13 @@
    [ 6	| GGGG	]
 
 
-// MAP MP -end
+// REVERSE MAP MP -end
+   size:  2
+
+   [ 6	| GGGG	]
+   [ 5	| FFFFF	]
+
+// MAP MP insert 2
    size:  4
 
    [ 5	| FFFFF	]
@@ -651,6 +811,14 @@
    [ 10	| Hello	]
    [ 11	| Hi	]
 
+
+// REVERSE MAP MP insert 2
+   size:  4
+
+   [ 11	| Hi	]
+   [ 10	| Hello	]
+   [ 6	| GGGG	]
+   [ 5	| FFFFF	]
    [ 5	| FFFFF	]
    [ 11	| Hi	]
 
@@ -659,6 +827,11 @@
 
    [ 5	| FFFFF	]
 
+
+// REVERSE MAP MP range ---end, end
+   size:  1
+
+   [ 5	| FFFFF	]
 
 // MAP MP
    size:  5
@@ -669,6 +842,15 @@
    [ 14	| THREE	]
    [ 15	| FOUR	]
 
+
+// REVERSE MAP MP
+   size:  5
+
+   [ 15	| FOUR	]
+   [ 14	| THREE	]
+   [ 13	| TWO	]
+   [ 12	| ONE	]
+   [ 5	| FFFFF	]
    [ 5	| FFFFF	]
    [ 15	| FOUR	]
 
@@ -677,6 +859,11 @@
 
    [ EMPTY MAP ]
 
+
+// REVERSE MAP MP
+   size:  0
+
+   [ EMPTY MAP ]
 
 // MAP FCK
    size:  10
@@ -693,12 +880,32 @@
    [ 9	| J	]
 
 
+// REVERSE MAP FCK
+   size:  10
+
+   [ 9	| J	]
+   [ 8	| II	]
+   [ 7	| HHH	]
+   [ 6	| GGGG	]
+   [ 5	| FFFFF	]
+   [ 4	| EEEEEE	]
+   [ 3	| DDDDDDD	]
+   [ 2	| CCCCCCCC	]
+   [ 1	| BBBBBBBBB	]
+   [ 0	| AAAAAAAAAA	]
+
 // MAP FCK erase +beg to -end
    size:  2
 
    [ 0	| AAAAAAAAAA	]
    [ 9	| J	]
 
+
+// REVERSE MAP FCK erase +beg to -end
+   size:  2
+
+   [ 9	| J	]
+   [ 0	| AAAAAAAAAA	]
    [ 0	| AAAAAAAAAA	]
 END:
    [ 9	| J	]
@@ -708,6 +915,157 @@ END:
 
    [ EMPTY MAP ]
 
+
+// REVERSE MAP FCK erase ---end to end
+   size:  0
+
+   [ EMPTY MAP ]
+erased?: 0
+
+// MAP M / erase 0
+   size:  6
+
+   [ 	| 	]
+   [ 0	| 2345456456456456	]
+   [ 000000	| 1111111111111111111111111111	]
+   [ 123	| kjhgfdsdffghsfghdfgh	]
+   [ 1234	| gfdsadgg	]
+   [ 123456	| 49857459898674568464	]
+
+
+// REVERSE MAP M / erase 0
+   size:  6
+
+   [ 123456	| 49857459898674568464	]
+   [ 1234	| gfdsadgg	]
+   [ 123	| kjhgfdsdffghsfghdfgh	]
+   [ 000000	| 1111111111111111111111111111	]
+   [ 0	| 2345456456456456	]
+   [ 	| 	]
+erased?: 1
+
+// MAP M / erase 1
+   size:  5
+
+   [ 	| 	]
+   [ 0	| 2345456456456456	]
+   [ 000000	| 1111111111111111111111111111	]
+   [ 1234	| gfdsadgg	]
+   [ 123456	| 49857459898674568464	]
+
+
+// REVERSE MAP M / erase 1
+   size:  5
+
+   [ 123456	| 49857459898674568464	]
+   [ 1234	| gfdsadgg	]
+   [ 000000	| 1111111111111111111111111111	]
+   [ 0	| 2345456456456456	]
+   [ 	| 	]
+erased?: 0
+
+// MAP M / erase 2
+   size:  5
+
+   [ 	| 	]
+   [ 0	| 2345456456456456	]
+   [ 000000	| 1111111111111111111111111111	]
+   [ 1234	| gfdsadgg	]
+   [ 123456	| 49857459898674568464	]
+
+
+// REVERSE MAP M / erase 2
+   size:  5
+
+   [ 123456	| 49857459898674568464	]
+   [ 1234	| gfdsadgg	]
+   [ 000000	| 1111111111111111111111111111	]
+   [ 0	| 2345456456456456	]
+   [ 	| 	]
+erased?: 1
+
+// MAP M / erase 3
+   size:  4
+
+   [ 0	| 2345456456456456	]
+   [ 000000	| 1111111111111111111111111111	]
+   [ 1234	| gfdsadgg	]
+   [ 123456	| 49857459898674568464	]
+
+
+// REVERSE MAP M / erase 3
+   size:  4
+
+   [ 123456	| 49857459898674568464	]
+   [ 1234	| gfdsadgg	]
+   [ 000000	| 1111111111111111111111111111	]
+   [ 0	| 2345456456456456	]
+erased?: 1
+
+// MAP M / erase 4
+   size:  3
+
+   [ 0	| 2345456456456456	]
+   [ 000000	| 1111111111111111111111111111	]
+   [ 123456	| 49857459898674568464	]
+
+
+// REVERSE MAP M / erase 4
+   size:  3
+
+   [ 123456	| 49857459898674568464	]
+   [ 000000	| 1111111111111111111111111111	]
+   [ 0	| 2345456456456456	]
+erased?: 1
+
+// MAP M / erase 5
+   size:  2
+
+   [ 0	| 2345456456456456	]
+   [ 000000	| 1111111111111111111111111111	]
+
+
+// REVERSE MAP M / erase 5
+   size:  2
+
+   [ 000000	| 1111111111111111111111111111	]
+   [ 0	| 2345456456456456	]
+erased?: 1
+
+// MAP M / erase 6
+   size:  1
+
+   [ 0	| 2345456456456456	]
+
+
+// REVERSE MAP M / erase 6
+   size:  1
+
+   [ 0	| 2345456456456456	]
+erased?: 1
+
+// MAP M / erase 7
+   size:  0
+
+   [ EMPTY MAP ]
+
+
+// REVERSE MAP M / erase 7
+   size:  0
+
+   [ EMPTY MAP ]
+erased?: 0
+
+// MAP M / erase 8
+   size:  0
+
+   [ EMPTY MAP ]
+
+
+// REVERSE MAP M / erase 8
+   size:  0
+
+   [ EMPTY MAP ]
 // CLEAR //
 
 // MAP C
@@ -959,3 +1317,9 @@ END:
    [ 4	| dis	]
    [ 5	| stop	]
 
+// BEGINNING TO END
+
+   after insert:
+   1 => one
+   9 => nine
+   after erase:

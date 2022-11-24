@@ -766,6 +766,110 @@ main_test_map() {
 			NAMESPACE::map<int, std::string>::reverse_iterator>(
 					fck, "FCK erase ---end to end");
 		
+		{
+			NAMESPACE::map<std::string, std::string>	m;
+
+			m.insert(NAMESPACE::make_pair("", ""));
+			m.insert(NAMESPACE::make_pair("123", "kjhgfdsdffghsfghdfgh"));
+			m.insert(NAMESPACE::make_pair("1234", "gfdsadgg"));
+			m.insert(NAMESPACE::make_pair("123456", "49857459898674568464"));
+			m.insert(NAMESPACE::make_pair("0", "2345456456456456"));
+			m.insert(NAMESPACE::make_pair("", ""));
+			m.insert(NAMESPACE::make_pair("", "9459845984598498"));
+			m.insert(NAMESPACE::make_pair("000000", "1111111111111111111111111111"));
+
+			NAMESPACE::map<std::string, std::string>::size_type	size;
+			
+			size = m.erase("1");
+
+			std::cout << "erased?: " << size << std::endl;
+			print_map<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::iterator>(
+						m, "M / erase 0");
+			print_reverse<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::reverse_iterator>(
+						m, "M / erase 0");
+
+			size = m.erase("123");
+
+			std::cout << "erased?: " << size << std::endl;
+			print_map<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::iterator>(
+						m, "M / erase 1");
+			print_reverse<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::reverse_iterator>(
+						m, "M / erase 1");
+
+			size = m.erase("123");
+
+			std::cout << "erased?: " << size << std::endl;
+			print_map<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::iterator>(
+						m, "M / erase 2");
+			print_reverse<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::reverse_iterator>(
+						m, "M / erase 2");
+
+			size = m.erase("");
+
+			std::cout << "erased?: " << size << std::endl;
+			print_map<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::iterator>(
+						m, "M / erase 3");
+			print_reverse<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::reverse_iterator>(
+						m, "M / erase 3");
+
+			size = m.erase("1234");
+
+			std::cout << "erased?: " << size << std::endl;
+			print_map<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::iterator>(
+						m, "M / erase 4");
+			print_reverse<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::reverse_iterator>(
+						m, "M / erase 4");
+
+			size = m.erase("123456");
+
+			std::cout << "erased?: " << size << std::endl;
+			print_map<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::iterator>(
+						m, "M / erase 5");
+			print_reverse<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::reverse_iterator>(
+						m, "M / erase 5");
+
+			size = m.erase("000000");
+
+			std::cout << "erased?: " << size << std::endl;
+			print_map<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::iterator>(
+						m, "M / erase 6");
+			print_reverse<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::reverse_iterator>(
+						m, "M / erase 6");
+
+			size = m.erase("0");
+
+			std::cout << "erased?: " << size << std::endl;
+			print_map<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::iterator>(
+						m, "M / erase 7");
+			print_reverse<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::reverse_iterator>(
+						m, "M / erase 7");
+
+			size = m.erase("000000");
+
+			std::cout << "erased?: " << size << std::endl;
+			print_map<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::iterator>(
+						m, "M / erase 8");
+			print_reverse<NAMESPACE::map<std::string, std::string>, 
+				NAMESPACE::map<std::string, std::string>::reverse_iterator>(
+						m, "M / erase 8");
+		}
 	}
 	
 	std::cout	<< "// CLEAR //" << std::endl;
@@ -1151,258 +1255,6 @@ main_test_map() {
 		for (NAMESPACE::map<int, std::string>::iterator it = mymap.begin(); 
 				it != mymap.end(); ++it)
 			std::cout << "   " << it->first << " => " << it->second << '\n';
-	}
-	{
-		NAMESPACE::map<int, std::string>	m;
-
-		m.insert(NAMESPACE::make_pair(23, "23n"));
-        m.insert(NAMESPACE::make_pair(25, "asdasdfsdfsafdsf"));
-        m.insert(NAMESPACE::make_pair(1, "asdssdfdfdffffff"));
-        m.insert(NAMESPACE::make_pair(2, "dsfdffffdfdfdsdfdffa"));
-        m.insert(NAMESPACE::make_pair(3, "sssdfs"));
-        m.insert(NAMESPACE::make_pair(75, "dfse"));
-        m.insert(NAMESPACE::make_pair(30, "sefsadfasdfasdfsadfasdfsf"));
-        m.insert(NAMESPACE::make_pair(-22, "dfhkihgbnfbcx5reterjhd"));
-        m.insert(NAMESPACE::make_pair(-23, "sdffgdfgrefet34thfgheewt"));
-        m.insert(NAMESPACE::make_pair(0, "98y4rtuohwidsjusdossefsse"));
-
-		NAMESPACE::map<int, std::string>::size_type	size;
-
-        size = m.erase(64);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(0);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(75);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(1);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(2);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(3);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(23);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(23);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(30);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(-22);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(25);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(-23);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase(25);
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<int, std::string>, 
-			NAMESPACE::map<int, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-    }
-
-    {
-		NAMESPACE::map<std::string, std::string>	m;
-
-        m.insert(NAMESPACE::make_pair("", ""));
-        m.insert(NAMESPACE::make_pair("123", "kjhgfdsdffghsfghdfgh"));
-        m.insert(NAMESPACE::make_pair("1234", "gfdsadgg"));
-        m.insert(NAMESPACE::make_pair("123456", "49857459898674568464"));
-        m.insert(NAMESPACE::make_pair("0", "2345456456456456"));
-        m.insert(NAMESPACE::make_pair("", ""));
-        m.insert(NAMESPACE::make_pair("", "9459845984598498"));
-        m.insert(NAMESPACE::make_pair("000000", "1111111111111111111111111111"));
-
-		NAMESPACE::map<std::string, std::string>::size_type	size;
-        
-		size = m.erase("1");
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::iterator>(
-					m, "M / erase 0");
-		print_reverse<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::reverse_iterator>(
-					m, "M / erase 0");
-
-        size = m.erase("123");
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::iterator>(
-					m, "M / erase 1");
-		print_reverse<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::reverse_iterator>(
-					m, "M / erase 1");
-
-        size = m.erase("123");
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::iterator>(
-					m, "M / erase 2");
-		print_reverse<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::reverse_iterator>(
-					m, "M / erase 2");
-
-        size = m.erase("");
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::iterator>(
-					m, "M / erase 3");
-		print_reverse<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::reverse_iterator>(
-					m, "M / erase 3");
-
-        size = m.erase("1234");
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::iterator>(
-					m, "M / erase 4");
-		print_reverse<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::reverse_iterator>(
-					m, "M / erase 4");
-
-/*		size = m.erase("123456");
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::iterator>(
-					m, "M / erase 5");
-		print_reverse<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::reverse_iterator>(
-					m, "M / erase 5");
-
-        size = m.erase("000000");
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::iterator>(
-					m, "M / erase 6");
-		print_reverse<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::reverse_iterator>(
-					m, "M / erase 6");
-
-        size = m.erase("0");
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::iterator>(
-					m, "M / erase 7");
-		print_reverse<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::reverse_iterator>(
-					m, "M / erase 7");
-
-        size = m.erase("000000");
-
-		std::cout << "erased?: " << size << std::endl;
-		print_map<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::iterator>(
-					m, "M / erase 8");
-		print_reverse<NAMESPACE::map<std::string, std::string>, 
-			NAMESPACE::map<std::string, std::string>::reverse_iterator>(
-					m, "M / erase 8");
-*/
 	}
 }
 
