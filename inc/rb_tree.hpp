@@ -678,7 +678,7 @@ namespace ft {
 				else { 
 					if (leftmost() == n)
 						_header.set_leftmost(n->parent);
-					if (rightmost() == n)
+					else if (rightmost() == n)
 						_header.set_rightmost(n->parent);
 				}
 				
