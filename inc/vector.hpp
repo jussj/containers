@@ -22,28 +22,28 @@ namespace ft {
 
 		// TYPES
 
-			typedef	size_t							size_type;
-			typedef	ptrdiff_t						difference_type;
+			typedef	size_t size_type;
+			typedef	ptrdiff_t difference_type;
 
-			typedef	T								value_type;
-			typedef Alloc							allocator_type;
-			typedef typename Alloc::reference		reference;
+			typedef	T	value_type;
+			typedef Alloc	allocator_type;
+			typedef typename Alloc::reference	reference;
 			typedef typename Alloc::const_reference	const_reference;
-			typedef typename Alloc::pointer			pointer;
+			typedef typename Alloc::pointer	pointer;
 			typedef typename Alloc::const_pointer	const_pointer;
 			
-			typedef	vector_iterator<T>						iterator;
-			typedef	vector_iterator<const T>				const_iterator;
-			typedef ft::reverse_iterator<iterator>			reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef	vector_iterator<T> iterator;
+			typedef	vector_iterator<const T> const_iterator;
+			typedef ft::reverse_iterator<iterator> reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
 		// CTOR/CPY/DTOR
 
 			explicit
 			vector(const Alloc& Allocator = Alloc())
 				: _alloc(Allocator), _begin(NULL), _end(NULL), _capacity(NULL) {
-					_begin		= _alloc.allocate(0);
-					_end		= _begin;
+					_begin = _alloc.allocate(0);
+					_end = _begin;
 					_capacity	= _begin;	
 				}
 
@@ -53,12 +53,12 @@ namespace ft {
 				: _alloc(Allocator) {
 				if (n  + 1 > max_size())
 					throw std::length_error("vector::");
-				this->_begin	= _alloc.allocate(n + 1);
-				pointer p		= _begin;
+				this->_begin = _alloc.allocate(n + 1);
+				pointer p	= _begin;
 				
 				for (size_type s = 0; s < n; s++)
 					_alloc.construct(p++, value);	
-				_end		= _begin + n;
+				_end = _begin + n;
 				_capacity	= _end;
 			}
 
@@ -66,8 +66,8 @@ namespace ft {
 			vector(InputIt first, InputIt last, const Alloc& Allocator = Alloc())
 					: _alloc(Allocator) {
 				
-				_begin		= _alloc.allocate(0);
-				_end		= _begin;
+				_begin = _alloc.allocate(0);
+				_end = _begin;
 				_capacity	= _begin;
 				_alloc	= Alloc();
 				
@@ -79,12 +79,12 @@ namespace ft {
 					return ;
 				if (src.size() > max_size())
 					throw std::length_error("vector::");
-				this->_begin	= _alloc.allocate(src.size());
-				pointer p		= _begin;
+				this->_begin = _alloc.allocate(src.size());
+				pointer p	= _begin;
 				for (size_type s = 0; s < src.size(); s++) {
 					this->_alloc.construct(p++, *(src._begin + s));	
 				}
-				_end		= _begin + src.size();
+				_end = _begin + src.size();
 				_capacity	= _begin + src.size();
 			}
 			
@@ -210,8 +210,8 @@ namespace ft {
 						_alloc.destroy(_begin + s);
 
 					_alloc.deallocate(_begin, size());
-					_begin	= tmp;
-					_end		= _begin + array_size;
+					_begin = tmp;
+					_end = _begin + array_size;
 					_capacity = _begin + n;
 				}
 			}
@@ -303,9 +303,9 @@ namespace ft {
 			// TO-DO redo erase
 			iterator
 			erase(iterator position) {
-				size_type	new_size 		= size() - 1;
-				size_type	new_position	= std::distance(begin(), position);
-				size_type 	s 				= new_position;
+				size_type	new_size = size() - 1;
+				size_type	new_position = std::distance(begin(), position);
+				size_type s = new_position;
 
 				for (iterator it = position; it < end(); it++) {
 					if (it == position) {
@@ -320,22 +320,22 @@ namespace ft {
 					s++;
 				}
 				_alloc.destroy(_begin + s);
-				_end 	= _begin + new_size;
+				_end = _begin + new_size;
 				
 				return begin() + new_position;
 			}
 			
 			void
 			swap(vector<T,Alloc>& src) {
-				pointer	tmp_begin 		= _begin;
-				pointer	tmp_end 		= _end;
-				pointer	tmp_capacity 	= _capacity;
+				pointer	tmp_begin = _begin;
+				pointer	tmp_end = _end;
+				pointer	tmp_capacity = _capacity;
 				
-				_begin		= src._begin;
-				_end		= src._begin + src.size();
+				_begin = src._begin;
+				_end = src._begin + src.size();
 				_capacity	= src._begin + src.capacity();
-				src._begin		= tmp_begin;
-				src._end		= tmp_end;
+				src._begin = tmp_begin;
+				src._end = tmp_end;
 				src._capacity	= tmp_capacity;
 			}
 			
@@ -350,10 +350,10 @@ namespace ft {
 
 		// ATTRIBUTES //
 
-			allocator_type	_alloc;
-			pointer			_begin;
-			pointer			_end;
-			pointer			_capacity;
+			allocator_type _alloc;
+			pointer	_begin;
+			pointer	_end;
+			pointer	_capacity;
 
 		// AUX MEMBER FUNCTIONS //
 		
@@ -511,10 +511,10 @@ namespace ft {
 				reverse_iterator	rbegin_insert(_begin + new_size - 1);
 				size_type			copy_from = size() - 1;
 
-				// condition NOT GOOD THOUGH
-				for	(	reverse_iterator rit = rbegin_insert;
+				for	(
+						reverse_iterator rit = rbegin_insert;
 						rit != rlast_insert; 
-						++rit	) {
+						++rit) {
 					_alloc.construct(	&(*rit.base()),
 											*(begin() + copy_from));
 					_alloc.destroy(_begin + copy_from);
@@ -529,7 +529,7 @@ namespace ft {
 					iterator position,
 					size_type elems_after,
 					size_type n) {
-				iterator	it		= position;
+				iterator it = position;
 					
 				for (size_type i = 0; i < elems_after; ++i) {
 					_alloc.construct(&(*it) + n, *it);
@@ -549,8 +549,8 @@ namespace ft {
 					const T& x) {
 				if (new_capacity + 1 > max_size())
 					throw std::length_error("vector::reallocate");
-				iterator	it			= begin();
-				pointer		new_array	= _alloc.allocate(new_capacity + 1);
+				iterator it	= begin();
+				pointer	new_array	= _alloc.allocate(new_capacity + 1);
 				
 				for (size_type s = 0; s < new_size; s++) {
 					if (it == position) {

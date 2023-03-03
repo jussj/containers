@@ -20,15 +20,15 @@ namespace ft {
 
 	struct rb_tree_node_base {
 
-		typedef	rb_tree_node_base*			ptr;
-		typedef const rb_tree_node_base*	const_ptr;
+		typedef	rb_tree_node_base* ptr;
+		typedef const rb_tree_node_base* const_ptr;
 
 		// ATTRIBUTES
 
-		t_color		color;
-		ptr			parent;
-		ptr			left;
-		ptr			right;
+		t_color	color;
+		ptr	parent;
+		ptr	left;
+		ptr	right;
 
 	};	/* rb_tree_node_base struct	*/
 	
@@ -37,7 +37,7 @@ namespace ft {
 		// ATTRIBUTES
 
 		rb_tree_node_base	node;
-		size_t				node_count;
+		size_t node_count;
 
 		// CTOR
 
@@ -66,10 +66,10 @@ namespace ft {
 				reset();
 				return ;
 			}
-			node.color	= src.node.color;
+			node.color = src.node.color;
 			node.parent = src.node.parent;
 			node.left	= src.node.left;
-			node.right	= src.node.right;
+			node.right = src.node.right;
 			node.parent->parent = &node;
 			
 			node_count	= src.node_count;	
@@ -77,10 +77,10 @@ namespace ft {
 
 		void
 		move_node_data(rb_tree_header& src) {
-			node.color	= src.node.color;
+			node.color = src.node.color;
 			node.parent = src.node.parent;
 			node.left	= src.node.left;
-			node.right	= src.node.right;
+			node.right = src.node.right;
 			node.parent->parent = &node;
 			
 			src.reset();	
@@ -90,8 +90,8 @@ namespace ft {
 		reset() {
 			node.parent	= 0;		// will be set to root
 			node.left	= &node;
-			node.right	= &node;
-			node_count	= 0;
+			node.right = &node;
+			node_count = 0;
 		}
 
 	};	/* rb_tree_header struct */
@@ -99,9 +99,9 @@ namespace ft {
 	template<class V>
 	struct rb_tree_node : public rb_tree_node_base {
 
-		typedef rb_tree_node<V>*	node_ptr;
-		typedef V					value_type;
-		typedef V*					value_ptr;
+		typedef rb_tree_node<V>* node_ptr;
+		typedef V	value_type;
+		typedef V* value_ptr;
 
 		value_ptr					value;
 
@@ -116,21 +116,21 @@ namespace ft {
 		}
 
 		// declaring a unique ptr to bottom NIL sentinel
-		static node_ptr			   nil;
+		static node_ptr	nil;
 
 		private:
 
 			// declaring the node "content"
-			static rb_tree_node 	   _nil_node;
+			static rb_tree_node _nil_node;
 
 			// init function for NIL sentinel
 			static rb_tree_node
 			black_node() {
 				rb_tree_node	node;
 				
-				node.color	= BLACK;
+				node.color = BLACK;
 				node.parent	= 0;
-				node.right	= &node;
+				node.right = &node;
 				node.left	= &node;
 				return node;
 			}
@@ -159,40 +159,40 @@ namespace ft {
 
 		public:
 
-			typedef Val					value_type;
-			typedef Key 				key_type;
-			typedef T					mapped_value;
-			typedef KeyOfValue			key_of_value;
+			typedef Val value_type;
+			typedef Key key_type;
+			typedef T mapped_value;
+			typedef KeyOfValue key_of_value;
 
-			typedef size_t 				size_type;
-			typedef ptrdiff_t 			difference_type;
+			typedef size_t size_type;
+			typedef ptrdiff_t difference_type;
 		 
-			typedef rb_tree_node_base*			base_ptr;
-			typedef const rb_tree_node_base*	const_base_ptr;
-			typedef	rb_tree_node<Val>*			node_ptr;
-			typedef	const rb_tree_node<Val>*	const_node_ptr;
-			typedef rb_tree_header				header;
+			typedef rb_tree_node_base* base_ptr;
+			typedef const rb_tree_node_base* const_base_ptr;
+			typedef	rb_tree_node<Val>* node_ptr;
+			typedef	const rb_tree_node<Val>* const_node_ptr;
+			typedef rb_tree_header header;
 		
-			typedef typename Alloc::template	rebind<rb_tree_node<Val> >::other 
-												node_allocator_type;
-			typedef Alloc						pair_allocator_type;
-			typedef Compare						key_compare;	
+			typedef typename Alloc::template rebind<rb_tree_node<Val> >::other 
+				node_allocator_type;
+			typedef Alloc pair_allocator_type;
+			typedef Compare	key_compare;	
 		
-			typedef rb_tree_iterator<value_type>			iterator;
-			typedef rb_tree_const_iterator<value_type>		const_iterator;
-			typedef ft::reverse_iterator<iterator>			reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef rb_tree_iterator<value_type> iterator;
+			typedef rb_tree_const_iterator<value_type> const_iterator;
+			typedef ft::reverse_iterator<iterator> reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
 		//// ATTRIBUTES /////
 
 		private:
 
-			pair_allocator_type		_alloc;
-			node_allocator_type		_nodalloc;
-			key_compare				_compare;
-			node_ptr				_root;
-			header					_header;
-			key_of_value			_key_of_value;
+			pair_allocator_type	_alloc;
+			node_allocator_type	_nodalloc;
+			key_compare	_compare;
+			node_ptr _root;
+			header _header;
+			key_of_value _key_of_value;
 
 		//// MEMBER FUNCTIONS ////
 
@@ -275,10 +275,10 @@ namespace ft {
 
 			rb_tree_impl&
 			operator=(const rb_tree_impl& src) {
-				_compare	= src._compare;
+				_compare = src._compare;
 				_nodalloc	= src._nodalloc;
-				_alloc		= src._alloc;
-				_root		= src._root;
+				_alloc = src._alloc;
+				_root	= src._root;
 				_key_of_value	= src._key_of_value;
 				_header.copy_data(src._header);
 				return *this;
@@ -290,12 +290,12 @@ namespace ft {
 
 			void
 			left_rotate(base_ptr x) {
-				base_ptr y	= x->right;
-				x->right	= y->left;
+				base_ptr y = x->right;
+				x->right = y->left;
 				
 				// maintain leftmost and rightmost
-				base_ptr	lmost = _header.node.left;
-				base_ptr	rmost = _header.node.right;
+				base_ptr lmost = _header.node.left;
+				base_ptr rmost = _header.node.right;
 
 				if (y->left != nil())
 					y->left->parent = x;
@@ -315,12 +315,12 @@ namespace ft {
 
 			void
 			right_rotate(base_ptr x) {
-				base_ptr y	= x->left;
-				x->left		= y->right;
+				base_ptr y = x->left;
+				x->left = y->right;
 				
 				// maintain leftmost and rightmost
-				base_ptr	lmost = _header.node.left;
-				base_ptr	rmost = _header.node.right;
+				base_ptr lmost = _header.node.left;
+				base_ptr rmost = _header.node.right;
 			
 				if (y->right != nil())
 					y->right->parent = x;
@@ -331,7 +331,7 @@ namespace ft {
 					x->parent->right = y;
 				else
 					x->parent->left = y;
-				y->right	= x;
+				y->right = x;
 				x->parent	= y;
 				
 				_header.set_leftmost(lmost);
@@ -355,8 +355,8 @@ namespace ft {
 				_header.node.color	= RED;
 
 				nil()->parent	= 0;
-				nil()->right	= nil();
-				nil()->left		= nil();
+				nil()->right = nil();
+				nil()->left	= nil();
 			}
 
 			// INSERTIONS
@@ -365,7 +365,7 @@ namespace ft {
 
 			iterator
 			rebalance_after_insert(node_ptr n) {
-				node_ptr	y;
+				node_ptr y;
 			
 				while (n->parent->color == RED) {
 					if (n->parent == n->parent->parent->left) {
@@ -420,9 +420,9 @@ namespace ft {
 
 			iterator	
 			insert_and_rebalance(const value_type &v) {
-				node_ptr	n	= _create_node(v);
-				node_ptr	y	= nil();
-				node_ptr	x	= _root;
+				node_ptr n = _create_node(v);
+				node_ptr y = nil();
+				node_ptr x = _root;
 			
 				// find insertion position	
 				while (x != nil()) {
@@ -487,8 +487,8 @@ namespace ft {
 						_header.set_rightmost(n);
 				}
 				n->parent	= y;
-				n->left		= nil();
-				n->right	= nil();
+				n->left	= nil();
+				n->right = nil();
 				
 				_header.node_count++;
 				rebalance_after_insert(n);		
@@ -621,14 +621,12 @@ namespace ft {
 
 			void
 			transplant(base_ptr u, base_ptr v) {
-				//if (u->parent == nil())
-					//(base_ptr&)_root = v;
 				if (u->parent == &_header.node) {
 					_set_new_root(v);
 				}
-				else if (u->parent->left == u)	// is node p left child
-					u->parent->left = v;		// set parent left to
-				else							// its child or 0
+				else if (u->parent->left == u)
+					u->parent->left = v;
+				else
 					u->parent->right = v;
 				v->parent = u->parent;
 			}
@@ -662,8 +660,8 @@ namespace ft {
 
 			base_ptr
 			erase_and_rebalance(const base_ptr n) {
-				base_ptr y	= n;			// successor to n
-				base_ptr x;					// successor to y
+				base_ptr y	= n; // successor to n
+				base_ptr x;	// successor to y
 
 				// save erased node original color
 				t_color original_color	= y->color;
@@ -684,9 +682,9 @@ namespace ft {
 				
 				// has 0 to 1 child
 				if (left(n) == nil()) {
-					x = n->right;				// save only child
-					transplant(n, n->right);	// replace parent child 
-				}								// by its own child
+					x = n->right;
+					transplant(n, n->right);
+				}
 				else if (n->right == nil()) {
 					x = n->left;	
 					transplant(n, n->left);
@@ -694,9 +692,9 @@ namespace ft {
 				
 				// has 2 children
 				else {	
-					y = minimum(n->right);		// n closest successor
+					y = minimum(n->right); // n closest successor
 					original_color = y->color;
-					if (y->right == nil()		// set successor to y
+					if (y->right == nil()	// set successor to y
 							&& size() == 2)
 						x = n->left;
 					else 
@@ -1215,13 +1213,14 @@ namespace ft {
 
 		//// CTORS ////
 		
-		rb_tree_iterator()				: node()	{}
-		rb_tree_iterator(base_ptr x)	: node(x)	{}
+		rb_tree_iterator()
+			: node()	{}
+		rb_tree_iterator(base_ptr x)
+			: node(x)	{}
 		rb_tree_iterator(const self& src)
 			: node() {
 			*this = src;
 		}
-		// cpy ctor
 
 		//// OVERLOADS ////
 
@@ -1266,7 +1265,6 @@ namespace ft {
 
 		self
 		operator++(int) {
-			//std::cout << "---NO NODE BOUHOU" << std::endl;
 			self tmp(*this);
 
 			++(*this);
@@ -1276,8 +1274,8 @@ namespace ft {
 		self&
 		operator--() {
 			if (node->parent->parent == node
-					&& node->color == RED) {	// look for header
-				node = node->right;				// return rightmost
+					&& node->color == RED) { // look for header
+				node = node->right;
 			}
 			else if (node->left != rb_tree_node<T>::nil) {
 				base_ptr x = node->left;
@@ -1345,17 +1343,17 @@ namespace ft {
 
 		// TYPES
 
-		typedef T			value_type;
-		typedef const T&	reference;
-		typedef const T*	pointer;
+		typedef T	value_type;
+		typedef const T& reference;
+		typedef const T* pointer;
 
-		typedef rb_tree_iterator<T>				iterator;
+		typedef rb_tree_iterator<T>	iterator;
 		typedef std::bidirectional_iterator_tag	iterator_category;
-		typedef ptrdiff_t						difference_type;
+		typedef ptrdiff_t	difference_type;
 		
-		typedef rb_tree_const_iterator<T>		self;
-		typedef rb_tree_node_base::const_ptr	base_ptr;
-		typedef const rb_tree_node<T>*			node_ptr;
+		typedef rb_tree_const_iterator<T>	self;
+		typedef rb_tree_node_base::const_ptr base_ptr;
+		typedef const rb_tree_node<T>* node_ptr;
 		
 		// ATTRIBUTES
 
@@ -1363,8 +1361,10 @@ namespace ft {
 
 		// CTORS
 		
-		rb_tree_const_iterator()			: node()	{}
-		rb_tree_const_iterator(base_ptr x)	: node(x)	{}
+		rb_tree_const_iterator()
+			: node()	{}
+		rb_tree_const_iterator(base_ptr x)
+			: node(x)	{}
 		rb_tree_const_iterator(const iterator& it)
 			: node(it.node)	{}
 
@@ -1412,8 +1412,8 @@ namespace ft {
 		self&
 		operator--() {
 			if (node->parent->parent == node
-					&& node->color == RED) {	// look for header
-				node = node->right;				// return rightmost
+					&& node->color == RED) { // look for header
+				node = node->right;
 			}
 			else if (node->left != rb_tree_node<T>::nil) {
 				base_ptr x = node->left;

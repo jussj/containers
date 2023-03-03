@@ -134,13 +134,6 @@ namespace ft {
 					return *(_current - n - 1);
 				}
 				
-				//template<class U>
-				//reverse_iterator&
-				//operator=(const reverse_iterator<U>& src) {
-					//_current = src.base();
-					//return *this;
-				//}
-		
 			// NON-MEMBER OPERATORS FRIEND DECLARATION
 		
 				template <class I, class J>

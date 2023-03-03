@@ -15,14 +15,14 @@ namespace ft {
 		std::stringstream	stream;
 
 		stream << n;
-		std::string 		str = stream.str();
+		std::string str = stream.str();
 		return str;
 	}
 
 	template<class It>
 	size_t
 	distance(It first, It last) {
-		size_t	dis = 0;
+		size_t dis = 0;
 
 		for (;first != last; ++first)
 			++dis;

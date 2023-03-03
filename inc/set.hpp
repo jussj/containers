@@ -12,35 +12,35 @@ namespace ft {
 
 			// TYPES
 			
-			typedef Key			key_type;
-			typedef Key			value_type;
-			typedef Compare		key_compare;
-			typedef Compare		value_compare;
+			typedef Key	key_type;
+			typedef Key	value_type;
+			typedef Compare	key_compare;
+			typedef Compare	value_compare;
 			typedef Allocator	allocator_type;
 
-			typedef typename Allocator::reference		reference;
+			typedef typename Allocator::reference	reference;
 			typedef typename Allocator::const_reference const_reference;
 			
-			typedef ft::rb_tree_const_iterator<value_type>	iterator;
-			typedef ft::rb_tree_const_iterator<value_type>	const_iterator;
+			typedef ft::rb_tree_const_iterator<value_type> iterator;
+			typedef ft::rb_tree_const_iterator<value_type> const_iterator;
 
-			typedef size_t				size_type;
-			typedef ptrdiff_t			difference_type;
+			typedef size_t size_type;
+			typedef ptrdiff_t	difference_type;
 			
-			typedef typename Allocator::pointer				pointer;
-			typedef typename Allocator::const_pointer		const_pointer;
-			typedef ft::reverse_iterator<iterator>			reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef typename Allocator::pointer	pointer;
+			typedef typename Allocator::const_pointer	const_pointer;
+			typedef ft::reverse_iterator<iterator> reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 		
 		private:
 
 			typedef rb_tree_impl <Key, Key, Key, Compare, 
-					Allocator, ft::return_value<Key> >		rb_tree;
+					Allocator, ft::return_value<Key> > rb_tree;
 			
 			// ATTRIBUTES
 			
-			allocator_type		_alloc;
-			rb_tree				_tree;
+			allocator_type _alloc;
+			rb_tree _tree;
 
 		public:
 
@@ -145,11 +145,11 @@ namespace ft {
 			
 			pair<iterator, bool>
 			insert(const value_type& x) {
-				bool		key		= false;
-				iterator	it		= find(x);
+				bool key = false;
+				iterator it	= find(x);
 
 				if (it == end()) {
-					it	= _tree.insert_and_rebalance(x);
+					it = _tree.insert_and_rebalance(x);
 					key = true;
 				}
 				return pair<iterator, bool>(it, key);
@@ -158,10 +158,10 @@ namespace ft {
 			// TO-DO obvs	
 			iterator
 			insert(iterator position, const value_type& x) {
-				iterator	it		= find(x);
+				iterator it	= find(x);
 
 				if (it == end())
-					it	= _tree.insert_with_hint(x, position);
+					it = _tree.insert_with_hint(x, position);
 				return it;
 			}
 			
@@ -181,7 +181,7 @@ namespace ft {
 			
 			size_type
 			erase(const key_type& x) {
-				const_iterator ret	= find(x);
+				const_iterator ret = find(x);
 			   
 				if (ret	== end())
 					return 0;

@@ -18,24 +18,24 @@ namespace ft {
 
 		//// TYPES ////
 
-			typedef Key					key_type;
-			typedef T					mapped_type;
-			typedef pair<const Key, T>	value_type;
-			typedef Compare				key_compare;
-			typedef Alloc				allocator_type;
-			typedef size_t				size_type;		
-			typedef ptrdiff_t			difference_type;
+			typedef Key	key_type;
+			typedef T	mapped_type;
+			typedef pair<const Key, T> value_type;
+			typedef Compare	key_compare;
+			typedef Alloc	allocator_type;
+			typedef size_t size_type;		
+			typedef ptrdiff_t	difference_type;
 
-			typedef typename Alloc::reference		reference;
+			typedef typename Alloc::reference	reference;
 			typedef typename Alloc::const_reference	const_reference;
-			typedef typename Alloc::pointer			pointer;
+			typedef typename Alloc::pointer	pointer;
 			typedef typename Alloc::const_pointer	const_pointer;
 
-			typedef ft::rb_tree_iterator<value_type>		iterator;
-			typedef ft::rb_tree_const_iterator<value_type>	const_iterator;
+			typedef ft::rb_tree_iterator<value_type> iterator;
+			typedef ft::rb_tree_const_iterator<value_type> const_iterator;
 
-			typedef ft::reverse_iterator<iterator>			reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
+			typedef ft::reverse_iterator<iterator> reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
 		private:
 
@@ -74,13 +74,13 @@ namespace ft {
 		//// CTOR, DTOR AND COPY ////
 
 			explicit
-			map(	const key_compare& comp = Compare(), 
+			map(const key_compare& comp = Compare(), 
 					const allocator_type& alloc = Alloc()
 					) 
 				:	_alloc(alloc), _tree(comp) {}
 
 			template <class InputIterator>
-			map(	InputIterator first,
+			map(InputIterator first,
 					InputIterator last,
 					const key_compare& comp = Compare(),
 					const allocator_type& alloc = Alloc()
@@ -179,8 +179,8 @@ namespace ft {
 
 			pair<iterator, bool>
 			insert(const value_type& x) {
-				bool		key		= false;
-				iterator	it		= find(x.first);
+				bool key = false;
+				iterator it	= find(x.first);
 
 				if (it == end()) {
 					it	= _tree.insert_and_rebalance(x);
@@ -191,7 +191,7 @@ namespace ft {
 			
 			iterator
 			insert(iterator position, const value_type& x) {
-				iterator	it		= find(x.first);
+				iterator it	= find(x.first);
 
 				if (it == end())
 					it	= _tree.insert_with_hint(x, position);
@@ -325,45 +325,51 @@ namespace ft {
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
-	operator==(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y	) {
+	operator==(
+			const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y) {
 		return x.size() == y.size() 
 			&& ft::equal(x.begin(), x.end(), y.begin());
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
-	operator<(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y	) {
+	operator<(
+			const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y) {
 		return ft::lexicographical_compare(x.begin(), x.end(), 
 				y.begin(), y.end());
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
-	operator!=(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y	) {
+	operator!=(
+			const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y) {
 		return !(x == y);	
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
-	operator>(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y	) {
+	operator>(
+			const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y) {
 		return y < x;
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
-	operator>=(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y) {
+	operator>=(
+			const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y) {
 		return !(x < y);
 	}
 
 	template <class Key, class T, class Compare, class Allocator>
 	bool
-	operator<=(	const map<Key,T,Compare,Allocator>& x,
-				const map<Key,T,Compare,Allocator>& y	) {
+	operator<=(
+			const map<Key,T,Compare,Allocator>& x,
+			const map<Key,T,Compare,Allocator>& y) {
 		return !(y < x);
 	}
 
@@ -371,8 +377,9 @@ namespace ft {
 
 	template <class Key, class T, class Compare, class Allocator>
 	void
-	swap(	map<Key,T,Compare,Allocator>& x,
-			map<Key,T,Compare,Allocator>& y		) {
+	swap(
+			map<Key,T,Compare,Allocator>& x,
+			map<Key,T,Compare,Allocator>& y) {
 		x.swap(y);
 	}
 

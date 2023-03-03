@@ -12,11 +12,11 @@ namespace ft {
 		
 		// ATTRIBUTES
 		
-		typedef	T1	first_type;
-		typedef T2	second_type;
+		typedef	T1 first_type;
+		typedef T2 second_type;
 	
-		T1			first;
-		T2			second;
+		T1 first;
+		T2 second;
 
 		// CTOR
 		
@@ -35,8 +35,8 @@ namespace ft {
 		pair&	operator=(const pair& src) {
 			if (&src == this)
 				return *this;
-			this->first		= src.first;
-			this->second	= src.second;
+			this->first	= src.first;
+			this->second = src.second;
 			return *this;
 		}
 
