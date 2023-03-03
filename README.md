@@ -1,14 +1,14 @@
 ## containers
 
-ft_containers is a school project which goal is to reimplement three containers. In short, these are c++ data structures available to us through the [Standard Template Library](https://en.wikipedia.org/wiki/Standard_Template_Library) used to store elements and providing an unified set of tools to operate on them. Since the standard offers strict guarantees regarding complexity, performance and, let's say, handiness, we are required to follow the same norm the STL implementations apply, called [ISO](https://www.lirmm.fr/~ducour/Doc-objets/ISO+IEC+14882-1998.pdf).
+ft_containers is a school project which goal is to reimplement three containers. In short, these are c++ data structures available to us through the [Standard Template Library](https://en.wikipedia.org/wiki/Standard_Template_Library) used to store elements and providing an unified set of tools to operate on them (inserting, removing, accessing elements, iterating over the container's elements). Since the standard offers strict guarantees regarding complexity, performance and, let's say, handiness, we are required to follow the same norm the STL implementations apply, called [ISO](https://www.lirmm.fr/~ducour/Doc-objets/ISO+IEC+14882-1998.pdf).
 
-* ```vector``` a sequence container implemented as an array.
+* ```vector``` a sequence container that stores elements in a contiguous memory. It is implemented as an array that can grow and shrink dynamically as elements are added or removed.
 
 * ```stack``` a container adapter so to speak, because it relies on an underlying container and offer a limited set of tools. ```vector``` is its default in this implementation.
 
-* ```map``` an associative container storing sorted key-value pairs where you access the value through the key. It is implemented as a binary tree and can be ordered according to a sorting criterion.
+* ```map``` an associative container storing sorted and unique key-value pairs. You access the value through its key. It is implemented as a binary tree and can be ordered according to a sorting criterion.
 
-* ```set``` comes as a bonus, in my implementation it relies on the same red black tree I implemented for ```map```. it is also an associative container, but it doesn't store pairs, only keys.
+* ```set``` comes as a bonus, in my implementation it relies on the same red black tree I implemented for ```map```. it is also an associative container, but it doesn't store pairs, only unique keys.
 
 ## usage
 
