@@ -11,11 +11,11 @@ namespace ft {
 		
 		public:
 		
-			typedef typename Iter::difference_type		difference_type;
-			typedef typename Iter::value_type			value_type;
-			typedef typename Iter::pointer				pointer;
-			typedef typename Iter::reference			reference;
-			typedef typename Iter::iterator_category	iterator_category;
+			typedef typename Iter::difference_type difference_type;
+			typedef typename Iter::value_type value_type;
+			typedef typename Iter::pointer pointer;
+			typedef typename Iter::reference reference;
+			typedef typename Iter::iterator_category iterator_category;
 	
 	};
 
@@ -24,10 +24,10 @@ namespace ft {
 	
 		public:
 	
-			typedef ptrdiff_t						difference_type;
-			typedef T								value_type;
-			typedef T *								pointer;
-			typedef T &								reference;
+			typedef ptrdiff_t	difference_type;
+			typedef T	value_type;
+			typedef T* pointer;
+			typedef T& reference;
 			typedef std::random_access_iterator_tag	iterator_category;
 	
 	};
@@ -37,10 +37,10 @@ namespace ft {
 	
 		public:
 	
-			typedef ptrdiff_t						difference_type;
-			typedef T								value_type;
-			typedef const T *						pointer;
-			typedef const T &						reference;
+			typedef ptrdiff_t difference_type;
+			typedef T value_type;
+			typedef const T* pointer;
+			typedef const T& reference;
 			typedef std::random_access_iterator_tag	iterator_category;
 	
 	};	/* iterator_traits class */
@@ -52,10 +52,10 @@ namespace ft {
 
 			// TYPES
 
-				typedef It												iterator_type;
+				typedef It iterator_type;
 				typedef typename iterator_traits<It>::difference_type	difference_type;
-				typedef typename iterator_traits<It>::reference			reference;
-				typedef typename iterator_traits<It>::pointer			pointer;
+				typedef typename iterator_traits<It>::reference reference;
+				typedef typename iterator_traits<It>::pointer pointer;
 			
 			// CTOR/DTOR
 
@@ -194,8 +194,10 @@ namespace ft {
 
 	template <class It>
 	reverse_iterator<It>
-	operator+(	typename reverse_iterator<It>::difference_type n, 
-				const reverse_iterator<It>& x) {
+	operator+(
+			typename reverse_iterator<It>::difference_type n, 
+			const reverse_iterator<It>& x
+	) {
 		return reverse_iterator<It>(x.base() - n);
 	}
 }	/* namespace ft */

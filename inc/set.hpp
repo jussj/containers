@@ -12,23 +12,23 @@ namespace ft {
 
 			// TYPES
 			
-			typedef Key	key_type;
-			typedef Key	value_type;
+			typedef Key key_type;
+			typedef Key value_type;
 			typedef Compare	key_compare;
 			typedef Compare	value_compare;
-			typedef Allocator	allocator_type;
+			typedef Allocator allocator_type;
 
-			typedef typename Allocator::reference	reference;
+			typedef typename Allocator::reference reference;
 			typedef typename Allocator::const_reference const_reference;
 			
 			typedef ft::rb_tree_const_iterator<value_type> iterator;
 			typedef ft::rb_tree_const_iterator<value_type> const_iterator;
 
 			typedef size_t size_type;
-			typedef ptrdiff_t	difference_type;
+			typedef ptrdiff_t difference_type;
 			
-			typedef typename Allocator::pointer	pointer;
-			typedef typename Allocator::const_pointer	const_pointer;
+			typedef typename Allocator::pointer pointer;
+			typedef typename Allocator::const_pointer const_pointer;
 			typedef ft::reverse_iterator<iterator> reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator> const_reverse_iterator;
 		
@@ -47,18 +47,20 @@ namespace ft {
 			// CTOR/DTOR
 			
 			explicit
-			set(const Compare& comp = Compare(),
-				const Allocator& alloc = Allocator())
-				:	_alloc(alloc), _tree(comp) {}
+			set(
+					const Compare& comp = Compare(),
+					const Allocator& alloc = Allocator())
+					:	_alloc(alloc), _tree(comp) {}
 			
 			template <class InputIterator>
-			set(InputIterator first,
-				InputIterator last,
-				const Compare& comp = Compare(),
-				const Allocator& alloc = Allocator())
-				:	_alloc(alloc), _tree(comp) {
-					insert(first, last);	
-				}
+			set(
+					InputIterator first,
+					InputIterator last,
+					const Compare& comp = Compare(),
+					const Allocator& alloc = Allocator())
+					:	_alloc(alloc), _tree(comp) {
+				insert(first, last);	
+			}
 			
 			set(const set<Key,Compare,Allocator>& x) {
 				*this = x;
@@ -71,9 +73,10 @@ namespace ft {
 			set<Key,Compare,Allocator>&
 			operator=(const set<Key,Compare,Allocator>& x) {
 				clear();
-				for (	const_iterator it = x.begin();
+				for (
+						const_iterator it = x.begin();
 						it != x.end();
-						++it	) {
+						++it) {
 					_tree.insert_and_rebalance(*it);
 				}
 				return *this;
@@ -146,7 +149,7 @@ namespace ft {
 			pair<iterator, bool>
 			insert(const value_type& x) {
 				bool key = false;
-				iterator it	= find(x);
+				iterator it = find(x);
 
 				if (it == end()) {
 					it = _tree.insert_and_rebalance(x);
@@ -155,10 +158,9 @@ namespace ft {
 				return pair<iterator, bool>(it, key);
 			}
 		
-			// TO-DO obvs	
 			iterator
 			insert(iterator position, const value_type& x) {
-				iterator it	= find(x);
+				iterator it = find(x);
 
 				if (it == end())
 					it = _tree.insert_with_hint(x, position);
@@ -197,10 +199,10 @@ namespace ft {
 
 			void
 			swap(set<Key,Compare,Allocator>& src) {
-				rb_tree	tmp	= this->_tree;
+				rb_tree	tmp = this->_tree;
 
-				this->_tree	= src._tree;
-				src._tree	= tmp;
+				this->_tree = src._tree;
+				src._tree = tmp;
 			}
 		
 			void	

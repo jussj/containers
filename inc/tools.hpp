@@ -12,7 +12,7 @@ namespace ft {
 	template<class T>
 	std::string
 	to_str(T n) {
-		std::stringstream	stream;
+		std::stringstream stream;
 
 		stream << n;
 		std::string str = stream.str();

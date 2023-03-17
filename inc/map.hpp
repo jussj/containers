@@ -10,26 +10,26 @@ namespace ft {
 
 	template <	class Key,
 				class T,
-				class Compare	= std::less<Key>,
-				class Alloc		= std::allocator<pair<const Key, T> > >
+				class Compare = std::less<Key>,
+				class Alloc = std::allocator<pair<const Key, T> > >
 	class map {
 
 		public:
 
 		//// TYPES ////
 
-			typedef Key	key_type;
-			typedef T	mapped_type;
+			typedef Key key_type;
+			typedef T mapped_type;
 			typedef pair<const Key, T> value_type;
 			typedef Compare	key_compare;
 			typedef Alloc	allocator_type;
 			typedef size_t size_type;		
-			typedef ptrdiff_t	difference_type;
+			typedef ptrdiff_t difference_type;
 
-			typedef typename Alloc::reference	reference;
+			typedef typename Alloc::reference reference;
 			typedef typename Alloc::const_reference	const_reference;
 			typedef typename Alloc::pointer	pointer;
-			typedef typename Alloc::const_pointer	const_pointer;
+			typedef typename Alloc::const_pointer const_pointer;
 
 			typedef ft::rb_tree_iterator<value_type> iterator;
 			typedef ft::rb_tree_const_iterator<value_type> const_iterator;
@@ -40,13 +40,13 @@ namespace ft {
 		private:
 
 			typedef rb_tree_impl <T, Key, pair<const Key, T>,
-					Compare, Alloc, ft::first_of<value_type, Key> >	
+				Compare, Alloc, ft::first_of<value_type, Key> >	
 			rb_tree;
 
 		//// ATTRIBUTES ////
 		
-			allocator_type	_alloc;
-			rb_tree			_tree;
+			allocator_type _alloc;
+			rb_tree _tree;
 
 		public:
 
@@ -65,8 +65,10 @@ namespace ft {
 				public:
 
 					bool
-					operator()(	const value_type& x,
-								const value_type& y	) const {
+					operator()(
+							const value_type& x,
+							const value_type& y
+					) const {
 						return comp(x.first, y.first);
 					}
 			};
@@ -74,20 +76,20 @@ namespace ft {
 		//// CTOR, DTOR AND COPY ////
 
 			explicit
-			map(const key_compare& comp = Compare(), 
+			map(
+					const key_compare& comp = Compare(), 
 					const allocator_type& alloc = Alloc()
-					) 
-				:	_alloc(alloc), _tree(comp) {}
+			)	:	_alloc(alloc), _tree(comp) {}
 
 			template <class InputIterator>
-			map(InputIterator first,
+			map(
+					InputIterator first,
 					InputIterator last,
 					const key_compare& comp = Compare(),
 					const allocator_type& alloc = Alloc()
-					)
-				:	_alloc(alloc), _tree(comp) {
-					insert(first, last);	
-				}
+			) : _alloc(alloc), _tree(comp) {
+				insert(first, last);	
+			}
 
 			map(const map<key_type, T, key_compare, allocator_type>& src) {
 				*this = src;	
@@ -101,9 +103,10 @@ namespace ft {
 			map<Key, T, Compare, Alloc>&
 			operator=(const map<Key, T, Compare, Alloc>& src) {
 				clear();
-				for (	const_iterator it = src.begin();
+				for (
+						const_iterator it = src.begin();
 						it != src.end();
-						++it	) {
+						++it) {
 					_tree.insert_and_rebalance(*it);
 				}
 				return *this;
@@ -183,7 +186,7 @@ namespace ft {
 				iterator it	= find(x.first);
 
 				if (it == end()) {
-					it	= _tree.insert_and_rebalance(x);
+					it = _tree.insert_and_rebalance(x);
 					key = true;
 				}
 				return pair<iterator, bool>(it, key);
@@ -194,7 +197,7 @@ namespace ft {
 				iterator it	= find(x.first);
 
 				if (it == end())
-					it	= _tree.insert_with_hint(x, position);
+					it = _tree.insert_with_hint(x, position);
 				return it;
 			}
 			

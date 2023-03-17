@@ -21,7 +21,7 @@ namespace ft {
 		// CTOR
 		
 		pair()
-			: first(), second()	{}
+			: first(), second() {}
 		
 		pair(const T1& x, const T2& y) 
 			: first(x), second(y) {}
@@ -32,10 +32,11 @@ namespace ft {
 
 		// OPERATOR
 		
-		pair&	operator=(const pair& src) {
+		pair&
+		operator=(const pair& src) {
 			if (&src == this)
 				return *this;
-			this->first	= src.first;
+			this->first = src.first;
 			this->second = src.second;
 			return *this;
 		}
@@ -46,45 +47,51 @@ namespace ft {
 	
 	template<class T1, class T2>
 	bool
-	operator==(const pair<T1,T2>& x,
-				const pair<T1,T2>& y) {
+	operator==(
+			const pair<T1,T2>& x,
+			const pair<T1,T2>& y) {
 		return x.first == y.first
 				&& x.second == y.second;
 	}
 
 	template<class T1, class T2>
 	bool
-	operator!=(const pair<T1,T2>& x,
-				const pair<T1,T2>& y) {
+	operator!=(
+			const pair<T1,T2>& x,
+			const pair<T1,T2>& y) {
 		return !(x == y);
 	}
 
 	template<class T1, class T2>
 	bool
-	operator<(	const pair<T1,T2>& x,
-				const pair<T1,T2>& y) {
+	operator<(
+			const pair<T1,T2>& x,
+			const pair<T1,T2>& y) {
 		return x.first < y.first || (!(y.first < x.first)
 				&& x.second < y.second);	
 	}
 
 	template<class T1, class T2>
 	bool
-	operator>(	const pair<T1,T2>& x,
-				const pair<T1,T2>& y) {
+	operator>(
+			const pair<T1,T2>& x,
+			const pair<T1,T2>& y) {
 		return y < x;
 	}	
 	
 	template<class T1, class T2>
 	bool
-	operator<=(const pair<T1,T2>& x,
-				const pair<T1,T2>& y) {
+	operator<=(
+			const pair<T1,T2>& x,
+			const pair<T1,T2>& y) {
 		return !(y < x);
 	}
 
 	template<class T1, class T2>
 	bool
-	operator>=(const pair<T1,T2>& x,
-				const pair<T1,T2>& y) {
+	operator>=(
+			const pair<T1,T2>& x,
+			const pair<T1,T2>& y) {
 		return !(x < y);
 	}
 

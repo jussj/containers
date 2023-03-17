@@ -1,12 +1,12 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-# include <cstddef>				// ptrdiff_t
-# include <memory>				// allocator
-# include <stdexcept>			// exceptions
-# include <sstream>				// stream
+# include <cstddef>
+# include <memory>
+# include <stdexcept>
+# include <sstream>
 # include <iostream>
-# include <algorithm>			// equal
+# include <algorithm>
 # include "vector_iterator.hpp"
 # include "tools.hpp"
 # include "type_traits.hpp"
@@ -25,12 +25,12 @@ namespace ft {
 			typedef	size_t size_type;
 			typedef	ptrdiff_t difference_type;
 
-			typedef	T	value_type;
-			typedef Alloc	allocator_type;
-			typedef typename Alloc::reference	reference;
+			typedef	T value_type;
+			typedef Alloc allocator_type;
+			typedef typename Alloc::reference reference;
 			typedef typename Alloc::const_reference	const_reference;
 			typedef typename Alloc::pointer	pointer;
-			typedef typename Alloc::const_pointer	const_pointer;
+			typedef typename Alloc::const_pointer const_pointer;
 			
 			typedef	vector_iterator<T> iterator;
 			typedef	vector_iterator<const T> const_iterator;
@@ -41,16 +41,16 @@ namespace ft {
 
 			explicit
 			vector(const Alloc& Allocator = Alloc())
-				: _alloc(Allocator), _begin(NULL), _end(NULL), _capacity(NULL) {
-					_begin = _alloc.allocate(0);
-					_end = _begin;
-					_capacity	= _begin;	
-				}
+					: _alloc(Allocator), _begin(NULL), _end(NULL), _capacity(NULL) {
+				_begin = _alloc.allocate(0);
+				_end = _begin;
+				_capacity = _begin;	
+			}
 
 			explicit
 			vector(size_type n, const T& value = T(),
 					const Alloc& Allocator = Alloc()) 
-				: _alloc(Allocator) {
+					: _alloc(Allocator) {
 				if (n  + 1 > max_size())
 					throw std::length_error("vector::");
 				this->_begin = _alloc.allocate(n + 1);
@@ -59,7 +59,7 @@ namespace ft {
 				for (size_type s = 0; s < n; s++)
 					_alloc.construct(p++, value);	
 				_end = _begin + n;
-				_capacity	= _end;
+				_capacity = _end;
 			}
 
 			template<class InputIt>
@@ -68,7 +68,7 @@ namespace ft {
 				
 				_begin = _alloc.allocate(0);
 				_end = _begin;
-				_capacity	= _begin;
+				_capacity = _begin;
 				_alloc	= Alloc();
 				
 				_assign_dispatch(first, last, typename ft::is_integral<InputIt>::type());	
@@ -80,12 +80,12 @@ namespace ft {
 				if (src.size() > max_size())
 					throw std::length_error("vector::");
 				this->_begin = _alloc.allocate(src.size());
-				pointer p	= _begin;
+				pointer p = _begin;
 				for (size_type s = 0; s < src.size(); s++) {
 					this->_alloc.construct(p++, *(src._begin + s));	
 				}
 				_end = _begin + src.size();
-				_capacity	= _begin + src.size();
+				_capacity = _begin + src.size();
 			}
 			
 			~vector() {
@@ -201,8 +201,8 @@ namespace ft {
 					throw std::length_error("vector::reserve");
 
 				else if (n > capacity()) {
-					pointer		tmp			= _alloc.allocate(n);
-					size_type	array_size	= size();
+					pointer	tmp = _alloc.allocate(n);
+					size_type array_size = size();
 					
 					for (size_type s = 0; s < size(); s++)
 						_alloc.construct(tmp + s, *(_begin + s));
@@ -292,8 +292,8 @@ namespace ft {
 			
 			iterator
 			erase(iterator first, iterator last) {
-				iterator	it		= first;
-				size_t		dis		= std::distance(first, last);
+				iterator it = first;
+				size_t dis = std::distance(first, last);
 					
 				for (size_t i = 0; i < dis; ++i)
 					it = erase(first);
@@ -303,8 +303,8 @@ namespace ft {
 			// TO-DO redo erase
 			iterator
 			erase(iterator position) {
-				size_type	new_size = size() - 1;
-				size_type	new_position = std::distance(begin(), position);
+				size_type new_size = size() - 1;
+				size_type new_position = std::distance(begin(), position);
 				size_type s = new_position;
 
 				for (iterator it = position; it < end(); it++) {
@@ -333,7 +333,7 @@ namespace ft {
 				
 				_begin = src._begin;
 				_end = src._begin + src.size();
-				_capacity	= src._begin + src.capacity();
+				_capacity = src._begin + src.capacity();
 				src._begin = tmp_begin;
 				src._end = tmp_end;
 				src._capacity	= tmp_capacity;
@@ -422,8 +422,8 @@ namespace ft {
 					}
 					_reallocate(new_capacity, new_size, n, position, x);
 				}
-				_end 		= _begin + new_size;
-				_capacity	= _begin + new_capacity;
+				_end = _begin + new_size;
+				_capacity = _begin + new_capacity;
 			}
 
 			template <class InputIt>
@@ -441,9 +441,9 @@ namespace ft {
 					return ;
 				}
 				// TO-DO last - first ft	
-				size_type 	length			= std::distance(first, last);
-				size_type	new_size		= size() + length;
-				size_type	new_capacity	= capacity();
+				size_type length = std::distance(first, last);
+				size_type new_size = size() + length;
+				size_type new_capacity = capacity();
 				
 				if (length < 1)
 					return ;
@@ -467,8 +467,8 @@ namespace ft {
 					}
 					_reallocate(new_capacity, new_size, position, first, last);
 				}
-				_end 		= _begin + new_size;
-				_capacity	= _begin + new_capacity;
+				_end = _begin + new_size;
+				_capacity = _begin + new_capacity;
 			}
 
 			// EXCEPTION
@@ -486,7 +486,7 @@ namespace ft {
 					throw std::out_of_range(fmt);
 			}
 			
-			//	FILL
+			// FILL
 
 			void
 			_fill(pointer start, size_type size, const T& value) {
@@ -507,16 +507,17 @@ namespace ft {
 
 			void
 			_copy_backwards(iterator position, size_type new_size) {
-				reverse_iterator	rlast_insert(position - 1);
-				reverse_iterator	rbegin_insert(_begin + new_size - 1);
-				size_type			copy_from = size() - 1;
+				reverse_iterator rlast_insert(position - 1);
+				reverse_iterator rbegin_insert(_begin + new_size - 1);
+				size_type	copy_from = size() - 1;
 
-				for	(
+				for (
 						reverse_iterator rit = rbegin_insert;
 						rit != rlast_insert; 
 						++rit) {
-					_alloc.construct(	&(*rit.base()),
-											*(begin() + copy_from));
+					_alloc.construct(
+							&(*rit.base()),
+							*(begin() + copy_from));
 					_alloc.destroy(_begin + copy_from);
 					if (_begin + copy_from == &(*position))
 							break ;
@@ -549,8 +550,8 @@ namespace ft {
 					const T& x) {
 				if (new_capacity + 1 > max_size())
 					throw std::length_error("vector::reallocate");
-				iterator it	= begin();
-				pointer	new_array	= _alloc.allocate(new_capacity + 1);
+				iterator it = begin();
+				pointer	new_array = _alloc.allocate(new_capacity + 1);
 				
 				for (size_type s = 0; s < new_size; s++) {
 					if (it == position) {
@@ -578,9 +579,9 @@ namespace ft {
 					InputIt last) {
 				if (new_capacity > max_size())
 					throw std::length_error("vector::reallocate");
-				pointer new_array	= _alloc.allocate(new_capacity);
-				iterator	it		= begin();
-				size_type 	length	= std::distance(first, last);
+				pointer new_array = _alloc.allocate(new_capacity);
+				iterator it = begin();
+				size_type length = std::distance(first, last);
 
 				for (size_type s = 0; s < new_size; s++) {
 					if (it == position) {
@@ -609,8 +610,9 @@ namespace ft {
 	template <class T, class Alloc>
 	bool
 	operator<(const vector<T,Alloc>& x, const vector<T,Alloc>& y) {
-		return ft::lexicographical_compare(	x.begin(), x.end(),
-											y.begin(), y.end());	
+		return ft::lexicographical_compare(
+				x.begin(), x.end(),
+				y.begin(), y.end());	
 	}
 	template <class T, class Alloc>
 	bool
